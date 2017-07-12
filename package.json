@@ -1,0 +1,22 @@
+{
+  "name": "SequenceDiagram.io",
+  "version": "0.9.0-beta1",
+  "private": true,
+  "homepage": ".",
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "redux": "^3.6.0",
+    "redux-undo": "^1.0.0-beta9-9-1"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.7",
+    "selenium-webdriver": "^3.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

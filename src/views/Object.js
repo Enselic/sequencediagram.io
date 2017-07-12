@@ -1,0 +1,79 @@
+import * as ac from './../reducers'
+import React from 'react'
+import moveHelper from './utils/componentMoveHelper'
+import Name from './Name'
+import RemoveButton from './RemoveButton'
+import devUtils from './../devUtils'
+import { hoverHelper, hoverLifelineHelper } from './utils'
+
+/**
+ * Note that 'object' here does not mean 'an instance of a class'.
+ * Instead, it is the concrete thing in the diagram with a lifeline that
+ * the user can add.
+ */
+export default function(props) {
+    const dispatch = props.dispatch;
+    const object = props.object;
+    const layout = props.layout;
+    const objects = props.objects;
+    const messages = props.messages;
+    const pending = props.pending;
+
+    function lifelineClick(object) {
+        return e => {
+            let action;
+            if (!pending.message || !pending.message.start) {
+                const startY = e.clientY - document.getElementById('diagram-root').getBoundingClientRect().top;
+                action = ac.pendingAddMessage(object.key, startY);
+            } else {
+                let insertIndex = 0;
+                messages.forEach((message, index) => {
+                    if (layout[message.key].top < pending.message.y) {
+                        insertIndex = index + 1;
+                    }
+                })
+                action = ac.addMessage(pending.message.start, object.key, 'sendMessage()', insertIndex);
+            }
+            dispatch(action);
+        }
+    }
+
+    const onMouseDown = moveHelper(
+        objects,
+        messages,
+        object,
+        e => e.pageX,
+        el => el.style.left,
+        ac.beginComponentMove,
+        ac.endComponentMove,
+        ac.rearrangeObjects,
+        dispatch
+    );
+
+    let style = {
+        left: layout[object.key].lifelineX,
+        top: layout[object.key].top,
+        position: 'absolute',
+        transition: devUtils.transitionIfNotDev('left 0.3s'),
+    };
+
+    return (
+        <div style={style} id={object.key} key={object.key} >
+            <div onMouseDown={onMouseDown} {...hoverHelper(dispatch, object.key)} style={{
+                    background: '#ffff99',
+                    padding: '15px 30px',
+                    border: '1px solid black',
+                    borderRadius: '4px',
+                    transform: 'translateX(-50%)',
+                    position: 'relative',
+                    }} >
+                <RemoveButton keyToRemove={object.key} dispatch={dispatch} pending={pending} {...hoverHelper(dispatch, object.key)} />
+                <Name component={object} pending={pending} dispatch={dispatch} />
+            </div>
+            <div {...hoverLifelineHelper(dispatch, object.key)} onClick={lifelineClick(object)}  style={{ textAlign: 'center', transform: 'translateX(-50%)' }} >
+                <div style={{ display: 'inline-block', borderLeft: '1px dashed black', width: '1px', height: layout['height'] + 'px' }}>
+                </div>
+            </div>
+        </div>
+    )
+}
