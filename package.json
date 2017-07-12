@@ -1,6 +1,6 @@
 {
   "name": "SequenceDiagram.io",
-  "version": "0.9.0-beta1",
+  "version": "1.0.0",
   "private": true,
   "homepage": ".",
   "dependencies": {
