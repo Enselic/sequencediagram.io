@@ -64,11 +64,18 @@ export default function(props) {
 
     const color = (pending.hoveredComponentKey === message.key || pending.componentMovedKey === message.key ? 'black' : 'transparent');
     let right, left;
-    if ((msgLayout.pointsLeft && type === 'end') ||
-        (!msgLayout.pointsLeft && type === 'start')) {
-        left = -17;
+    if (msgLayout.pointsLeft) {
+        if (type === 'start') {
+            right = -16;
+        } else {
+            left = -24;
+        }
     } else {
-        right = -20;
+        if (type === 'start') {
+            left = -16;
+        } else {
+            right = -24;
+        }
     }
     const style= {
         position: 'absolute',
