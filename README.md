@@ -1,5 +1,8 @@
+https://sequencediagram.io
+==========================
 
 Pleasurably create simple and sharable sequence diagrams directly in the browser. Also works offline.
+
 
 Why this project exists
 =======================
