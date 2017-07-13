@@ -48,9 +48,9 @@ Contributions of any kind are very welcomed however!
 Setting up for development
 ==========================
 
-Should work to git clone this repo and then run `npm start` after `npm install`.
-To run the automated tests you need make Selenium 2/WebDriver to work, then just
-run `npm test`.
+It should work to git clone this repo and then run `npm start` after `npm install`.
+To run the automated tests it should work to run `npm test` while `npm start` is
+running.
 
 Technology
 ----------
