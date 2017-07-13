@@ -71,6 +71,7 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- When chromedriver 2.31 is released, run tests in Travis CI (see https://bugs.chromium.org/p/chromedriver/issues/detail?id=1772 and https://github.com/Enselic/sequencediagram.io/tree/travis-test)
 - Create a more accurate text measurer
 - Make page warn when using unsupported browsers
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
