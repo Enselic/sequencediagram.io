@@ -83,6 +83,10 @@ export function toggleMessageLineStyle(key) {
     return { type: 'TOGGLE_MESSAGE_LINE_STYLE', key };
 }
 
+export function toggleMessageArrowStyle(key) {
+    return { type: 'TOGGLE_MESSAGE_ARROW_STYLE', key };
+}
+
 export function rearrangeMessages(messages) {
     return { type: 'REARRANGE_MESSAGES', messages };
 }
@@ -127,6 +131,14 @@ function messages(state = [], action) {
         return state.map(message => {
             if (message.key === action.key) {
                 return { ...message, isReply: message.isReply ? undefined : true };
+            } else {
+                return { ...message };
+            }
+        });
+    case 'TOGGLE_MESSAGE_ARROW_STYLE':
+        return state.map(message => {
+            if (message.key === action.key) {
+                return { ...message, isAsync: message.isAsync ? undefined : true };
             } else {
                 return { ...message };
             }

@@ -135,6 +135,13 @@ global.assertFragment = function(expected) {
     });
 }
 
+global.urlParsing = function(url, expected) {
+    return () => {
+        goTo(url);
+        return assertFragment(expected ? expected : url);
+    }
+}
+
 global.goTo = function(startState) {
     driver.get('http://localhost:3000/#' + startState);
     /* We use 0.3 second CSS transitions, so make sure those have

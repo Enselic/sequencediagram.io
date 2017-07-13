@@ -34,7 +34,6 @@ The current feature set is minimal but useful.
 Here is a list of features that I plan on adding later, roughly sorted by descending priority.
 Contributions of any kind are very welcomed however!
 
-- Let the user specify if messages are synchronous (solid arrow head) or asynchronous (open arrow head)
 - Let the user add so called activation boxes to lifelines to represent processing
 - Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
 - Support adding message in a single click-drag-release motion (click at start, release at end)
@@ -66,18 +65,18 @@ Misc
 ====
 
 Diagram using all current features, i.e. the "most advanced" diagram you can create:
-https://SequenceDiagram.io/#o4,User;o1,Web%20browser;o2,Server;m3,o4,o1,enter%20URL;m4,o4,o1,Press%20return;m1,o1,o2,GET%20%2F;m5,o2,o1,response,r;m6,o1,o1,parse%20and%20render;m7,o1,o4,display
+https://SequenceDiagram.io/#o5,Friend;o4,User;o1,Web%20browser;o2,Server;m8,o5,o4,say(%22visit%20URL%22),a;m3,o4,o1,enter%20URL;m4,o4,o1,Press%20return;m1,o1,o2,GET%20%2F;m5,o2,o1,response,r;m6,o1,o1,parse%20and%20render;m7,o1,o4,display
 
 
 TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- Bug: React doesn't trigger mouse enter if the mouse static but components move in under the cursor. Quite problematic for messages that have large area now.
 - When chromedriver 2.31 is released, run tests in Travis CI (see https://bugs.chromium.org/p/chromedriver/issues/detail?id=1772 and https://github.com/Enselic/sequencediagram.io/tree/travis-test)
 - Create a more accurate text measurer
 - Make page warn when using unsupported browsers
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
-- Bug: React doesn't trigger mouse enter if the mouse static but components move in under the cursor
 - Bug: Message grab points does not remain filled when dragged
 - Enable Cache-Control using deploy scripts
 - make features more discoverable using a tutorial-like approach

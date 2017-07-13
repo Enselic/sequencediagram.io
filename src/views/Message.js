@@ -5,6 +5,7 @@ import Name from './Name'
 import RemoveButton from './RemoveButton'
 import MessageStartEnd from './MessageStartEnd'
 import LineSelector from './LineSelector'
+import ArrowSelector from './ArrowSelector'
 import devUtils from './../devUtils'
 import { hoverHelper } from './utils'
 import { layoutMessageLeftAndWidth } from './../layouter'
@@ -61,6 +62,7 @@ export default function(props) {
             { !isPending && !pending.message && <MessageStartEnd {...props} msgLayout={msgLayout} type="start" /> }
             { !isPending && !pending.message && <MessageStartEnd {...props} msgLayout={msgLayout} type="end" /> }
             { !isPending && !pending.message && <LineSelector {...props} message={message} msgLayout={msgLayout} /> }
+            { !isPending && !pending.message && <ArrowSelector {...props} message={message} msgLayout={msgLayout} /> }
         </div>
     )
 }
