@@ -18,14 +18,24 @@ the global object
 // are doing
 const SLOW_DOWN_FOR_HUMAN_OBSERVATION = 0
 
+// Set to false to show tests while they run. The main reason we default to
+// running headless is to make it configuration easier for CI builds
+const HEADLESS = 1
+
 if (SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 }
 let { Builder, By, until, Key, promise } = require('selenium-webdriver');
+let { Options } = require('selenium-webdriver/chrome');
 let devUtils = require('../devUtils');
 
+let options = new Options();
+if (HEADLESS) {
+    options.addArguments('headless', 'disable-gpu');
+}
 global.driver = new Builder()
     .forBrowser('chrome')
+    .setChromeOptions(options)
     .build();
 
 let Promise = promise.Promise;
@@ -125,7 +135,7 @@ global.assertFragment = function(expected) {
 }
 
 global.goTo = function(startState) {
-    driver.get('localhost:3000/#' + startState);
+    driver.get('http://localhost:3000/#' + startState);
     /* We use 0.3 second CSS transitions, so make sure those have
      * settled before we move on.
      */
