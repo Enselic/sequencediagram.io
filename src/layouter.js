@@ -1,5 +1,6 @@
 import messageBorderSelf from './views/message-borders-self.png'
 import messageBorders from './views/message-borders.png'
+import messageBordersDashed from './views/message-borders-dashed.png'
 
 export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overrideEndX) {
     let startX;
@@ -38,8 +39,9 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
         width = 22; // From borderWidth
     } else {
         const arrowWidth = 9;
+        const png = message.isReply ? messageBordersDashed : messageBorders;
 
-        borderImage = 'url(' + messageBorders + ') 0 9 17 fill repeat';
+        borderImage = 'url(' + png + ') 0 9 17 fill repeat';
         borderWidth = (pointsLeft ?
                        '0px 0px 17px ' + arrowWidth + 'px' :
                        '0px ' + arrowWidth + 'px 17px 0px');

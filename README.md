@@ -34,7 +34,6 @@ The current feature set is minimal but useful.
 Here is a list of features that I plan on adding later, roughly sorted by descending priority.
 Contributions of any kind are very welcomed however!
 
-- Let the user select if messages are normal or replies (with a dashed message line)
 - Let the user specify if messages are synchronous (solid arrow head) or asynchronous (open arrow head)
 - Let the user add so called activation boxes to lifelines to represent processing
 - Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
@@ -66,8 +65,8 @@ Technology
 Misc
 ====
 
-Large diagram using all current features:
-https://SequenceDiagram.io/#o4,User;o1,Web%20browser;o2,Server;m3,o4,o1,enter%20URL;m4,o4,o1,Press%20return;m1,o1,o2,GET%20%2F;m5,o2,o1,response;m6,o1,o1,parse%20and%20render;m7,o1,o4,display
+Diagram using all current features, i.e. the "most advanced" diagram you can create:
+https://SequenceDiagram.io/#o4,User;o1,Web%20browser;o2,Server;m3,o4,o1,enter%20URL;m4,o4,o1,Press%20return;m1,o1,o2,GET%20%2F;m5,o2,o1,response,r;m6,o1,o1,parse%20and%20render;m7,o1,o4,display
 
 
 TODO

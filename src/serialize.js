@@ -7,7 +7,11 @@ function serializeObject(object) {
 }
 
 function serializeMessage(message) {
-    return message.key + ',' + message.start + ',' + message.end + ',' + encodeURIComponent(message.name);
+    let res = message.key + ',' + message.start + ',' + message.end + ',' + encodeURIComponent(message.name);
+    if (message.isReply) {
+        res += ',r';
+    }
+    return res;
 }
 
 function serializeComponents(components) {
@@ -43,11 +47,13 @@ export function deserialize(serialized) {
             });
         } else if (o[0] === 'm' && parts.length >= 4 &&
             parts[0] && parts[1] && parts[2] && parts[3]) {
+            const isReply = parts[4] && parts[4].indexOf('r') >= 0;
             messages.push({
                 key: parseKey(parts[0]),
                 start: parts[1],
                 end: parts[2],
                 name: decodeURIComponent(parts[3]),
+                isReply: isReply ? true : undefined,
             });
         }
     });

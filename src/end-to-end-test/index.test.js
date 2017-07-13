@@ -180,6 +180,7 @@ require('./misc-object');
 require('./move-message');
 require('./add-message');
 require('./remove-message');
+require('./change-message-appearance');
 
 require('./misc');
 require('./undo-redo');

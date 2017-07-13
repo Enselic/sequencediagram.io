@@ -4,6 +4,7 @@ import moveHelper from './utils/componentMoveHelper'
 import Name from './Name'
 import RemoveButton from './RemoveButton'
 import MessageStartEnd from './MessageStartEnd'
+import LineSelector from './LineSelector'
 import devUtils from './../devUtils'
 import { hoverHelper } from './utils'
 import { layoutMessageLeftAndWidth } from './../layouter'
@@ -59,6 +60,7 @@ export default function(props) {
             <Name component={message} pending={pending} dispatch={dispatch} />
             { !isPending && !pending.message && <MessageStartEnd {...props} msgLayout={msgLayout} type="start" /> }
             { !isPending && !pending.message && <MessageStartEnd {...props} msgLayout={msgLayout} type="end" /> }
+            { !isPending && !pending.message && <LineSelector {...props} message={message} msgLayout={msgLayout} /> }
         </div>
     )
 }

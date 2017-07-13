@@ -79,6 +79,10 @@ export function replaceMessage(message) {
     return { type: 'REPLACE_MESSAGE', message };
 }
 
+export function toggleMessageLineStyle(key) {
+    return { type: 'TOGGLE_MESSAGE_LINE_STYLE', key };
+}
+
 export function rearrangeMessages(messages) {
     return { type: 'REARRANGE_MESSAGES', messages };
 }
@@ -119,6 +123,14 @@ function messages(state = [], action) {
         });
     case 'REPLACE_CORE':
         return [ ...action.messages ];
+    case 'TOGGLE_MESSAGE_LINE_STYLE':
+        return state.map(message => {
+            if (message.key === action.key) {
+                return { ...message, isReply: message.isReply ? undefined : true };
+            } else {
+                return { ...message };
+            }
+        });
     case 'REARRANGE_MESSAGES':
         return [ ...action.messages ];
     default:
