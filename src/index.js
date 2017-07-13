@@ -7,6 +7,8 @@ import { createStore } from 'redux'
 import { ActionCreators } from 'redux-undo';
 import { serialize, deserialize } from './serialize'
 
+const debug = 0
+
 var store = createStore(ac.default);
 function dispatch(action) {
     if (!action) {
@@ -14,7 +16,9 @@ function dispatch(action) {
         return;
     }
 
-    console.log('dispatching ' + JSON.stringify(action));
+    if (debug) {
+        console.log('dispatching ' + JSON.stringify(action));
+    }
 
     return store.dispatch(action);
 }
