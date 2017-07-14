@@ -39,6 +39,7 @@ export default function(props) {
 
     return (
         <div style={{
+                minWidth: layout.width,
                 minHeight: '100%',
                 position: 'relative'
                 }} >

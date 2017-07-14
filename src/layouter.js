@@ -92,6 +92,7 @@ export default function(getTextWidth, objects, messages) {
         currentY += MESSAGE_SPACING;
     });
 
+    layout.width = currentX;
     layout.height = currentY + DIAGRAM_PADDING.TOP_BOTTOM;
 
     return layout;
