@@ -71,6 +71,8 @@ export default function(state = {}, action) {
         return { ...state, lifelineHoveredKey: action.key, lifelineHoveredY: action.y };
     case 'MOUSE_LEAVE_LIFEILNE':
         return { ...state, lifelineHoveredKey: undefined, lifelineHoveredY: undefined };
+    case 'REPLACE_CORE':
+        return {};
     default:
         return state;
     }
