@@ -51,6 +51,8 @@ export default function(state = {}, action) {
         return { ...state, message: { start: action.start, y: action.y }};
     case 'ADD_MESSAGE':
         return { ...state, message: undefined };
+    case 'REMOVE_COMPONENT':
+        return { ...state, message: !state.message || state.message.start === action.key ? undefined : state.message };
     case 'BEGIN_COMPONENT_MOVE':
         return { ...state, componentMovedKey: action.key };
     case 'END_COMPONENT_MOVE':

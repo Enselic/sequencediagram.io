@@ -87,3 +87,13 @@ test('add message between two messages reversed', insertMessage(
     size => { return { x: size.width, y: size.height + 30 } },
     size => { return { x: 0, y: size.height + 30 } },
     'o1,Foo;o2,Bar;m1,o1,o2,M1();m3,o2,o1,sendMessage();m2,o2,o1,M2()'));
+
+test('remove object while pending message', () => {
+    goTo('o2,Bar;o3,Baz');
+    clickLifelineForObjectWithText('Bar');
+    removeComponentWithKey('o2');
+    // Do something afterwards so we detect if the app crashed
+    clickLifelineForObjectWithText('Baz');
+    clickLifelineForObjectWithText('Baz');
+    return assertFragment('o3,Baz;m1,o3,o3,sendMessage()');
+});
