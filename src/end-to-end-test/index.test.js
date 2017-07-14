@@ -117,6 +117,7 @@ global.typeAndConfirmm = function(typedText) {
 global.clickAndType = function(elementText, typedText) {
     click(elementText);
     typeAndConfirmm(typedText);
+    waitForCssTransitions();
 }
 
 global.assertFragment = function(expected) {
@@ -154,20 +155,24 @@ global.move = function(startState, grabbedText, toMove, expectedEndState) {
 
 global.clickLifelineForObjectWithText = function(objectText) {
     driver.actions().mouseMove(findElementByText(objectText), { x: 30, y: 100 }).click().perform();
+    waitForCssTransitions();
 }
 
 global.clickAddObject = function() {
     click('Add object');
+    waitForCssTransitions();
 }
 
 global.removeComponentWithKey = function(key) {
     // Low prio todo: Stop depending on the implementation detail that components have
     // remove buttons with certain IDs without complicating testing code too much
     driver.actions().click(driver.findElement(By.id('remove-' + key))).perform();
+    waitForCssTransitions();
 }
 
 global.ctrlZ = function() {
     driver.actions().sendKeys([ Key.CONTROL, 'z', Key.NULL ]).perform();
+    waitForCssTransitions();
 }
 
 
