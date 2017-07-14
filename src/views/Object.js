@@ -59,7 +59,7 @@ export default function(props) {
 
     return (
         <div style={style} id={object.key} key={object.key} >
-            <div onMouseDown={onMouseDown} {...hoverHelper(dispatch, object.key)} style={{
+            <div onMouseDown={onMouseDown} {...hoverHelper(pending, dispatch, object.key)} style={{
                     background: '#ffff99',
                     padding: '15px 30px',
                     border: '1px solid black',
@@ -67,7 +67,7 @@ export default function(props) {
                     transform: 'translateX(-50%)',
                     position: 'relative',
                     }} >
-                <RemoveButton keyToRemove={object.key} dispatch={dispatch} pending={pending} {...hoverHelper(dispatch, object.key)} />
+                <RemoveButton keyToRemove={object.key} dispatch={dispatch} pending={pending} {...hoverHelper(pending, dispatch, object.key)} />
                 <Name component={object} pending={pending} dispatch={dispatch} />
             </div>
             <div {...hoverLifelineHelper(dispatch, object.key)} onClick={lifelineClick(object)}  style={{ textAlign: 'center', transform: 'translateX(-50%)' }} >

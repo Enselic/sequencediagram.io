@@ -56,7 +56,7 @@ export default function(props) {
     }
 
     return (
-        <div onMouseDown={onMouseDown} style={{ ...msgLayout, ...style }} id={message.key} key={message.key} {...hoverHelper(dispatch, message.key)} >
+        <div onMouseDown={onMouseDown} style={{ ...msgLayout, ...style }} id={message.key} key={message.key} {...hoverHelper(pending, dispatch, message.key)} >
             { !isPending && !pending.message && <RemoveButton keyToRemove={message.key} dispatch={dispatch} pending={pending} /> }
             <Name component={message} pending={pending} dispatch={dispatch} />
             { !isPending && !pending.message && <MessageStartEnd {...props} msgLayout={msgLayout} type="start" /> }

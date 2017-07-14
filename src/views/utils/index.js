@@ -1,14 +1,14 @@
 import * as ac from './../../reducers'
 
-export function hoverHelper(dispatch, key) {
+export function hoverHelper(pending, dispatch, key) {
     return {
         onMouseEnter() {
             dispatch(ac.hoverOverComponent(key));
         },
         onMouseMove() {
-            // throttle this to fix
-            // * React doesn't trigger mouse enter if the mouse static but components move in under the cursor
-            //dispatch(ac.hoverOverComponent(key));
+            if (pending.hoveredComponentKey !== key) {
+                dispatch(ac.hoverOverComponent(key));
+            }
         },
         onMouseLeave() {
             dispatch(ac.endHoverOverComponent());

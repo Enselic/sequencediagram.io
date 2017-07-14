@@ -72,7 +72,6 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- Bug: React doesn't trigger mouse enter if the mouse static but components move in under the cursor. Quite problematic for messages that have large area now.
 - When chromedriver 2.31 is released, run tests in Travis CI (see https://bugs.chromium.org/p/chromedriver/issues/detail?id=1772 and https://github.com/Enselic/sequencediagram.io/tree/travis-test)
 - Create a more accurate text measurer
 - Make page warn when using unsupported browsers
