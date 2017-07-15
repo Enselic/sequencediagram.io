@@ -34,10 +34,9 @@ The current feature set is minimal but useful.
 Here is a list of features that I plan on adding later, roughly sorted by descending priority.
 Contributions of any kind are very welcomed however!
 
+- Make features more discoverable using an interactive tutorial-like approach
 - Let the user add so called activation boxes to lifelines to represent processing
 - Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
-- Support adding message in a single click-drag-release motion (click at start, release at end)
-- support adding objects at arbitrary indexes by dragging the 'add object' button to desired index
 - Support adding arbitrary comments to the diagram
 - Support SVG export to allow embedding in in e.g. PDFs. For now, users can take PNG screenshots of the app
 - Allow nesting of activation boxes
@@ -72,12 +71,7 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- When chromedriver 2.31 is released, run tests in Travis CI (see https://bugs.chromium.org/p/chromedriver/issues/detail?id=1772 and https://github.com/Enselic/sequencediagram.io/tree/travis-test)
 - Create a more accurate text measurer
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
-- Bug: Message grab points does not remain filled when dragged
-- Enable Cache-Control using deploy scripts
-- make features more discoverable using a tutorial-like approach
-- Make adding an actor edit its text. Makes text edit discoverabble
 - make pending message animate nicely to real message
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
