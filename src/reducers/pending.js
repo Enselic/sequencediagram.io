@@ -42,6 +42,10 @@ export function mouseLeaveLifeline() {
     return { type: 'MOUSE_LEAVE_LIFEILNE' };
 }
 
+export function touchWarn() {
+    return { type: 'TOUCH_WARN' };
+}
+
 /* Various "in-between" states like partially constructed messages
  * or objects-in-movement-info.
  */
@@ -75,6 +79,8 @@ export default function(state = {}, action) {
         return { ...state, lifelineHoveredKey: undefined, lifelineHoveredY: undefined };
     case 'REPLACE_CORE':
         return {};
+    case 'TOUCH_WARN':
+        return { ...state, touchWarn: true };
     default:
         return state;
     }

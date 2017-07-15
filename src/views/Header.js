@@ -1,10 +1,12 @@
 import React from 'react'
 
 export default function(props) {
-    const { showShareInfo } = props.pending;
+    const { showShareInfo, touchWarn } = props.pending;
 
     return (
         <div style={{ backgroundColor: '#000', padding: 10 }}>
+            { touchWarn && <i style={{ color: 'red' }}>Touch input not supported yet, please use a mouse or contribute touch input support via GitHub</i>}
+
             <div style={{ fontSize: '300%', color: '#fff' }}>
                 <a style={{ textDecoration: 'none', color: '#fff' }} target="_blank" rel="noopener noreferrer" href="/">SequenceDiagram.io</a>
             </div>

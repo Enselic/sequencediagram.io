@@ -7,6 +7,7 @@ import Footer from './Footer'
 import Menu from './Menu'
 import { transferPropsToStyle } from './utils'
 import { layoutMessageLeftAndWidth } from './../layouter'
+import * as ac from './../reducers'
 
 export default function(props) {
     const { state, dispatch } = props;
@@ -38,7 +39,7 @@ export default function(props) {
     }
 
     return (
-        <div style={{
+        <div onTouchEnd={() => dispatch(ac.touchWarn())} style={{
                 minWidth: layout.width,
                 minHeight: '100%',
                 position: 'relative'
