@@ -2,7 +2,7 @@ import { removeComponent } from './../reducers'
 import React from 'react'
 
 export default function(props) {
-    const { keyToRemove, dispatch, pending } = props;
+    const { keyToRemove, dispatch, pending, rightOffset } = props;
 
     function handleMouseDown(e) {
         // We don't want the parent div to receive any mouse down event if
@@ -14,7 +14,7 @@ export default function(props) {
     const color = (pending.hoveredComponentKey === keyToRemove || pending.componentMovedKey === keyToRemove ? 'black' : 'transparent');
     const style={
         position: 'absolute',
-        right: '-20px',
+        right: -20 + rightOffset,
         top: '-19px',
         width: '30px',
         height: '30px',

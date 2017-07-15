@@ -33,8 +33,8 @@ export default function(props) {
                 onMouseDown={handleMouseDown}
                 style={{
                     position: 'absolute',
-                    right: pointsLeft ? undefined : -30,
-                    left: pointsLeft ? -20 : undefined,
+                    right: pointsLeft ? undefined : -24,
+                    left: pointsLeft ? -24 : undefined,
                     bottom: -57,
                     width: width,
                     height: height,

@@ -35,12 +35,13 @@ export default function(props) {
 
     return (
         <div onClick={() => dispatch(toggleMessageLineStyle(key))} onMouseDown={handleMouseDown} style={style} >
-            <div style={{
+            <div className="message-end" style={{
                     position: 'relative',
                     left: '-50%',
                     width: width,
                     height: height,
                     border: '1px dotted ' + color,
+                    borderRadius: 5,
                     }}>
                 <div style={{
                         position: 'relative',

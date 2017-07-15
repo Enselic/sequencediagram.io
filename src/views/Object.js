@@ -67,7 +67,7 @@ export default function(props) {
                     transform: 'translateX(-50%)',
                     position: 'relative',
                     }} >
-                <RemoveButton keyToRemove={object.key} dispatch={dispatch} pending={pending} {...hoverHelper(pending, dispatch, object.key)} />
+                <RemoveButton rightOffset={0} keyToRemove={object.key} dispatch={dispatch} pending={pending} {...hoverHelper(pending, dispatch, object.key)} />
                 <Name component={object} pending={pending} dispatch={dispatch} />
             </div>
             <div {...hoverLifelineHelper(dispatch, object.key)} onClick={lifelineClick(object)}  style={{ textAlign: 'center', transform: 'translateX(-50%)' }} >
