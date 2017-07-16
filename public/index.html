@@ -21,8 +21,16 @@
       body,html,#root {
         margin: 0;
         padding: 0;
-        height: 100%;
         font-family: sans-serif;
+
+        /* To make their width match the potentially large width of the diagram */
+        min-width: 100%;
+        display: inline-block;
+      }
+
+      #root {
+        /* To make the footer always appear below the fold */
+        min-height: 100vh;
       }
 
       button:hover {
@@ -45,12 +53,18 @@
           background: rgba(200,200,200,0.5) !important;
       }
 
-      kbd {
+      .footer {
+        display: flex;
+        flex-wrap: wrap;
+        background: #111;
+        padding: 20px 0;
+      }
+
+      a {
         display: inline-block;
-        padding: 0.2em;
-        color: black;
-        background-color: #ccc;
-        border-radius: 4px;
+        text-decoration: none;
+        color: #fff;
+        padding: 10px;
       }
 
     </style>
@@ -69,7 +83,21 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root" />
+    <div style="background-color: #000">
+      <div style="font-size: 300%">
+          <a target="_blank" rel="noopener noreferrer" href="/">SequenceDiagram.io</a>
+      </div>
+    </div>
 
+    <div id="root">
+      <!-- React overwrites the below element when it's done loading -->
+      <div style="border-bottom: 1px solid black; padding: 3px 10px; color: #999; background-color: #ccc; font-size: 20px">Loading app...</div>
+    </div>
+
+    <div class="footer">
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/Enselic/sequencediagram.io">Fork me on GitHub</a>
+      <a target="_blank" rel="noopener noreferrer" href="./acknowledgements.html">Acknowledgements</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/SeqDiag_io">@SeqDiag_io</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/Enselic/sequencediagram.io/releases/tag/v1.1.0-beta" style="margin-left: auto; padding-right: 10px" >v1.1.0-beta</a>
   </body>
 </html>

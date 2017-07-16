@@ -4,37 +4,44 @@ import { isChrome } from './utils'
 export default function(props) {
     const { showShareInfo, touchWarn } = props.pending;
 
-    return (
-        <div style={{ backgroundColor: '#000', padding: 10 }}>
-            { touchWarn && <i style={{ color: 'red' }}>Touch input not supported yet, please use a mouse or contribute touch input support via GitHub</i>}
-            { !isChrome() && <i style={{ color: 'red' }}>Your browser is not supported yet, please use Google Chrome or contribute more browser support via GitHub</i>}
+    function Kbd(props) {
+        return (
+            <kbd style={{
+                display: 'inline-block',
+                padding: '0.2em',
+                color: 'black',
+                backgroundColor: '#ccc',
+                borderRadius: '4px',
+                }}>
+                {props.children}
+            </kbd>
+        );
+    }
 
-            <div style={{
-                    fontSize: '300%',
-                    color: '#fff',
-                    }}>
-                <a target="_blank" rel="noopener noreferrer" href="/" style={{
-                        textDecoration: 'none',
-                        color: '#fff',
-                        }}>SequenceDiagram.io</a>
-            </div>
-            <div style={{
-                    fontSize: '110%',
-                    marginTop: '0.5em',
-                    }}>
-                <span style={{
-                        color: 'white',
-                        }}>
-                    { showShareInfo && (<span>
-                        <b>Share by URL:</b> The current diagram is tersely encoded in the
-                        current URL and can simply be shared as-is by copy-paste
-                        from the browser address bar. <br/>
-                        <b>Share by PNG:</b> <kbd>F12</kbd> (for <i>Developer Tools</i>) then <kbd>
-                        Ctrl/Cmd + Shift + P</kbd> (for <i>Command Menu</i>) then <kbd>
-                        Capture full size screenshot</kbd>.
-                    </span> )}
-                </span>
-            </div>
+    return (
+        <div style={{ backgroundColor: '#000' }}>
+
+            { touchWarn && <div style={{ color: 'red', padding: '10px 10px', paddingTop: 0, }}>
+                Touch input not supported yet, please use a mouse or contribute
+                touch input support via GitHub
+            </div> }
+
+            { !isChrome() && <div style={{ color: 'red', padding: '10px 10px', paddingTop: 0, }}>
+                Your browser is not supported yet, please use Google Chrome or
+                contribute more browser support via GitHub
+            </div> }
+
+            { showShareInfo && <div style={{ color: '#fff', padding: '12px 10px', paddingTop: 0, }}>
+                <b>Share by URL:</b> The current diagram is tersely encoded in the
+                current URL and can simply be shared as-is by copy-paste
+                from the browser address bar.
+            </div> }
+
+            { showShareInfo && <div style={{ color: '#fff', padding: '12px 10px', paddingTop: 0, }}>
+                <b>Share by PNG:</b> <Kbd>F12</Kbd> (for <i>Developer Tools</i>) then <Kbd>
+                Ctrl/Cmd + Shift + P</Kbd> (for <i>Command Menu</i>) then <Kbd>
+                Capture full size screenshot</Kbd>.
+            </div> }
         </div>
     );
 }

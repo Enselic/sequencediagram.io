@@ -3,7 +3,6 @@ import layouter from './../layouter'
 import Objekt from './Object'
 import Message, { PENDING_MESSAGE_KEY } from './Message'
 import Header from './Header'
-import Footer from './Footer'
 import Menu from './Menu'
 import { transferPropsToStyle } from './utils'
 import { layoutMessageLeftAndWidth } from './../layouter'
@@ -41,7 +40,6 @@ export default function(props) {
     return (
         <div onTouchEnd={() => dispatch(ac.touchWarn())} style={{
                 minWidth: layout.width,
-                minHeight: '100%',
                 position: 'relative'
                 }} >
 
@@ -55,8 +53,6 @@ export default function(props) {
                 {pendingMessage && <Message key={pendingMessage.key} message={pendingMessage} {...usefulProps} /> }
                 {pending.lifelineHoveredKey && !pending.componentMovedKey && <div style={{ border: '1px dotted black', width: 30, height: 30, borderRadius: 15, left: layout[pending.lifelineHoveredKey].lifelineX - 15, top: (pending.message ? pending.message.y : pending.lifelineHoveredY) - 15 + 'px', position: 'relative', pointerEvents: 'none' }} /> }
             </div>
-
-            <Footer />
         </div>
     )
 }
