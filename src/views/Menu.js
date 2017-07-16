@@ -31,7 +31,7 @@ export default function(props) {
             <Button text="Add object" onClick={addObjectAndEditName} />
             <Button text="Undo" onClick={() => dispatch(ActionCreators.undo())} />
             <Button text="Redo" onClick={() => dispatch(ActionCreators.redo())} />
-            <Button text={ showShareInfo ? 'Sharing was easy, thanks!' : 'Share' } onClick={() => dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())} />
+            <Button text={ showShareInfo ? 'Hide share info' : 'Share' } onClick={() => dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())} />
         </div>
     );
 }
