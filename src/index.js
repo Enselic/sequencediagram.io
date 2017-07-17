@@ -66,7 +66,7 @@ function serializeState() {
 }
 
 function render() {
-    ReactDOM.render(<App defaultDiagram={defaultDiagram} state={store.getState()} dispatch={dispatch} />, document.getElementById('root'));
+    ReactDOM.render(<App state={store.getState()} dispatch={dispatch} />, document.getElementById('root'));
 
     const result = serializeState();
     window.location.hash = result;
