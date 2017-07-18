@@ -4,6 +4,7 @@ import Objekt from './Object'
 import Message, { PENDING_MESSAGE_KEY } from './Message'
 import Header from './Header'
 import Menu from './Menu'
+import NewMessageMarker from './NewMessageMarker'
 import { transferPropsToStyle } from './utils'
 import { layoutMessageLeftAndWidth } from './../layouter'
 import * as ac from './../reducers'
@@ -54,7 +55,12 @@ export default function(props) {
                 {objects.map(object => (<Objekt key={object.key} object={object} {...usefulProps} />))}
                 {messages.map(message => (<Message key={message.key} message={message} {...usefulProps} />))}
                 {pendingMessage && <Message key={pendingMessage.key} message={pendingMessage} {...usefulProps} /> }
-                {pending.lifelineHoveredKey && !pending.componentMovedKey && <div style={{ border: '1px dotted black', width: 30, height: 30, borderRadius: 15, left: layout[pending.lifelineHoveredKey].lifelineX - 15, top: (pending.message ? pending.message.y : pending.lifelineHoveredY) - 15 + 'px', position: 'relative', pointerEvents: 'none' }} /> }
+
+                {pending.lifelineHoveredKey && !pending.componentMovedKey &&
+                <NewMessageMarker
+                        left={layout[pending.lifelineHoveredKey].lifelineX - 15}
+                        top={(pending.message ? pending.message.y : pending.lifelineHoveredY) - 15 + 'px'}
+                        /> }
             </div>
         </div>
     )
