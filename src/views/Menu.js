@@ -37,8 +37,8 @@ export default function(props) {
 
     return (
         <div style={{
-                backgroundColor: '#ccc',
-                borderBottom: '1px solid black',
+                backgroundColor: '#eee',
+                borderBottom: '1px solid #aaa',
                 }}>
             <Button text="Add object" onClick={addObjectAndEditName} />
             { undoOrRedoShown && <Button disabled={!showUndo} text="Undo" onClick={() => dispatch(ActionCreators.undo())} /> }
