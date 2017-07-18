@@ -42,11 +42,6 @@ test('EDGE CASE: move bottom message of two to bottom again', moveMessage(
 // %3C is <
 // %3E is >
 
-test('EDGE CASE: move top message to top again', moveMessage(
-    'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
-    'A1->A2', -50,
-    'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3'));
-
 test('move top message to middle', moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
     'A1->A2', 100,
@@ -67,11 +62,6 @@ test('move middle message to top', moveMessage(
     'A2<-A3', -150,
     'o1,A1;o2,A2;o3,A3;m2,o3,o2,A2%3C-A3;m1,o1,o2,A1-%3EA2;m3,o3,o1,A1%3C-A3'));
 
-test('EDGE CASE: move middle message to middle again', moveMessage(
-    'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
-    'A2<-A3', 50,
-    'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3'));
-
 test('move middle message to bottom', moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
     'A2<-A3', 150,
@@ -91,8 +81,3 @@ test('move bottom message to middle', moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
     'A1<-A3', -100,
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m3,o3,o1,A1%3C-A3;m2,o3,o2,A2%3C-A3'));
-
-test('move middle message to bottom', moveMessage(
-    'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
-    'A1<-A3', 50,
-    'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3'));
