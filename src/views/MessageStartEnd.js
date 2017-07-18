@@ -83,12 +83,14 @@ export default function(props) {
         left,
         bottom: '-25px',
         width: 30,
-        height: 30,
+        height: 27,
         background: 'transparent',
         borderRadius: '15px',
         border: '1px dotted ' + color,
         color: color,
+        paddingTop: 3,
+        fontSize: 10,
     }
 
-    return <span style={style} className="message-end" onMouseDown={mousedown(type)}></span>;
+    return <span style={style} className="message-end" onMouseDown={mousedown(type)}>move</span>;
 }
