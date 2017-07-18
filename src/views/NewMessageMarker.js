@@ -7,18 +7,30 @@ import React from 'react'
  */
 export default class NewMessageMarker extends React.PureComponent {
     render() {
+        const width = 30;
+        const height = 30;
+        const textContainerWidth = 150;
         const { left, top } = this.props;
         return (
             <div style={{
                     border: '1px dotted black',
-                    width: 30,
-                    height: 30,
+                    width: width,
+                    height: height,
                     borderRadius: 15,
                     left: left,
                     top: top,
                     position: 'relative',
                     pointerEvents: 'none'
                     }}>
+                <div style={{
+                        position: 'absolute',
+                        top: -height,
+                        left: -textContainerWidth/2 + width / 2,
+                        textAlign: 'center',
+                        width: textContainerWidth,
+                        }}>
+                    Add message
+                </div>
             </div>
         );
     }
