@@ -45,7 +45,10 @@ export default function(props) {
 
             <Header {...usefulProps} />
 
-            <Menu {...usefulProps} />
+            <Menu {...usefulProps}
+                    showUndo={core.past.length > 0}
+                    showRedo={core.future.length > 0}
+                    />
 
             <div onMouseMove={handleMouseMove} style={{ position: 'relative', height: layout.height + 50 }} id="diagram-root">
                 {objects.map(object => (<Objekt key={object.key} object={object} {...usefulProps} />))}
