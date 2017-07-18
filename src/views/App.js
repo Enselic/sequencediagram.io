@@ -49,6 +49,7 @@ export default function(props) {
             <Menu {...usefulProps}
                     showUndo={core.past.length > 0}
                     showRedo={core.future.length > 0}
+                    showTipIfSpace={objects.length < 3 && messages.length < 2}
                     />
 
             <div onMouseMove={handleMouseMove} style={{ position: 'relative', height: layout.height + 50 }} id="diagram-root">

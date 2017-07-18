@@ -33,6 +33,19 @@
         min-height: 100vh;
       }
 
+      @keyframes tipKeyframes
+      {
+        0% { transform: translateX(30px); }
+        70% { transform: translateX(0px); }
+        100% { transform: translateX(30px); }
+      }
+
+      .tip {
+        animation: tipKeyframes 3s ease-out infinite;
+        display: inline-block;
+        font-size: 17px;
+      }
+
       button:hover {
           background-color: #eee !important;
       }

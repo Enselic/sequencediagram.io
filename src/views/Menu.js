@@ -3,7 +3,7 @@ import { ActionCreators } from 'redux-undo'
 import * as ac from './../reducers'
 
 export default function(props) {
-    const { dispatch, pending, showUndo, showRedo } = props;
+    const { dispatch, pending, showUndo, showRedo, showTipIfSpace } = props;
 
     function addObjectAndEditName() {
         const newName = "NewObject";
@@ -35,6 +35,10 @@ export default function(props) {
     // or Redo is shown
     const showShare = undoOrRedoShown;
 
+    // We only want to show the hint if 'Add object' is the only
+    // item (otherwise it will point at the wrong item)
+    const showTip = showTipIfSpace && !showShare && !undoOrRedoShown;
+
     return (
         <div style={{
                 backgroundColor: '#eee',
@@ -44,6 +48,16 @@ export default function(props) {
             { undoOrRedoShown && <Button disabled={!showUndo} text="Undo" onClick={() => dispatch(ActionCreators.undo())} /> }
             { undoOrRedoShown && <Button disabled={!showRedo} text="Redo" onClick={() => dispatch(ActionCreators.redo())} /> }
             { showShare && <Button disabled={!showUndo && !showRedo} text={ showShareInfo ? 'Hide share info' : 'Share' } onClick={() => dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())} /> }
+            { showTip && <span className="tip">
+                ◀<span style={{
+                        backgroundColor: '#000',
+                        padding: '2px 5px',
+                        color: '#fff',
+                        borderRadius: 2,
+                    }}>
+                    Click to start
+                </span>
+            </span> }
         </div>
     );
 }

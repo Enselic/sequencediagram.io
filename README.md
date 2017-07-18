@@ -17,7 +17,8 @@ to require several interactions.
 Target audience
 ===============
 
-Software developers sitting at their desktop using modern browsers.
+Software developers sitting at their desktop using modern browsers, and they
+already know what a sequence diagram is.
 
 Important design points
 -----------------------
@@ -34,14 +35,13 @@ The current feature set is minimal but useful.
 Here is a list of features that I plan on adding later, roughly sorted by descending priority.
 Contributions of any kind are very welcomed however!
 
-- Make features more discoverable using an interactive tutorial-like approach
-- Let the user add so called activation boxes to lifelines to represent processing
 - Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
 - Support adding arbitrary comments to the diagram
 - Support SVG export to allow embedding in in e.g. PDFs. For now, users can take PNG screenshots of the app
+- Support visualization of so called found message, i.e. messages originating form a solid circle
+- Let the user add so called activation boxes to lifelines to represent processing
 - Allow nesting of activation boxes
 - Allow X-es to be added to lifelines, representing object destruction
-- Support visualization of so called found message, i.e. messages originating form a solid circle
 - Optimize for consistent 60 FPS animations. Nice to have of course but probably quite a bit of work
 
 

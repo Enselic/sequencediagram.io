@@ -23,7 +23,7 @@ const SLOW_DOWN_FOR_HUMAN_OBSERVATION = 0
 const HEADLESS = !SLOW_DOWN_FOR_HUMAN_OBSERVATION && 1
 
 if (SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 }
 let { Builder, By, until, Key, promise } = require('selenium-webdriver');
 let { Options } = require('selenium-webdriver/chrome');
@@ -76,9 +76,24 @@ global.sleepIfHumanObserver = function(seconds) {
     sleep(seconds);
 }
 
+global.reversePromise = function(promise) {
+    return new Promise((resolve, reject) => {
+        promise.then(reject).catch(resolve);
+    });
+}
+
+global.byText = function(text) {
+    return By.xpath("//*[contains(text(),'" + text + "')]");
+}
+
+global.waitForElement = function(text) {
+    const locator = byText(text);
+    return driver.wait(until.elementLocated(locator), 2000);
+}
+
 global.findElementByText = function(text) {
-    const locator = By.xpath("//*[contains(text(),'" + text + "')]");
-    driver.wait(until.elementLocated(locator));
+    const locator = byText(text);
+    waitForElement(text);
     return driver.findElement(locator);
 }
 

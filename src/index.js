@@ -23,7 +23,7 @@ function dispatch(action) {
     return store.dispatch(action);
 }
 
-const defaultDiagram = '#o1,Foo;o2,Bar;o3,Baz;m1,o1,o2,foo();m2,o2,o3,bar()';
+const defaultDiagram = '#o1,Foo;o2,Bar;m1,o1,o2,Baz';
 
 function setupFromHash(hash) {
     let { objects, messages } = deserialize(hash.substring(1));
