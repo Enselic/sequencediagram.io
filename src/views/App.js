@@ -38,6 +38,15 @@ export default function(props) {
         }
     }
 
+
+    function controlsColorProp(componentKey) {
+        const show = pending.hoveredComponentKey === componentKey &&
+                !pending.componentMovedKey;
+        return {
+            controlsColor: show ? 'black' : 'transparent',
+        }
+    }
+
     return (
         <div onTouchEnd={() => dispatch(ac.touchWarn())} style={{
                 minWidth: layout.width,
@@ -53,12 +62,32 @@ export default function(props) {
                     />
 
             <div onMouseMove={handleMouseMove} style={{ position: 'relative', height: layout.height + 50 }} id="diagram-root">
-                {objects.map(object => (<Objekt key={object.key} object={object} {...usefulProps} />))}
-                {messages.map(message => (<Message key={message.key} message={message} {...usefulProps} />))}
-                {pendingMessage && <Message key={pendingMessage.key} message={pendingMessage} {...usefulProps} /> }
 
-                {pending.lifelineHoveredKey && !pending.componentMovedKey &&
-                <NewMessageMarker
+                { objects.map(object => (
+                  <Objekt
+                        key={object.key}
+                        object={object}
+                        {...usefulProps}
+                        {...controlsColorProp(object.key)}
+                        />)) }
+
+                { messages.map(message => (
+                  <Message
+                        key={message.key}
+                        message={message}
+                        {...usefulProps}
+                        {...controlsColorProp(message.key)}
+                        />)) }
+
+                { pendingMessage &&
+                  <Message
+                        key={pendingMessage.key}
+                        message={pendingMessage}
+                        {...usefulProps}
+                        /> }
+
+                { pending.lifelineHoveredKey && !pending.componentMovedKey &&
+                  <NewMessageMarker
                         left={layout[pending.lifelineHoveredKey].lifelineX - 15}
                         top={(pending.message ? pending.message.y : pending.lifelineHoveredY) - 15 + 'px'}
                         /> }

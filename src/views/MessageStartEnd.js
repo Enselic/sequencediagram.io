@@ -3,7 +3,7 @@ import { layoutMessageLeftAndWidth } from './../layouter'
 import * as ac from './../reducers'
 
 export default function(props) {
-    const { dispatch, message, layout, objects, pending, type, msgLayout } = props;
+    const { dispatch, message, layout, objects, type, msgLayout, controlsColor } = props;
 
     function eventToPos(e) {
         return e.pageX;
@@ -62,7 +62,6 @@ export default function(props) {
         }
     }
 
-    const color = (pending.hoveredComponentKey === message.key || pending.componentMovedKey === message.key ? 'black' : 'transparent');
     let right, left;
     if (msgLayout.pointsLeft) {
         if (type === 'start') {
@@ -86,8 +85,8 @@ export default function(props) {
         height: 27,
         background: 'transparent',
         borderRadius: '15px',
-        border: '1px dotted ' + color,
-        color: color,
+        border: '1px dotted ' + controlsColor,
+        color: controlsColor,
         paddingTop: 3,
         fontSize: 10,
     }

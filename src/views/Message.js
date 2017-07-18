@@ -13,7 +13,7 @@ import { layoutMessageLeftAndWidth } from './../layouter'
 export const PENDING_MESSAGE_KEY = "pendingMessage";
 
 export default function(props) {
-    const { dispatch, message, layout, objects, messages, pending } = props;
+    const { dispatch, message, layout, objects, messages, pending, controlsColor } = props;
 
     let msgLayout;
     let onMouseDown;
@@ -55,14 +55,53 @@ export default function(props) {
         borderStyle: 'solid',
     }
 
+    // Show controls unless this is a pending message and unless
+    // a pending message is in the middle of creation (so that the user
+    // can focus on completing the new message without UI noise
+    // from controls)
+    const showControls = !isPending && !pending.message;
+
     return (
         <div onMouseDown={onMouseDown} style={{ ...msgLayout, ...style }} id={message.key} key={message.key} {...hoverHelper(pending, dispatch, message.key)} >
-            { !isPending && !pending.message && <RemoveButton rightOffset={msgLayout.pointsLeft ? 4 : -4} keyToRemove={message.key} dispatch={dispatch} pending={pending} /> }
+            { showControls &&
+              <RemoveButton
+                    rightOffset={msgLayout.pointsLeft ? 4 : -4}
+                    keyToRemove={message.key}
+                    dispatch={dispatch}
+                    pending={pending}
+                    controlsColor={controlsColor}
+                    /> }
+
             <Name component={message} pending={pending} dispatch={dispatch} />
-            { !isPending && !pending.message && <MessageStartEnd {...props} msgLayout={msgLayout} type="start" /> }
-            { !isPending && !pending.message && <MessageStartEnd {...props} msgLayout={msgLayout} type="end" /> }
-            { !isPending && !pending.message && <LineSelector {...props} message={message} msgLayout={msgLayout} /> }
-            { !isPending && !pending.message && <ArrowSelector {...props} message={message} msgLayout={msgLayout} /> }
+
+            { showControls &&
+              <MessageStartEnd
+                    {...props}
+                    msgLayout={msgLayout}
+                    type="start"
+                    /> }
+
+            { showControls &&
+              <MessageStartEnd
+                    {...props}
+                    msgLayout={msgLayout}
+                    type="end"
+                    /> }
+
+            { showControls &&
+              <LineSelector
+                    {...props}
+                    message={message}
+                    msgLayout={msgLayout}
+                    /> }
+
+            { showControls &&
+              <ArrowSelector
+                    {...props}
+                    message={message}
+                    msgLayout={msgLayout}
+                    /> }
+
         </div>
     )
 }

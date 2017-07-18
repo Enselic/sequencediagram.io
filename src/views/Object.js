@@ -12,12 +12,7 @@ import { hoverHelper, hoverLifelineHelper } from './utils'
  * the user can add.
  */
 export default function(props) {
-    const dispatch = props.dispatch;
-    const object = props.object;
-    const layout = props.layout;
-    const objects = props.objects;
-    const messages = props.messages;
-    const pending = props.pending;
+    const { dispatch, object, layout, objects, messages, pending, controlsColor } = props;
 
     function lifelineClick(object) {
         return e => {
@@ -67,7 +62,7 @@ export default function(props) {
                     transform: 'translateX(-50%)',
                     position: 'relative',
                     }} >
-                <RemoveButton rightOffset={0} keyToRemove={object.key} dispatch={dispatch} pending={pending} {...hoverHelper(pending, dispatch, object.key)} />
+                <RemoveButton controlsColor={controlsColor} rightOffset={0} keyToRemove={object.key} dispatch={dispatch} pending={pending} {...hoverHelper(pending, dispatch, object.key)} />
                 <Name component={object} pending={pending} dispatch={dispatch} />
             </div>
             <div {...hoverLifelineHelper(dispatch, object.key)} onClick={lifelineClick(object)}  style={{ textAlign: 'center', transform: 'translateX(-50%)' }} >

@@ -4,7 +4,7 @@ import messageBorders from './message-borders.png'
 import messageBordersDashed from './message-borders-dashed.png'
 
 export default function(props) {
-    const { dispatch, pending, message } = props;
+    const { dispatch, message, controlsColor } = props;
     const key = message.key;
 
     function handleMouseDown(e) {
@@ -14,9 +14,7 @@ export default function(props) {
         e.preventDefault();
     }
 
-    const show = pending.hoveredComponentKey === key;
-    const borderStyle = show ? 'solid' : 'none';
-    const color = (show ? 'black' : 'transparent');
+    const borderStyle = controlsColor === 'transparent' ? 'none' : 'solid';
 
     const height = 30;
     const width = 40;
@@ -40,7 +38,7 @@ export default function(props) {
                     left: '-50%',
                     width: width,
                     height: height,
-                    border: '1px dotted ' + color,
+                    border: '1px dotted ' + controlsColor,
                     borderRadius: 5,
                     }}>
                 <div style={{
