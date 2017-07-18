@@ -8,6 +8,7 @@ export default function(objects, messages, movedComponent, eventToPos, elementTo
         e.preventDefault();
         const downPos = eventToPos(e);
         let grabOffset = 0;
+        let movedAwayFromClick = false;
 
         function getUiComponents(component) {
             const el = document.getElementById(component.key);
@@ -40,6 +41,12 @@ export default function(objects, messages, movedComponent, eventToPos, elementTo
 
         function updatePositions(e) {
             const offsettedPos = eventToPos(e) - grabOffset;
+
+            const newPos = eventToPos(e);
+            if (Math.abs(newPos - downPos) > 20) {
+                movedAwayFromClick = true;
+            }
+
             uiComponents.sort(function(o1, o2) {
                 function toX(uiComponent) {
                     if (uiComponent.component.key === movedComponent.key) {
@@ -136,8 +143,7 @@ export default function(objects, messages, movedComponent, eventToPos, elementTo
             window.removeEventListener('mousemove', mousemove);
             dispatch(endComponentMove());
 
-            const upPos = eventToPos(e);
-            if (Math.abs(upPos - downPos) < 20) {
+            if (!movedAwayFromClick) {
                 dispatch(ac.editComponentName(movedComponent.key, movedComponent.name, true));
             }
 

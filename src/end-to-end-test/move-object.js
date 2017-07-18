@@ -76,3 +76,15 @@ test('make third object of three second', moveObject(
     'o9,CCC;o8,BBB;o7,Martin',
     'Martin', -200,
     'o9,CCC;o7,Martin;o8,BBB'));
+
+
+test('move away and back does not trigger click', () => {
+    const text = "FixedName"
+    const expected = goTo('o1,' + text);
+    driver.actions().mouseDown(findElementByText(text)).perform();
+    driver.actions().mouseMove({ x: 100, y: 0 }).perform();
+    driver.actions().mouseMove({ x: -100, y: 0 }).perform();
+    driver.actions().mouseUp().perform();
+    typeAndConfirmm("This text shall not end up as name for object");
+    return assertFragment(expected);
+});
