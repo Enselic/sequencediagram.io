@@ -1,5 +1,5 @@
 import React from 'react'
-import { toggleMessageLineStyle, toggleMessageArrowStyle } from './../reducers'
+import { toggleMessageLineStyle, toggleMessageArrowStyle, flipMessageDirection } from './../reducers'
 import messageBorders from './message-borders.png'
 import messageBordersDashed from './message-borders-dashed.png'
 import messageBordersAsync from './message-borders-async.png'
@@ -40,33 +40,51 @@ export default function(props) {
                 left: '50%',
                 bottom: -45,
                 background: 'transparent',
+                pointerEvents: 'none',
                 }}>
             <div style={{
-                    display: 'flex',
                     position: 'relative',
                     left: '-50%',
                     }}>
-                <div className="message-end" onClick={() => dispatch(toggleMessageLineStyle(key))} {...eatMouseDown} style={outlineStyle}>
-                    <div style={{
-                            borderStyle,
-                            borderWidth: '0px 0px 17px 0px',
-                            borderImage: borderImageLine,
-                            height: 6,
-                            }} />
-                </div>
-                <div className="message-end" onClick={() => dispatch(toggleMessageArrowStyle(key))} {...eatMouseDown} style={outlineStyle}>
-                    <div style={{
-                            position: 'relative',
-                            left: 8,
-                            top: 8,
-                            borderStyle,
-                            borderWidth: (pointsLeft ?
-                                          '0px 0px 17px 9px' :
-                                          '0px 9px 17px 0px'),
-                            borderImage: borderImageArrow,
-                            width: 3,
-                            height: 1,
-                            }} />
+                <div style={{
+                        display: 'flex',
+                        position: 'relative',
+                        left: pointsLeft ? -4 : 4,
+                        pointerEvents: 'auto',
+                        }}>
+                    { message.start !== message.end && <div className="message-end" onClick={() => dispatch(flipMessageDirection(key))} {...eatMouseDown} style={{
+                            background: 'transparent',
+                            borderRadius: 15,
+                            border: '1px dotted ' + controlsColor,
+                            ...outlineStyle,
+                            color: controlsColor,
+                            fontSize: 10,
+                            lineHeight: outlineStyle.height + 'px',
+                            }}>
+                        flip
+                    </div> }
+                    <div className="message-end" onClick={() => dispatch(toggleMessageLineStyle(key))} {...eatMouseDown} style={outlineStyle}>
+                        <div style={{
+                                borderStyle,
+                                borderWidth: '0px 0px 17px 0px',
+                                borderImage: borderImageLine,
+                                height: 6,
+                                }} />
+                    </div>
+                    <div className="message-end" onClick={() => dispatch(toggleMessageArrowStyle(key))} {...eatMouseDown} style={outlineStyle}>
+                        <div style={{
+                                position: 'relative',
+                                left: 8,
+                                top: 5,
+                                borderStyle,
+                                borderWidth: (pointsLeft ?
+                                              '0px 0px 17px 9px' :
+                                              '0px 9px 17px 0px'),
+                                borderImage: borderImageArrow,
+                                width: 3,
+                                height: 1,
+                                }} />
+                    </div>
                 </div>
             </div>
         </div>

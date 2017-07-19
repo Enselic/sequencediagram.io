@@ -87,6 +87,10 @@ export function toggleMessageArrowStyle(key) {
     return { type: 'TOGGLE_MESSAGE_ARROW_STYLE', key };
 }
 
+export function flipMessageDirection(key) {
+    return { type: 'FLIP_MESSAGE_DIRECTION', key };
+}
+
 export function rearrangeMessages(messages) {
     return { type: 'REARRANGE_MESSAGES', messages };
 }
@@ -145,6 +149,14 @@ function messages(state = [], action) {
         });
     case 'REARRANGE_MESSAGES':
         return [ ...action.messages ];
+    case 'FLIP_MESSAGE_DIRECTION':
+        return state.map(message => {
+            if (message.key === action.key) {
+                return { ...message, start: message.end, end: message.start };
+            } else {
+                return { ...message };
+            }
+        });
     default:
         return state;
     }

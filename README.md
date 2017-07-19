@@ -74,6 +74,8 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- Make messages sync immediately without animation with object when moving object
 - Create a more accurate text measurer
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
+- Re-layout diagram when increasting name length for objects
