@@ -9,8 +9,8 @@ export default class NewMessageMarker extends React.PureComponent {
     render() {
         const width = 30;
         const height = 30;
-        const textContainerWidth = 150;
-        const { left, top } = this.props;
+        const textContainerWidth = 230;
+        const { left, top, isStart } = this.props;
         return (
             <div style={{
                     border: '1px dotted black',
@@ -29,7 +29,7 @@ export default class NewMessageMarker extends React.PureComponent {
                         textAlign: 'center',
                         width: textContainerWidth,
                         }}>
-                    Add message
+                    Click to set <b>{ isStart ? <span>origin</span> : <span>destination</span> }</b> <br/> of <b>new message</b>
                 </div>
             </div>
         );

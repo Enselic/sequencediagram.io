@@ -90,6 +90,7 @@ export default function(props) {
                   <NewMessageMarker
                         left={layout[pending.lifelineHoveredKey].lifelineX - 15}
                         top={(pending.message ? pending.message.y : pending.lifelineHoveredY) - 15 + 'px'}
+                        isStart={!!!pending.message}
                         /> }
             </div>
         </div>
