@@ -31,4 +31,24 @@ test('hints hide when clicking "Hide share info"', () => {
             ]));
 })
 
+const tipText = 'Click "Add object" to start';
+
+test('tip shown for default diagram', () => {
+    goTo('none');
+    sleepIfHumanObserver(2);
+    return waitForElement(tipText);
+});
+
+test('tip not shown for non-default diagram (one extra object)', () => {
+    goTo('o1,Foo;o3,NewObject;o4,NewObject;m1,o1,o3,sendMessage()');
+    sleepIfHumanObserver(2);
+    return reversePromise(waitForElement(tipText));
+});
+
+test('tip not shown for non-default diagram (one extra message)', () => {
+    goTo('o1,Foo;o2,Bar;m1,o1,o2,Baz;m2,o1,o2,sendMessage()');
+    sleepIfHumanObserver(2);
+    return reversePromise(waitForElement(tipText));
+});
+
 // TODO: http://localhost:3000/#o1,Foo;o3,Baz;m2,o2,o3,bar()   should not crash

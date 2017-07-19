@@ -49,13 +49,13 @@ export default function(props) {
             { undoOrRedoShown && <Button disabled={!showRedo} text="Redo" onClick={() => dispatch(ActionCreators.redo())} /> }
             { showShare && <Button disabled={!showUndo && !showRedo} text={ showShareInfo ? 'Hide share info' : 'Share' } onClick={() => dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())} /> }
             { showTip && <span className="tip">
-                ◀<span style={{
+                ⇐ <span style={{
                         backgroundColor: '#000',
                         padding: '2px 5px',
                         color: '#fff',
                         borderRadius: 2,
                     }}>
-                    Click to start
+                    Click "Add object" to start
                 </span>
             </span> }
         </div>
