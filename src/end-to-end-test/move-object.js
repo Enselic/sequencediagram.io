@@ -88,3 +88,12 @@ test('move away and back does not trigger click', () => {
     typeAndConfirmm("This text shall not end up as name for object");
     return assertFragment(expected);
 });
+
+
+test('move does not suppress blur event (i.e. text commit) when renaming', () => {
+    goTo('o1,Foo;o2,Bar');
+    click('Foo');
+    type('CHEEERS');
+    click('Bar');
+    return assertFragment('o1,CHEEERS;o2,Bar');
+})

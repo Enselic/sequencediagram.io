@@ -125,9 +125,15 @@ global.clickElement = function(element) {
 }
 
 global.typeAndConfirmm = function(typedText) {
+    type(typedText);
+    driver.actions()
+    .sendKeys(Key.RETURN)
+    .perform();
+}
+
+global.type = function(typedText) {
     driver.actions()
     .sendKeys(typedText)
-    .sendKeys(Key.RETURN)
     .perform();
 }
 

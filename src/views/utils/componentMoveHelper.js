@@ -5,7 +5,6 @@ import { transferPropsToStyle } from '.'
 /* To get high FPS while moving things around, manipulate DOM objects directly */
 export default function(objects, messages, movedComponent, eventToPos, elementToPos, beginComponentMove, endComponentMove, rearrangeComponents, dispatch) {
     return e => {
-        e.preventDefault();
         const downPos = eventToPos(e);
         let grabOffset = 0;
         let movedAwayFromClick = false;
