@@ -35,6 +35,8 @@ The current feature set is minimal but useful.
 Here is a list of features that I plan on adding later, roughly sorted by descending priority.
 Contributions of any kind are very welcomed however!
 
+- Support more browsers i.e. make the test suite work on more browsers
+- Support adding a title to the diagram
 - Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
 - Support adding arbitrary comments to the diagram
 - Support SVG export to allow embedding in in e.g. PDFs. For now, users can take PNG screenshots of the app
