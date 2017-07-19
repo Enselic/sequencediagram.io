@@ -24,6 +24,8 @@ const HEADLESS = !SLOW_DOWN_FOR_HUMAN_OBSERVATION && 1
 
 if (SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+} else {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 }
 let { Builder, By, until, Key, promise } = require('selenium-webdriver');
 let { Options } = require('selenium-webdriver/chrome');

@@ -10,4 +10,25 @@ test('change to state without messages after state with messages', () => {
     return assertFragment('o100,Hello');
 });
 
+test('hints shown when clicking "Share"', () => {
+    goTo('empty');
+    click('Add object'); // To make Share button appear
+    click('Share');
+    return Promise.all([
+            waitForElement('Share by PNG'),
+            waitForElement('Share by URL'),
+            ]);
+})
+
+test('hints hide when clicking "Hide share info"', () => {
+    goTo('empty');
+    click('Add object'); // To make Share button appear
+    click('Share');
+    click('Hide share info');
+    return reversePromise(Promise.all([
+            waitForElement('Share by PNG'),
+            waitForElement('Share by URL'),
+            ]));
+})
+
 // TODO: http://localhost:3000/#o1,Foo;o3,Baz;m2,o2,o3,bar()   should not crash
