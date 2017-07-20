@@ -4,8 +4,7 @@ import moveHelper from './utils/componentMoveHelper'
 import Name from './Name'
 import RemoveButton from './RemoveButton'
 import MessageStartEnd from './MessageStartEnd'
-import LineSelector from './LineSelector'
-import ArrowSelector from './ArrowSelector'
+import AppearanceSelector from './AppearanceSelector'
 import devUtils from './../devUtils'
 import { hoverHelper } from './utils'
 import { layoutMessageLeftAndWidth } from './../layouter'
@@ -90,14 +89,7 @@ export default function(props) {
                     /> }
 
             { showControls &&
-              <LineSelector
-                    {...props}
-                    message={message}
-                    msgLayout={msgLayout}
-                    /> }
-
-            { showControls &&
-              <ArrowSelector
+              <AppearanceSelector
                     {...props}
                     message={message}
                     msgLayout={msgLayout}

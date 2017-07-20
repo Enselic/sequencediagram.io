@@ -56,8 +56,8 @@ test('add message just below existing single message', insertMessage(
 test('add message just below existing single message reversed', insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,singleMessage()',
     'singleMessage()',
-    size => { return { x: size.width, y: size.height + 60 } },
-    size => { return { x: 0, y: size.height + 60 } },
+    size => { return { x: size.width, y: size.height + 30 } },
+    size => { return { x: 0, y: size.height + 30 } },
     'o1,Foo;o2,Bar;m1,o1,o2,singleMessage();m2,o2,o1,sendMessage()'));
 
 test('add message just above existing single message', insertMessage(
@@ -84,7 +84,7 @@ test('add message between two messages', insertMessage(
 test('add message between two messages reversed', insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,M1();m2,o2,o1,M2()',
     'M1()',
-    size => { return { x: size.width + 40, y: size.height + 30 } },
+    size => { return { x: size.width, y: size.height + 30 } },
     size => { return { x: 0, y: size.height + 30 } },
     'o1,Foo;o2,Bar;m1,o1,o2,M1();m3,o2,o1,sendMessage();m2,o2,o1,M2()'));
 
