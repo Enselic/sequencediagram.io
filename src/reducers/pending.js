@@ -64,7 +64,7 @@ export default function(state = {}, action) {
     case 'EDIT_COMPONENT_NAME':
         return { ...state, componentRenamed: { key: action.key, newName: action.newName, preselect: action.preselect }};
     case 'ESCAPE_PENDING_OPERATION':
-        return { ...state, componentRenamed: undefined, showShareInfo: undefined, message: undefined };
+        return { ...state, componentRenamed: undefined, showShareInfo: undefined, message: undefined, touchWarn: undefined };
     case 'HOVER_OVER_COMPONENT':
         return { ...state, hoveredComponentKey: action.key};
     case 'END_HOVER_OVER_COMPONENT':
