@@ -97,3 +97,19 @@ test('move does not suppress blur event (i.e. text commit) when renaming', () =>
     click('Bar');
     return assertFragment('o1,CHEEERS;o2,Bar');
 })
+
+
+test('can click in renamed component text to place cursor', () => {
+    goTo('o1,PrefixMe');
+    return findElementByText('PrefixMe')
+        .then(el => {
+            // To hit upper left coner, to place cursor first
+            const topLeft = { x: 1, y: 1 };
+            driver.actions().mouseMove(el, topLeft).mouseDown().mouseUp().perform();
+            sleepIfHumanObserver(1);
+            driver.actions().mouseDown().mouseUp().perform();
+            sleepIfHumanObserver(1);
+            typeAndConfirmm('prefix');
+            return assertFragment('o1,prefixPrefixMe');
+        });
+})

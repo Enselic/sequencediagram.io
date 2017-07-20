@@ -34,7 +34,8 @@ export default function(props) {
             ac.beginComponentMove,
             ac.endComponentMove,
             ac.rearrangeMessages,
-            dispatch
+            dispatch,
+            pending
         );
 
         style = {

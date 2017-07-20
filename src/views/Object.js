@@ -42,7 +42,8 @@ export default function(props) {
         ac.beginComponentMove,
         ac.endComponentMove,
         ac.rearrangeObjects,
-        dispatch
+        dispatch,
+        pending
     );
 
     let style = {

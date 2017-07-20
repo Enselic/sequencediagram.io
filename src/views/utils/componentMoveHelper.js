@@ -3,8 +3,12 @@ import layouter, { layoutMessageLeftAndWidth } from './../../layouter'
 import { transferPropsToStyle } from '.'
 
 /* To get high FPS while moving things around, manipulate DOM objects directly */
-export default function(objects, messages, movedComponent, eventToPos, elementToPos, beginComponentMove, endComponentMove, rearrangeComponents, dispatch) {
-    return e => {
+export default function(objects, messages, movedComponent, eventToPos, elementToPos, beginComponentMove, endComponentMove, rearrangeComponents, dispatch, pending) {
+    // The move helper eats mouse events, causing e.g. "click in text to place cursor" to break, so
+    // disable the move helper if this object is being renamed
+    const beingRenamed = pending.componentRenamed && pending.componentRenamed.key === movedComponent.key;
+
+    return beingRenamed ? null : e => {
         const downPos = eventToPos(e);
         let grabOffset = 0;
         let movedAwayFromClick = false;
