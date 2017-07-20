@@ -7,9 +7,7 @@ import { createStore, bindActionCreators } from 'redux'
 import { ActionCreators } from 'redux-undo';
 import { serialize, deserialize } from './serialize'
 
-const debug = 0
-
-// Useful to track "code coverage", i.e. what actions tha automated
+// Useful to track "code coverage", i.e. what actions that automated tests
 // dispatch. We want a test suite that dispatches all actions
 const trackDispatchedActions = 0
 
@@ -22,7 +20,7 @@ function dispatch(action) {
         return;
     }
 
-    if (debug) {
+    if (0) {
         console.log('dispatching ' + JSON.stringify(action));
     }
 
