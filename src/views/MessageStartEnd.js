@@ -77,6 +77,7 @@ export default function(props) {
         }
     }
     const style= {
+        cursor: 'default',
         position: 'absolute',
         right,
         left,
