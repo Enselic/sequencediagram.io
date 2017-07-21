@@ -31,7 +31,7 @@ export default function(props) {
         dispatch(ac.editComponentName(component.key, e.target.value, false));
     }
 
-    if (pending.componentRenamed && pending.componentRenamed.key === component.key) {
+    if (pending && pending.componentRenamed && pending.componentRenamed.key === component.key) {
         const value = pending.componentRenamed.newName;
         return <input ref={onRef} size={value ? value.length : 1 } type="text" value={value} onKeyDown={handleKeyDown} onChange={onChange} onBlur={commit}/>
     } else {

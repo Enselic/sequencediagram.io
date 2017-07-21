@@ -7,23 +7,16 @@ import MessageStartEnd from './MessageStartEnd'
 import AppearanceSelector from './AppearanceSelector'
 import devUtils from './../devUtils'
 import { hoverHelper } from './utils'
-import { layoutMessageLeftAndWidth } from './../layouter'
 
 export const PENDING_MESSAGE_KEY = "pendingMessage";
 
 export default function(props) {
-    const { dispatch, message, layout, objects, messages, pending, controlsColor } = props;
+    const { dispatch, message, msgLayout, objects, messages, pending, controlsColor } = props;
 
-    let msgLayout;
     let onMouseDown;
     let style;
     const isPending = message.key === PENDING_MESSAGE_KEY;
     if (!isPending) {
-        msgLayout = layout[message.key];
-        if (!msgLayout) {
-            return null;
-        }
-
         onMouseDown = moveHelper(
             objects,
             messages,
@@ -41,8 +34,6 @@ export default function(props) {
             transition: devUtils.transitionIfNotDev('left 0.3s, width 0.3s, top 0.3s, height 0.3s'),
         };
     } else {
-        msgLayout = layoutMessageLeftAndWidth(layout, message);
-        msgLayout.top = pending.message.y;
         style= {
             pointerEvents: 'none',
         }

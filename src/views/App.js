@@ -63,31 +63,32 @@ export default function(props) {
 
             <div onMouseMove={handleMouseMove} style={{ position: 'relative', height: layout.height + 50 }} id="diagram-root">
 
-                { objects.map(object => (
-                  <Objekt
+                { objects.map(object => (<Objekt
                         key={object.key}
                         object={object}
                         {...usefulProps}
                         {...controlsColorProp(object.key)}
                         />)) }
 
-                { messages.map(message => (
-                  <Message
-                        key={message.key}
-                        message={message}
-                        {...usefulProps}
-                        {...controlsColorProp(message.key)}
-                        />)) }
+                { messages.map(message => {
+                    const msgLayout = layout[message.key];
+                    return msgLayout ? (<Message
+                            key={message.key}
+                            message={message}
+                            msgLayout={msgLayout}
+                            {...usefulProps}
+                            {...controlsColorProp(message.key)}
+                            />) : null;
+                    }) }
 
-                { pendingMessage &&
-                  <Message
+                { pendingMessage && <Message
                         key={pendingMessage.key}
                         message={pendingMessage}
+                        msgLayout={{ ...layoutMessageLeftAndWidth(layout, pendingMessage), top: pending.message.y }}
                         {...usefulProps}
                         /> }
 
-                { pending.lifelineHoveredKey && !pending.componentMovedKey &&
-                  <NewMessageMarker
+                { pending.lifelineHoveredKey && !pending.componentMovedKey && <NewMessageMarker
                         left={layout[pending.lifelineHoveredKey].lifelineX - 15}
                         top={(pending.message ? pending.message.y : pending.lifelineHoveredY) - 15 + 'px'}
                         isStart={!!!pending.message}
