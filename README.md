@@ -75,6 +75,6 @@ TODO
 
 List of minor/uninteresting things to do, roughly sorted by priority.
 - Create a more accurate text measurer
+- Make self-sent messages wider when there's much text
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
-- Re-layout diagram when increasting name length for objects
