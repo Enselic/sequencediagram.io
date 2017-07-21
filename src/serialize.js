@@ -66,6 +66,14 @@ export function deserialize(serialized) {
         }
     });
 
+    // Make sure all messages only references objects that were
+    // successfully deserialized
+    messages = messages.filter(message => {
+        const startExists = objects.find(object => object.key === message.start);
+        const endExists = objects.find(object => object.key === message.end);
+        return startExists && endExists;
+    });
+
     return {
         objects,
         messages,

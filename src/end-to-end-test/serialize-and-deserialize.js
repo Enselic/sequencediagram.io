@@ -15,6 +15,13 @@ test('missing components are handled', () => {
     return assertFragment('o100,Valid;o101,Alsovalid;m6,o100,o101,Valid');
 })
 
+test('messages with invalid references are not included in deserialization', () => {
+    goTo("'o1,Foo;o2,Bar;m1,o1,o2,Baz'");
+    click('Bar');
+    typeAndConfirmm('Boom');
+    return assertFragment('o2,Boom');
+})
+
 // TODO special chars are handled
 // TODO: double ids handled, first only is used
 // TODO: negative ids are handled i.e. ignored
