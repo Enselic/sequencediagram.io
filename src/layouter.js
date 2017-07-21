@@ -40,7 +40,10 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
         borderImage = 'url(' + png + ') 0 0 19 22 fill';
         borderWidth = '0px 0px 19px 22px'
         left = startX;
-        width = 22; // From borderWidth
+        const maxLineWidth = 150;
+        const minWidth = 22; // From borderWidth
+        const messageTextWidth = layout.getTextWidth ? layout.getTextWidth(message.name) : minWidth;
+        width = Math.min(maxLineWidth, messageTextWidth);
     } else {
         const arrowWidth = 9;
         let png;
@@ -82,6 +85,9 @@ export default function(getTextWidth, objects, messages, extraMessage) {
     const MESSAGE_SPACING = 70;
 
     let layout = {};
+
+    // We want subsequent measurements to use the same text measurer
+    layout.getTextWidth = getTextWidth;
 
     let currentX = DIAGRAM_PADDING.LEFT_RIGHT;
     objects.forEach(object => {

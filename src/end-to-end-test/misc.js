@@ -52,3 +52,5 @@ test('tip not shown for non-default diagram (one extra message)', () => {
 });
 
 // TODO: http://localhost:3000/#o1,Foo;o3,Baz;m2,o2,o3,bar()   should not crash
+
+// TODO #'o2,Bar;m1,o1,o2,Baz'  should not crash

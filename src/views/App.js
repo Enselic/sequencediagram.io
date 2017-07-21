@@ -14,17 +14,19 @@ export default function(props) {
     const { core, pending } = state;
     const { objects, messages } = core.present;
 
-    // We want to perform the layout as if the pending name was commited, so that
-    // the diagram layout adapts to the pending name which we show as part of the
+    // We want to perform the layout as if the pending names were commited, so that
+    // the diagram layout adapts to the pending names which we show as part of the
     // diagram
-    const objectsWithPendingNames = objects.map(object => {
-        if (pending.componentRenamed && pending.componentRenamed.key === object.key) {
-            return { ...object, name: pending.componentRenamed.newName};
+    function withPendingNewName(component) {
+        if (pending.componentRenamed && pending.componentRenamed.key === component.key) {
+            return { ...component, name: pending.componentRenamed.newName};
         } else {
-            return object;
+            return component;
         }
-    })
-    const layout = layouter(name => name.length * 7 /* TODO: hack */, objectsWithPendingNames, messages, pending.message);
+    }
+    const objectsWithPendingNames = objects.map(withPendingNewName);
+    const messagesWithPendingNames = messages.map(withPendingNewName);
+    const layout = layouter(name => name.length * 7 /* TODO: hack */, objectsWithPendingNames, messagesWithPendingNames, pending.message);
     const usefulProps = { objects, messages, pending, dispatch, layout };
 
     let pendingMessage;
