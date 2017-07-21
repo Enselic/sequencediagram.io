@@ -1,4 +1,6 @@
 import React from 'react'
+import Message, { PENDING_MESSAGE_KEY } from './Message'
+import { layoutMessageLeftAndWidth } from './../layouter'
 
 /**
  * When the user hovers a lifeline, this is what gets shown
@@ -9,10 +11,22 @@ export default class NewMessageMarker extends React.PureComponent {
     render() {
         const width = 30;
         const height = 30;
-        const textContainerWidth = 230;
-        const { left, top, isStart } = this.props;
-        return (
-            <div style={{
+        const { left, top, isStart, direction } = this.props;
+        const tmpMessage = {
+            key: PENDING_MESSAGE_KEY,
+            start: null,
+            end: null,
+            name: '',
+        };
+        const messageHeight = 20;
+        const msgLayout = {
+            ...layoutMessageLeftAndWidth(null, tmpMessage, left, left + direction * width),
+            top: top - messageHeight / 2,
+        }
+
+        return (isStart ?
+            (<Message message={tmpMessage} msgLayout={msgLayout} />) :
+            (<div style={{
                     border: '1px dotted black',
                     width: width,
                     height: height,
@@ -22,16 +36,7 @@ export default class NewMessageMarker extends React.PureComponent {
                     position: 'relative',
                     pointerEvents: 'none'
                     }}>
-                <div style={{
-                        position: 'absolute',
-                        top: -height,
-                        left: -textContainerWidth/2 + width / 2,
-                        textAlign: 'center',
-                        width: textContainerWidth,
-                        }}>
-                    Click to set <b>{ isStart ? <span>origin</span> : <span>destination</span> }</b> <br/> of <b>new message</b>
-                </div>
-            </div>
+            </div>)
         );
     }
 }

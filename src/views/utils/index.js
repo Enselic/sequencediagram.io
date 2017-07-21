@@ -24,10 +24,10 @@ export function eventToDiagramCoords(event) {
 export function hoverLifelineHelper(dispatch, key) {
     return {
         onMouseEnter(e) {
-            dispatch(ac.mouseEnterLifeline(key, eventToDiagramCoords(e)[1]));
+            dispatch(ac.mouseEnterLifeline(key, ...eventToDiagramCoords(e)));
         },
         onMouseMove(e) {
-            dispatch(ac.mouseEnterLifeline(key, eventToDiagramCoords(e)[1]));
+            dispatch(ac.mouseEnterLifeline(key, ...eventToDiagramCoords(e)));
         },
         onMouseLeave() {
             dispatch(ac.mouseLeaveLifeline());

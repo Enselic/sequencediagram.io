@@ -34,8 +34,8 @@ export function hideShareInfo() {
     return { type: 'HIDE_SHARE_INFO' };
 }
 
-export function mouseEnterLifeline(key, y) {
-    return { type: 'MOUSE_ENTER_LIFELINE', key, y };
+export function mouseEnterLifeline(key, x, y) {
+    return { type: 'MOUSE_ENTER_LIFELINE', key, x, y };
 }
 
 export function mouseLeaveLifeline() {
@@ -74,7 +74,7 @@ export default function(state = {}, action) {
     case 'HIDE_SHARE_INFO':
         return { ...state, showShareInfo: undefined };
     case 'MOUSE_ENTER_LIFELINE':
-        return { ...state, lifelineHoveredKey: action.key, lifelineHoveredY: action.y };
+        return { ...state, lifelineHoveredKey: action.key, lifelineHoveredX: action.x, lifelineHoveredY: action.y };
     case 'MOUSE_LEAVE_LIFEILNE':
         return { ...state, lifelineHoveredKey: undefined, lifelineHoveredY: undefined };
     case 'REPLACE_CORE':

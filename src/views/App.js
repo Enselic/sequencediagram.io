@@ -92,6 +92,7 @@ export default function(props) {
                         left={layout[pending.lifelineHoveredKey].lifelineX}
                         top={pending.message ? pending.message.y : pending.lifelineHoveredY}
                         isStart={!!!pending.message}
+                        direction={layout[pending.lifelineHoveredKey].lifelineX > pending.lifelineHoveredX ? -1 : 1}
                         /> }
             </div>
         </div>
