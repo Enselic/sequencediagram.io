@@ -79,6 +79,4 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 - Make layouter take into account height of layouted text for messages
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
-- hide line selector for self-sent messages
-- hide end move icon for self-sent messages
 - Make diagram look more professional, larger object paddings, less screaming yellow?

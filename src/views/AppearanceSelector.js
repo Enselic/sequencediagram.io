@@ -5,7 +5,7 @@ import messageBordersDashed from './message-borders-dashed.png'
 import messageBordersAsync from './message-borders-async.png'
 
 export default function(props) {
-    const { dispatch, message, layout, controlsColor } = props;
+    const { dispatch, message, layout, controlsColor, selfSent } = props;
     const key = message.key;
 
     const eatMouseDown = {
@@ -52,7 +52,7 @@ export default function(props) {
                         left: pointsLeft ? -4 : 4,
                         pointerEvents: 'auto',
                         }}>
-                    { message.start !== message.end && <div className="message-end" onClick={() => dispatch(flipMessageDirection(key))} {...eatMouseDown} style={{
+                    { !selfSent && <div className="message-end" onClick={() => dispatch(flipMessageDirection(key))} {...eatMouseDown} style={{
                             background: 'transparent',
                             borderRadius: 15,
                             border: '1px dotted ' + controlsColor,
@@ -63,14 +63,14 @@ export default function(props) {
                             }}>
                         flip
                     </div> }
-                    <div className="message-end" onClick={() => dispatch(toggleMessageLineStyle(key))} {...eatMouseDown} style={outlineStyle}>
+                    { !selfSent && <div className="message-end" onClick={() => dispatch(toggleMessageLineStyle(key))} {...eatMouseDown} style={outlineStyle}>
                         <div style={{
                                 borderStyle,
                                 borderWidth: '0px 0px 17px 0px',
                                 borderImage: borderImageLine,
                                 height: 6,
                                 }} />
-                    </div>
+                    </div> }
                     <div className="message-end" onClick={() => dispatch(toggleMessageArrowStyle(key))} {...eatMouseDown} style={outlineStyle}>
                         <div style={{
                                 position: 'relative',

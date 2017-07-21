@@ -51,6 +51,7 @@ export default function(props) {
     // can focus on completing the new message without UI noise
     // from controls)
     const showControls = !isPending && !pending.message;
+    const selfSent = message.start === message.end;
 
     return (
         <div onMouseDown={onMouseDown} style={{ ...msgLayout, ...style }} id={message.key} key={message.key} {...hoverHelper(pending, dispatch, message.key)} >
@@ -72,7 +73,7 @@ export default function(props) {
                     type="start"
                     /> }
 
-            { showControls &&
+            { showControls && !selfSent &&
               <MessageStartEnd
                     {...props}
                     msgLayout={msgLayout}
@@ -84,6 +85,7 @@ export default function(props) {
                     {...props}
                     message={message}
                     msgLayout={msgLayout}
+                    selfSent={selfSent}
                     /> }
 
         </div>
