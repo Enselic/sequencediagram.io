@@ -20,13 +20,7 @@ export default function(props) {
             if (!pending.message || !pending.message.start) {
                 action = ac.pendingAddMessage(object.key, eventToDiagramCoords(e)[1]);
             } else {
-                let insertIndex = 0;
-                messages.forEach((message, index) => {
-                    if (layout[message.key].top < pending.message.y) {
-                        insertIndex = index + 1;
-                    }
-                })
-                action = ac.addMessage(pending.message.start, object.key, 'sendMessage()', insertIndex);
+                action = ac.addMessage(pending.message.start, object.key, 'sendMessage()', layout.extraMessage.index);
             }
             dispatch(action);
         }

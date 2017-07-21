@@ -67,7 +67,14 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
     }
 }
 
-export default function(getTextWidth, objects, messages) {
+/**
+ * Lays out ordered sets of objects and messages.
+ * @param getTextWidth Used to measure rendered width of texts
+ * @param objects Array of objects to layout.
+ * @param messages Array of messages to layout.
+ * @param extraMessage Optional pre-layouted message to take into account. For example a pending message.
+ **/
+export default function(getTextWidth, objects, messages, extraMessage) {
     const DIAGRAM_PADDING= { LEFT_RIGHT: 30, TOP_BOTTOM: 30 };
     const OBJECT_NAME_PADDING = { TOP_BOTTOM: 15, LEFT_RIGHT: 30 };
     const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3;
@@ -87,7 +94,23 @@ export default function(getTextWidth, objects, messages) {
 
     layout['next-object'] = { lifelineX: currentX };
 
-    messages.forEach(message => {
+    function insertExtraMessage(index) {
+        layout.extraMessage = { top: currentY, index };
+        currentY += MESSAGE_SPACING;
+    }
+
+    function extraMessageToBeInserted() {
+        return extraMessage && !layout.extraMessage;
+    }
+
+    messages.forEach((message, index) => {
+        // Make room for a temporary/pending/extra message if one exists
+        if (extraMessageToBeInserted()) {
+            if (currentY > extraMessage.y) {
+                insertExtraMessage(index);
+            }
+        }
+
         const leftRightValues = layoutMessageLeftAndWidth(layout, message);
         if (!leftRightValues) {
             return;
@@ -100,6 +123,10 @@ export default function(getTextWidth, objects, messages) {
 
         currentY += MESSAGE_SPACING;
     });
+
+    if (extraMessageToBeInserted()) {
+        insertExtraMessage(messages.length);
+    }
 
     layout.width = currentX;
     layout.height = currentY + DIAGRAM_PADDING.TOP_BOTTOM;

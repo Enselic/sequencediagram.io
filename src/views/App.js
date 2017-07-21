@@ -13,7 +13,7 @@ export default function(props) {
     const { state, dispatch } = props;
     const { core, pending } = state;
     const { objects, messages } = core.present;
-    const layout = layouter(name => name.length * 7 /* TODO: hack */, objects, messages);
+    const layout = layouter(name => name.length * 7 /* TODO: hack */, objects, messages, pending.message);
     const usefulProps = { objects, messages, pending, dispatch, layout };
 
     let pendingMessage;
@@ -84,13 +84,13 @@ export default function(props) {
                 { pendingMessage && <Message
                         key={pendingMessage.key}
                         message={pendingMessage}
-                        msgLayout={{ ...layoutMessageLeftAndWidth(layout, pendingMessage), top: pending.message.y }}
+                        msgLayout={{ ...layoutMessageLeftAndWidth(layout, pendingMessage), top: layout.extraMessage.top }}
                         {...usefulProps}
                         /> }
 
                 { pending.lifelineHoveredKey && !pending.componentMovedKey && <NewMessageMarker
                         left={layout[pending.lifelineHoveredKey].lifelineX}
-                        top={pending.message ? pending.message.y : pending.lifelineHoveredY}
+                        top={pending.message ? layout.extraMessage.top : pending.lifelineHoveredY}
                         isStart={!!!pending.message}
                         direction={layout[pending.lifelineHoveredKey].lifelineX > pending.lifelineHoveredX ? -1 : 1}
                         /> }
