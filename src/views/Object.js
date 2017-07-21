@@ -49,8 +49,8 @@ export default function(props) {
     return (
         <div style={style} id={object.key} key={object.key} >
             <div onMouseDown={onMouseDown} {...hoverHelper(pending, dispatch, object.key)} style={{
-                    background: '#ffff99',
-                    padding: '15px 30px',
+                    background: '#ffffcc',
+                    padding: '20px 40px',
                     border: '1px solid black',
                     borderRadius: '4px',
                     transform: 'translateX(-50%)',

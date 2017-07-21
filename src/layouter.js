@@ -78,10 +78,10 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
  * @param extraMessage Optional pre-layouted message to take into account. For example a pending message.
  **/
 export default function(getTextWidth, objects, messages, extraMessage) {
-    const DIAGRAM_PADDING= { LEFT_RIGHT: 30, TOP_BOTTOM: 30 };
-    const OBJECT_NAME_PADDING = { TOP_BOTTOM: 15, LEFT_RIGHT: 30 };
+    const DIAGRAM_PADDING= { LEFT_RIGHT: 70, TOP_BOTTOM: 40 };
+    const OBJECT_NAME_PADDING = { TOP_BOTTOM: 20, LEFT_RIGHT: 40 };
     const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3;
-    const MESSAGE_START_Y = 120;
+    const MESSAGE_START_Y = 140;
     const MESSAGE_SPACING = 70;
 
     let layout = {};
