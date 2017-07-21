@@ -2,7 +2,7 @@ import React from 'react'
 import { isChrome } from './utils'
 
 export default function(props) {
-    const { showShareInfo, touchWarn } = props.pending;
+    const { showShareInfo, touchWarn, showNewContentAvailable } = props.pending;
 
     function Kbd(props) {
         return (
@@ -41,6 +41,10 @@ export default function(props) {
                 <b>Share by PNG:</b> <Kbd>F12</Kbd> (for <i>Developer Tools</i>) then <Kbd>
                 Ctrl/Cmd + Shift + P</Kbd> (for <i>Command Menu</i>) then <Kbd>
                 Capture full size screenshot</Kbd>.
+            </div> }
+
+            { showNewContentAvailable && <div style={{ color: '#fff', padding: '12px 10px', paddingTop: 0, }}>
+                <b>New version available</b> A new version of the this web app has been published. Press F5 to load it.
             </div> }
         </div>
     );

@@ -46,6 +46,14 @@ export function touchWarn() {
     return { type: 'TOUCH_WARN' };
 }
 
+export function showWorksOffline() {
+    return { type: 'SHOW_WORKS_OFFLINE' };
+}
+
+export function showNewContentAvailable() {
+    return { type: 'SHOW_NEW_CONTENT_AVAILABLE' };
+}
+
 /* Various "in-between" states like partially constructed messages
  * or objects-in-movement-info.
  */
@@ -64,7 +72,7 @@ export default function(state = {}, action) {
     case 'EDIT_COMPONENT_NAME':
         return { ...state, componentRenamed: { key: action.key, newName: action.newName, preselect: action.preselect }};
     case 'ESCAPE_PENDING_OPERATION':
-        return { ...state, componentRenamed: undefined, showShareInfo: undefined, message: undefined, touchWarn: undefined };
+        return { ...state, componentRenamed: undefined, showShareInfo: undefined, message: undefined, touchWarn: undefined, showWorksOffline: undefined };
     case 'HOVER_OVER_COMPONENT':
         return { ...state, hoveredComponentKey: action.key};
     case 'END_HOVER_OVER_COMPONENT':
@@ -81,6 +89,10 @@ export default function(state = {}, action) {
         return {};
     case 'TOUCH_WARN':
         return { ...state, touchWarn: true };
+    case 'SHOW_WORKS_OFFLINE':
+        return { ...state, showWorksOffline: true }
+    case 'SHOW_NEW_CONTENT_AVAILABLE':
+        return { ...state, showNewContentAvailable: true };
     default:
         return state;
     }

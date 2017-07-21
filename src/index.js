@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as ac from './reducers'
 import App from './views/App'
 import registerServiceWorker from './registerServiceWorker';
-import { createStore } from 'redux'
+import { createStore, bindActionCreators } from 'redux'
 import { ActionCreators } from 'redux-undo';
 import { serialize, deserialize } from './serialize'
 
@@ -37,6 +37,7 @@ function dispatch(action) {
 
     return store.dispatch(action);
 }
+const boundActionCreators = bindActionCreators(ac, dispatch);
 
 const defaultDiagram = '#o1,Foo;o2,Bar;m1,o1,o2,Baz';
 
@@ -89,4 +90,4 @@ function render() {
 store.subscribe(render);
 render();
 
-registerServiceWorker();
+registerServiceWorker(boundActionCreators.showWorksOffline, boundActionCreators.showNewContentAvailable);
