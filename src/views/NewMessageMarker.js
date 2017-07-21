@@ -17,8 +17,8 @@ export default class NewMessageMarker extends React.PureComponent {
                     width: width,
                     height: height,
                     borderRadius: 15,
-                    left: left,
-                    top: top,
+                    left: left - width / 2,
+                    top: top - height / 2,
                     position: 'relative',
                     pointerEvents: 'none'
                     }}>

@@ -89,8 +89,8 @@ export default function(props) {
                         /> }
 
                 { pending.lifelineHoveredKey && !pending.componentMovedKey && <NewMessageMarker
-                        left={layout[pending.lifelineHoveredKey].lifelineX - 15}
-                        top={(pending.message ? pending.message.y : pending.lifelineHoveredY) - 15 + 'px'}
+                        left={layout[pending.lifelineHoveredKey].lifelineX}
+                        top={pending.message ? pending.message.y : pending.lifelineHoveredY}
                         isStart={!!!pending.message}
                         /> }
             </div>
