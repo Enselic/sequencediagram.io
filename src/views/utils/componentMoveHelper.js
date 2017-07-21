@@ -94,6 +94,10 @@ export default function(objects, messages, movedComponent, eventToPos, elementTo
                     pos = offsettedPos;
                     transition = undefined;
                 }
+                if ((o.start && o.start === movedComponent.key) ||
+                        (o.end && o.end === movedComponent.key)) {
+                    transition = undefined;
+                }
 
                 const movingStart = o.start === movedComponent.key;
                 const movingEnd = o.end === movedComponent.key;
