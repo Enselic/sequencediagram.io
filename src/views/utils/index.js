@@ -16,13 +16,18 @@ export function hoverHelper(pending, dispatch, key) {
     }
 }
 
+export function eventToDiagramCoords(event) {
+    const boundingClientRect = document.getElementById('diagram-root').getBoundingClientRect();
+    return [ event.clientX - boundingClientRect.left, event.clientY - boundingClientRect.top ];
+}
+
 export function hoverLifelineHelper(dispatch, key) {
     return {
         onMouseEnter(e) {
-            dispatch(ac.mouseEnterLifeline(key, e.clientY - document.getElementById('diagram-root').getBoundingClientRect().top));
+            dispatch(ac.mouseEnterLifeline(key, eventToDiagramCoords(e)[1]));
         },
         onMouseMove(e) {
-            dispatch(ac.mouseEnterLifeline(key, e.clientY - document.getElementById('diagram-root').getBoundingClientRect().top));
+            dispatch(ac.mouseEnterLifeline(key, eventToDiagramCoords(e)[1]));
         },
         onMouseLeave() {
             dispatch(ac.mouseLeaveLifeline());

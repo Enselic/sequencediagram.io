@@ -4,7 +4,7 @@ import moveHelper from './utils/componentMoveHelper'
 import Name from './Name'
 import RemoveButton from './RemoveButton'
 import devUtils from './../devUtils'
-import { hoverHelper, hoverLifelineHelper } from './utils'
+import { hoverHelper, hoverLifelineHelper, eventToDiagramCoords } from './utils'
 
 /**
  * Note that 'object' here does not mean 'an instance of a class'.
@@ -18,8 +18,7 @@ export default function(props) {
         return e => {
             let action;
             if (!pending.message || !pending.message.start) {
-                const startY = e.clientY - document.getElementById('diagram-root').getBoundingClientRect().top;
-                action = ac.pendingAddMessage(object.key, startY);
+                action = ac.pendingAddMessage(object.key, eventToDiagramCoords(e)[1]);
             } else {
                 let insertIndex = 0;
                 messages.forEach((message, index) => {
