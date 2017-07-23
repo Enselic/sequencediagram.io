@@ -36,7 +36,6 @@ Here is a list of features that I plan on adding later, roughly sorted by descen
 Contributions of any kind are very welcomed however!
 
 - Support more browsers i.e. make the test suite work on more browsers
-- Integrate URL shortener service
 - Support adding a title to the diagram
 - Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
 - Support adding arbitrary comments to the diagram

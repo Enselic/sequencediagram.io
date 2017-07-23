@@ -34,7 +34,9 @@ export default function(props) {
             { showShareInfo && <div style={{ color: '#fff', padding: '12px 10px', paddingTop: 0, }}>
                 <b>Share by URL:</b> The current diagram is tersely encoded in the
                 current URL and can simply be shared as-is by copy-paste
-                from the browser address bar.
+                from the browser address bar. You might want to make use of <a
+                        style={{padding:0}} target="_blank" rel="noopener noreferrer" href="https://www.google.se/search?q=url+shortener">
+                URL shortener services</a>.
             </div> }
 
             { showShareInfo && <div style={{ color: '#fff', padding: '12px 10px', paddingTop: 0, }}>
