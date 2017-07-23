@@ -18,14 +18,15 @@ export default function(props) {
     }
 
     const pointsLeft = layout[key].pointsLeft;
+    const invisible = controlsColor === 'transparent';
 
-    const borderStyle = controlsColor === 'transparent' ? 'none' : 'solid';
+    const borderStyle = invisible ? 'none' : 'solid';
 
     const pngLine = message.isReply ? messageBorders : messageBordersDashed;
     const pngArrow = message.isAsync ? messageBorders : messageBordersAsync;
 
-    const borderImageLine = 'url(' + pngLine + ') 0 9 17 fill repeat';
-    const borderImageArrow = 'url(' + pngArrow + ') 0 9 17 fill repeat';
+    const borderImageLine = invisible ? 'none' : 'url(' + pngLine + ') 0 9 17 fill repeat';
+    const borderImageArrow = invisible ? 'none' : 'url(' + pngArrow + ') 0 9 17 fill repeat';
 
     const outlineStyle = {
         width: 30,
