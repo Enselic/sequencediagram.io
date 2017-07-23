@@ -1,6 +1,6 @@
 import * as ac from './../../reducers'
 import layouter, { layoutMessageLeftAndWidth } from './../../layouter'
-import { transferPropsToStyle } from '.'
+import { transferPropsToStyle, transferStyleToProps } from '.'
 
 /* To get high FPS while moving things around, manipulate DOM objects directly */
 export default function(objects, messages, movedComponent, eventToPos, elementToPos, beginComponentMove, endComponentMove, rearrangeComponents, dispatch, pending) {
@@ -24,13 +24,7 @@ export default function(objects, messages, movedComponent, eventToPos, elementTo
             return {
                 component: component,
                 el: el,
-                oldStyle: {
-                    transition: style.transition,
-                    left: style.left,
-                    width: style.width,
-                    top: style.top,
-                    height: style.height,
-                },
+                oldStyle: transferStyleToProps(style),
             };
         }
 

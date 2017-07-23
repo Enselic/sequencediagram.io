@@ -1,6 +1,6 @@
 // Setting this to true makes end-to-end tests execute much quicker
 // which is useful during iterative development
-const devMode = 1
+const devMode = 0
 
 let devUtils = {
     transitionIfNotDev(transition) {
