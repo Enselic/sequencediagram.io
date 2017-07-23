@@ -54,7 +54,7 @@ export default function(props) {
 
     function controlsColorProp(componentKey) {
         const show = pending.hoveredComponentKey === componentKey &&
-                !pending.componentMovedKey;
+                !pending.componentMoved;
         return {
             controlsColor: show ? 'black' : 'transparent',
         }
@@ -101,7 +101,7 @@ export default function(props) {
                         {...usefulProps}
                         /> }
 
-                { pending.lifelineHoveredKey && !pending.componentMovedKey && <NewMessageMarker
+                { pending.lifelineHoveredKey && !pending.componentMoved && <NewMessageMarker
                         left={layout[pending.lifelineHoveredKey].lifelineX}
                         top={pending.message ? layout.extraMessage.top : pending.lifelineHoveredY}
                         isStart={!!!pending.message}

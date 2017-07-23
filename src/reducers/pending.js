@@ -66,9 +66,9 @@ export default function(state = {}, action) {
     case 'REMOVE_COMPONENT':
         return { ...state, message: !state.message || state.message.start === action.key ? undefined : state.message };
     case 'BEGIN_COMPONENT_MOVE':
-        return { ...state, componentMovedKey: action.key };
+        return { ...state, componentMoved: { key: action.key }};
     case 'END_COMPONENT_MOVE':
-        return { ...state, componentMovedKey: undefined };
+        return { ...state, componentMoved: undefined };
     case 'EDIT_COMPONENT_NAME':
         return { ...state, componentRenamed: { key: action.key, newName: action.newName, preselect: action.preselect }};
     case 'ESCAPE_PENDING_OPERATION':
