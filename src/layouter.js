@@ -35,6 +35,7 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
     let borderWidth;
     let left;
     let width;
+    const messageTextWidth = (layout && layout.getTextWidth) ? layout.getTextWidth(message.name) : 100 /* arbitrary */;
     if (Math.abs(direction) < 0.5) {
         let png = message.isAsync ? messageBorderSelfAsync : messageBorderSelf;
         borderImage = 'url(' + png + ') 0 0 19 22 fill';
@@ -42,8 +43,7 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
         left = startX;
         const maxLineWidth = 150;
         const minWidth = 22; // From borderWidth
-        const messageTextWidth = layout.getTextWidth ? layout.getTextWidth(message.name) : minWidth;
-        width = Math.min(maxLineWidth, messageTextWidth);
+        width = Math.min(maxLineWidth, Math.max(minWidth, messageTextWidth));
     } else {
         const arrowWidth = 9;
         let png;
@@ -61,10 +61,15 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
         width = Math.abs(startX - endX) - arrowWidth;
     }
 
+    const approximateLineHeight = 18;
+    const carefulnessFactor = 1.4;
+    const approximateHeight = Math.floor(messageTextWidth * carefulnessFactor / width) * approximateLineHeight;
+
     return {
         left,
         width,
         pointsLeft,
+        approximateHeight,
         borderImage,
         borderWidth,
     }
@@ -127,7 +132,7 @@ export default function(getTextWidth, objects, messages, extraMessage) {
             top: currentY,
         };
 
-        currentY += MESSAGE_SPACING;
+        currentY += MESSAGE_SPACING + leftRightValues.approximateHeight;
     });
 
     if (extraMessageToBeInserted()) {

@@ -75,8 +75,6 @@ TODO
 
 List of minor/uninteresting things to do, roughly sorted by priority.
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
-- make diagrams get drawn so the message line matches their top pos to make everything align
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
-- Make layouter take into account height of layouted text for messages
-- Make <input /> show as multiline when the layout will wrap lines
+- Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Create a more accurate text measurer
