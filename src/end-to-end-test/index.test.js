@@ -18,9 +18,8 @@ the global object
 // are doing
 const SLOW_DOWN_FOR_HUMAN_OBSERVATION = 0
 
-// Set to false to show tests while they run. The main reason we default to
-// running headless is to make it configuration easier for CI builds
-const HEADLESS = !SLOW_DOWN_FOR_HUMAN_OBSERVATION && 1
+// Default to headless testing when running in Continous Integration environments
+const HEADLESS = !!process.env.CI
 
 if (SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
