@@ -41,7 +41,7 @@ global.driver = new Builder()
     .setChromeOptions(options)
     .build();
 
-let Promise = promise.Promise;
+global.SPromise = promise.Promise;
 
 afterAll(() => {
     driver.quit();
@@ -80,7 +80,7 @@ global.sleepIfHumanObserver = function(seconds) {
 }
 
 global.reversePromise = function(promise) {
-    return new Promise((resolve, reject) => {
+    return new SPromise((resolve, reject) => {
         promise.then(reject).catch(resolve);
     });
 }
@@ -146,7 +146,7 @@ global.clickAndType = function(elementText, typedText) {
 
 global.assertFragment = function(expected) {
     sleepIfHumanObserver(0.7);
-    return new Promise((resolve, reject) => {
+    return new SPromise((resolve, reject) => {
         driver.getCurrentUrl().then(url => {
             const fragment = url.substring(url.indexOf('#') + 1);
             if (fragment === expected) {
