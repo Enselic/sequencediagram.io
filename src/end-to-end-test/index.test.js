@@ -193,6 +193,11 @@ global.clickAddObject = function() {
     waitForCssTransitions();
 }
 
+global.addMessage = function(start, end) {
+    clickLifelineForObjectWithText(start);
+    clickLifelineForObjectWithText(end);
+}
+
 global.removeComponentWithKey = function(key) {
     // Low prio todo: Stop depending on the implementation detail that components have
     // remove buttons with certain IDs without complicating testing code too much

@@ -1,28 +1,27 @@
-function addMessage(start, firstClick, secondClick, expected) {
+function addingMessage(start, firstClick, secondClick, expected) {
     return () => {
         goTo(start);
-        clickLifelineForObjectWithText(firstClick);
-        clickLifelineForObjectWithText(secondClick);
+        addMessage(firstClick, secondClick);
         return assertFragment(expected);
     }
 }
 
-test('add message between two objects', addMessage(
+test('add message between two objects', addingMessage(
     'o1,O1;o2,O2',
     'O1', 'O2',
     'o1,O1;o2,O2;m1,o1,o2,sendMessage()'));
 
-test('add message between two objects reversed', addMessage(
+test('add message between two objects reversed', addingMessage(
     'o1,O1;o2,O2',
     'O2', 'O1',
     'o1,O1;o2,O2;m1,o2,o1,sendMessage()'));
 
-test('add message between next first and next last object', addMessage(
+test('add message between next first and next last object', addingMessage(
     'o1,O1;o2,O2;o3,O3;o4,O4',
     'O2', 'O3',
     'o1,O1;o2,O2;o3,O3;o4,O4;m1,o2,o3,sendMessage()'));
 
-test('add message between next last and next first object', addMessage(
+test('add message between next last and next first object', addingMessage(
     'o1,O1;o2,O2;o3,O3;o4,O4',
     'O3', 'O2',
     'o1,O1;o2,O2;o3,O3;o4,O4;m1,o3,o2,sendMessage()'));
