@@ -52,7 +52,7 @@ Setting up for development
 
 It should work to git clone this repo and then run `npm start` after `npm install`.
 To run the automated tests it should work to run `npm test` while `npm start` is
-running.
+running. To see the tests run, set HEADLESS in index.test.js to a falsy value.
 
 Technology
 ----------

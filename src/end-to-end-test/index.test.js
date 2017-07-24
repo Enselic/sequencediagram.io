@@ -23,13 +23,15 @@ const SLOW_DOWN_FOR_HUMAN_OBSERVATION = 0
 const HEADLESS = !SLOW_DOWN_FOR_HUMAN_OBSERVATION && 1
 
 if (SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 } else {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 }
 let { Builder, By, until, Key, promise } = require('selenium-webdriver');
 let { Options } = require('selenium-webdriver/chrome');
 let devUtils = require('../devUtils');
+
+global.Key = Key;
 
 let options = new Options();
 if (HEADLESS) {
@@ -186,16 +188,26 @@ global.move = function(startState, grabbedText, toMove, expectedEndState) {
 global.clickLifelineForObjectWithText = function(objectText) {
     driver.actions().mouseMove(findElementByText(objectText), { x: 30, y: 100 }).click().perform();
     waitForCssTransitions();
+    sleepIfHumanObserver(0.7);
 }
 
 global.clickAddObject = function() {
     click('Add object');
     waitForCssTransitions();
+    sleepIfHumanObserver(0.7);
 }
 
 global.addMessage = function(start, end) {
     clickLifelineForObjectWithText(start);
     clickLifelineForObjectWithText(end);
+    sleepIfHumanObserver(0.7);
+}
+
+global.flip = function(key) {
+    // Low prio todo: Stop depending on the implementation detail that messages have
+    // flip buttons with certain IDs without complicating testing code too much
+    driver.actions().click(driver.findElement(By.id('flip-' + key))).perform();
+    sleepIfHumanObserver(0.7);
 }
 
 global.removeComponentWithKey = function(key) {
@@ -204,12 +216,6 @@ global.removeComponentWithKey = function(key) {
     driver.actions().click(driver.findElement(By.id('remove-' + key))).perform();
     waitForCssTransitions();
 }
-
-global.ctrlZ = function() {
-    driver.actions().sendKeys([ Key.CONTROL, 'z', Key.NULL ]).perform();
-    waitForCssTransitions();
-}
-
 
 
 require('./move-object');

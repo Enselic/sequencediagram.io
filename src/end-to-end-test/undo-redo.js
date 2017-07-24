@@ -1,30 +1,88 @@
+function ctrlZ() {
+    driver.actions().sendKeys([ Key.CONTROL, 'z', Key.NULL ]).perform();
+    waitForCssTransitions();
+    sleepIfHumanObserver(0.7);
+}
 
-test('undo redo non-trivial diagram', () => {
+function ctrlShiftZ() {
+    driver.actions().sendKeys([ Key.CONTROL, Key.SHIFT, 'z', Key.NULL ]).perform();
+    waitForCssTransitions();
+    sleepIfHumanObserver(0.7);
+}
+
+function ctrlZOrUndo(i) {
+    if (i % 2 > 0) {
+        ctrlZ();
+    } else {
+        click('Undo');
+    }
+}
+function ctrlShiftZOrRedo(i) {
+    if (i % 2 > 0) {
+        ctrlShiftZ();
+    } else {
+        click('Redo');
+    }
+}
+
+test('use all features, then undo all, then redo all', () => {
+    class UndoRedoAsserter {
+        constructor() {
+            this.fragments = [];
+        }
+
+        assertFragmentAndPush(expectedFragment) {
+            assertFragment(expectedFragment);
+            this.fragments.push(expectedFragment);
+        }
+
+        undoRedoAll() {
+            // Deterministically mix Ctrl-[Shift-]Z and Undo/Redo menu items
+            const len = this.fragments.length;
+            let assertPromises = [];
+            for (let i = len - 1; i >= 0; i--) {
+                assertPromises.push(assertFragment(this.fragments[i]));
+                ctrlZOrUndo(i);
+            }
+            for (let i = 0; i < len; i++) {
+                ctrlShiftZOrRedo(i);
+                assertPromises.push(assertFragment(this.fragments[i]));
+            }
+            // We want to return a Promise to block tests from completing
+            return Promise.all(assertPromises);
+        }
+    }
+
+    let asserter = new UndoRedoAsserter();
+
     goTo('empty');
 
     clickAddObject();
-    assertFragment('o1,NewObject');
+    asserter.assertFragmentAndPush('o1,NewObject');
 
     clickAndType('NewObject', 'Undoer');
-    assertFragment('o1,Undoer');
+    asserter.assertFragmentAndPush('o1,Undoer');
 
     clickAddObject();
-    assertFragment('o1,Undoer;o2,NewObject');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,NewObject');
 
     clickAndType('NewObject', 'Redoer');
-    assertFragment('o1,Undoer;o2,Redoer');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer');
 
-    // TODO: Add new messages too
+    addMessage('Undoer', 'Redoer');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;m1,o1,o2,sendMessage()');
 
-    click('Undo');
-    assertFragment('o1,Undoer;o2,NewObject');
+    clickAndType('sendMessage()', 'invoke()');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;m1,o1,o2,invoke()');
 
-    click('Undo');
-    assertFragment('o1,Undoer');
+    flip('m1');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;m1,o2,o1,invoke()');
 
-    ctrlZ();
-    assertFragment('o1,NewObject');
+    clickAddObject();
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,NewObject;m1,o2,o1,invoke()');
 
-    ctrlZ();
-    return assertFragment('');
+    clickAndType('NewObject', 'User');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m1,o2,o1,invoke()');
+
+    return asserter.undoRedoAll();
 })

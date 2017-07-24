@@ -53,7 +53,7 @@ export default function(props) {
                         left: pointsLeft ? -4 : 4,
                         pointerEvents: 'auto',
                         }}>
-                    { !selfSent && <div className="message-end" onClick={() => dispatch(flipMessageDirection(key))} {...eatMouseDown} style={{
+                    { !selfSent && <div id={'flip-'+key} className="message-end" onClick={() => dispatch(flipMessageDirection(key))} {...eatMouseDown} style={{
                             background: 'transparent',
                             borderRadius: 15,
                             border: '1px dotted ' + controlsColor,
@@ -64,7 +64,7 @@ export default function(props) {
                             }}>
                         flip
                     </div> }
-                    { !selfSent && <div className="message-end" onClick={() => dispatch(toggleMessageLineStyle(key))} {...eatMouseDown} style={outlineStyle}>
+                    { !selfSent && <div id={'toggle-line-style-'+key} className="message-end" onClick={() => dispatch(toggleMessageLineStyle(key))} {...eatMouseDown} style={outlineStyle}>
                         <div style={{
                                 borderStyle,
                                 borderWidth: '0px 0px 17px 0px',
@@ -72,7 +72,7 @@ export default function(props) {
                                 height: 6,
                                 }} />
                     </div> }
-                    <div className="message-end" onClick={() => dispatch(toggleMessageArrowStyle(key))} {...eatMouseDown} style={outlineStyle}>
+                    <div id={'toggle-arrow-style-'+key} className="message-end" onClick={() => dispatch(toggleMessageArrowStyle(key))} {...eatMouseDown} style={outlineStyle}>
                         <div style={{
                                 position: 'relative',
                                 left: 8,
