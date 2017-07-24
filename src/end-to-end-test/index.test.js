@@ -102,12 +102,16 @@ global.findElementByText = function(text) {
 
 function dragAndDrop(elementText, offset) {
     driver.actions().mouseDown(findElementByText(elementText)).perform();
-    // XXX: Why can't we set this to 20 without stalling WebDriver command execution?
-    const steps = 5;
+    const steps = 20;
     let i = steps;
     while (i > 0) {
         i--;
-        driver.actions().mouseMove({ x: offset.x / steps, y: offset.y / steps }).perform();
+        // Steps must be ints, otherwise WebDriver pukes
+        const offsetStep = {
+            x: Math.ceil(offset.x / steps),
+            y: Math.ceil(offset.y / steps),
+        };
+        driver.actions().mouseMove(offsetStep).perform();
         sleepIfHumanObserver(0.7 / steps);
     }
     driver.actions().mouseUp().perform();
