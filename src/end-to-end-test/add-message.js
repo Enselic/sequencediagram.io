@@ -1,8 +1,8 @@
 function addingMessage(start, firstClick, secondClick, expected) {
     return () => {
         goTo(start);
-        addMessage(firstClick, secondClick);
-        return assertFragment(expected);
+        return addMessage(firstClick, secondClick)
+            .then(_ => assertFragment(expected));
     }
 }
 

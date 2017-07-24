@@ -25,7 +25,7 @@ function ctrlShiftZOrRedo(i) {
     }
 }
 
-test('use all features, then undo all, then redo all', () => {
+test('use all features, then undo all, then redo all', async () => {
     class UndoRedoAsserter {
         constructor() {
             this.fragments = [];
@@ -69,7 +69,7 @@ test('use all features, then undo all, then redo all', () => {
     clickAndType('NewObject', 'Redoer');
     asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer');
 
-    addMessage('Undoer', 'Redoer');
+    await addMessage('Undoer', 'Redoer');
     asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;m1,o1,o2,sendMessage()');
 
     clickAndType('sendMessage()', 'invoke()');

@@ -100,20 +100,27 @@ global.findElementByText = function(text) {
     return driver.findElement(locator);
 }
 
-function dragAndDrop(elementText, offset) {
-    driver.actions().mouseDown(findElementByText(elementText)).perform();
+global.mouseMoveInSteps = function(totalOffset) {
     const steps = 20;
     let i = steps;
     while (i > 0) {
         i--;
         // Steps must be ints, otherwise WebDriver pukes
         const offsetStep = {
-            x: Math.ceil(offset.x / steps),
-            y: Math.ceil(offset.y / steps),
+            x: Math.ceil(totalOffset.x / steps),
+            y: Math.ceil(totalOffset.y / steps),
         };
         driver.actions().mouseMove(offsetStep).perform();
         sleepIfHumanObserver(0.7 / steps);
     }
+}
+
+function dragAndDrop(elementText, offset) {
+    driver.actions().mouseDown(findElementByText(elementText)).perform();
+    sleepIfHumanObserver(0.7);
+
+    mouseMoveInSteps(offset);
+
     driver.actions().mouseUp().perform();
     sleepIfHumanObserver(0.7);
 }
@@ -201,9 +208,33 @@ global.clickAddObject = function() {
 }
 
 global.addMessage = function(start, end) {
-    clickLifelineForObjectWithText(start);
-    clickLifelineForObjectWithText(end);
-    sleepIfHumanObserver(0.7);
+    let startEl;
+    let endEl;
+    return Promise.all([
+        findElementByText(start),
+        findElementByText(end),
+    ]).then(args => {
+        startEl = args[0];
+        endEl = args[1];
+        return Promise.all([
+            startEl.getLocation(),
+            endEl.getLocation(),
+        ]);
+    }).then(args => {
+        const startLoc = args[0];
+        const endLoc = args[1];
+
+        const fromObjectNameToLifelineOffset = { x: 30, y: 100 };
+
+        driver.actions().mouseMove(startEl, fromObjectNameToLifelineOffset).click().perform();
+        sleepIfHumanObserver(0.7);
+
+        mouseMoveInSteps({ x: endLoc.x - startLoc.x, y: endLoc.y - startLoc.y })
+
+        const ret = driver.actions().click().perform();
+        sleepIfHumanObserver(0.7);
+        return ret;
+    });
 }
 
 global.flip = function(key) {
