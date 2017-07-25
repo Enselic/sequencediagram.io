@@ -24,6 +24,7 @@ export default function(props) {
         border: '1px dotted ' + controlsColor,
         color: controlsColor,
         display: 'block',
+        cursor: 'default',
     }
 
     return (<div className="remove-button" id={'remove-' + keyToRemove} onMouseDown={handleMouseDown} style={style} onClick={() => dispatch(removeComponent(keyToRemove))}>&#10006;</div>);

@@ -61,6 +61,7 @@ export default function(props) {
                             color: controlsColor,
                             fontSize: 10,
                             lineHeight: outlineStyle.height + 'px',
+                            cursor: 'default',
                             }}>
                         flip
                     </div> }
