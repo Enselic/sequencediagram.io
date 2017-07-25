@@ -42,8 +42,8 @@ const boundActionCreators = bindActionCreators(ac, dispatch);
 const defaultDiagram = '#o1,Foo;o2,Bar;m1,o1,o2,Baz';
 
 function setupFromHash(hash) {
-    let { objects, messages } = deserialize(hash.substring(1));
-    dispatch(ac.replaceCore(objects, messages));
+    let { objects, messages, title } = deserialize(hash.substring(1));
+    dispatch(ac.replaceCore(objects, messages, title));
     dispatch(ActionCreators.clearHistory());
 }
 
@@ -76,8 +76,8 @@ window.addEventListener('hashchange', e => {
 });
 
 function serializeState() {
-    const present = store.getState().core.present;
-    let args = [ ...present.objects, ...present.messages ];
+    const { objects, messages, title } = store.getState().core.present;
+    let args = [ title, ...objects, ...messages ];
     return serialize(args);
 }
 

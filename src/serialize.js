@@ -1,3 +1,5 @@
+import { DEFAULT_TITLE } from './reducers'
+
 export function serialize(components) {
     return serializeComponents(components);
 }
@@ -20,6 +22,14 @@ function serializeMessage(message) {
     return res;
 }
 
+function serializeTitle(title) {
+    if (title.added) {
+        return title.key + ',' + encodeURIComponent(title.name);
+    } else {
+        return '';
+    }
+}
+
 function serializeComponents(components) {
     return components.reduce((acc, component) => {
         let serializedComponent;
@@ -27,8 +37,10 @@ function serializeComponents(components) {
             serializedComponent = serializeObject(component);
         } else if (component.key[0] === 'm') {
             serializedComponent = serializeMessage(component);
+        } else if (component.key[0] === 't') {
+            serializedComponent = serializeTitle(component);
         }
-        return acc + (acc ? ';' : '') + serializedComponent
+        return acc + (serializedComponent ? ((acc ? ';' : '') + serializedComponent) : '');
     }, '');
 }
 
@@ -39,6 +51,7 @@ function parseKey(key) {
 export function deserialize(serialized) {
     let objects = [];
     let messages = [];
+    let title = { name: DEFAULT_TITLE, added: false };
 
     serialized.split(';').forEach(o => {
         if (!o) {
@@ -63,6 +76,10 @@ export function deserialize(serialized) {
                 isReply: isReply ? true : undefined,
                 isAsync: isAsync ? true : undefined,
             });
+        } else if (o[0] === 't' && parts.length >= 2 &&
+            parts[0] && parts[1]) {
+            title.name = decodeURIComponent(parts[1]);
+            title.added = true;
         }
     });
 
@@ -77,5 +94,6 @@ export function deserialize(serialized) {
     return {
         objects,
         messages,
+        title,
     };
 }

@@ -59,8 +59,8 @@ export function removeComponent(key) {
     return { type: 'REMOVE_COMPONENT', key };
 }
 
-export function replaceCore(objects, messages) {
-    return { type: 'REPLACE_CORE', objects, messages };
+export function replaceCore(objects, messages, title) {
+    return { type: 'REPLACE_CORE', objects, messages, title };
 }
 
 export function rearrangeObjects(objects) {
@@ -162,7 +162,30 @@ function messages(state = [], action) {
     }
 }
 
+export function addTitle() {
+    return { type: 'ADD_TITLE' };
+}
+
+export function removeTitle() {
+    return { type: 'REMOVE_TITLE' };
+}
+
+export const DEFAULT_TITLE = "Click here to edit title";
+
+function title(state = { name: DEFAULT_TITLE, added: false }, action) {
+    switch (action.type) {
+    case 'ADD_TITLE':
+        return { ...state, key: 't', added: true };
+    case 'REMOVE_TITLE':
+        return { ...state, added: false };
+    case 'REPLACE_CORE':
+        return { key: 't', ...action.title };
+    default:
+        return state;
+    }
+}
+
 // The core state is the "main" state, i.e. the state that is undoable.
 // Basically everything in the URL fragment that we deserialize
 // Example of things NOT found here are UI state and pending components
-export default undoable(combineReducers({objects, messages}));
+export default undoable(combineReducers({objects, messages, title}));

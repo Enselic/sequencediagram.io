@@ -3,7 +3,7 @@ import { ActionCreators } from 'redux-undo'
 import * as ac from './../reducers'
 
 export default function(props) {
-    const { dispatch, pending, showUndo, showRedo, showTipIfSpace } = props;
+    const { dispatch, pending, showUndo, showRedo, showTipIfSpace, hasTitle } = props;
 
     function addObjectAndEditName() {
         const newName = "NewObject";
@@ -28,16 +28,14 @@ export default function(props) {
     // one that can be clicked. We do this so that if the user frantically
     // clicks Undo, he does not accidentally start clicking the Redo button
     // when the Undo button is removed
-    const undoOrRedoShown = showUndo || showRedo;
-
     // To keep UI clean, especially on first visit when we want users to
     // discover the 'Add object' menu item, only show Share button if Undo
     // or Redo is shown
-    const showShare = undoOrRedoShown;
+    const undoOrRedoShown = showUndo || showRedo;
 
     // We only want to show the hint if 'Add object' is the only
     // item (otherwise it will point at the wrong item)
-    const showTip = showTipIfSpace && !showShare && !undoOrRedoShown;
+    const showTip = showTipIfSpace && !undoOrRedoShown;
 
     return (
         <div style={{
@@ -45,9 +43,10 @@ export default function(props) {
                 borderBottom: '1px solid #aaa',
                 }}>
             <Button text="Add object" onClick={addObjectAndEditName} />
+            { undoOrRedoShown && <Button text={ hasTitle ? 'Remove title' : 'Add title' } onClick={() => dispatch(hasTitle ? ac.removeTitle() : ac.addTitle())} /> }
             { undoOrRedoShown && <Button disabled={!showUndo} text="Undo" onClick={() => dispatch(ActionCreators.undo())} /> }
             { undoOrRedoShown && <Button disabled={!showRedo} text="Redo" onClick={() => dispatch(ActionCreators.redo())} /> }
-            { showShare && <Button disabled={!showUndo && !showRedo} text={ showShareInfo ? 'Hide share info' : 'Share' } onClick={() => dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())} /> }
+            { undoOrRedoShown && <Button text={ showShareInfo ? 'Hide share info' : 'Share' } onClick={() => dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())} /> }
             { showTip && <span className="tip">
                 ⇐ <span style={{
                         backgroundColor: '#000',

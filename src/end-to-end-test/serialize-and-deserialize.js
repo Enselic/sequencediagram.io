@@ -25,3 +25,4 @@ test('messages with invalid references are not included in deserialization', () 
 // TODO special chars are handled
 // TODO: double ids handled, first only is used
 // TODO: negative ids are handled i.e. ignored
+// TODO: Reject components with too many parts to avoid future problems with compatibility

@@ -4,6 +4,7 @@ import Objekt from './Object'
 import Message, { PENDING_MESSAGE_KEY } from './Message'
 import Header from './Header'
 import Menu from './Menu'
+import Name from './Name'
 import NewMessageMarker from './NewMessageMarker'
 import { transferPropsToStyle } from './utils'
 import { layoutMessageLeftAndWidth } from './../layouter'
@@ -12,7 +13,7 @@ import * as ac from './../reducers'
 export default function(props) {
     const { state, dispatch } = props;
     const { core, pending } = state;
-    const { objects, messages } = core.present;
+    const { objects, messages, title } = core.present;
 
     // We want to perform the layout as if the pending names were commited, so that
     // the diagram layout adapts to the pending names which we show as part of the
@@ -72,7 +73,9 @@ export default function(props) {
                     showUndo={core.past.length > 0}
                     showRedo={core.future.length > 0}
                     showTipIfSpace={objects.length < 3 && messages.length < 2}
+                    hasTitle={title.added}
                     />
+            { title.added && <Name component={title} pending={pending} dispatch={dispatch} /> }
 
             <div onMouseMove={handleMouseMove} style={{ position: 'relative', height: layout.height + 50 }} id="diagram-root">
 
