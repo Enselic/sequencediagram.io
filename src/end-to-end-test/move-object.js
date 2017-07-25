@@ -82,8 +82,8 @@ test('move away and back does not trigger click', () => {
     const text = "FixedName"
     const expected = goTo('o1,' + text);
     driver.actions().mouseDown(findElementByText(text)).perform();
-    driver.actions().mouseMove({ x: 100, y: 0 }).perform();
-    driver.actions().mouseMove({ x: -100, y: 0 }).perform();
+    mouseMoveInSteps({ x: 100, y: 0 })
+    mouseMoveInSteps({ x: -100, y: 0 })
     driver.actions().mouseUp().perform();
     typeAndConfirmm("This-text-shall-not-end-up-as-name-for-object");
     return assertFragment(expected);
