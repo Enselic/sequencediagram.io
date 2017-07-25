@@ -224,12 +224,12 @@ global.addMessage = function(start, end) {
         const startLoc = args[0];
         const endLoc = args[1];
 
-        const fromObjectNameToLifelineOffset = { x: 30, y: 100 };
+        const fromObjectNameToLifelineOffset = { x: 30, y: 70 };
 
         driver.actions().mouseMove(startEl, fromObjectNameToLifelineOffset).click().perform();
         sleepIfHumanObserver(0.7);
 
-        mouseMoveInSteps({ x: endLoc.x - startLoc.x, y: endLoc.y - startLoc.y })
+        mouseMoveInSteps(calcOffset(startLoc, endLoc));
 
         const ret = driver.actions().click().perform();
         sleepIfHumanObserver(0.7);
@@ -237,10 +237,43 @@ global.addMessage = function(start, end) {
     });
 }
 
+
+function calcOffset(startLoc, endLoc) {
+    return { x: endLoc.x - startLoc.x, y: endLoc.y - startLoc.y };
+}
+
+global.moveEndPointToActor = async function(messageKey, endPointType, actorName) {
+    // Low prio todo: Stop depending on the implementation detail that messages have
+    // end point buttons with certain IDs without complicating testing code too much
+    const messageEndPointEl = await driver.findElement(By.id(messageKey + '-' + endPointType));
+    const actorNameEl = await findElementByText(actorName);
+    const messageEndPointLoc = await messageEndPointEl.getLocation();
+    const actorNameLoc = await actorNameEl.getLocation();
+    const offsetToMove = calcOffset(messageEndPointLoc, actorNameLoc);
+
+    await driver.actions().mouseMove(messageEndPointEl).mouseDown().perform();
+    mouseMoveInSteps(offsetToMove);
+    await driver.actions().mouseUp().perform();
+}
+
 global.flip = function(key) {
     // Low prio todo: Stop depending on the implementation detail that messages have
     // flip buttons with certain IDs without complicating testing code too much
     driver.actions().click(driver.findElement(By.id('flip-' + key))).perform();
+    sleepIfHumanObserver(0.7);
+}
+
+global.toggleArrowStyle = function(key) {
+    // Low prio todo: Stop depending on the implementation detail that messages have
+    // toggle buttons with certain IDs without complicating testing code too much
+    driver.actions().click(driver.findElement(By.id('toggle-arrow-style-' + key))).perform();
+    sleepIfHumanObserver(0.7);
+}
+
+global.toggleLineStyle = function(key) {
+    // Low prio todo: Stop depending on the implementation detail that messages have
+    // toggle buttons with certain IDs without complicating testing code too much
+    driver.actions().click(driver.findElement(By.id('toggle-line-style-' + key))).perform();
     sleepIfHumanObserver(0.7);
 }
 

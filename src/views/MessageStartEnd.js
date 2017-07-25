@@ -92,5 +92,5 @@ export default function(props) {
         fontSize: 10,
     }
 
-    return <span style={style} className="message-end" onMouseDown={mousedown(type)}>move</span>;
+    return <span id={message.key + '-' + type} style={style} className="message-end" onMouseDown={mousedown(type)}>move</span>;
 }
