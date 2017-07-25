@@ -85,7 +85,7 @@ test('move away and back does not trigger click', () => {
     driver.actions().mouseMove({ x: 100, y: 0 }).perform();
     driver.actions().mouseMove({ x: -100, y: 0 }).perform();
     driver.actions().mouseUp().perform();
-    typeAndConfirmm("This text shall not end up as name for object");
+    typeAndConfirmm("This-text-shall-not-end-up-as-name-for-object");
     return assertFragment(expected);
 });
 

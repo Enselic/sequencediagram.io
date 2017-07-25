@@ -27,7 +27,7 @@ test('remove object does not trigger name change', () => {
     goTo('o100,SameNameUsedTwiceForIdenticalSizes');
 
     // If o100 text is selected (which it should not), typing text and pressing enter will change the text
-    typeAndConfirmm('This text should not end up anywhere');
+    typeAndConfirmm('This-text-should-not-end-up-anywhere');
 
     return assertFragment('o100,SameNameUsedTwiceForIdenticalSizes');
 })
