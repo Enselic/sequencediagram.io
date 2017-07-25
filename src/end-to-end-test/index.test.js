@@ -221,19 +221,27 @@ global.removeComponentWithKey = function(key) {
 }
 
 
-require('./move-object');
-require('./add-object');
-require('./remove-object');
-require('./misc-object');
+const filesWithTests = [
+    'move-object.js',
+    'add-object.js',
+    'remove-object.js',
+    'misc-object.js',
 
-require('./move-message');
-require('./add-message');
-require('./remove-message');
-require('./change-message-appearance');
+    'move-message.js',
+    'add-message.js',
+    'remove-message.js',
+    'change-message-appearance.js',
 
-require('./misc');
-require('./undo-redo');
-require('./serialize-and-deserialize');
+    'misc.js',
+    'undo-redo.js',
+    'serialize-and-deserialize.js',
+];
+
+filesWithTests.forEach(file => {
+    describe(file, () => {
+        require('./' + file);
+    })
+})
 
 // TODO: Click an empty area
 // TODO: Click and drag on empty area
