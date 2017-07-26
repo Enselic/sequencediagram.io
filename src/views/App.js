@@ -1,12 +1,11 @@
 import React from 'react'
 import layouter from './../layouter'
 import Objekt from './Object'
-import Message, { PENDING_MESSAGE_KEY } from './Message'
+import Message from './Message'
 import Header from './Header'
 import Menu from './Menu'
 import NewMessageMarker from './NewMessageMarker'
-import { transferPropsToStyle } from './utils'
-import { layoutMessageLeftAndWidth } from './../layouter'
+import { eventToDiagramCoords } from './utils'
 import * as ac from './../reducers'
 
 export default function(props) {
@@ -29,28 +28,18 @@ export default function(props) {
     const layout = layouter(name => name.length * 7 /* TODO: hack */, objectsWithPendingNames, messagesWithPendingNames, pending.message);
     const usefulProps = { objects, messages, pending, dispatch, layout };
 
-    let pendingMessage;
+    let pendingMessageLayout;
     let handleMouseMove;
     if (pending.message) {
-        const key = PENDING_MESSAGE_KEY;
-        pendingMessage = {
-            key: key,
-            start: pending.message.start,
-            end: pending.message.start,
-            name: 'sendMessage()' };
         handleMouseMove = e => {
-            const el = document.getElementById(key);
-            const tmpLayout = layoutMessageLeftAndWidth(
-                layout,
-                pendingMessage,
-                undefined,
-                e.pageX);
-            tmpLayout.width = tmpLayout.width + 'px';
-            tmpLayout.left = tmpLayout.left + 'px';
-            transferPropsToStyle(tmpLayout, el.style);
+            dispatch(ac.pendingAddMessage(
+                    pending.message.start,
+                    eventToDiagramCoords(e)[0],
+                    pending.message.y,
+                    pending.message.name));
         }
+        pendingMessageLayout = layout[pending.message.key];
     }
-
 
     function controlsColorProp(componentKey) {
         const show = pending.hoveredComponentKey === componentKey &&
@@ -94,16 +83,17 @@ export default function(props) {
                             />) : null;
                     }) }
 
-                { pendingMessage && <Message
-                        key={pendingMessage.key}
-                        message={pendingMessage}
-                        msgLayout={{ ...layoutMessageLeftAndWidth(layout, pendingMessage), top: layout.extraMessage.top }}
+                { pending.message && <Message
+                        key={pending.message.key}
+                        message={pending.message}
+                        msgLayout={pendingMessageLayout}
                         {...usefulProps}
+                        isPending={true}
                         /> }
 
                 { pending.lifelineHoveredKey && !pending.componentMoved && <NewMessageMarker
                         left={layout[pending.lifelineHoveredKey].lifelineX}
-                        top={pending.message ? layout.extraMessage.top : pending.lifelineHoveredY}
+                        top={pending.message ? pendingMessageLayout.top : pending.lifelineHoveredY}
                         isStart={!!!pending.message}
                         direction={layout[pending.lifelineHoveredKey].lifelineX > pending.lifelineHoveredX ? -1 : 1}
                         /> }

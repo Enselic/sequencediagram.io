@@ -1,5 +1,5 @@
 import React from 'react'
-import Message, { PENDING_MESSAGE_KEY } from './Message'
+import Message from './Message'
 import { layoutMessageLeftAndWidth } from './../layouter'
 
 /**
@@ -13,7 +13,7 @@ export default class NewMessageMarker extends React.PureComponent {
         const height = 30;
         const { left, top, isStart, direction } = this.props;
         const tmpMessage = {
-            key: PENDING_MESSAGE_KEY,
+            key: "newMessageMarker",
             start: null,
             end: null,
             name: '',
@@ -25,7 +25,7 @@ export default class NewMessageMarker extends React.PureComponent {
         }
 
         return (isStart ?
-            (<Message message={tmpMessage} msgLayout={msgLayout} />) :
+            (<Message message={tmpMessage} msgLayout={msgLayout} isPending={true} />) :
             (<div style={{
                     border: '1px dotted black',
                     width: width,

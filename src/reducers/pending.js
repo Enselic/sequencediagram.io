@@ -1,5 +1,12 @@
-export function pendingAddMessage(start, y) {
-    return { type: 'PENDING_ADD_MESSAGE', start, y };
+/**
+ * @start The determined start/origin of the message (id of Object)
+ * @x The current and temporary X position of the end/destination. Will
+ *    change when the mouse is moved.
+ * @name Name.
+ * @y The Y position of the new message
+ */
+export function pendingAddMessage(start, x, y, name) {
+    return { type: 'PENDING_ADD_MESSAGE', start, x, y, name };
 }
 
 export function beginComponentMove(key) {
@@ -60,7 +67,7 @@ export function showNewContentAvailable() {
 export default function(state = {}, action) {
     switch (action.type) {
     case 'PENDING_ADD_MESSAGE':
-        return { ...state, message: { start: action.start, y: action.y }};
+        return { ...state, message: { key: "pendingMessage", start: action.start, end: action.x, name: action.name, y: action.y }};
     case 'ADD_MESSAGE':
         return { ...state, message: undefined };
     case 'REMOVE_COMPONENT':

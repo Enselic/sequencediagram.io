@@ -8,14 +8,11 @@ import AppearanceSelector from './AppearanceSelector'
 import devUtils from './../devUtils'
 import { hoverHelper } from './utils'
 
-export const PENDING_MESSAGE_KEY = "pendingMessage";
-
 export default function(props) {
-    const { dispatch, message, msgLayout, objects, messages, pending, controlsColor } = props;
+    const { dispatch, message, msgLayout, objects, messages, pending, controlsColor, isPending } = props;
 
     let onMouseDown;
     let style;
-    const isPending = message.key === PENDING_MESSAGE_KEY;
     if (!isPending) {
         onMouseDown = moveHelper(
             objects,

@@ -106,12 +106,18 @@ export default function(getTextWidth, objects, messages, extraMessage) {
     layout['next-object'] = { lifelineX: currentX };
 
     function insertExtraMessage(index) {
-        layout.extraMessage = { top: currentY, index };
+        layout[extraMessage.key] = {
+            ...layoutMessageLeftAndWidth(layout,
+                    extraMessage,
+                    undefined /*overrideStartX*/,
+                    extraMessage.end /*overrideEndX*/),
+            top: currentY,
+            index };
         currentY += MESSAGE_SPACING;
     }
 
     function extraMessageToBeInserted() {
-        return extraMessage && !layout.extraMessage;
+        return extraMessage && !(extraMessage.key in layout);
     }
 
     messages.forEach((message, index) => {

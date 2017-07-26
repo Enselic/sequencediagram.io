@@ -18,9 +18,9 @@ export default function(props) {
         return e => {
             let action;
             if (!pending.message || !pending.message.start) {
-                action = ac.pendingAddMessage(object.key, eventToDiagramCoords(e)[1]);
+                action = ac.pendingAddMessage(object.key, ...eventToDiagramCoords(e), 'sendMessage()');
             } else {
-                action = ac.addMessage(pending.message.start, object.key, 'sendMessage()', layout.extraMessage.index);
+                action = ac.addMessage(pending.message.start, object.key, pending.message.name, layout[pending.message.key].index);
             }
             dispatch(action);
         }
