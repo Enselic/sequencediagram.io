@@ -52,14 +52,13 @@ Setting up for development
 
 It should work to git clone this repo and then run `npm start` after `npm install`.
 To run the automated tests it should work to run `npm test` while `npm start` is
-running. To see the tests run, set HEADLESS in index.test.js to a falsy value.
+running.
 
 Technology
 ----------
 
-- Redux + React for the app
+- React (via create-react-app) and Redux for the app
 - selenium-webdriver for automated end-to-end testing.
-  (I'm not a big fan of implementation-dependent testing because they are a pain to maintain.)
 
 
 Misc
@@ -73,6 +72,8 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- Pre-render default diagram to index.html
+- Change default diagram to Object 1, Object 2, sendMessage()
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
