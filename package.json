@@ -10,7 +10,7 @@
     "redux-undo": "^1.0.0-beta9-9-1"
   },
   "devDependencies": {
-    "chromedriver": "^2.30.1",
+    "chromedriver": "^2.31.0",
     "react-scripts": "1.0.7",
     "selenium-webdriver": "^3.4.0"
   },

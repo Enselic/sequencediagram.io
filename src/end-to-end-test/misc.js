@@ -29,7 +29,7 @@ test('hints hide when clicking "Hide share info"', () => {
             waitForElement('Share by PNG'),
             waitForElement('Share by URL'),
             ]));
-})
+}, 20 * 1000)
 
 const tipText = 'Click "Add object" to start';
 

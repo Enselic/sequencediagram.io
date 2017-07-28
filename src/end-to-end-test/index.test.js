@@ -21,11 +21,11 @@ const SLOW_DOWN_FOR_HUMAN_OBSERVATION = 0
 // Default to headless testing when running in Continous Integration environments
 const HEADLESS = !!process.env.CI
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10 * 1000;
 if (SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
-} else {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL *= 4;
 }
+
 let { Builder, By, until, Key, promise } = require('selenium-webdriver');
 let { Options } = require('selenium-webdriver/chrome');
 let devUtils = require('../devUtils');

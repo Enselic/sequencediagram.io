@@ -100,4 +100,4 @@ test('use all features, then undo all, then redo all', async () => {
     asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r');
 
     return asserter.undoRedoAll();
-})
+}, 80 * 1000)

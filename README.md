@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Enselic/sequencediagram.io.svg?branch=master)](https://travis-ci.org/Enselic/sequencediagram.io)
+
 https://sequencediagram.io
 ==========================
 
