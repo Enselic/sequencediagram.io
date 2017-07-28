@@ -1,0 +1,9 @@
+dist: trusty
+language: node_js
+node_js:
+  - "6"
+addons:
+  chrome: stable
+before_script:
+  - npm start &
+  - sleep 30
