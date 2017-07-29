@@ -43,13 +43,8 @@ global.driver = new Builder()
 
 global.SPromise = promise.Promise;
 
-afterAll(async () => {
-    try {
-        return driver.quit();
-    } catch (e) {
-        console.log(e);
-        return false;
-    }
+afterAll(() => {
+    return driver.quit();
 });
 
 // Helper functions
