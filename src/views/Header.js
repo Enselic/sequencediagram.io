@@ -22,7 +22,7 @@ export default function(props) {
         <div style={{ backgroundColor: '#000' }}>
 
             { touchWarn && <div style={{ color: 'red', padding: '10px 10px', paddingTop: 0, }}>
-                Touch input not supported yet, please use a mouse or contribute
+                Touch input is not supported yet, please use a mouse or contribute
                 touch input support via GitHub
             </div> }
 

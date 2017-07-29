@@ -57,4 +57,15 @@ test('MANUAL: Inspect layout and message appearances', () => {
     return assertFragment(url);
 });
 
+test('Warn that touch input is not supported yet, and dismiss it', async () => {
+    // Pretend we got a "pure" link to the site i.e. without any URL fragment
+    await driver.get('http://localhost:3000/');
+    await assertFragment('o1,Foo;o2,Bar;m1,o1,o2,Baz');
+    await driver.touchActions().tap(findElementByText('Foo')).perform();
+    const touchHintText = 'Touch input is not supported yet';
+    await waitForElement(touchHintText);
+    await driver.actions().sendKeys(Key.ESCAPE).perform();
+    return reversePromise(waitForElement(touchHintText));
+});
+
 // TODO: http://localhost:3000/#o1,Foo;o3,Baz;m2,o2,o3,bar()   should not crash
