@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Enselic/sequencediagram.io.svg?branch=master)](https://travis-ci.org/Enselic/sequencediagram.io)
+[![Coverage Status](https://coveralls.io/repos/github/Enselic/sequencediagram.io/badge.svg?branch=master-with-code-coverage)](https://coveralls.io/github/Enselic/sequencediagram.io?branch=master-with-code-coverage)
 
 https://sequencediagram.io
 ==========================
