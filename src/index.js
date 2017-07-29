@@ -7,12 +7,6 @@ import { createStore, bindActionCreators } from 'redux'
 import { ActionCreators } from 'redux-undo';
 import { serialize, deserialize } from './serialize'
 
-// Useful to track "code coverage", i.e. what actions that automated tests
-// dispatch. We want a test suite that dispatches all actions
-const trackDispatchedActions = 0
-
-let dispatched = {};
-
 var store = createStore(ac.default);
 function dispatch(action) {
     if (!action) {
@@ -22,15 +16,6 @@ function dispatch(action) {
 
     if (0) {
         console.log('dispatching ' + JSON.stringify(action));
-    }
-
-    if (trackDispatchedActions) {
-        const key = action.type;
-        if (!(key in dispatched)) {
-            dispatched[key] = 0;
-        }
-        dispatched[key] = dispatched[key] + 1;
-        console.log(dispatched);
     }
 
     return store.dispatch(action);

@@ -16,14 +16,6 @@ function getNextId(components) {
     return highestUsedId + 1;
 }
 
-export function getNextObjectId(objects) {
-    return 'o' + getNextId(objects)
-}
-
-export function getNextMessageId(messages) {
-    return 'm' + getNextId(messages);
-}
-
 function doRenameComponent(components, key, newName) {
     return components.map(component => {
         if (component.key === key) {
