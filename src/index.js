@@ -7,15 +7,10 @@ import { createStore, bindActionCreators } from 'redux'
 import { ActionCreators } from 'redux-undo';
 import { serialize, deserialize } from './serialize'
 
-var store = createStore(ac.default);
+var store = createStore(ac.default, undefined, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 function dispatch(action) {
     if (!action) {
-        console.log('not dispatching: ' + action);
         return;
-    }
-
-    if (0) {
-        console.log('dispatching ' + JSON.stringify(action));
     }
 
     return store.dispatch(action);
