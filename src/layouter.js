@@ -103,8 +103,6 @@ export default function(getTextWidth, objects, messages, extraMessage) {
 
     let currentY = MESSAGE_START_Y;
 
-    layout['next-object'] = { lifelineX: currentX };
-
     function insertExtraMessage(index) {
         layout[extraMessage.key] = {
             ...layoutMessageLeftAndWidth(layout,
