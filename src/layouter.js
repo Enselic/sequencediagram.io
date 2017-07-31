@@ -5,6 +5,12 @@ import messageBordersAsync from './views/message-borders-async.png'
 import messageBordersDashed from './views/message-borders-dashed.png'
 import messageBordersDashedAsync from './views/message-borders-dashed-async.png'
 
+const DIAGRAM_PADDING= { LEFT_RIGHT: 70, TOP_BOTTOM: 40 };
+const OBJECT_NAME_PADDING = { TOP_BOTTOM: 20, LEFT_RIGHT: 40 };
+const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3;
+const MESSAGE_START_Y = 140;
+const MESSAGE_SPACING = 70;
+
 export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overrideEndX) {
     let startX;
     let endX;
@@ -75,6 +81,25 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
     }
 }
 
+function layoutObject(getTextWidth, currentX, object) {
+    const objectNameWidth = getTextWidth(object.name) + OBJECT_NAME_PADDING.LEFT_RIGHT;
+    const objectLayout = { lifelineX: currentX + objectNameWidth / 2, top: DIAGRAM_PADDING.TOP_BOTTOM };
+    const newX = currentX + objectNameWidth + OBJECT_SPACING;
+    return { newX, objectLayout };
+}
+
+function layoutObjects(layout, objects) {
+    let currentX = DIAGRAM_PADDING.LEFT_RIGHT;
+
+    objects.forEach(object => {
+        const { newX, objectLayout } = layoutObject(layout.getTextWidth, currentX, object);
+        layout[object.key] = objectLayout;
+        currentX = newX;
+    });
+
+    return currentX;
+}
+
 /**
  * Lays out ordered sets of objects and messages.
  * @param getTextWidth Used to measure rendered width of texts
@@ -83,23 +108,12 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
  * @param extraMessage Optional pre-layouted message to take into account. For example a pending message.
  **/
 export default function(getTextWidth, objects, messages, extraMessage) {
-    const DIAGRAM_PADDING= { LEFT_RIGHT: 70, TOP_BOTTOM: 40 };
-    const OBJECT_NAME_PADDING = { TOP_BOTTOM: 20, LEFT_RIGHT: 40 };
-    const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3;
-    const MESSAGE_START_Y = 140;
-    const MESSAGE_SPACING = 70;
-
     let layout = {};
 
     // We want subsequent measurements to use the same text measurer
     layout.getTextWidth = getTextWidth;
 
-    let currentX = DIAGRAM_PADDING.LEFT_RIGHT;
-    objects.forEach(object => {
-        const objectNameWidth = getTextWidth(object.name) + OBJECT_NAME_PADDING.LEFT_RIGHT;
-        layout[object.key] = { lifelineX: currentX + objectNameWidth / 2, top: DIAGRAM_PADDING.TOP_BOTTOM };
-        currentX += objectNameWidth + OBJECT_SPACING;
-    });
+    const currentX = layoutObjects(layout, objects);
 
     let currentY = MESSAGE_START_Y;
 
