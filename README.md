@@ -78,7 +78,9 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 - Never assume coordinates in tests for Add-object tests
 - Change default diagram to Object 1, Object 2, sendMessage()
 - Pre-render default diagram to index.html
+- Make Acknowledge page prettier
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Create a more accurate text measurer
+- Use CSS3 translate instead of left/top to animate objects and message. Will probably result in higher FPS

@@ -35,13 +35,13 @@
 
       @keyframes tipKeyframes
       {
-        0% { transform: translateX(30px); }
-        70% { transform: translateX(0px); }
-        100% { transform: translateX(30px); }
+        0% { transform: translateX(0px); }
+        30% { transform: translateX(30px); }
+        100% { transform: translateX(0px); }
       }
 
       .tip {
-        animation: tipKeyframes 3s ease-out infinite;
+        animation: tipKeyframes 3s ease-out 5;
         display: inline-block;
         font-size: 17px;
       }
