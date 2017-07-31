@@ -16,6 +16,10 @@ export function hoverHelper(pending, dispatch, key) {
     }
 }
 
+export function isJsonDifferent(object1, object2) {
+    return JSON.stringify(object1) !== JSON.stringify(object2);
+}
+
 export function eventToDiagramCoords(event) {
     const boundingClientRect = document.getElementById('diagram-root').getBoundingClientRect();
     return [ event.clientX - boundingClientRect.left, event.clientY - boundingClientRect.top ];

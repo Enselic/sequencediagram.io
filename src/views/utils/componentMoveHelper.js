@@ -1,6 +1,6 @@
 import * as ac from './../../reducers'
 import layouter, { layoutMessageLeftAndWidth } from './../../layouter'
-import { transferPropsToStyle, transferStyleToProps } from '.'
+import { transferPropsToStyle, transferStyleToProps, isJsonDifferent } from '.'
 
 /* To get high FPS while moving things around, manipulate DOM objects directly */
 export default function(objects, messages, movedComponent, eventToPos, elementToPos, beginComponentMove, endComponentMove, rearrangeComponents, dispatch, pending) {
@@ -137,7 +137,7 @@ export default function(objects, messages, movedComponent, eventToPos, elementTo
             let newMessages = uiMessages.reduce(reduceAndReset, []);
             const newComponents = isMovingObject ? newObjects : newMessages;
 
-            if (JSON.stringify(newComponents) !== JSON.stringify(components)) {
+            if (isJsonDifferent(newComponents, components)) {
                 dispatch(rearrangeComponents(newComponents));
             }
 

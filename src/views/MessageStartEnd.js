@@ -1,5 +1,6 @@
 import React from 'react'
 import { layoutMessageLeftAndWidth } from './../layouter'
+import { isJsonDifferent } from './utils'
 import * as ac from './../reducers'
 
 export default function(props) {
@@ -46,7 +47,7 @@ export default function(props) {
             function mouseup(e) {
                 e.preventDefault();
 
-                if (JSON.stringify(messageCopy) !== JSON.stringify(message)) {
+                if (isJsonDifferent(messageCopy, message)) {
                     dispatch(ac.replaceMessage(messageCopy));
                 }
 
