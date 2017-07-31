@@ -79,6 +79,13 @@ global.sleepIfHumanObserver = function(seconds) {
     sleep(seconds);
 }
 
+global.getTextCenterPos = async function(text) {
+    const el = await findElementByText(text);
+    const pos = await el.getLocation();
+    const size = await el.getSize();
+    return { x: pos.x + size.width / 2, y: pos.y + size.height / 2 };
+}
+
 global.reversePromise = function(promise) {
     return new SPromise((resolve, reject) => {
         promise.then(reject).catch(resolve);
@@ -103,6 +110,7 @@ global.findElementByText = function(text) {
 global.mouseMoveInSteps = function(totalOffset) {
     const steps = 20;
     let i = steps;
+    let lastPromise;
     while (i > 0) {
         i--;
         // Steps must be ints, otherwise WebDriver pukes
@@ -110,9 +118,10 @@ global.mouseMoveInSteps = function(totalOffset) {
             x: Math.ceil(totalOffset.x / steps),
             y: Math.ceil(totalOffset.y / steps),
         };
-        driver.actions().mouseMove(offsetStep).perform();
+        lastPromise = driver.actions().mouseMove(offsetStep).perform();
         sleepIfHumanObserver(1.5 / steps);
     }
+    return lastPromise;
 }
 
 function dragAndDrop(elementText, offset) {

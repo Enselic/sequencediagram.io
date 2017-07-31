@@ -113,3 +113,23 @@ test('can click in renamed component text to place cursor', () => {
             return assertFragment('o1,prefixPrefixMe');
         });
 })
+
+test('pending object move changes is stable', async () => {
+    goTo('o1,EndsUpRight;o2,EndsUpLeft');
+    const el = await findElementByText('EndsUpRight');
+    const endsUpRightPos = await getTextCenterPos('EndsUpRight');
+    const endsUpLeftPos = await getTextCenterPos('EndsUpLeft');
+    const slightlyRightOfEndsUpLeft = { x: endsUpLeftPos.x - endsUpRightPos.x + 30, y: 0 };
+    const inBetweenReversed = {x: -slightlyRightOfEndsUpLeft.x / 2, y: 0 };
+
+    await driver.actions().mouseMove(el).mouseDown().perform();
+
+    // This should result in the expected state we assert on
+    await mouseMoveInSteps(slightlyRightOfEndsUpLeft);
+
+    // This should not change the layout back
+    await mouseMoveInSteps(inBetweenReversed);
+
+    await driver.actions().mouseUp().perform();
+    return assertFragment('o2,EndsUpLeft;o1,EndsUpRight');
+});
