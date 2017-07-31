@@ -35,6 +35,7 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
     let borderWidth;
     let left;
     let width;
+    const minWidth = 22; // From largest borderWidth
     const messageTextWidth = (layout && layout.getTextWidth) ? layout.getTextWidth(message.name) : 100 /* arbitrary */;
     if (Math.abs(direction) < 0.5) {
         let png = message.isAsync ? messageBorderSelfAsync : messageBorderSelf;
@@ -42,7 +43,6 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
         borderWidth = '0px 0px 19px 22px'
         left = startX;
         const maxLineWidth = 150;
-        const minWidth = 22; // From borderWidth
         width = Math.min(maxLineWidth, Math.max(minWidth, messageTextWidth));
     } else {
         const arrowWidth = 9;
@@ -58,7 +58,7 @@ export function layoutMessageLeftAndWidth(layout, message, overrideStartX, overr
                        '0px 0px 17px ' + arrowWidth + 'px' :
                        '0px ' + arrowWidth + 'px 17px 0px');
         left = Math.min(startX, endX);
-        width = Math.abs(startX - endX) - arrowWidth;
+        width = Math.max(Math.abs(startX - endX) - arrowWidth, minWidth);
     }
 
     const approximateLineHeight = 18;
