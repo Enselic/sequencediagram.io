@@ -43,7 +43,7 @@ test('EDGE CASE: move second object right of two objects', moveObject(
 
 test('make first object of three second', moveObject(
     'o11,Emma;o22,Alvin;o33,Saga',
-    'Emma', 200,
+    'Emma', 260,
     'o22,Alvin;o11,Emma;o33,Saga'));
 
 test('make first object of three last', moveObject(
@@ -61,7 +61,7 @@ test('make second object of three first', moveObject(
 
 test('make second object of three last', moveObject(
     'o2,Banana;o4,Apple;o7,Orange',
-    'Apple', 200,
+    'Apple', 300,
     'o2,Banana;o7,Orange;o4,Apple'));
 
 
@@ -74,7 +74,7 @@ test('make third object of three first', moveObject(
 
 test('make third object of three second', moveObject(
     'o9,CCC;o8,BBB;o7,Martin',
-    'Martin', -200,
+    'Martin', -260,
     'o9,CCC;o7,Martin;o8,BBB'));
 
 

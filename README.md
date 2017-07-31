@@ -75,7 +75,6 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- Never assume coordinates in tests for Add-object tests
 - Change default diagram to Object 1, Object 2, sendMessage()
 - Pre-render default diagram to index.html
 - Make Acknowledge page prettier

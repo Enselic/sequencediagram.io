@@ -111,7 +111,7 @@ global.mouseMoveInSteps = function(totalOffset) {
             y: Math.ceil(totalOffset.y / steps),
         };
         driver.actions().mouseMove(offsetStep).perform();
-        sleepIfHumanObserver(0.7 / steps);
+        sleepIfHumanObserver(1.5 / steps);
     }
 }
 
