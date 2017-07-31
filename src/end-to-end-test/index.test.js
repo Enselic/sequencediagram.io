@@ -186,8 +186,13 @@ global.urlParsing = function(url, expected) {
     }
 }
 
+
 global.goTo = function(startState) {
-    driver.get('http://localhost:3000/#' + startState);
+    // CI scripts run from npm run build with serve (port 5000)
+    // while you (typically) you run from npm start (port 3000)
+    const port = !!process.env.CI ? '5000' : '3000';
+    const fragment = startState ? '#' + startState : '';
+    driver.get(`http://localhost:${port}/${fragment}`);
     /* We use 0.3 second CSS transitions, so make sure those have
      * settled before we move on.
      */

@@ -5,5 +5,5 @@ node_js:
 addons:
   chrome: stable
 before_script:
-  - npm start &
+  - npm run build && node_modules/serve/bin/serve.js -s build &
   - sleep 30
