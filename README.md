@@ -76,8 +76,7 @@ TODO
 
 List of minor/uninteresting things to do, roughly sorted by priority.
 - Change default diagram to Object 1, Object 2, sendMessage()
-- Pre-render default diagram to index.html
-- Make Acknowledge page prettier
+- Make Acknowledge page prettier and fix SW bug!
 - Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
