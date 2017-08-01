@@ -87,10 +87,19 @@ test('add message between two messages reversed', insertMessage(
     size => { return { x: 0, y: size.height + 30 } },
     'o1,Foo;o2,Bar;m1,o1,o2,M1();m3,o2,o1,sendMessage();m2,o2,o1,M2()'));
 
-test('remove object while pending message', () => {
-    goTo('o2,Bar;o3,Baz');
+test('remove object while pending message', async () => {
+    goTo('o2,Bar;o3,Baz;o4,Foo');
     clickLifelineForObjectWithText('Bar');
+
+    // First remove an object that is not a starting point for a pending message
+    // No special code needs to run
+    removeComponentWithKey('o4');
+    await assertFragment('o2,Bar;o3,Baz');
+
+    // Now remove the object that has a pending message attached
+    // Our code should handle this and dismiss the pending message
     removeComponentWithKey('o2');
+
     // Do something afterwards so we detect if the app crashed
     clickLifelineForObjectWithText('Baz');
     clickLifelineForObjectWithText('Baz');

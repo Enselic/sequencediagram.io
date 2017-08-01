@@ -18,10 +18,29 @@ test('missing components are handled', () => {
 test('messages with invalid references are not included in deserialization', () => {
     goTo("'o1,Foo;o2,Bar;m1,o1,o2,Baz'");
     click('Bar');
-    typeAndConfirmm('Boom');
-    return assertFragment('o2,Boom');
+    typeAndConfirmm('NoBoom');
+    return assertFragment('o2,NoBoom');
 })
 
-// TODO special chars are handled
-// TODO: double ids handled, first only is used
+test('invalid message references do not crash', () => {
+    goTo('o1,Foo;o3,Baz;m2,o2,o3,bar()');
+    click('Foo');
+    typeAndConfirmm('NoBoom');
+    return assertFragment('o1,NoBoom;o3,Baz');
+})
+
+test('Can have unicode arrow in message and object name', async () => {
+    const toAssert = 'o1,%E2%87%90;o2,Unicode%20arrows%20ftw;m1,o1,o2,%E2%87%90%20plus%20text';
+    goTo('o1,%E2%87%90;o2,Unicode%20arrows%20ftw;m1,o1,o2,%E2%87%90%20plus%20text');
+    await assertFragment(toAssert);
+    goTo('o1,⇐;o2,Unicode%20arrows%20ftw;m1,o1,o2,⇐%20plus%20text');
+    return assertFragment(toAssert);
+})
+
+/*TODO
+test('double object ids', () => {
+    goTo('o1,First;o1,Duplicate');
+});
+*/
+
 // TODO: negative ids are handled i.e. ignored

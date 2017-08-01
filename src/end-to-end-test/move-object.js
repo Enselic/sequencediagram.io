@@ -78,6 +78,11 @@ test('make third object of three second', moveObject(
     'o9,CCC;o7,Martin;o8,BBB'));
 
 
+test('MANUAL (VISUAL): move object with messages attached look good', moveObject(
+    'o1,o1;o2,o2;o3,o3;o4,o4;m1,o1,o2,m1;m2,o3,o2,m2;m3,o2,o4,m3,a;m4,o4,o2,m4,r',
+    'o2', 700,
+    'o1,o1;o3,o3;o4,o4;o2,o2;m1,o1,o2,m1;m2,o3,o2,m2;m3,o2,o4,m3,a;m4,o4,o2,m4,r'));
+
 test('move away and back does not trigger click', () => {
     const text = "FixedName"
     const expected = goTo('o1,' + text);

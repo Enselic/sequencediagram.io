@@ -30,6 +30,8 @@ let { Builder, By, until, Key, promise } = require('selenium-webdriver');
 let { Options } = require('selenium-webdriver/chrome');
 let devUtils = require('../devUtils');
 
+global.devMode = devUtils.devMode;
+
 global.Key = Key;
 
 let options = new Options();
@@ -50,7 +52,7 @@ afterAll(() => {
 // Helper functions
 
 global.sleep = function(seconds) {
-    driver.sleep(seconds * 1000);
+    return driver.sleep(seconds * 1000);
 }
 
 function transitionsDisabled() {
@@ -76,7 +78,7 @@ global.sleepIfHumanObserver = function(seconds) {
         return;
     }
 
-    sleep(seconds);
+    return sleep(seconds);
 }
 
 global.getTextCenterPos = async function(text) {
@@ -320,10 +322,3 @@ filesWithTests.forEach(file => {
         require('./' + file);
     })
 })
-
-// TODO: Click an empty area
-// TODO: Click and drag on empty area
-// TODO: Double-click on empty area
-// TODO: drag and drop remove button shall not select text
-// TODO: test devMode === false
-// TODO: test that when there is a pending message, the controls for other messages is removed (to not be in the way)

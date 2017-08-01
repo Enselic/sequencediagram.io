@@ -68,4 +68,17 @@ test('Warn that touch input is not supported yet, and dismiss it', async () => {
     return reversePromise(waitForElement(touchHintText));
 });
 
-// TODO: http://localhost:3000/#o1,Foo;o3,Baz;m2,o2,o3,bar()   should not crash
+test('MANUAL: Drag and drop Object remove button shall not select any text', () => {
+    goTo('o1,MANUAL%3A%20Drag%20and%20drop%20the%20remove%20button%20of%20this%20object%20(but%20don\'t%20trigger%20a%20click).%20No%20text%20shall%20be%20selected.');
+    return sleepIfHumanObserver(7);
+});
+
+test('ensure devMode == false', () => {
+    // We don't want to deploy in dev mode...
+    expect(devMode).toBeFalsy();
+});
+
+test('MANUAL: Controls are removed when a message is pending', () => {
+    goTo('o1,Foo;o2,Bar;m1,o1,o2,MANUAL%20TEST%3A%201.%20Click%20any%20lifeline%20to%20create%20a%20pending%20message.%20Expected%3A%20The%20controls%20for%20this%20message%20shall%20not%20be%20displayed%20when%20hovered%20because%20it%20makes%20the%20UI%20nosiy%20and%20distracting.');
+    return sleepIfHumanObserver(7);
+});

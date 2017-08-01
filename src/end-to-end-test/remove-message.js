@@ -25,7 +25,7 @@ test('remove message does not trigger name change', () => {
     return assertFragment('o1,A1;o2,A2;m1,o1,o2,SameNameUsedTwiceForIdenticalSizes');
 })
 
-test('MANUAL VISUAL: hover is triggered when component moves in under cursor', () => {
+test('MANUAL TEST (VISUAL): hover is triggered when component moves in under cursor', () => {
     goTo('o1,Foo;o3,Baz;m2,o1,o3,after this is removed;m3,o1,o3,mouse move should show controls, if not => failed test');
     removeComponentWithKey('m2');
     driver.actions().mouseMove({x: -2, y: -2}).perform();
