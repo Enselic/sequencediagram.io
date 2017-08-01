@@ -59,13 +59,13 @@ function serializeState() {
     return serialize(args);
 }
 
-function render() {
+function renderAndSerialize() {
     ReactDOM.render(<App state={store.getState()} dispatch={dispatch} />, document.getElementById('root'));
 
     const result = serializeState();
     window.location.hash = result;
 }
-store.subscribe(render);
-render();
+store.subscribe(renderAndSerialize);
+renderAndSerialize();
 
 registerServiceWorker(boundActionCreators.showWorksOffline, boundActionCreators.showNewContentAvailable);
