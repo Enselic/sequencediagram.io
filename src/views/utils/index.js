@@ -75,3 +75,12 @@ export function isChrome() {
       return false;
   }
 }
+
+export const eatMouseDown = {
+    onMouseDown: e => {
+        // We don't want the parent div to receive any mouse down event if
+        // this item is clicked
+        e.stopPropagation();
+        e.preventDefault();
+    }
+}

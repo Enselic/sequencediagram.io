@@ -3,19 +3,11 @@ import { toggleMessageLineStyle, toggleMessageArrowStyle, flipMessageDirection }
 import messageBorders from './message-borders.png'
 import messageBordersDashed from './message-borders-dashed.png'
 import messageBordersAsync from './message-borders-async.png'
+import { eatMouseDown } from './utils'
 
 export default function(props) {
     const { dispatch, message, layout, controlsColor, selfSent } = props;
     const key = message.key;
-
-    const eatMouseDown = {
-        onMouseDown: e => {
-            // We don't want the parent div to receive any mouse down event if
-            // this item is clicked
-            e.stopPropagation();
-            e.preventDefault();
-        }
-    }
 
     const pointsLeft = layout[key].pointsLeft;
     const invisible = controlsColor === 'transparent';
