@@ -70,9 +70,9 @@ test('use all features, then undo all, then redo all', async () => {
     asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer');
 
     await addMessage('Undoer', 'Redoer');
-    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;m1,o1,o2,sendMessage()');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;m1,o1,o2,newMessage()');
 
-    clickAndType('sendMessage()', 'invoke()');
+    clickAndType('newMessage()', 'invoke()');
     asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;m1,o1,o2,invoke()');
 
     clickAddObject();
@@ -85,12 +85,12 @@ test('use all features, then undo all, then redo all', async () => {
     asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m1,o3,o2,invoke()');
 
     await addMessage('Redoer', 'User', 'invoke()');
-    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m2,o2,o3,sendMessage();m1,o3,o2,invoke()');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m2,o2,o3,newMessage();m1,o3,o2,invoke()');
 
     flip('m2');
-    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,sendMessage();m1,o3,o2,invoke()');
+    asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,newMessage();m1,o3,o2,invoke()');
 
-    clickAndType('sendMessage()', 'call()'); // Use a different term so we can search by text uniquely
+    clickAndType('newMessage()', 'call()'); // Use a different term so we can search by text uniquely
     asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call();m1,o3,o2,invoke()');
 
     toggleArrowStyle('m2');
