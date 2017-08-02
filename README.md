@@ -77,10 +77,12 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- Prevent select text inside diagram
 - Change default diagram to Object 1, Object 2, sendMessage()
 - Make Acknowledge page prettier and fix SW bug!
-- Add more end-to-end tests so that all current features are covered, like message end point move, including undo redo
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
+- Make tab switch objects
 - Create a more accurate text measurer
+- Make messages movable horizontally
 - Use CSS3 translate instead of left/top to animate objects and message. Will probably result in higher FPS

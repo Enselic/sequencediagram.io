@@ -126,7 +126,7 @@ global.mouseMoveInSteps = function(totalOffset) {
     return lastPromise;
 }
 
-function dragAndDrop(elementText, offset) {
+global.dragAndDrop = function(elementText, offset) {
     driver.actions().mouseDown(findElementByText(elementText)).perform();
     sleepIfHumanObserver(0.7);
 
