@@ -75,8 +75,8 @@ https://SequenceDiagram.io/#o5,Friend;o4,User;o1,Web%20browser;o2,Server;m8,o5,o
 
 TODO
 ====
+
 List of minor/uninteresting things to do, roughly sorted by priority.
-- Change default diagram to Object 1, Object 2, sendMessage()
 - Make Acknowledge page prettier and fix SW bug!
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
 - Prevent select text inside diagram

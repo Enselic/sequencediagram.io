@@ -46,7 +46,7 @@ test('tip not shown for non-default diagram (one extra object)', () => {
 });
 
 test('tip not shown for non-default diagram (one extra message)', () => {
-    goTo('o1,Foo;o2,Bar;m1,o1,o2,Baz;m2,o1,o2,newMessage()');
+    goTo('o1,Foo;o2,Bar;m1,o1,o2,message();m2,o1,o2,newMessage()');
     sleepIfHumanObserver(2);
     return reversePromise(waitForElement(tipText));
 });
@@ -60,7 +60,7 @@ test('MANUAL: Inspect layout and message appearances', () => {
 test('Warn that touch input is not supported yet, and dismiss it', async () => {
     // Pretend we got a "pure" link to the site i.e. without any URL fragment
     await goTo('');
-    await assertFragment('o1,Foo;o2,Bar;m1,o1,o2,Baz');
+    await assertFragment('o1,Foo;o2,Bar;m1,o1,o2,message()');
     await driver.touchActions().tap(findElementByText('Foo')).perform();
     const touchHintText = 'Touch input is not supported yet';
     await waitForElement(touchHintText);

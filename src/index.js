@@ -17,7 +17,7 @@ function dispatch(action) {
 }
 const boundActionCreators = bindActionCreators(ac, dispatch);
 
-const defaultDiagram = '#o1,Foo;o2,Bar;m1,o1,o2,Baz';
+const defaultDiagram = '#o1,Foo;o2,Bar;m1,o1,o2,message()';
 
 function setupFromHash(hash) {
     let { objects, messages } = deserialize(hash.substring(1));
