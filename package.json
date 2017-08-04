@@ -31,6 +31,7 @@
     "glob": "^7.1.2",
     "istanbul": "^0.4.5",
     "jest": "^22.0.0",
+    "license-webpack-plugin": "0.6.0",
     "morgan": "^1.8.2",
     "morgan-body": "^0.10.9",
     "node-fetch": "^1.7.3",
