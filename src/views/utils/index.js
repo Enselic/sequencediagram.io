@@ -54,7 +54,6 @@ export function transferStyleToProps(style) {
         width: style.width,
         top: style.top,
         height: style.height,
-        'pointer-events': style['pointer-events'],
     };
 }
 
