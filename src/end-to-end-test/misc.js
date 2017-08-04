@@ -82,3 +82,14 @@ test('MANUAL: Controls are removed when a message is pending', () => {
     goTo('o1,Foo;o2,Bar;m1,o1,o2,MANUAL%20TEST%3A%201.%20Click%20any%20lifeline%20to%20create%20a%20pending%20message.%20Expected%3A%20The%20controls%20for%20this%20message%20shall%20not%20be%20displayed%20when%20hovered%20because%20it%20makes%20the%20UI%20nosiy%20and%20distracting.');
     return sleepIfHumanObserver(7);
 });
+
+/* why does not this work?
+test.only('Clicking Acknowledgements brings us to Acknowledgements', async () => {
+    goTo('');
+    await click('Acknowledgements');
+    await sleep(3);
+    console.log('waiting');
+    const title = await driver.getTitle();
+    expect(title).toEqual("Acknowledgements for https://sequencediagram.io");
+});
+*/

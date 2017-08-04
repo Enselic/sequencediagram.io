@@ -77,7 +77,6 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- Make Acknowledge page prettier and fix SW bug!
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
 - Prevent select text inside diagram
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?

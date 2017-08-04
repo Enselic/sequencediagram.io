@@ -69,7 +69,9 @@ global.sleepIfTransitionsEnabled = function(seconds) {
 
 global.waitForCssTransitions = function() {
     if (!transitionsDisabled()) {
-        sleep(0.3);
+        return sleep(0.3);
+    } else {
+        return true;
     }
 }
 
@@ -137,14 +139,14 @@ global.dragAndDrop = function(elementText, offset) {
 }
 
 global.click = function(elementText) {
-    clickElement(findElementByText(elementText));
+    return clickElement(findElementByText(elementText));
 }
 
 global.clickElement = function(element) {
     driver.actions()
     .click(element)
     .perform();
-    waitForCssTransitions();
+    return waitForCssTransitions();
 }
 
 global.typeAndConfirmm = function(typedText) {
