@@ -1,6 +1,6 @@
 import React from 'react'
 import { layoutMessageLeftAndWidth } from './../layouter'
-import { isJsonDifferent } from './utils'
+import { isJsonDifferent, transferPropsToStyle, transferStyleToProps } from './utils'
 import * as ac from './../reducers'
 
 export default function(props) {
@@ -18,6 +18,8 @@ export default function(props) {
             const messageCopy = { ...message };
 
             const el = document.getElementById(message.key);
+            const oldStyle = transferStyleToProps(el.style);
+            el.style.transition = 'none';
 
             function updatePositions(e) {
                 let shortestDist = 10000000;
@@ -29,7 +31,11 @@ export default function(props) {
                     }
                 });
 
-                const l = layoutMessageLeftAndWidth(layout, messageCopy);
+                const l = layoutMessageLeftAndWidth(
+                    layout,
+                    messageCopy,
+                    part === "start" ? e.pageX : undefined,
+                    part === "end" ? e.pageX : undefined);
                 const style = el.style;
                 style.left = l.left + 'px';
                 style.width = l.width + 'px';
@@ -47,6 +53,8 @@ export default function(props) {
             function mouseup(e) {
                 e.preventDefault();
 
+                transferPropsToStyle(oldStyle, el.style);
+
                 if (isJsonDifferent(messageCopy, message)) {
                     dispatch(ac.replaceMessage(messageCopy));
                 }
@@ -59,7 +67,7 @@ export default function(props) {
 
             updatePositions(e);
 
-            dispatch(ac.beginComponentMove(message.key));
+            dispatch(ac.beginComponentMove(message.key, part));
         }
     }
 

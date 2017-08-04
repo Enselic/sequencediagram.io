@@ -29,6 +29,7 @@ export default function(props) {
 
         style = {
             transition: devUtils.transitionIfNotDev('left 0.3s, width 0.3s, top 0.3s, height 0.3s'),
+            pointerEvents: pending.componentMoved ? 'none' : 'auto',
         };
     } else {
         style= {
@@ -48,7 +49,7 @@ export default function(props) {
     // a pending message is in the middle of creation (so that the user
     // can focus on completing the new message without UI noise
     // from controls)
-    const showControls = !isPending && !pending.message;
+    const showControls = !isPending && !pending.message && !(pending.componentMoved && pending.componentMoved.part);
     const selfSent = message.start === message.end;
 
     return (

@@ -9,8 +9,12 @@ export function pendingAddMessage(start, x, y, name) {
     return { type: 'PENDING_ADD_MESSAGE', start, x, y, name };
 }
 
-export function beginComponentMove(key) {
-    return { type: 'BEGIN_COMPONENT_MOVE', key: key };
+/**
+ * @param key Key of component. Message or Object.
+ * @param part Part of message. "start" or "end". If not specified, entire component is moved.
+ */
+export function beginComponentMove(key, part) {
+    return { type: 'BEGIN_COMPONENT_MOVE', key, part };
 }
 
 export function endComponentMove(key) {
@@ -73,7 +77,7 @@ export default function(state = {}, action) {
     case 'REMOVE_COMPONENT':
         return { ...state, message: !state.message || state.message.start === action.key ? undefined : state.message };
     case 'BEGIN_COMPONENT_MOVE':
-        return { ...state, componentMoved: { key: action.key }};
+        return { ...state, componentMoved: { key: action.key, part: action.part }};
     case 'END_COMPONENT_MOVE':
         return { ...state, componentMoved: undefined };
     case 'EDIT_COMPONENT_NAME':

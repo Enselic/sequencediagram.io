@@ -91,10 +91,10 @@ export default function(props) {
                         isPending={true}
                         /> }
 
-                { pending.lifelineHoveredKey && !pending.componentMoved && <NewMessageMarker
+                { pending.lifelineHoveredKey && (!pending.componentMoved || pending.componentMoved.part) && <NewMessageMarker
                         left={layout[pending.lifelineHoveredKey].lifelineX}
-                        top={pending.message ? pendingMessageLayout.top : pending.lifelineHoveredY}
-                        isStart={!!!pending.message}
+                        top={pending.message ? pendingMessageLayout.top + 25 : pending.lifelineHoveredY}
+                        isStart={!!!pending.message && !(pending.componentMoved && pending.componentMoved.part)}
                         direction={layout[pending.lifelineHoveredKey].lifelineX > pending.lifelineHoveredX ? -1 : 1}
                         /> }
             </div>
