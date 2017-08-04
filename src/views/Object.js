@@ -44,6 +44,7 @@ export default function(props) {
         top: layout[object.key].top,
         position: 'absolute',
         transition: devUtils.transitionIfNotDev('left 0.3s'),
+        userSelect: 'none',
     };
 
     return (

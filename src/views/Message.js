@@ -41,6 +41,7 @@ export default function(props) {
         position: 'absolute',
         textAlign: 'center',
         borderStyle: 'solid',
+        userSelect: 'none',
     }
 
     // Show controls unless this is a pending message and unless

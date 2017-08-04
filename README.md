@@ -78,7 +78,7 @@ TODO
 
 List of minor/uninteresting things to do, roughly sorted by priority.
 - make pending message and end-point-of-message move behave the same with regards to lifeline "stickyness"
-- Prevent select text inside diagram
+- Make adding an object preselect its text
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Make tab switch objects
 - Create a more accurate text measurer

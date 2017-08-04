@@ -93,3 +93,9 @@ test.only('Clicking Acknowledgements brings us to Acknowledgements', async () =>
     expect(title).toEqual("Acknowledgements for https://sequencediagram.io");
 });
 */
+
+test('MANUAL: Diagram text not visibly selectable', async () => {
+    goTo('o1,Make%20sure%20this%20text%20is%20not%20selected%20after%20Ctrl%2BA;o2,.;m1,o1,o2,Nor%20this%20text%2C%20or%20any%20controls');
+    await driver.actions().sendKeys([ Key.CONTROL, 'a', Key.NULL ]).perform();
+    await sleepIfHumanObserver(7);
+});
