@@ -77,7 +77,6 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- Add click hint to message move endpoints
 - Make adding an object preselect its text
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Make tab switch objects

@@ -97,9 +97,8 @@ export default function(props) {
         borderRadius: '15px',
         border: '1px dotted ' + controlsColor,
         color: controlsColor,
-        paddingTop: 3,
         fontSize: 10,
     }
 
-    return <span id={message.key + '-' + type} style={style} className="message-end" onMouseDown={mousedown(type)}>move</span>;
+    return <span id={message.key + '-' + type} style={style} className="message-end" onMouseDown={mousedown(type)}>drag-able</span>;
 }
