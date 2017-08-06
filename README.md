@@ -41,9 +41,9 @@ Here is a list of features that I plan on adding later, roughly sorted by descen
 Contributions of any kind are very welcomed however!
 
 - Support more browsers i.e. make the test suite work on more browsers
-- Support adding a title to the diagram (work in progress: https://github.com/Enselic/sequencediagram.io/tree/add-title)
-- Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
 - Support adding arbitrary comments to the diagram
+- Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
+- Support adding a title to the diagram (work in progress: https://github.com/Enselic/sequencediagram.io/tree/add-title)
 - Support SVG export to allow embedding in in e.g. PDFs. For now, users can take PNG screenshots of the app
 - Support visualization of so called found message, i.e. messages originating form a solid circle
 - Let the user add so called activation boxes to lifelines to represent processing
@@ -77,6 +77,13 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- Make Object movable vertically
+- layout message buttons better and with colors
+- 'a' to add Object
+- Make adding a component edit its text directly
+- fix issue #5
+- node_modules/prettier/bin/prettier.js --single-quote --trailing-comma es5 --write 'src/**/*.js'
+- make NewMesssageMarker only be where messages will be added
 - Make adding an object preselect its text
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Make tab switch objects
