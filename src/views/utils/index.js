@@ -12,7 +12,7 @@ export function hoverHelper(pending, dispatch, key) {
     },
     onMouseLeave() {
       dispatch(ac.endHoverOverComponent());
-    }
+    },
   };
 }
 
@@ -26,7 +26,7 @@ export function eventToDiagramCoords(event) {
     .getBoundingClientRect();
   return [
     event.clientX - boundingClientRect.left,
-    event.clientY - boundingClientRect.top
+    event.clientY - boundingClientRect.top,
   ];
 }
 
@@ -40,7 +40,7 @@ export function hoverLifelineHelper(dispatch, key) {
     },
     onMouseLeave() {
       dispatch(ac.mouseLeaveLifeline());
-    }
+    },
   };
 }
 
@@ -58,7 +58,7 @@ export function transferStyleToProps(style) {
     left: style.left,
     width: style.width,
     top: style.top,
-    height: style.height
+    height: style.height,
   };
 }
 
@@ -92,5 +92,5 @@ export const eatMouseDown = {
     // this item is clicked
     e.stopPropagation();
     e.preventDefault();
-  }
+  },
 };
