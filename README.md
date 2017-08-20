@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/Enselic/sequencediagram.io.svg?branch=master)](https://travis-ci.org/Enselic/sequencediagram.io)
 [![Coverage Status](https://coveralls.io/repos/github/Enselic/sequencediagram.io/badge.svg?branch=master-with-code-coverage)](https://coveralls.io/github/Enselic/sequencediagram.io?branch=master-with-code-coverage)
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
 
 https://sequencediagram.io
@@ -82,7 +83,6 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 - 'a' to add Object
 - Make adding a component edit its text directly
 - fix issue #5
-- node_modules/prettier/bin/prettier.js --single-quote --trailing-comma es5 --write 'src/**/*.js'
 - make NewMesssageMarker only be where messages will be added
 - Make adding an object preselect its text
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?

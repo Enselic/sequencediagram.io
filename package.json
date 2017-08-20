@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "chromedriver": "^2.31.0",
+    "prettier": "^1.5.3",
     "react-scripts": "1.0.7",
     "selenium-webdriver": "^3.4.0",
     "serve": "^6.0.4"
@@ -17,8 +18,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "npm run prettier -- --list-different && react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write --trailing-comma es5"
+    "prettier": "node_modules/.bin/prettier --trailing-comma es5 'src/**/*.js'"
   }
 }
