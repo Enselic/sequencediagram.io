@@ -94,3 +94,72 @@ export const eatMouseDown = {
     e.preventDefault();
   },
 };
+
+/**
+ * Same as <pre><code>arrayToMap.map(callback)</code></pre>, except order of
+ * DOM elements is preserved across calls. This function exists so that CSS
+ * animations are not reset when rearranging React components. In the following
+ * code, the function makes both 'A' and 'B' animate. With
+ * <pre><code>Array.prototype.map</code></pre>, only one of them is animated.
+ *
+ * <pre><code>
+let memoryArray = [];
+function renderItems(items) {
+  ReactDOM.render(
+    <div>
+      {mapWithSameDomOrder(items, memoryArray, (item, index) => {
+        return (
+          <div
+            key={item.key}
+            style={{
+              position: "absolute",
+              left: index * 200,
+              transition: "left 5s"
+            }}
+          >
+            {item.key}
+          </div>
+        );
+      })}
+    </div>,
+    document.getElementById("root")
+  );
+}
+
+renderItems([{ key: "A" }, { key: "B" }]);
+setTimeout(renderItems, 500, [{ key: "B" }, { key: "A" }]);
+
+</code></pre>
+ *
+ * @param {Object[]} arrayToMap Array to map.
+ * @param {Object[]} memoryArray Array that contains the previous order. After
+ * the method returns, it contains the new order, and should be sent in to the
+ * next call of this function. You would typically have this as a property of
+ * a React component.
+ * @callback {*} callback
+ */
+export function mapWithSameDomOrder(arrayToMap, memoryArray, callback) {
+  // Create new elements
+  let keyToElement = {};
+  arrayToMap.forEach((item, index, array) => {
+    const element = callback(item, index, array);
+    keyToElement[item.key] = element;
+  });
+
+  // Rearrange them according to previous order
+  let elements = [];
+  memoryArray.forEach(prevElement => {
+    if (prevElement.key in keyToElement) {
+      elements.push(keyToElement[prevElement.key]);
+      delete keyToElement[prevElement.key];
+    }
+  });
+
+  // Finally, append remaining (new) elements
+  elements.splice(elements.length, 0, ...Object.values(keyToElement));
+
+  // Move 'elements' contents to 'memoryArray'
+  memoryArray.splice(0, memoryArray.length, ...elements);
+
+  return elements;
+}
