@@ -6,6 +6,7 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:3000",
+            "urlFilter": "localhost:3000/*",
             "webRoot": "${workspaceRoot}"
         },
         {
@@ -13,6 +14,7 @@
             "request": "attach",
             "name": "Attach to Chrome",
             "port": 9222,
+            "urlFilter": "localhost:3000/*",
             "webRoot": "${workspaceRoot}"
         }
     ]

@@ -59,6 +59,11 @@ It should work to git clone this repo and then run `npm start` after `npm instal
 To run the automated tests it should work to run `npm test` while `npm start` is
 running.
 
+Visual Studio Code
+------------------
+
+First launch Google Chrome with `google-chrome --remote-debugging-port=9222`. Then open up the project in vscode with `code sequencediagram.io/`. Now you should be able to set breakpoints, launch, debug, etc (after `npm start` as per above).
+
 Technology
 ----------
 
