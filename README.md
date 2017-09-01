@@ -70,6 +70,12 @@ Technology
 - React (via create-react-app) and Redux for the app
 - selenium-webdriver for automated end-to-end testing.
 
+Debugging tips
+--------------
+
+When running automated tests that control the mouse via scripts, it is
+useful to show the mouse position via an overlay by doing: `REACT_APP_MOUSE_DEBUG=1 npm start`
+
 
 Misc
 ====
