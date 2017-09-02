@@ -112,56 +112,56 @@ test(
   )
 );
 
-test("move away and back does not trigger click", () => {
+test("move away and back does not trigger click", async () => {
   const text = "FixedName";
-  const expected = goTo("o1," + text);
-  driver
+  const expected = "o1," + text;
+  await goTo(expected);
+  await driver
     .actions()
-    .mouseDown(findElementByText(text))
+    .mouseDown(await findElementByText(text))
     .perform();
-  mouseMoveInSteps({ x: 100, y: 0 });
-  mouseMoveInSteps({ x: -100, y: 0 });
-  driver
+  await mouseMoveInSteps({ x: 100, y: 0 });
+  await mouseMoveInSteps({ x: -100, y: 0 });
+  await driver
     .actions()
     .mouseUp()
     .perform();
-  typeAndConfirmm("This-text-shall-not-end-up-as-name-for-object");
+  await typeAndConfirmm("This-text-shall-not-end-up-as-name-for-object");
   return assertFragment(expected);
 });
 
-test("move does not suppress blur event (i.e. text commit) when renaming", () => {
-  goTo("o1,Foo;o2,Bar");
-  click("Foo");
-  type("CHEEERS");
-  click("Bar");
+test("move does not suppress blur event (i.e. text commit) when renaming", async () => {
+  await goTo("o1,Foo;o2,Bar");
+  await click("Foo");
+  await type("CHEEERS");
+  await click("Bar");
   return assertFragment("o1,CHEEERS;o2,Bar");
 });
 
-test("can click in renamed component text to place cursor", () => {
-  goTo("o1,PrefixMe");
-  return findElementByText("PrefixMe").then(el => {
-    // To hit upper left coner, to place cursor first
-    const topLeft = { x: 1, y: 1 };
-    driver
-      .actions()
-      .mouseMove(el, topLeft)
-      .mouseDown()
-      .mouseUp()
-      .perform();
-    sleepIfHumanObserver(1);
-    driver
-      .actions()
-      .mouseDown()
-      .mouseUp()
-      .perform();
-    sleepIfHumanObserver(1);
-    typeAndConfirmm("prefix");
-    return assertFragment("o1,prefixPrefixMe");
-  });
+test("can click in renamed component text to place cursor", async () => {
+  await goTo("o1,PrefixMe");
+  const el = await findElementByText("PrefixMe");
+  // To hit upper left coner, to place cursor first
+  const topLeft = { x: 1, y: 1 };
+  await driver
+    .actions()
+    .mouseMove(el, topLeft)
+    .mouseDown()
+    .mouseUp()
+    .perform();
+  await sleepIfHumanObserver(1);
+  await driver
+    .actions()
+    .mouseDown()
+    .mouseUp()
+    .perform();
+  await sleepIfHumanObserver(1);
+  await typeAndConfirmm("prefix");
+  return assertFragment("o1,prefixPrefixMe");
 });
 
 test("pending object move changes is stable", async () => {
-  goTo("o1,EndsUpRight;o2,EndsUpLeft");
+  await goTo("o1,EndsUpRight;o2,EndsUpLeft");
   const el = await findElementByText("EndsUpRight");
   const endsUpRightPos = await getTextCenterPos("EndsUpRight");
   const endsUpLeftPos = await getTextCenterPos("EndsUpLeft");

@@ -141,7 +141,7 @@ test(
 // Move endpoints
 
 test("move endpoints", async () => {
-  goTo(
+  await goTo(
     "o1,o1;o2,o2;o3,o3;m1,o2,o3,m1%20start%20to%20o1;m2,o1,o3,m2%20start%20to%20o2;m3,o2,o2,m3%20start%20to%20o3;m4,o2,o3,m4%20end%20to%20o1;m5,o1,o3,m5%20end%20to%20o2;m6,o2,o3,m6%20end%20to%20o2"
   );
 
@@ -177,7 +177,7 @@ test("move endpoints", async () => {
 
   // m6 end to o2
   await moveEndPointToActor("m6", "end", "o2");
-  await assertFragment(
+  return assertFragment(
     "o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o2,o3,m2%20start%20to%20o2;m3,o3,o2,m3%20start%20to%20o3;m4,o2,o1,m4%20end%20to%20o1;m5,o1,o2,m5%20end%20to%20o2;m6,o2,o2,m6%20end%20to%20o2"
   );
 });

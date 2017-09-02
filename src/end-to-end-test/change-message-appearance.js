@@ -24,24 +24,24 @@ test(
 );
 
 test("toggle arrow style", async () => {
-  goTo("o1,An%20Object;o2,Another%20Object;m1,o1,o2,message()");
-  toggleArrowStyle("m1");
+  await goTo("o1,An%20Object;o2,Another%20Object;m1,o1,o2,message()");
+  await toggleArrowStyle("m1");
   await assertFragment(
     "o1,An%20Object;o2,Another%20Object;m1,o1,o2,message(),a"
   );
-  toggleArrowStyle("m1");
+  await toggleArrowStyle("m1");
   return assertFragment(
     "o1,An%20Object;o2,Another%20Object;m1,o1,o2,message()"
   );
 });
 
 test("toggle line style", async () => {
-  goTo("o1,An%20Object;o2,Another%20Object;m333,o1,o2,message()");
-  toggleLineStyle("m333");
+  await goTo("o1,An%20Object;o2,Another%20Object;m333,o1,o2,message()");
+  await toggleLineStyle("m333");
   await assertFragment(
     "o1,An%20Object;o2,Another%20Object;m333,o1,o2,message(),r"
   );
-  toggleLineStyle("m333");
+  await toggleLineStyle("m333");
   return assertFragment(
     "o1,An%20Object;o2,Another%20Object;m333,o1,o2,message()"
   );

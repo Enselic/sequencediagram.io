@@ -1,9 +1,8 @@
 function addingMessage(start, firstClick, secondClick, expected) {
-  return () => {
-    goTo(start);
-    return addMessage(firstClick, secondClick).then(_ =>
-      assertFragment(expected)
-    );
+  return async () => {
+    await goTo(start);
+    await addMessage(firstClick, secondClick);
+    return assertFragment(expected);
   };
 }
 
@@ -38,36 +37,31 @@ test(
 );
 
 function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
-  return () => {
-    goTo(start);
-    const message = findElementByText(messageText);
-    return message
-      .getSize()
-      .then(size => {
-        sleepIfHumanObserver(1);
-        driver
-          .actions()
-          .mouseMove(message, offsetFunc1(size))
-          .perform();
-        sleepIfHumanObserver(1);
-        driver
-          .actions()
-          .click()
-          .perform();
-        sleepIfHumanObserver(1);
-        driver
-          .actions()
-          .mouseMove(message, offsetFunc2(size))
-          .perform();
-        sleepIfHumanObserver(1);
-        return driver
-          .actions()
-          .click()
-          .perform();
-      })
-      .then(() => {
-        return assertFragment(expected);
-      });
+  return async () => {
+    await goTo(start);
+    const message = await findElementByText(messageText);
+    const size = await message.getSize();
+    await sleepIfHumanObserver(1);
+    await driver
+      .actions()
+      .mouseMove(message, offsetFunc1(size))
+      .perform();
+    await sleepIfHumanObserver(1);
+    await driver
+      .actions()
+      .click()
+      .perform();
+    await sleepIfHumanObserver(1);
+    await driver
+      .actions()
+      .mouseMove(message, offsetFunc2(size))
+      .perform();
+    await sleepIfHumanObserver(1);
+    await driver
+      .actions()
+      .click()
+      .perform();
+    return assertFragment(expected);
   };
 }
 
@@ -162,20 +156,20 @@ test(
 );
 
 test("remove object while pending message", async () => {
-  goTo("o2,Bar;o3,Baz;o4,Foo");
-  clickLifelineForObjectWithText("Bar");
+  await goTo("o2,Bar;o3,Baz;o4,Foo");
+  await clickLifelineForObjectWithText("Bar");
 
   // First remove an object that is not a starting point for a pending message
   // No special code needs to run
-  removeComponentWithKey("o4");
+  await removeComponentWithKey("o4");
   await assertFragment("o2,Bar;o3,Baz");
 
   // Now remove the object that has a pending message attached
   // Our code should handle this and dismiss the pending message
-  removeComponentWithKey("o2");
+  await removeComponentWithKey("o2");
 
   // Do something afterwards so we detect if the app crashed
-  clickLifelineForObjectWithText("Baz");
-  clickLifelineForObjectWithText("Baz");
+  await clickLifelineForObjectWithText("Baz");
+  await clickLifelineForObjectWithText("Baz");
   return assertFragment("o3,Baz;m1,o3,o3,newMessage()");
 });

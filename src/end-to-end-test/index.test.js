@@ -51,7 +51,7 @@ afterAll(() => {
 
 // Helper functions
 
-global.sleep = function(seconds) {
+global.sleep = async function(seconds) {
   return driver.sleep(seconds * 1000);
 };
 
@@ -59,15 +59,16 @@ function transitionsDisabled() {
   return devUtils.devMode;
 }
 
-global.sleepIfTransitionsEnabled = function(seconds) {
+global.sleepIfTransitionsEnabled = async function(seconds) {
   if (transitionsDisabled()) {
     // The UI reacts immediately to input, no need to sleep
+    return true;
   } else {
-    sleep(seconds);
+    return sleep(seconds);
   }
 };
 
-global.waitForCssTransitions = function() {
+global.waitForCssTransitions = async function() {
   if (!transitionsDisabled()) {
     return sleep(0.3);
   } else {
@@ -75,9 +76,9 @@ global.waitForCssTransitions = function() {
   }
 };
 
-global.sleepIfHumanObserver = function(seconds) {
+global.sleepIfHumanObserver = async function(seconds) {
   if (!SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
-    return;
+    return true;
   }
 
   return sleep(seconds);
@@ -100,21 +101,20 @@ global.byText = function(text) {
   return By.xpath("//*[contains(text(),'" + text + "')]");
 };
 
-global.waitForElement = function(text) {
+global.waitForElement = async function(text) {
   const locator = byText(text);
   return driver.wait(until.elementLocated(locator), 2000);
 };
 
-global.findElementByText = function(text) {
+global.findElementByText = async function(text) {
   const locator = byText(text);
-  waitForElement(text);
+  await waitForElement(text);
   return driver.findElement(locator);
 };
 
-global.mouseMoveInSteps = function(totalOffset) {
+global.mouseMoveInSteps = async function(totalOffset) {
   const steps = 20;
   let i = steps;
-  let lastPromise;
   while (i > 0) {
     i--;
     // Steps must be ints, otherwise WebDriver pukes
@@ -122,66 +122,66 @@ global.mouseMoveInSteps = function(totalOffset) {
       x: Math.ceil(totalOffset.x / steps),
       y: Math.ceil(totalOffset.y / steps),
     };
-    lastPromise = driver
+    await driver
       .actions()
       .mouseMove(offsetStep)
       .perform();
-    sleepIfHumanObserver(1.5 / steps);
+    await sleepIfHumanObserver(1.5 / steps);
   }
-  return lastPromise;
+  return true;
 };
 
-global.dragAndDrop = function(elementText, offset) {
-  driver
+global.dragAndDrop = async function(elementText, offset) {
+  await driver
     .actions()
-    .mouseDown(findElementByText(elementText))
+    .mouseDown(await findElementByText(elementText))
     .perform();
-  sleepIfHumanObserver(0.7);
+  await sleepIfHumanObserver(0.7);
 
-  mouseMoveInSteps(offset);
+  await mouseMoveInSteps(offset);
 
-  driver
+  await driver
     .actions()
     .mouseUp()
     .perform();
-  sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(0.7);
 };
 
-global.click = function(elementText) {
-  return clickElement(findElementByText(elementText));
+global.click = async function(elementText) {
+  return clickElement(await findElementByText(elementText));
 };
 
-global.clickElement = function(element) {
-  driver
+global.clickElement = async function(element) {
+  await driver
     .actions()
     .click(element)
     .perform();
   return waitForCssTransitions();
 };
 
-global.typeAndConfirmm = function(typedText) {
-  type(typedText);
-  driver
+global.typeAndConfirmm = async function(typedText) {
+  await type(typedText);
+  return driver
     .actions()
     .sendKeys(Key.RETURN)
     .perform();
 };
 
-global.type = function(typedText) {
-  driver
+global.type = async function(typedText) {
+  await driver
     .actions()
     .sendKeys(typedText)
     .perform();
 };
 
-global.clickAndType = function(elementText, typedText) {
-  click(elementText);
-  typeAndConfirmm(typedText);
-  waitForCssTransitions();
+global.clickAndType = async function(elementText, typedText) {
+  await click(elementText);
+  await typeAndConfirmm(typedText);
+  return waitForCssTransitions();
 };
 
-global.assertFragment = function(expected) {
-  sleepIfHumanObserver(0.7);
+global.assertFragment = async function(expected) {
+  await sleepIfHumanObserver(0.7);
   return new SPromise((resolve, reject) => {
     driver
       .getCurrentUrl()
@@ -199,80 +199,69 @@ global.assertFragment = function(expected) {
 };
 
 global.urlParsing = function(url, expected) {
-  return () => {
-    goTo(url);
+  return async () => {
+    await goTo(url);
     return assertFragment(expected ? expected : url);
   };
 };
 
-global.goTo = function(startState) {
+global.goTo = async function(startState) {
   // CI scripts run from npm run build with serve (port 5000)
   // while you (typically) you run from npm start (port 3000)
   const port = !!process.env.CI ? "5000" : "3000";
   const fragment = startState ? "#" + startState : "";
-  driver.get(`http://localhost:${port}/${fragment}`);
+  await driver.get(`http://localhost:${port}/${fragment}`);
   /* We use 0.3 second CSS transitions, so make sure those have
      * settled before we move on.
      */
-  waitForCssTransitions();
-  return startState;
+  return waitForCssTransitions();
 };
 
 global.move = function(startState, grabbedText, toMove, expectedEndState) {
-  return () => {
-    goTo(startState);
-    dragAndDrop(grabbedText, toMove);
+  return async () => {
+    await goTo(startState);
+    await dragAndDrop(grabbedText, toMove);
     return assertFragment(expectedEndState);
   };
 };
 
-global.clickLifelineForObjectWithText = function(objectText) {
-  driver
+global.clickLifelineForObjectWithText = async function(objectText) {
+  await driver
     .actions()
-    .mouseMove(findElementByText(objectText), { x: 30, y: 100 })
+    .mouseMove(await findElementByText(objectText), { x: 30, y: 100 })
     .click()
     .perform();
-  waitForCssTransitions();
-  sleepIfHumanObserver(0.7);
+  await waitForCssTransitions();
+  return sleepIfHumanObserver(0.7);
 };
 
-global.clickAddObject = function() {
-  click("Add object");
-  waitForCssTransitions();
-  sleepIfHumanObserver(0.7);
+global.clickAddObject = async function() {
+  await click("Add object");
+  await waitForCssTransitions();
+  return sleepIfHumanObserver(0.7);
 };
 
-global.addMessage = function(start, end) {
-  let startEl;
-  let endEl;
-  return Promise.all([findElementByText(start), findElementByText(end)])
-    .then(args => {
-      startEl = args[0];
-      endEl = args[1];
-      return Promise.all([startEl.getLocation(), endEl.getLocation()]);
-    })
-    .then(args => {
-      const startLoc = args[0];
-      const endLoc = args[1];
+global.addMessage = async function(start, end) {
+  const startEl = await findElementByText(start);
+  const endEl = await findElementByText(end);
+  const startLoc = await startEl.getLocation();
+  const endLoc = await endEl.getLocation();
+  const fromObjectNameToLifelineOffset = { x: 30, y: 70 };
 
-      const fromObjectNameToLifelineOffset = { x: 30, y: 70 };
+  await driver
+    .actions()
+    .mouseMove(startEl, fromObjectNameToLifelineOffset)
+    .click()
+    .perform();
+  await sleepIfHumanObserver(0.7);
 
-      driver
-        .actions()
-        .mouseMove(startEl, fromObjectNameToLifelineOffset)
-        .click()
-        .perform();
-      sleepIfHumanObserver(0.7);
+  await mouseMoveInSteps(calcOffset(startLoc, endLoc));
 
-      mouseMoveInSteps(calcOffset(startLoc, endLoc));
-
-      const ret = driver
-        .actions()
-        .click()
-        .perform();
-      sleepIfHumanObserver(0.7);
-      return ret;
-    });
+  await driver
+    .actions()
+    .click()
+    .perform();
+  return sleepIfHumanObserver(0.7);
 };
 
 function calcOffset(startLoc, endLoc) {
@@ -299,51 +288,51 @@ global.moveEndPointToActor = async function(
     .mouseMove(messageEndPointEl)
     .mouseDown()
     .perform();
-  mouseMoveInSteps(offsetToMove);
-  await driver
+  await mouseMoveInSteps(offsetToMove);
+  return driver
     .actions()
     .mouseUp()
     .perform();
 };
 
-global.flip = function(key) {
+global.flip = async function(key) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // flip buttons with certain IDs without complicating testing code too much
-  driver
+  await driver
     .actions()
-    .click(driver.findElement(By.id("flip-" + key)))
+    .click(await driver.findElement(By.id("flip-" + key)))
     .perform();
-  sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(0.7);
 };
 
-global.toggleArrowStyle = function(key) {
+global.toggleArrowStyle = async function(key) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // toggle buttons with certain IDs without complicating testing code too much
-  driver
+  await driver
     .actions()
-    .click(driver.findElement(By.id("toggle-arrow-style-" + key)))
+    .click(await driver.findElement(By.id("toggle-arrow-style-" + key)))
     .perform();
-  sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(0.7);
 };
 
-global.toggleLineStyle = function(key) {
+global.toggleLineStyle = async function(key) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // toggle buttons with certain IDs without complicating testing code too much
-  driver
+  await driver
     .actions()
-    .click(driver.findElement(By.id("toggle-line-style-" + key)))
+    .click(await driver.findElement(By.id("toggle-line-style-" + key)))
     .perform();
-  sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(0.7);
 };
 
-global.removeComponentWithKey = function(key) {
+global.removeComponentWithKey = async function(key) {
   // Low prio todo: Stop depending on the implementation detail that components have
   // remove buttons with certain IDs without complicating testing code too much
-  driver
+  await driver
     .actions()
-    .click(driver.findElement(By.id("remove-" + key)))
+    .click(await driver.findElement(By.id("remove-" + key)))
     .perform();
-  waitForCssTransitions();
+  return waitForCssTransitions();
 };
 
 const filesWithTests = [
