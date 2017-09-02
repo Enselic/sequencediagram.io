@@ -21,16 +21,23 @@ export default function(props) {
   }
 
   return (
-    <div style={{ backgroundColor: "#000" }}>
+    <div
+      style={{
+        background: "linear-gradient(to right, #0b00a8 0%,#0d00f5 100%)",
+        backgroundRepeat: "repeat-y",
+        backgroundSize: 700,
+        backgroundColor: "#0d00f5",
+      }}
+    >
       {touchWarn && (
-        <div style={{ color: "red", padding: "10px 10px", paddingTop: 0 }}>
+        <div style={{ color: "#fff", padding: "10px 10px", paddingTop: 0 }}>
           Touch input is not supported yet, please use a mouse or contribute
           touch input support via GitHub
         </div>
       )}
 
       {!isChrome() && (
-        <div style={{ color: "red", padding: "10px 10px", paddingTop: 0 }}>
+        <div style={{ color: "#fff", padding: "10px 10px", paddingTop: 0 }}>
           Your browser is not supported yet, please use Google Chrome or
           contribute more browser support via GitHub
         </div>

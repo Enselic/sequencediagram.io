@@ -88,13 +88,13 @@ export default function(props) {
     if (type === "start") {
       right = -16;
     } else {
-      left = -24;
+      left = -16;
     }
   } else {
     if (type === "start") {
       left = -16;
     } else {
-      right = -24;
+      right = -16;
     }
   }
   const style = {
@@ -102,7 +102,7 @@ export default function(props) {
     position: "absolute",
     right,
     left,
-    bottom: "-25px",
+    bottom: -5,
     width: 30,
     height: 27,
     background: "transparent",

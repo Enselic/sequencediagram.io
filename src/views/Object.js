@@ -5,6 +5,11 @@ import Name from "./Name";
 import RemoveButton from "./RemoveButton";
 import devUtils from "./../devUtils";
 import {
+  OBJECT_NAME_PADDING,
+  OBJECT_NAME_FONT_SIZE_PX,
+  MESSAGE_START_Y,
+} from "./../layouter";
+import {
   hoverHelper,
   hoverLifelineHelper,
   eventToDiagramCoords,
@@ -74,17 +79,17 @@ export default function(props) {
         onMouseDown={onMouseDown}
         {...hoverHelper(pending, dispatch, object.key)}
         style={{
-          background: "#ffffcc",
-          padding: "20px 40px",
-          border: "1px solid black",
-          borderRadius: "4px",
+          background: "linear-gradient(to right, #fdff34 0%,#fdff70 100%)",
+          padding: `${OBJECT_NAME_PADDING.TOP_BOTTOM}px ${OBJECT_NAME_PADDING.LEFT_RIGHT}px`,
           transform: "translateX(-50%)",
+          border: "1px solid #f4f400",
           position: "relative",
+          borderRadius: 2,
+          fontSize: `${OBJECT_NAME_FONT_SIZE_PX}px`,
         }}
       >
         <RemoveButton
           controlsColor={controlsColor}
-          rightOffset={0}
           keyToRemove={object.key}
           dispatch={dispatch}
           pending={pending}
@@ -100,9 +105,9 @@ export default function(props) {
         <div
           style={{
             display: "inline-block",
-            borderLeft: "1px dashed black",
+            borderLeft: "1px dashed #999",
             width: "1px",
-            height: layout["height"] + "px",
+            height: layout["height"] - MESSAGE_START_Y,
           }}
         />
       </div>

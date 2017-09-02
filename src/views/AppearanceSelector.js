@@ -40,7 +40,7 @@ export default function(props) {
       style={{
         position: "absolute",
         left: "50%",
-        bottom: -45,
+        bottom: -35,
         background: "transparent",
         pointerEvents: "none",
       }}

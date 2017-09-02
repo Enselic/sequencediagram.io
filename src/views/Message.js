@@ -52,7 +52,6 @@ export default function(props) {
     ...style,
     position: "absolute",
     textAlign: "center",
-    borderStyle: "solid",
     userSelect: "none",
   };
 
@@ -76,7 +75,6 @@ export default function(props) {
     >
       {showControls && (
         <RemoveButton
-          rightOffset={msgLayout.pointsLeft ? 4 : -4}
           keyToRemove={message.key}
           dispatch={dispatch}
           pending={pending}
@@ -84,7 +82,14 @@ export default function(props) {
         />
       )}
 
-      <Name component={message} pending={pending} dispatch={dispatch} />
+      <Name
+        showBackground={!isPending}
+        component={message}
+        pending={pending}
+        dispatch={dispatch}
+      />
+
+      <div style={{ ...msgLayout.arrowStyle, borderStyle: "solid" }} />
 
       {showControls && (
         <MessageStartEnd {...props} msgLayout={msgLayout} type="start" />

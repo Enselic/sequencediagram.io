@@ -49,7 +49,7 @@ export default function(props) {
     <div
       style={{
         backgroundColor: "#eee",
-        borderBottom: "1px solid #aaa",
+        boxShadow: "0 3px 3px 0 rgba(0,0,0,.33)",
       }}
     >
       <Button text="Add object" onClick={addObjectAndEditName} />

@@ -5,11 +5,16 @@ import messageBordersAsync from "./views/message-borders-async.png";
 import messageBordersDashed from "./views/message-borders-dashed.png";
 import messageBordersDashedAsync from "./views/message-borders-dashed-async.png";
 
-const DIAGRAM_PADDING = { LEFT_RIGHT: 70, TOP_BOTTOM: 40 };
-const OBJECT_NAME_PADDING = { TOP_BOTTOM: 20, LEFT_RIGHT: 40 };
-const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3;
-const MESSAGE_START_Y = 140;
-const MESSAGE_SPACING = 70;
+export const DIAGRAM_PADDING = { LEFT_RIGHT: 100, TOP_BOTTOM: 70 };
+export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 25, LEFT_RIGHT: 40 };
+export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
+export const OBJECT_NAME_FONT_SIZE_PX = 18;
+export const MESSAGE_SPACING = 90;
+export const MESSAGE_START_Y =
+  DIAGRAM_PADDING.TOP_BOTTOM +
+  OBJECT_NAME_PADDING.TOP_BOTTOM * 2 +
+  OBJECT_NAME_FONT_SIZE_PX +
+  MESSAGE_SPACING * 0.5;
 
 export function layoutMessageLeftAndWidth(
   layout,
@@ -46,7 +51,7 @@ export function layoutMessageLeftAndWidth(
   let borderWidth;
   let left;
   let width;
-  const minWidth = 22; // From largest borderWidth
+  const minWidth = 30; // Arbitrary
   const messageTextWidth =
     layout && layout.getTextWidth
       ? layout.getTextWidth(message.name)
@@ -72,7 +77,7 @@ export function layoutMessageLeftAndWidth(
       ? "0px 0px 17px " + arrowWidth + "px"
       : "0px " + arrowWidth + "px 17px 0px";
     left = Math.min(startX, endX);
-    width = Math.max(Math.abs(startX - endX) - arrowWidth, minWidth);
+    width = Math.max(Math.abs(startX - endX), minWidth);
   }
 
   const approximateLineHeight = 18;
@@ -86,8 +91,7 @@ export function layoutMessageLeftAndWidth(
     width,
     pointsLeft,
     approximateHeight,
-    borderImage,
-    borderWidth,
+    arrowStyle: { borderImage, borderWidth },
   };
 }
 
@@ -179,7 +183,7 @@ export default function(getTextWidth, objects, messages, extraMessage) {
   }
 
   layout.width = currentX;
-  layout.height = currentY + DIAGRAM_PADDING.TOP_BOTTOM;
+  layout.height = currentY + MESSAGE_SPACING + DIAGRAM_PADDING.TOP_BOTTOM;
 
   return layout;
 }

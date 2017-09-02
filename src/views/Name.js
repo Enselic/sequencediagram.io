@@ -1,8 +1,9 @@
 import React from "react";
 import * as ac from "./../reducers";
+import nameBackground from "./pngs/name-background.png";
 
 export default function(props) {
-  const { pending, dispatch, component } = props;
+  const { pending, dispatch, component, showBackground } = props;
 
   // pending.componentRenamed && pending.componentRenamed.key === message.key
 
@@ -45,6 +46,7 @@ export default function(props) {
     const value = pending.componentRenamed.newName;
     return (
       <input
+        style={showBackground ? { padding: 10 } : null}
         ref={onRef}
         size={value ? value.length : 1}
         type="text"
@@ -55,6 +57,21 @@ export default function(props) {
       />
     );
   } else {
-    return <div>{component.name}</div>;
+    return (
+      <div
+        style={
+          showBackground ? (
+            {
+              display: "inline-block",
+              borderImage: `url(${nameBackground}) 10 fill repeat`,
+              borderWidth: 10,
+              borderStyle: "solid",
+            }
+          ) : null
+        }
+      >
+        {component.name}
+      </div>
+    );
   }
 }

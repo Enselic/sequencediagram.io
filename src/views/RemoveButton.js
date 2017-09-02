@@ -3,11 +3,11 @@ import React from "react";
 import { eatMouseDown } from "./utils";
 
 export default function(props) {
-  const { keyToRemove, dispatch, rightOffset, controlsColor } = props;
+  const { keyToRemove, dispatch, controlsColor } = props;
 
   const style = {
     position: "absolute",
-    right: -20 + rightOffset,
+    right: -20,
     top: "-19px",
     width: "30px",
     height: "30px",

@@ -128,30 +128,30 @@ test(
 test(
   "add message between two messages",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,M1();m2,o2,o1,M2()",
-    "M1()",
+    "o1,Foo;o2,Bar;m1,o1,o2,MMMMMMM1();m2,o2,o1,M2()",
+    "MMMMMMM1()",
     size => {
       return { x: 0, y: size.height + 30 };
     },
     size => {
       return { x: size.width, y: size.height + 30 };
     },
-    "o1,Foo;o2,Bar;m1,o1,o2,M1();m3,o1,o2,newMessage();m2,o2,o1,M2()"
+    "o1,Foo;o2,Bar;m1,o1,o2,MMMMMMM1();m3,o1,o2,newMessage();m2,o2,o1,M2()"
   )
 );
 
 test(
   "add message between two messages reversed",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,M1();m2,o2,o1,M2()",
-    "M1()",
+    "o1,Foo;o2,Bar;m1,o1,o2,M111111111();m2,o2,o1,M2()",
+    "M111111111()",
     size => {
       return { x: size.width, y: size.height + 30 };
     },
     size => {
       return { x: 0, y: size.height + 30 };
     },
-    "o1,Foo;o2,Bar;m1,o1,o2,M1();m3,o2,o1,newMessage();m2,o2,o1,M2()"
+    "o1,Foo;o2,Bar;m1,o1,o2,M111111111();m3,o2,o1,newMessage();m2,o2,o1,M2()"
   )
 );
 
