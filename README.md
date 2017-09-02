@@ -74,7 +74,7 @@ Debugging tips
 --------------
 
 When running automated tests that control the mouse via scripts, it is
-useful to show the mouse position via an overlay by doing: `REACT_APP_MOUSE_DEBUG=1 npm start`
+useful to show the mouse position via an overlay by doing: `REACT_APP_MOUSE_DEBUG=1 npm start`. To run the tests slowly one time, run like this: `CI=t SLOW_DOWN_FOR_HUMAN_OBSERVATION=t npm test`.
 
 
 Misc
