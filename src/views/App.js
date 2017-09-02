@@ -89,45 +89,48 @@ export default class App extends React.Component {
           style={{ position: "relative", height: layout.height + 50 }}
           id="diagram-root"
         >
-          {mapWithSameDomOrder(objects, this.objectsMemory, object =>
+          {mapWithSameDomOrder(objects, this.objectsMemory, object => (
             <Objekt
               key={object.key}
               object={object}
               {...usefulProps}
               {...controlsColorProp(object.key)}
             />
-          )}
+          ))}
 
           {mapWithSameDomOrder(messages, this.messagesMemory, message => {
             const msgLayout = layout[message.key];
-            return msgLayout
-              ? <Message
-                  key={message.key}
-                  message={message}
-                  msgLayout={msgLayout}
-                  {...usefulProps}
-                  {...controlsColorProp(message.key)}
-                />
-              : null;
+            return msgLayout ? (
+              <Message
+                key={message.key}
+                message={message}
+                msgLayout={msgLayout}
+                {...usefulProps}
+                {...controlsColorProp(message.key)}
+              />
+            ) : null;
           })}
 
-          {pending.message &&
+          {pending.message && (
             <Message
               key={pending.message.key}
               message={pending.message}
               msgLayout={pendingMessageLayout}
               {...usefulProps}
               isPending={true}
-            />}
+            />
+          )}
 
           {pending.lifelineHoveredKey &&
-            (!pending.componentMoved || pending.componentMoved.part) &&
+          (!pending.componentMoved || pending.componentMoved.part) && (
             <NewMessageMarker
               left={layout[pending.lifelineHoveredKey].lifelineX}
               top={
-                pending.message
-                  ? pendingMessageLayout.top + 25
-                  : pending.lifelineHoveredY
+                pending.message ? (
+                  pendingMessageLayout.top + 25
+                ) : (
+                  pending.lifelineHoveredY
+                )
               }
               isStart={
                 !!!pending.message &&
@@ -135,11 +138,14 @@ export default class App extends React.Component {
               }
               direction={
                 layout[pending.lifelineHoveredKey].lifelineX >
-                pending.lifelineHoveredX
-                  ? -1
-                  : 1
+                pending.lifelineHoveredX ? (
+                  -1
+                ) : (
+                  1
+                )
               }
-            />}
+            />
+          )}
         </div>
       </div>
     );

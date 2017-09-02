@@ -55,10 +55,6 @@ export default function(props) {
       />
     );
   } else {
-    return (
-      <div>
-        {component.name}
-      </div>
-    );
+    return <div>{component.name}</div>;
   }
 }

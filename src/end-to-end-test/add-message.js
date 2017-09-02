@@ -45,13 +45,25 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
       .getSize()
       .then(size => {
         sleepIfHumanObserver(1);
-        driver.actions().mouseMove(message, offsetFunc1(size)).perform();
+        driver
+          .actions()
+          .mouseMove(message, offsetFunc1(size))
+          .perform();
         sleepIfHumanObserver(1);
-        driver.actions().click().perform();
+        driver
+          .actions()
+          .click()
+          .perform();
         sleepIfHumanObserver(1);
-        driver.actions().mouseMove(message, offsetFunc2(size)).perform();
+        driver
+          .actions()
+          .mouseMove(message, offsetFunc2(size))
+          .perform();
         sleepIfHumanObserver(1);
-        return driver.actions().click().perform();
+        return driver
+          .actions()
+          .click()
+          .perform();
       })
       .then(() => {
         return assertFragment(expected);

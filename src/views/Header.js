@@ -22,19 +22,21 @@ export default function(props) {
 
   return (
     <div style={{ backgroundColor: "#000" }}>
-      {touchWarn &&
+      {touchWarn && (
         <div style={{ color: "red", padding: "10px 10px", paddingTop: 0 }}>
           Touch input is not supported yet, please use a mouse or contribute
           touch input support via GitHub
-        </div>}
+        </div>
+      )}
 
-      {!isChrome() &&
+      {!isChrome() && (
         <div style={{ color: "red", padding: "10px 10px", paddingTop: 0 }}>
           Your browser is not supported yet, please use Google Chrome or
           contribute more browser support via GitHub
-        </div>}
+        </div>
+      )}
 
-      {showShareInfo &&
+      {showShareInfo && (
         <div style={{ color: "#fff", padding: "12px 10px", paddingTop: 0 }}>
           <b>Share by URL:</b> The current diagram is tersely encoded in the
           current URL and can simply be shared as-is by copy-paste from the
@@ -47,20 +49,23 @@ export default function(props) {
           >
             URL shortener services
           </a>.
-        </div>}
+        </div>
+      )}
 
-      {showShareInfo &&
+      {showShareInfo && (
         <div style={{ color: "#fff", padding: "12px 10px", paddingTop: 0 }}>
           <b>Share by PNG:</b> <Kbd>F12</Kbd> (for <i>Developer Tools</i>) then{" "}
           <Kbd>Ctrl/Cmd + Shift + P</Kbd> (for <i>Command Menu</i>) then{" "}
           <Kbd>Capture full size screenshot</Kbd>.
-        </div>}
+        </div>
+      )}
 
-      {showNewContentAvailable &&
+      {showNewContentAvailable && (
         <div style={{ color: "#fff", padding: "12px 10px", paddingTop: 0 }}>
           <b>New version available</b> A new version of the this web app has
           been published. Press F5 to load it.
-        </div>}
+        </div>
+      )}
     </div>
   );
 }

@@ -122,19 +122,28 @@ global.mouseMoveInSteps = function(totalOffset) {
       x: Math.ceil(totalOffset.x / steps),
       y: Math.ceil(totalOffset.y / steps),
     };
-    lastPromise = driver.actions().mouseMove(offsetStep).perform();
+    lastPromise = driver
+      .actions()
+      .mouseMove(offsetStep)
+      .perform();
     sleepIfHumanObserver(1.5 / steps);
   }
   return lastPromise;
 };
 
 global.dragAndDrop = function(elementText, offset) {
-  driver.actions().mouseDown(findElementByText(elementText)).perform();
+  driver
+    .actions()
+    .mouseDown(findElementByText(elementText))
+    .perform();
   sleepIfHumanObserver(0.7);
 
   mouseMoveInSteps(offset);
 
-  driver.actions().mouseUp().perform();
+  driver
+    .actions()
+    .mouseUp()
+    .perform();
   sleepIfHumanObserver(0.7);
 };
 
@@ -143,17 +152,26 @@ global.click = function(elementText) {
 };
 
 global.clickElement = function(element) {
-  driver.actions().click(element).perform();
+  driver
+    .actions()
+    .click(element)
+    .perform();
   return waitForCssTransitions();
 };
 
 global.typeAndConfirmm = function(typedText) {
   type(typedText);
-  driver.actions().sendKeys(Key.RETURN).perform();
+  driver
+    .actions()
+    .sendKeys(Key.RETURN)
+    .perform();
 };
 
 global.type = function(typedText) {
-  driver.actions().sendKeys(typedText).perform();
+  driver
+    .actions()
+    .sendKeys(typedText)
+    .perform();
 };
 
 global.clickAndType = function(elementText, typedText) {
@@ -248,7 +266,10 @@ global.addMessage = function(start, end) {
 
       mouseMoveInSteps(calcOffset(startLoc, endLoc));
 
-      const ret = driver.actions().click().perform();
+      const ret = driver
+        .actions()
+        .click()
+        .perform();
       sleepIfHumanObserver(0.7);
       return ret;
     });
@@ -273,15 +294,25 @@ global.moveEndPointToActor = async function(
   const actorNameLoc = await actorNameEl.getLocation();
   const offsetToMove = calcOffset(messageEndPointLoc, actorNameLoc);
 
-  await driver.actions().mouseMove(messageEndPointEl).mouseDown().perform();
+  await driver
+    .actions()
+    .mouseMove(messageEndPointEl)
+    .mouseDown()
+    .perform();
   mouseMoveInSteps(offsetToMove);
-  await driver.actions().mouseUp().perform();
+  await driver
+    .actions()
+    .mouseUp()
+    .perform();
 };
 
 global.flip = function(key) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // flip buttons with certain IDs without complicating testing code too much
-  driver.actions().click(driver.findElement(By.id("flip-" + key))).perform();
+  driver
+    .actions()
+    .click(driver.findElement(By.id("flip-" + key)))
+    .perform();
   sleepIfHumanObserver(0.7);
 };
 
@@ -308,7 +339,10 @@ global.toggleLineStyle = function(key) {
 global.removeComponentWithKey = function(key) {
   // Low prio todo: Stop depending on the implementation detail that components have
   // remove buttons with certain IDs without complicating testing code too much
-  driver.actions().click(driver.findElement(By.id("remove-" + key))).perform();
+  driver
+    .actions()
+    .click(driver.findElement(By.id("remove-" + key)))
+    .perform();
   waitForCssTransitions();
 };
 

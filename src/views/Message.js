@@ -74,31 +74,35 @@ export default function(props) {
       key={message.key}
       {...hoverHelper(pending, dispatch, message.key)}
     >
-      {showControls &&
+      {showControls && (
         <RemoveButton
           rightOffset={msgLayout.pointsLeft ? 4 : -4}
           keyToRemove={message.key}
           dispatch={dispatch}
           pending={pending}
           controlsColor={controlsColor}
-        />}
+        />
+      )}
 
       <Name component={message} pending={pending} dispatch={dispatch} />
 
-      {showControls &&
-        <MessageStartEnd {...props} msgLayout={msgLayout} type="start" />}
+      {showControls && (
+        <MessageStartEnd {...props} msgLayout={msgLayout} type="start" />
+      )}
 
       {showControls &&
-        !selfSent &&
-        <MessageStartEnd {...props} msgLayout={msgLayout} type="end" />}
+      !selfSent && (
+        <MessageStartEnd {...props} msgLayout={msgLayout} type="end" />
+      )}
 
-      {showControls &&
+      {showControls && (
         <AppearanceSelector
           {...props}
           message={message}
           msgLayout={msgLayout}
           selfSent={selfSent}
-        />}
+        />
+      )}
     </div>
   );
 }

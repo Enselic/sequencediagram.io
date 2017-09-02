@@ -59,7 +59,7 @@ export default function(props) {
             pointerEvents: "auto",
           }}
         >
-          {!selfSent &&
+          {!selfSent && (
             <div
               id={"flip-" + key}
               className="message-end"
@@ -77,8 +77,9 @@ export default function(props) {
               }}
             >
               flip
-            </div>}
-          {!selfSent &&
+            </div>
+          )}
+          {!selfSent && (
             <div
               id={"toggle-line-style-" + key}
               className="message-end"
@@ -94,7 +95,8 @@ export default function(props) {
                   height: 6,
                 }}
               />
-            </div>}
+            </div>
+          )}
           <div
             id={"toggle-arrow-style-" + key}
             className="message-end"

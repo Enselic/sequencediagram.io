@@ -31,7 +31,10 @@ test("MANUAL TEST (VISUAL): hover is triggered when component moves in under cur
     "o1,Foo;o3,Baz;m2,o1,o3,after this is removed;m3,o1,o3,mouse move should show controls, if not => failed test"
   );
   removeComponentWithKey("m2");
-  driver.actions().mouseMove({ x: -2, y: -2 }).perform();
+  driver
+    .actions()
+    .mouseMove({ x: -2, y: -2 })
+    .perform();
   sleepIfHumanObserver(1);
   removeComponentWithKey("m3");
   return assertFragment("o1,Foo;o3,Baz");

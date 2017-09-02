@@ -1,11 +1,17 @@
 function ctrlZ() {
-  driver.actions().sendKeys([Key.CONTROL, "z", Key.NULL]).perform();
+  driver
+    .actions()
+    .sendKeys([Key.CONTROL, "z", Key.NULL])
+    .perform();
   waitForCssTransitions();
   sleepIfHumanObserver(0.7);
 }
 
 function ctrlShiftZ() {
-  driver.actions().sendKeys([Key.CONTROL, Key.SHIFT, "z", Key.NULL]).perform();
+  driver
+    .actions()
+    .sendKeys([Key.CONTROL, Key.SHIFT, "z", Key.NULL])
+    .perform();
   waitForCssTransitions();
   sleepIfHumanObserver(0.7);
 }

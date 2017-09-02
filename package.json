@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "chromedriver": "^2.31.0",
-    "prettier": "^1.5.3",
+    "prettier": "1.6.x",
     "react-scripts": "1.0.7",
     "selenium-webdriver": "^3.4.0",
     "serve": "^6.0.4"

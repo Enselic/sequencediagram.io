@@ -53,26 +53,29 @@ export default function(props) {
       }}
     >
       <Button text="Add object" onClick={addObjectAndEditName} />
-      {undoOrRedoShown &&
+      {undoOrRedoShown && (
         <Button
           disabled={!showUndo}
           text="Undo"
           onClick={() => dispatch(ActionCreators.undo())}
-        />}
-      {undoOrRedoShown &&
+        />
+      )}
+      {undoOrRedoShown && (
         <Button
           disabled={!showRedo}
           text="Redo"
           onClick={() => dispatch(ActionCreators.redo())}
-        />}
-      {showShare &&
+        />
+      )}
+      {showShare && (
         <Button
           disabled={!showUndo && !showRedo}
           text={showShareInfo ? "Hide share info" : "Share"}
           onClick={() =>
             dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())}
-        />}
-      {showTip &&
+        />
+      )}
+      {showTip && (
         <span className="tip">
           ⇐{" "}
           <span
@@ -85,7 +88,8 @@ export default function(props) {
           >
             Click "Add object" to start
           </span>
-        </span>}
+        </span>
+      )}
     </div>
   );
 }

@@ -29,19 +29,21 @@ export default class NewMessageMarker extends React.PureComponent {
       top: top - messageHeight / 2,
     };
 
-    return isStart
-      ? <Message message={tmpMessage} msgLayout={msgLayout} isPending={true} />
-      : <div
-          style={{
-            border: "1px dotted black",
-            width: width,
-            height: height,
-            borderRadius: 15,
-            left: left - width / 2,
-            top: top - height / 2,
-            position: "relative",
-            pointerEvents: "none",
-          }}
-        />;
+    return isStart ? (
+      <Message message={tmpMessage} msgLayout={msgLayout} isPending={true} />
+    ) : (
+      <div
+        style={{
+          border: "1px dotted black",
+          width: width,
+          height: height,
+          borderRadius: 15,
+          left: left - width / 2,
+          top: top - height / 2,
+          position: "relative",
+          pointerEvents: "none",
+        }}
+      />
+    );
   }
 }

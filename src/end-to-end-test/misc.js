@@ -68,10 +68,16 @@ test("Warn that touch input is not supported yet, and dismiss it", async () => {
   // Pretend we got a "pure" link to the site i.e. without any URL fragment
   await goTo("");
   await assertFragment("o1,Foo;o2,Bar;m1,o1,o2,message()");
-  await driver.touchActions().tap(findElementByText("Foo")).perform();
+  await driver
+    .touchActions()
+    .tap(findElementByText("Foo"))
+    .perform();
   const touchHintText = "Touch input is not supported yet";
   await waitForElement(touchHintText);
-  await driver.actions().sendKeys(Key.ESCAPE).perform();
+  await driver
+    .actions()
+    .sendKeys(Key.ESCAPE)
+    .perform();
   return reversePromise(waitForElement(touchHintText));
 });
 
@@ -109,6 +115,9 @@ test("MANUAL: Diagram text not visibly selectable", async () => {
   goTo(
     "o1,Make%20sure%20this%20text%20is%20not%20selected%20after%20Ctrl%2BA;o2,.;m1,o1,o2,Nor%20this%20text%2C%20or%20any%20controls"
   );
-  await driver.actions().sendKeys([Key.CONTROL, "a", Key.NULL]).perform();
+  await driver
+    .actions()
+    .sendKeys([Key.CONTROL, "a", Key.NULL])
+    .perform();
   await sleepIfHumanObserver(7);
 });

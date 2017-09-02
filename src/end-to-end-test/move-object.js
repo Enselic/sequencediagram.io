@@ -115,10 +115,16 @@ test(
 test("move away and back does not trigger click", () => {
   const text = "FixedName";
   const expected = goTo("o1," + text);
-  driver.actions().mouseDown(findElementByText(text)).perform();
+  driver
+    .actions()
+    .mouseDown(findElementByText(text))
+    .perform();
   mouseMoveInSteps({ x: 100, y: 0 });
   mouseMoveInSteps({ x: -100, y: 0 });
-  driver.actions().mouseUp().perform();
+  driver
+    .actions()
+    .mouseUp()
+    .perform();
   typeAndConfirmm("This-text-shall-not-end-up-as-name-for-object");
   return assertFragment(expected);
 });
@@ -136,9 +142,18 @@ test("can click in renamed component text to place cursor", () => {
   return findElementByText("PrefixMe").then(el => {
     // To hit upper left coner, to place cursor first
     const topLeft = { x: 1, y: 1 };
-    driver.actions().mouseMove(el, topLeft).mouseDown().mouseUp().perform();
+    driver
+      .actions()
+      .mouseMove(el, topLeft)
+      .mouseDown()
+      .mouseUp()
+      .perform();
     sleepIfHumanObserver(1);
-    driver.actions().mouseDown().mouseUp().perform();
+    driver
+      .actions()
+      .mouseDown()
+      .mouseUp()
+      .perform();
     sleepIfHumanObserver(1);
     typeAndConfirmm("prefix");
     return assertFragment("o1,prefixPrefixMe");
@@ -156,7 +171,11 @@ test("pending object move changes is stable", async () => {
   };
   const inBetweenReversed = { x: -slightlyRightOfEndsUpLeft.x / 2, y: 0 };
 
-  await driver.actions().mouseMove(el).mouseDown().perform();
+  await driver
+    .actions()
+    .mouseMove(el)
+    .mouseDown()
+    .perform();
 
   // This should result in the expected state we assert on
   await mouseMoveInSteps(slightlyRightOfEndsUpLeft);
@@ -164,6 +183,9 @@ test("pending object move changes is stable", async () => {
   // This should not change the layout back
   await mouseMoveInSteps(inBetweenReversed);
 
-  await driver.actions().mouseUp().perform();
+  await driver
+    .actions()
+    .mouseUp()
+    .perform();
   return assertFragment("o2,EndsUpLeft;o1,EndsUpRight");
 });
