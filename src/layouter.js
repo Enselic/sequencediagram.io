@@ -1,10 +1,3 @@
-import messageBorderSelf from "./views/message-borders-self.png";
-import messageBorderSelfAsync from "./views/message-borders-self-async.png";
-import messageBorders from "./views/message-borders.png";
-import messageBordersAsync from "./views/message-borders-async.png";
-import messageBordersDashed from "./views/message-borders-dashed.png";
-import messageBordersDashedAsync from "./views/message-borders-dashed-async.png";
-
 export const DIAGRAM_PADDING = { LEFT_RIGHT: 100, TOP_BOTTOM: 70 };
 export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 25, LEFT_RIGHT: 40 };
 export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
@@ -44,38 +37,21 @@ export function layoutMessageLeftAndWidth(
     endX = end.lifelineX;
   }
 
-  const pointsLeft = startX > endX;
-  const direction = endX - startX;
+  let direction = endX - startX;
 
-  let borderImage;
-  let borderWidth;
   let left;
   let width;
-  const minWidth = 30; // Arbitrary
+  const minWidth = 42; // Width of self-sent SVG
   const messageTextWidth =
     layout && layout.getTextWidth
       ? layout.getTextWidth(message.name)
       : 100 /* arbitrary */;
   if (Math.abs(direction) < 0.5) {
-    let png = message.isAsync ? messageBorderSelfAsync : messageBorderSelf;
-    borderImage = "url(" + png + ") 0 0 19 22 fill";
-    borderWidth = "0px 0px 19px 22px";
+    direction = 0;
     left = startX;
     const maxLineWidth = 150;
     width = Math.min(maxLineWidth, Math.max(minWidth, messageTextWidth));
   } else {
-    const arrowWidth = 9;
-    let png;
-    if (message.isAsync) {
-      png = message.isReply ? messageBordersDashedAsync : messageBordersAsync;
-    } else {
-      png = message.isReply ? messageBordersDashed : messageBorders;
-    }
-
-    borderImage = "url(" + png + ") 0 9 17 fill repeat";
-    borderWidth = pointsLeft
-      ? "0px 0px 17px " + arrowWidth + "px"
-      : "0px " + arrowWidth + "px 17px 0px";
     left = Math.min(startX, endX);
     width = Math.max(Math.abs(startX - endX), minWidth);
   }
@@ -89,9 +65,8 @@ export function layoutMessageLeftAndWidth(
   return {
     left,
     width,
-    pointsLeft,
+    direction,
     approximateHeight,
-    arrowStyle: { borderImage, borderWidth },
   };
 }
 

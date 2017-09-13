@@ -84,17 +84,17 @@ export default function(props) {
   }
 
   let right, left;
-  if (msgLayout.pointsLeft) {
+  if (msgLayout.direction < 0) {
     if (type === "start") {
-      right = -16;
+      right = -26;
     } else {
-      left = -16;
+      left = -26;
     }
   } else {
     if (type === "start") {
-      left = -16;
+      left = -26;
     } else {
-      right = -16;
+      right = -26;
     }
   }
   const style = {

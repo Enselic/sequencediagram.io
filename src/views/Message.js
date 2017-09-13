@@ -4,7 +4,7 @@ import moveHelper from "./utils/componentMoveHelper";
 import Name from "./Name";
 import RemoveButton from "./RemoveButton";
 import MessageStartEnd from "./MessageStartEnd";
-import AppearanceSelector from "./AppearanceSelector";
+import MessageArrow from "./MessageArrow";
 import devUtils from "./../devUtils";
 import { hoverHelper } from "./utils";
 
@@ -89,7 +89,15 @@ export default function(props) {
         dispatch={dispatch}
       />
 
-      <div style={{ ...msgLayout.arrowStyle, borderStyle: "solid" }} />
+      <MessageArrow
+        theKey={message.key}
+        isReply={message.isReply}
+        isAsync={message.isAsync}
+        direction={msgLayout.direction}
+        onLineClicked={() => dispatch(ac.toggleMessageLineStyle(message.key))}
+        onArrowClicked={() => dispatch(ac.toggleMessageArrowStyle(message.key))}
+        onFlipClicked={() => dispatch(ac.flipMessageDirection(message.key))}
+      />
 
       {showControls && (
         <MessageStartEnd {...props} msgLayout={msgLayout} type="start" />
@@ -98,15 +106,6 @@ export default function(props) {
       {showControls &&
       !selfSent && (
         <MessageStartEnd {...props} msgLayout={msgLayout} type="end" />
-      )}
-
-      {showControls && (
-        <AppearanceSelector
-          {...props}
-          message={message}
-          msgLayout={msgLayout}
-          selfSent={selfSent}
-        />
       )}
     </div>
   );
