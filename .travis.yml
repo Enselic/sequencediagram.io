@@ -4,6 +4,10 @@ node_js:
   - "6"
 addons:
   chrome: stable
+  apt:
+    packages:
+      - oracle-java8-set-default
 before_script:
+  - node backend/dynamodb-local.js &
   - npm run build && node_modules/serve/bin/serve.js -s build &
   - sleep 30

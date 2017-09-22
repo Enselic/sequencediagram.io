@@ -9,7 +9,15 @@
     "redux-undo": "^1.0.0-beta9-9-1"
   },
   "devDependencies": {
+    "aws-sdk": "^2.117.0",
+    "body-parser": "^1.18.0",
     "chromedriver": "^2.31.0",
+    "cors": "^2.8.4",
+    "dynamodb-local": "0.0.18",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "morgan-body": "^0.10.9",
+    "node-fetch": "^1.7.3",
     "prettier": "1.6.x",
     "react-scripts": "1.0.7",
     "selenium-webdriver": "^3.4.0",
