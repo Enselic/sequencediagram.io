@@ -32,12 +32,8 @@ function expectSuccessfulPostOrGet(status, body, sequenceDiagram) {
   expect(status).toEqual(200);
   expect(body.creationTimeUtc).toBeGreaterThan(1500000000);
   expect(body.id).toMatch(/^[0-9a-z]{4,20}$/);
-  expect(body.sequenceDiagram.objects).toEqual(
-    expect.arrayContaining(sequenceDiagram.objects)
-  );
-  expect(body.sequenceDiagram.messages).toEqual(
-    expect.arrayContaining(sequenceDiagram.messages)
-  );
+  expect(body.sequenceDiagram.objects).toEqual(sequenceDiagram.objects);
+  expect(body.sequenceDiagram.messages).toEqual(sequenceDiagram.messages);
 }
 
 function expectError(status, body, expectedMessagePart, expectedCode) {

@@ -27,13 +27,21 @@ global.applyTimeoutFactor = function(timeout) {
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
 
-let { Builder, By, until, Key, promise } = require("selenium-webdriver");
+let {
+  logging,
+  Builder,
+  By,
+  until,
+  Key,
+  promise,
+} = require("selenium-webdriver");
 let { Options } = require("selenium-webdriver/chrome");
 let devUtils = require("../devUtils");
 
 global.devMode = devUtils.devMode;
 
 global.Key = Key;
+global.logging = logging;
 
 let options = new Options();
 let args = ["window-size=1280,950"];
@@ -360,4 +368,12 @@ filesWithTests.forEach(file => {
   describe(file, () => {
     require("./" + file);
   });
+});
+
+test("no browser log output", async () => {
+  const logEntries = await driver
+    .manage()
+    .logs()
+    .get(logging.Type.BROWSER);
+  expect(logEntries).toEqual([]);
 });
