@@ -36,9 +36,11 @@ global.devMode = devUtils.devMode;
 global.Key = Key;
 
 let options = new Options();
+let args = ["window-size=1280,950"];
 if (HEADLESS) {
-  options.addArguments("headless", "disable-gpu");
+  args = args.concat(["headless", "disable-gpu"]);
 }
+options.addArguments(...args);
 global.driver = new Builder()
   .forBrowser("chrome")
   .setChromeOptions(options)
