@@ -124,7 +124,7 @@ test(
       "o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r"
     );
 
-    await dragAndDrop("User", { x: -500, y: 0 });
+    await dragAndDrop("User", { x: -700, y: 0 });
     await asserter.assertFragmentAndPush(
       "o3,User;o1,Undoer;o2,Redoer;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r"
     );

@@ -87,7 +87,7 @@ test(
   moveObject(
     "o9,CCC;o8,BBB;o7,Martin",
     "Martin",
-    -500,
+    -700,
     "o7,Martin;o9,CCC;o8,BBB"
   )
 );

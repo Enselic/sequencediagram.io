@@ -17,8 +17,9 @@ export default function(props) {
         style={{
           backgroundColor: "transparent",
           border: "none",
-          fontSize: 20,
-          padding: "3px 12px",
+          fontSize: 25,
+          padding: "5px 20px",
+          color: "#002456",
         }}
         disabled={props.disabled}
         onClick={props.onClick}
@@ -48,7 +49,7 @@ export default function(props) {
   return (
     <div
       style={{
-        backgroundColor: "#eee",
+        backgroundColor: "#8ecaef",
         boxShadow: "0 3px 3px 0 rgba(0,0,0,.33)",
       }}
     >

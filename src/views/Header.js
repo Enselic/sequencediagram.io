@@ -23,28 +23,25 @@ export default function(props) {
   return (
     <div
       style={{
-        background: "linear-gradient(to right, #0b00a8 0%,#0d00f5 100%)",
-        backgroundRepeat: "repeat-y",
-        backgroundSize: 700,
-        backgroundColor: "#0d00f5",
+        backgroundColor: "#64b9ef",
       }}
     >
       {touchWarn && (
-        <div style={{ color: "#fff", padding: "10px 10px", paddingTop: 0 }}>
+        <div style={{ color: "#002456", padding: "10px 20px", paddingTop: 0 }}>
           Touch input is not supported yet, please use a mouse or contribute
           touch input support via GitHub
         </div>
       )}
 
       {!isChrome() && (
-        <div style={{ color: "#fff", padding: "10px 10px", paddingTop: 0 }}>
+        <div style={{ color: "#002456", padding: "10px 20px", paddingTop: 0 }}>
           Your browser is not supported yet, please use Google Chrome or
           contribute more browser support via GitHub
         </div>
       )}
 
       {showShareInfo && (
-        <div style={{ color: "#fff", padding: "12px 10px", paddingTop: 0 }}>
+        <div style={{ color: "#002456", padding: "12px 20px", paddingTop: 0 }}>
           <b>Share by URL:</b> The current diagram is tersely encoded in the
           current URL and can simply be shared as-is by copy-paste from the
           browser address bar. You might want to make use of{" "}

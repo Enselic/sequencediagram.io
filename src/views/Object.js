@@ -79,10 +79,9 @@ export default function(props) {
         onMouseDown={onMouseDown}
         {...hoverHelper(pending, dispatch, object.key)}
         style={{
-          background: "linear-gradient(to right, #fdff34 0%,#fdff70 100%)",
+          background: "#ffe761",
           padding: `${OBJECT_NAME_PADDING.TOP_BOTTOM}px ${OBJECT_NAME_PADDING.LEFT_RIGHT}px`,
           transform: "translateX(-50%)",
-          border: "1px solid #f4f400",
           position: "relative",
           borderRadius: 2,
           fontSize: `${OBJECT_NAME_FONT_SIZE_PX}px`,
