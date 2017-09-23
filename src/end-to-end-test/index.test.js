@@ -209,7 +209,7 @@ global.urlParsing = function(url, expected) {
 global.goTo = async function(startState) {
   // CI scripts run from npm run build with serve (port 5000)
   // while you (typically) you run from npm start (port 3000)
-  const port = HEADLESS ? "5000" : "3000";
+  const port = process.env.PORT || (HEADLESS ? "5000" : "3000");
 
   // When no fragment is requsted, make sure to not even include '#'
   const fragment = startState ? "#" + startState : "";

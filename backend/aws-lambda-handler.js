@@ -166,8 +166,7 @@ module.exports.handler = (event, context, callback) => {
     ) {
       getRevisionHelper(id, undefined, done);
     } else if (
-      event.resource ===
-        "/sequencediagrams/{sequenceDiagramId}/{revision}" &&
+      event.resource === "/sequencediagrams/{sequenceDiagramId}/{revision}" &&
       event.httpMethod === "GET"
     ) {
       getRevisionHelper(id, revision, done);

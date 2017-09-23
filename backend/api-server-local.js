@@ -33,6 +33,7 @@ AWS.config.update({
 });
 const tableName = "io.sequencediagram.dynamodb.test";
 const dynamoLocalPort = 8000;
+const port = 4000;
 
 function ApiServerLocal(sequencediagrams) {
   this.app = express();
@@ -88,7 +89,7 @@ ApiServerLocal.prototype = {
   listen() {
     return new Promise((resolve, reject) => {
       if (!this.server) {
-        this.server = this.app.listen(4000, resolve);
+        this.server = this.app.listen(port, resolve);
 
         // For quick .close()
         // See https://github.com/nodejs/node-v0.x-archive/issues/9066
@@ -118,4 +119,14 @@ ApiServerLocal.prototype = {
   },
 };
 
-module.exports = ApiServerLocal;
+if (require.main === module) {
+  const server = new ApiServerLocal();
+  server
+    .listen()
+    .then(
+      _ => console.log("API server listening on port " + port),
+      console.log
+    );
+} else {
+  module.exports = ApiServerLocal;
+}

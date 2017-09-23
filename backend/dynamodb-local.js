@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 const DynamoDbLocal = require("dynamodb-local");
+const path = require("path");
 
 AWS.config.update({
   accessKeyId: "AKID",
@@ -8,8 +9,12 @@ AWS.config.update({
   endpoint: "http://localhost:8000",
 });
 const tableName = "io.sequencediagram.dynamodb.test";
+const port = 8000;
 
-DynamoDbLocal.launch(8000, null, ["-sharedDb", "-inMemory"])
+DynamoDbLocal.configureInstaller({
+  installPath: path.join(process.env.HOME, "opt/dynamodb-local2"),
+});
+DynamoDbLocal.launch(port, null, ["-sharedDb", "-inMemory"])
   .then(_ => {
     return new Promise((resolve, reject) => {
       var dynamodb = new AWS.DynamoDB();
@@ -30,7 +35,13 @@ DynamoDbLocal.launch(8000, null, ["-sharedDb", "-inMemory"])
             WriteCapacityUnits: 5,
           },
         },
-        console.log
+        (err, data) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("dynamodb-local listening on port " + port);
+          }
+        }
       );
     });
   })
