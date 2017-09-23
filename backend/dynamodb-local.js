@@ -12,7 +12,7 @@ const tableName = "io.sequencediagram.dynamodb.test";
 const port = 8000;
 
 DynamoDbLocal.configureInstaller({
-  installPath: path.join(process.env.HOME, "opt/dynamodb-local2"),
+  installPath: path.join(process.env.HOME || "/tmp", "dynamodb-local"),
 });
 DynamoDbLocal.launch(port, null, ["-sharedDb", "-inMemory"])
   .then(_ => {
