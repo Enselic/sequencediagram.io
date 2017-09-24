@@ -79,7 +79,7 @@ export default function(props) {
           dispatch={dispatch}
           pending={pending}
           controlsColor={controlsColor}
-          extraStyle={{ margin: "0px 20px" }}
+          extraStyle={{ margin: "0px 30px" }}
         />
       )}
 

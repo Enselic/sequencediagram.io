@@ -83,6 +83,7 @@ export default function(props) {
     };
   }
 
+  const padding = 15;
   let right, left;
   if (msgLayout.direction < 0) {
     if (type === "start") {
@@ -97,19 +98,26 @@ export default function(props) {
       right = -26;
     }
   }
+  const margin = 15;
+  if (left) {
+    left -= padding + margin;
+  }
+  if (right) {
+    right -= padding + margin;
+  }
+  const showControls = controlsColor !== "transparent" ? true : undefined;
   const style = {
     cursor: "default",
     position: "absolute",
     right,
     left,
-    bottom: -5,
-    width: 30,
-    height: 27,
-    background: "transparent",
-    borderRadius: "15px",
-    border: "1px dotted " + controlsColor,
-    color: controlsColor,
-    fontSize: 10,
+    bottom: -25,
+    padding,
+    background: showControls && "#f8f8f8",
+    zIndex: 999,
+    fontWeight: "bold",
+    boxShadow: showControls && "0 3px 3px 0 rgba(0,0,0,.33)",
+    color: showControls ? "#888" : "transparent",
   };
 
   return (
@@ -119,7 +127,7 @@ export default function(props) {
       className="message-end"
       onMouseDown={mousedown(type)}
     >
-      drag-able
+      ⇆
     </span>
   );
 }
