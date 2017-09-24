@@ -75,26 +75,27 @@ export default function(props) {
 
   return (
     <div style={style} id={object.key} key={object.key}>
-      <div
-        onMouseDown={onMouseDown}
-        {...hoverHelper(pending, dispatch, object.key)}
-        style={{
-          background: "#ffe761",
-          padding: `${OBJECT_NAME_PADDING.TOP_BOTTOM}px ${OBJECT_NAME_PADDING.LEFT_RIGHT}px`,
-          transform: "translateX(-50%)",
-          position: "relative",
-          borderRadius: 2,
-          fontSize: `${OBJECT_NAME_FONT_SIZE_PX}px`,
-        }}
-      >
+      <div {...hoverHelper(pending, dispatch, object.key)}>
         <RemoveButton
           controlsColor={controlsColor}
           keyToRemove={object.key}
           dispatch={dispatch}
           pending={pending}
-          {...hoverHelper(pending, dispatch, object.key)}
+          extraStyle={{ transform: "translateX(-50%)" }}
         />
-        <Name component={object} pending={pending} dispatch={dispatch} />
+        <div
+          onMouseDown={onMouseDown}
+          style={{
+            background: "#ffe761",
+            padding: `${OBJECT_NAME_PADDING.TOP_BOTTOM}px ${OBJECT_NAME_PADDING.LEFT_RIGHT}px`,
+            transform: "translateX(-50%)",
+            position: "relative",
+            borderRadius: 2,
+            fontSize: `${OBJECT_NAME_FONT_SIZE_PX}px`,
+          }}
+        >
+          <Name component={object} pending={pending} dispatch={dispatch} />
+        </div>
       </div>
       <div
         {...hoverLifelineHelper(dispatch, object.key)}

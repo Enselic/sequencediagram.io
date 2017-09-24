@@ -61,7 +61,9 @@ export default class App extends React.Component {
 
     function controlsColorProp(componentKey) {
       const show =
-        pending.hoveredComponentKey === componentKey && !pending.componentMoved;
+        pending.hoveredComponentKey === componentKey &&
+        !pending.componentMoved &&
+        !pending.componentRenamed;
       return {
         controlsColor: show ? "black" : "transparent",
       };

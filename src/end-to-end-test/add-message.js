@@ -68,90 +68,90 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
 test(
   "add message just below existing single message",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,singleMessage()",
-    "singleMessage()",
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     size => {
       return { x: 0, y: size.height + 30 };
     },
     size => {
       return { x: size.width, y: size.height + 30 };
     },
-    "o1,Foo;o2,Bar;m1,o1,o2,singleMessage();m2,o1,o2,newMessage()"
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o1,o2,newMessage()"
   )
 );
 
 test(
   "add message just below existing single message reversed",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,singleMessage()",
-    "singleMessage()",
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     size => {
       return { x: size.width, y: size.height + 30 };
     },
     size => {
       return { x: 0, y: size.height + 30 };
     },
-    "o1,Foo;o2,Bar;m1,o1,o2,singleMessage();m2,o2,o1,newMessage()"
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,newMessage()"
   )
 );
 
 test(
   "add message just above existing single message",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,singleMessage()",
-    "singleMessage()",
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     size => {
       return { x: 0, y: -30 };
     },
     size => {
       return { x: size.width, y: -30 };
     },
-    "o1,Foo;o2,Bar;m2,o1,o2,newMessage();m1,o1,o2,singleMessage()"
+    "o1,Foo;o2,Bar;m2,o1,o2,newMessage();m1,o1,o2,this-is-a-message-reference()"
   )
 );
 
 test(
   "add message just above existing single message reversed",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,singleMessage()",
-    "singleMessage()",
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     size => {
       return { x: size.width, y: -30 };
     },
     size => {
       return { x: 0, y: -30 };
     },
-    "o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,singleMessage()"
+    "o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,this-is-a-message-reference()"
   )
 );
 
 test(
   "add message between two messages",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,MMMMMMM1();m2,o2,o1,M2()",
-    "MMMMMMM1()",
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()",
+    "this-is-a-message-reference()",
     size => {
       return { x: 0, y: size.height + 30 };
     },
     size => {
       return { x: size.width, y: size.height + 30 };
     },
-    "o1,Foo;o2,Bar;m1,o1,o2,MMMMMMM1();m3,o1,o2,newMessage();m2,o2,o1,M2()"
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o1,o2,newMessage();m2,o2,o1,M2()"
   )
 );
 
 test(
   "add message between two messages reversed",
   insertMessage(
-    "o1,Foo;o2,Bar;m1,o1,o2,M111111111();m2,o2,o1,M2()",
-    "M111111111()",
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()",
+    "this-is-a-message-reference()",
     size => {
       return { x: size.width, y: size.height + 30 };
     },
     size => {
       return { x: 0, y: size.height + 30 };
     },
-    "o1,Foo;o2,Bar;m1,o1,o2,M111111111();m3,o2,o1,newMessage();m2,o2,o1,M2()"
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()"
   )
 );
 

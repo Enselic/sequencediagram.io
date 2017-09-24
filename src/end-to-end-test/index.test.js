@@ -44,7 +44,7 @@ global.Key = Key;
 global.logging = logging;
 
 let options = new Options();
-let args = ["window-size=1280,950"];
+let args = ["window-size=1280,1050"];
 if (HEADLESS) {
   args = args.concat(["headless", "disable-gpu"]);
 }

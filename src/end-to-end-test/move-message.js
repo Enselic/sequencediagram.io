@@ -75,7 +75,7 @@ test(
   moveMessage(
     "o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3",
     "A1->A2",
-    100,
+    150,
     "o1,A1;o2,A2;o3,A3;m2,o3,o2,A2%3C-A3;m1,o1,o2,A1-%3EA2;m3,o3,o1,A1%3C-A3"
   )
 );
@@ -133,7 +133,7 @@ test(
   moveMessage(
     "o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3",
     "A1<-A3",
-    -100,
+    -150,
     "o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m3,o3,o1,A1%3C-A3;m2,o3,o2,A2%3C-A3"
   )
 );
