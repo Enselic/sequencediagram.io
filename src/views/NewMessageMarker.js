@@ -9,8 +9,8 @@ import { layoutMessageLeftAndWidth } from "./../layouter";
  */
 export default class NewMessageMarker extends React.PureComponent {
   render() {
-    const width = 30;
-    const height = 30;
+    const width = 10;
+    const height = 10;
     const { left, top, isStart, direction } = this.props;
     const tmpMessage = {
       key: "newMessageMarker",
@@ -42,6 +42,7 @@ export default class NewMessageMarker extends React.PureComponent {
           top: top - height / 2,
           position: "relative",
           pointerEvents: "none",
+          background: "#000",
         }}
       />
     );
