@@ -59,6 +59,27 @@ export default class App extends React.Component {
       pendingMessageLayout = layout[pending.message.key];
     }
 
+    function handleLifelineClick(object) {
+      return e => {
+        let action;
+        if (!pending.message || !pending.message.start) {
+          action = ac.pendingAddMessage(
+            object.key,
+            ...eventToDiagramCoords(e),
+            "newMessage()"
+          );
+        } else {
+          action = ac.addMessage(
+            pending.message.start,
+            object.key,
+            pending.message.name,
+            layout[pending.message.key].index
+          );
+        }
+        dispatch(action);
+      };
+    }
+
     function controlsColorProp(componentKey) {
       const show =
         pending.hoveredComponentKey === componentKey &&
@@ -95,6 +116,7 @@ export default class App extends React.Component {
             <Objekt
               key={object.key}
               object={object}
+              onLifelineClick={handleLifelineClick(object)}
               {...usefulProps}
               {...controlsColorProp(object.key)}
             />

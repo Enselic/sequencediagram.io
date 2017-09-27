@@ -9,11 +9,7 @@ import {
   OBJECT_NAME_FONT_SIZE_PX,
   MESSAGE_START_Y,
 } from "./../layouter";
-import {
-  hoverHelper,
-  hoverLifelineHelper,
-  eventToDiagramCoords,
-} from "./utils";
+import { hoverHelper, hoverLifelineHelper } from "./utils";
 
 /**
  * Note that 'object' here does not mean 'an instance of a class'.
@@ -29,28 +25,8 @@ export default function(props) {
     messages,
     pending,
     controlsColor,
+    onLifelineClick,
   } = props;
-
-  function lifelineClick(object) {
-    return e => {
-      let action;
-      if (!pending.message || !pending.message.start) {
-        action = ac.pendingAddMessage(
-          object.key,
-          ...eventToDiagramCoords(e),
-          "newMessage()"
-        );
-      } else {
-        action = ac.addMessage(
-          pending.message.start,
-          object.key,
-          pending.message.name,
-          layout[pending.message.key].index
-        );
-      }
-      dispatch(action);
-    };
-  }
 
   const onMouseDown = moveHelper(
     objects,
@@ -99,7 +75,7 @@ export default function(props) {
       </div>
       <div
         {...hoverLifelineHelper(dispatch, object.key)}
-        onClick={lifelineClick(object)}
+        onClick={onLifelineClick}
         style={{ textAlign: "center", transform: "translateX(-50%)" }}
       >
         <div
