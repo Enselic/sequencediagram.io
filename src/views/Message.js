@@ -18,6 +18,7 @@ export default function(props) {
     pending,
     controlsColor,
     isPending,
+    isMarker,
   } = props;
 
   let onMouseDown;
@@ -84,7 +85,7 @@ export default function(props) {
       )}
 
       <Name
-        showBackground={!isPending}
+        showBackground={!isMarker}
         component={message}
         pending={pending}
         dispatch={dispatch}

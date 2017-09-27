@@ -3,6 +3,7 @@ export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
 export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
 export const OBJECT_NAME_FONT_SIZE_PX = 18;
 export const MESSAGE_SPACING = 100;
+export const MESSAGE_MIN_WIDTH = 42; // Width of self-sent SVG
 export const MESSAGE_START_Y =
   DIAGRAM_PADDING.TOP_BOTTOM +
   OBJECT_NAME_PADDING.TOP_BOTTOM * 2 +
@@ -41,7 +42,6 @@ export function layoutMessageLeftAndWidth(
 
   let left;
   let width;
-  const minWidth = 42; // Width of self-sent SVG
   const messageTextWidth =
     layout && layout.getTextWidth
       ? layout.getTextWidth(message.name)
@@ -50,10 +50,17 @@ export function layoutMessageLeftAndWidth(
     direction = 0;
     left = startX;
     const maxLineWidth = 150;
-    width = Math.min(maxLineWidth, Math.max(minWidth, messageTextWidth));
+    width = Math.min(
+      maxLineWidth,
+      Math.max(MESSAGE_MIN_WIDTH, messageTextWidth)
+    );
   } else {
-    left = Math.min(startX, endX);
-    width = Math.max(Math.abs(startX - endX), minWidth);
+    width = Math.max(Math.abs(startX - endX), MESSAGE_MIN_WIDTH);
+    if (direction > 0) {
+      left = startX;
+    } else {
+      left = Math.min(endX, startX - width);
+    }
   }
 
   const approximateLineHeight = 18;

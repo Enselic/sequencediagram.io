@@ -6,7 +6,6 @@ export default function(props) {
   const { keyToRemove, dispatch, controlsColor, extraStyle } = props;
 
   const showControls = controlsColor !== "transparent" ? true : undefined;
-  console.log(showControls);
   const style = {
     position: "absolute",
     bottom: "100%",

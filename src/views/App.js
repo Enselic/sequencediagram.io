@@ -129,7 +129,7 @@ export default class App extends React.Component {
               left={layout[pending.lifelineHoveredKey].lifelineX}
               top={
                 pending.message ? (
-                  pendingMessageLayout.top + 25
+                  pendingMessageLayout.top + 39
                 ) : (
                   pending.lifelineHoveredY
                 )

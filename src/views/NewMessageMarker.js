@@ -1,6 +1,6 @@
 import React from "react";
 import Message from "./Message";
-import { layoutMessageLeftAndWidth } from "./../layouter";
+import { layoutMessageLeftAndWidth, MESSAGE_MIN_WIDTH } from "./../layouter";
 
 /**
  * When the user hovers a lifeline, this is what gets shown
@@ -24,20 +24,25 @@ export default class NewMessageMarker extends React.PureComponent {
         null,
         tmpMessage,
         left,
-        left + direction * width
+        left + direction * MESSAGE_MIN_WIDTH
       ),
       top: top - messageHeight / 2,
     };
 
     return isStart ? (
-      <Message message={tmpMessage} msgLayout={msgLayout} isPending={true} />
+      <Message
+        message={tmpMessage}
+        msgLayout={msgLayout}
+        isPending={true}
+        isMarker={true}
+      />
     ) : (
       <div
         style={{
           border: "1px dotted black",
           width: width,
           height: height,
-          borderRadius: 15,
+          borderRadius: width / 2,
           left: left - width / 2,
           top: top - height / 2,
           position: "relative",
