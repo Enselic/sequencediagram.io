@@ -49,6 +49,10 @@ if (HEADLESS) {
   args = args.concat(["headless", "disable-gpu"]);
 }
 options.addArguments(...args);
+const prefs = new logging.Preferences();
+// So we can test the we don't forget debug logs
+prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
+options.setLoggingPrefs(prefs);
 global.driver = new Builder()
   .forBrowser("chrome")
   .setChromeOptions(options)
@@ -378,9 +382,15 @@ filesWithTests.forEach(file => {
 });
 
 test("no browser log output", async () => {
-  const logEntries = await driver
+  let logEntries = await driver
     .manage()
     .logs()
     .get(logging.Type.BROWSER);
+  logEntries = logEntries.filter(
+    entry =>
+      entry.message.indexOf(
+        "Download the React DevTools for a better development experience"
+      ) === -1
+  );
   expect(logEntries).toEqual([]);
 });

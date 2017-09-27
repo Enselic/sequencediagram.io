@@ -17,7 +17,6 @@ export default class MessageArrow extends React.Component {
     const selfSentMessage = direction === 0;
     const pointsLeft = direction > 0;
 
-    console.log(showControls);
     return (
       <div
         onMouseDown={showControls ? eatMouseDownCallback : null}

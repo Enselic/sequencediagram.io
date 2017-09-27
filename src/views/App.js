@@ -106,7 +106,6 @@ export default class App extends React.Component {
           const newMessage = { ...thiz.state.messageStartEndMoved.message };
           newMessage[thiz.state.messageStartEndMoved.type] = object.key;
           action = ac.replaceMessage(newMessage);
-          console.log("new msg", newMessage);
           thiz.setState({
             messageStartEndMoved: undefined,
           });
