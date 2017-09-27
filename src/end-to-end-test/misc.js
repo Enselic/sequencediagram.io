@@ -118,3 +118,10 @@ test("MANUAL: Diagram text not visibly selectable", async () => {
     .perform();
   return sleepIfHumanObserver(7);
 });
+
+test("MANUAL: can't remove object while pending message", async () => {
+  await goTo("o2,Bar;o3,Baz;o4,Foo");
+  await clickLifelineForObjectWithText("Bar");
+  // TODO: instructions
+  return sleepIfHumanObserver(7);
+});

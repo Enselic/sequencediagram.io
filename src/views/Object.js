@@ -26,6 +26,7 @@ export default function(props) {
     pending,
     controlsColor,
     onLifelineClick,
+    showControls,
   } = props;
 
   const onMouseDown = moveHelper(
@@ -52,13 +53,15 @@ export default function(props) {
   return (
     <div style={style} id={object.key} key={object.key}>
       <div {...hoverHelper(pending, dispatch, object.key)}>
-        <RemoveButton
-          controlsColor={controlsColor}
-          keyToRemove={object.key}
-          dispatch={dispatch}
-          pending={pending}
-          extraStyle={{ transform: "translateX(-50%)" }}
-        />
+        {showControls && (
+          <RemoveButton
+            controlsColor={controlsColor}
+            keyToRemove={object.key}
+            dispatch={dispatch}
+            pending={pending}
+            extraStyle={{ transform: "translateX(-50%)" }}
+          />
+        )}
         <div
           onMouseDown={onMouseDown}
           style={{

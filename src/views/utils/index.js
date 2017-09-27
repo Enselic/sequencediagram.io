@@ -86,13 +86,15 @@ export function isChrome() {
   }
 }
 
+export const eatMouseDownCallback = e => {
+  // We don't want the parent div to receive any mouse down event if
+  // this item is clicked
+  e.stopPropagation();
+  e.preventDefault();
+};
+
 export const eatMouseDown = {
-  onMouseDown: e => {
-    // We don't want the parent div to receive any mouse down event if
-    // this item is clicked
-    e.stopPropagation();
-    e.preventDefault();
-  },
+  onMouseDown: eatMouseDownCallback,
 };
 
 /**

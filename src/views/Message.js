@@ -5,7 +5,6 @@ import Name from "./Name";
 import RemoveButton from "./RemoveButton";
 import MessageStartEnd from "./MessageStartEnd";
 import MessageArrow from "./MessageArrow";
-import devUtils from "./../devUtils";
 import { hoverHelper } from "./utils";
 
 export default function(props) {
@@ -19,6 +18,7 @@ export default function(props) {
     controlsColor,
     isPending,
     isMarker,
+    showControls,
   } = props;
 
   let onMouseDown;
@@ -38,9 +38,6 @@ export default function(props) {
     );
 
     style = {
-      transition: devUtils.transitionIfNotDev(
-        "left 0.3s, width 0.3s, top 0.3s, height 0.3s"
-      ),
       pointerEvents: pending.componentMoved ? "none" : "auto",
     };
   } else {
@@ -60,12 +57,9 @@ export default function(props) {
   // a pending message is in the middle of creation (so that the user
   // can focus on completing the new message without UI noise
   // from controls)
-  const showControls =
-    !isPending &&
-    !pending.message &&
-    !(pending.componentMoved && pending.componentMoved.part);
   const selfSent = message.start === message.end;
 
+  const showControlsEffective = showControls && !isPending;
   return (
     <div
       onMouseDown={onMouseDown}
@@ -74,13 +68,13 @@ export default function(props) {
       key={message.key}
       {...hoverHelper(pending, dispatch, message.key)}
     >
-      {showControls && (
+      {showControlsEffective && (
         <RemoveButton
           keyToRemove={message.key}
           dispatch={dispatch}
           pending={pending}
           controlsColor={controlsColor}
-          extraStyle={{ margin: "0px 30px" }}
+          extraStyle={Object.assign({}, selfSent ? {} : { margin: "0px 30px" })}
         />
       )}
 
@@ -99,13 +93,14 @@ export default function(props) {
         onLineClicked={() => dispatch(ac.toggleMessageLineStyle(message.key))}
         onArrowClicked={() => dispatch(ac.toggleMessageArrowStyle(message.key))}
         onFlipClicked={() => dispatch(ac.flipMessageDirection(message.key))}
+        showControls={showControls}
       />
 
-      {showControls && (
+      {showControlsEffective && (
         <MessageStartEnd {...props} msgLayout={msgLayout} type="start" />
       )}
 
-      {showControls &&
+      {showControlsEffective &&
       !selfSent && (
         <MessageStartEnd {...props} msgLayout={msgLayout} type="end" />
       )}

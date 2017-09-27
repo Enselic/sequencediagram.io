@@ -1,5 +1,5 @@
 import React from "react";
-import { eatMouseDown } from "./utils";
+import { eatMouseDownCallback } from "./utils";
 
 export default class MessageArrow extends React.Component {
   render() {
@@ -11,16 +11,21 @@ export default class MessageArrow extends React.Component {
       onLineClicked,
       onArrowClicked,
       onFlipClicked,
+      showControls,
     } = this.props;
 
     const selfSentMessage = direction === 0;
     const pointsLeft = direction > 0;
 
+    console.log(showControls);
     return (
-      <div {...eatMouseDown} style={{ position: "relative", top: -8 }}>
+      <div
+        onMouseDown={showControls ? eatMouseDownCallback : null}
+        style={{ position: "relative", top: -8 }}
+      >
         <div
           id={"toggle-line-style-" + theKey}
-          onClick={onLineClicked}
+          onClick={showControls ? onLineClicked : null}
           style={{
             position: "absolute",
             width: "100%",
@@ -56,7 +61,7 @@ export default class MessageArrow extends React.Component {
         </div>
         <div
           id={"toggle-arrow-style-" + theKey}
-          onClick={onArrowClicked}
+          onClick={showControls ? onArrowClicked : null}
           style={{
             position: "absolute",
             width: 20,
@@ -88,7 +93,7 @@ export default class MessageArrow extends React.Component {
         {!selfSentMessage && (
           <div
             id={"flip-" + theKey}
-            onClick={onFlipClicked}
+            onClick={showControls ? onFlipClicked : null}
             style={{
               position: "absolute",
               width: 20,

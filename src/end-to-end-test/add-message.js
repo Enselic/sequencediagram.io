@@ -154,22 +154,3 @@ test(
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()"
   )
 );
-
-test("remove object while pending message", async () => {
-  await goTo("o2,Bar;o3,Baz;o4,Foo");
-  await clickLifelineForObjectWithText("Bar");
-
-  // First remove an object that is not a starting point for a pending message
-  // No special code needs to run
-  await removeComponentWithKey("o4");
-  await assertFragment("o2,Bar;o3,Baz");
-
-  // Now remove the object that has a pending message attached
-  // Our code should handle this and dismiss the pending message
-  await removeComponentWithKey("o2");
-
-  // Do something afterwards so we detect if the app crashed
-  await clickLifelineForObjectWithText("Baz");
-  await clickLifelineForObjectWithText("Baz");
-  return assertFragment("o3,Baz;m1,o3,o3,newMessage()");
-});

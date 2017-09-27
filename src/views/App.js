@@ -13,12 +13,33 @@ export default class App extends React.Component {
     super(props);
     this.objectsMemory = [];
     this.messagesMemory = [];
+
+    this.state = {
+      messageStartEndMoved: undefined,
+    };
+
+    this.handleOnStartEndClick = (message, type, newX) => {
+      this.setState({ messageStartEndMoved: { message, type, newX } });
+    };
+
+    this.handleKeyDown = e => {
+      if (e.keyCode === 27) {
+        this.setState({ messageStartEndMoved: undefined });
+      }
+    };
   }
 
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyDown, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown, false);
+  }
   render() {
     const { state, dispatch } = this.props;
     const { core, pending } = state;
     const { objects, messages } = core.present;
+    const thiz = this;
 
     // We want to perform the layout as if the pending names were commited, so that
     // the diagram layout adapts to the pending names which we show as part of the
@@ -29,6 +50,14 @@ export default class App extends React.Component {
         pending.componentRenamed.key === component.key
       ) {
         return { ...component, name: pending.componentRenamed.newName };
+      } else if (
+        thiz.state.messageStartEndMoved &&
+        thiz.state.messageStartEndMoved.message.key === component.key
+      ) {
+        const newComponent = { ...component };
+        newComponent[thiz.state.messageStartEndMoved.type] =
+          thiz.state.messageStartEndMoved.newX;
+        return newComponent;
       } else {
         return component;
       }
@@ -57,12 +86,31 @@ export default class App extends React.Component {
         );
       };
       pendingMessageLayout = layout[pending.message.key];
+    } else if (this.state.messageStartEndMoved) {
+      handleMouseMove = e => {
+        this.setState({
+          messageStartEndMoved: {
+            ...this.state.messageStartEndMoved,
+            newX: e.pageX,
+          },
+        });
+      };
+      pendingMessageLayout =
+        layout[this.state.messageStartEndMoved.message.key];
     }
 
     function handleLifelineClick(object) {
       return e => {
         let action;
-        if (!pending.message || !pending.message.start) {
+        if (thiz.state.messageStartEndMoved) {
+          const newMessage = { ...thiz.state.messageStartEndMoved.message };
+          newMessage[thiz.state.messageStartEndMoved.type] = object.key;
+          action = ac.replaceMessage(newMessage);
+          console.log("new msg", newMessage);
+          thiz.setState({
+            messageStartEndMoved: undefined,
+          });
+        } else if (!pending.message || !pending.message.start) {
           action = ac.pendingAddMessage(
             object.key,
             ...eventToDiagramCoords(e),
@@ -84,15 +132,21 @@ export default class App extends React.Component {
       const show =
         pending.hoveredComponentKey === componentKey &&
         !pending.componentMoved &&
-        !pending.componentRenamed;
+        !pending.componentRenamed &&
+        !thiz.state.messageStartEndMoved;
       return {
         controlsColor: show ? "black" : "transparent",
       };
     }
+    const showControls =
+      !pending.message &&
+      !(pending.componentMoved && pending.componentMoved.part) &&
+      !thiz.state.messageStartEndMoved;
 
     return (
       <div
         onTouchEnd={() => dispatch(ac.touchWarn())}
+        onKeyDown={this.handleKeyDown}
         style={{
           minWidth: layout.width,
           position: "relative",
@@ -117,6 +171,7 @@ export default class App extends React.Component {
               key={object.key}
               object={object}
               onLifelineClick={handleLifelineClick(object)}
+              showControls={showControls}
               {...usefulProps}
               {...controlsColorProp(object.key)}
             />
@@ -129,6 +184,12 @@ export default class App extends React.Component {
                 key={message.key}
                 message={message}
                 msgLayout={msgLayout}
+                onStartEndClick={this.handleOnStartEndClick}
+                showControls={showControls}
+                isPending={
+                  this.state.messageStartEndMoved &&
+                  this.state.messageStartEndMoved.message.key === message.key
+                }
                 {...usefulProps}
                 {...controlsColorProp(message.key)}
               />
@@ -146,11 +207,13 @@ export default class App extends React.Component {
           )}
 
           {pending.lifelineHoveredKey &&
-          (!pending.componentMoved || pending.componentMoved.part) && (
+          (!pending.componentMoved ||
+            pending.componentMoved.part ||
+            this.state.messageStartEndMoved) && (
             <NewMessageMarker
               left={layout[pending.lifelineHoveredKey].lifelineX}
               top={
-                pending.message ? (
+                pendingMessageLayout ? (
                   pendingMessageLayout.top + 39
                 ) : (
                   pending.lifelineHoveredY
@@ -158,7 +221,8 @@ export default class App extends React.Component {
               }
               isStart={
                 !!!pending.message &&
-                !(pending.componentMoved && pending.componentMoved.part)
+                !(pending.componentMoved && pending.componentMoved.part) &&
+                !this.state.messageStartEndMoved
               }
               direction={
                 layout[pending.lifelineHoveredKey].lifelineX >

@@ -248,6 +248,13 @@ global.clickLifelineForObjectWithText = async function(objectText) {
   return sleepIfHumanObserver(0.7);
 };
 
+global.moveToComponentWithText = async function(componentText) {
+  return driver
+    .actions()
+    .mouseMove(await findElementByText(componentText))
+    .perform();
+};
+
 global.clickAddObject = async function() {
   await click("Add object");
   await waitForCssTransitions();
@@ -294,17 +301,17 @@ global.moveEndPointToActor = async function(
   const actorNameEl = await findElementByText(actorName);
   const messageEndPointLoc = await messageEndPointEl.getLocation();
   const actorNameLoc = await actorNameEl.getLocation();
-  const offsetToMove = calcOffset(messageEndPointLoc, actorNameLoc);
+  let offsetToMove = calcOffset(messageEndPointLoc, actorNameLoc);
+  offsetToMove.y = 0;
 
   await driver
     .actions()
-    .mouseMove(messageEndPointEl)
-    .mouseDown()
+    .click(messageEndPointEl)
     .perform();
   await mouseMoveInSteps(offsetToMove);
-  return driver
+  await driver
     .actions()
-    .mouseUp()
+    .click()
     .perform();
 };
 

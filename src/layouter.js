@@ -1,3 +1,5 @@
+import devUtils from "./devUtils";
+
 export const DIAGRAM_PADDING = { LEFT_RIGHT: 100, TOP_BOTTOM: 70 };
 export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
 export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
@@ -18,8 +20,15 @@ export function layoutMessageLeftAndWidth(
 ) {
   let startX;
   let endX;
+  let transition = devUtils.transitionIfNotDev(
+    "left 0.3s, width 0.3s, top 0.3s, height 0.3s"
+  );
   if (overrideStartX !== undefined) {
+    transition = null;
     startX = overrideStartX;
+  } else if (typeof message.start === "number") {
+    transition = null;
+    startX = message.start;
   } else {
     const start = layout[message.start];
     if (!start) {
@@ -29,7 +38,11 @@ export function layoutMessageLeftAndWidth(
   }
 
   if (overrideEndX !== undefined) {
+    transition = null;
     endX = overrideEndX;
+  } else if (typeof message.end === "number") {
+    transition = null;
+    endX = message.end;
   } else {
     const end = layout[message.end];
     if (!end) {
@@ -74,6 +87,7 @@ export function layoutMessageLeftAndWidth(
     width,
     direction,
     approximateHeight,
+    transition,
   };
 }
 
