@@ -40,14 +40,15 @@ export default class MessageArrow extends React.Component {
                   strokeWidth: 2,
                   strokeDasharray: "8," + (isReply ? "8" : "0"),
                 }}
-                d="m 0,13 c 0,0 39,-1 40,8 1,11 -35,9 -35,9"
+                d="m 0,13 c 0,0 39,-1 40,8 1,11 -36,9 -36,9"
               />
             ) : (
               <line
-                x1="0"
+                x1="3"
                 y1="10"
                 x2="100%"
                 y2="10"
+                transform={"translate(" + (pointsLeft ? "-3" : "0") + " 0)"}
                 style={{
                   fill: "none",
                   stroke: "#000000",
@@ -79,11 +80,11 @@ export default class MessageArrow extends React.Component {
             <path
               style={{
                 fill: isAsync ? "none" : "#000000",
-                stroke: isAsync ? "#000000" : "none",
+                stroke: "#000000",
                 strokeWidth: 2,
               }}
               d={
-                "M 0,0 C 20,10 20,10 20,10 L 0,20" +
+                "M 2,2 C 18,10 18,10 18,10 L 2,18" +
                 (isAsync ? "" : "z") /* close path */
               }
             />
