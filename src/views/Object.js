@@ -69,7 +69,6 @@ export default function(props) {
             padding: `${OBJECT_NAME_PADDING.TOP_BOTTOM}px ${OBJECT_NAME_PADDING.LEFT_RIGHT}px`,
             transform: "translateX(-50%)",
             position: "relative",
-            borderRadius: 2,
             fontSize: `${OBJECT_NAME_FONT_SIZE_PX}px`,
           }}
         >

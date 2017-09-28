@@ -11,16 +11,15 @@ export default function(props) {
     bottom: "100%",
     left: 0,
     right: 0,
-    background: showControls && "#f8f8f8",
+    background: showControls && "#e6e6e6",
     textAlign: "center",
     color: showControls ? "#888" : "transparent",
     display: "block",
     cursor: "default",
     padding: 10,
-    marginBottom: 5,
     zIndex: 999,
     fontWeight: "bold",
-    boxShadow: showControls && "0 3px 3px 0 rgba(0,0,0,.33)",
+    fontSize: 13,
     ...extraStyle,
   };
 
@@ -32,7 +31,7 @@ export default function(props) {
       style={style}
       onClick={() => dispatch(removeComponent(keyToRemove))}
     >
-      &#10006;
+      remove
     </div>
   );
 }
