@@ -382,15 +382,24 @@ filesWithTests.forEach(file => {
 });
 
 test("no browser log output", async () => {
+  const okEntries = [
+    "Download the React DevTools for a better development experience",
+    "Content is cached for offline use.",
+    "New content is available; please refresh.",
+  ];
+
   let logEntries = await driver
     .manage()
     .logs()
     .get(logging.Type.BROWSER);
-  logEntries = logEntries.filter(
-    entry =>
-      entry.message.indexOf(
-        "Download the React DevTools for a better development experience"
-      ) === -1
-  );
+
+  logEntries = logEntries.filter(entry => {
+    let wasOk = false;
+    okEntries.forEach(okEntry => {
+      wasOk |= entry.message.indexOf(okEntry) >= 0;
+    });
+    return !wasOk;
+  });
+
   expect(logEntries).toEqual([]);
 });
