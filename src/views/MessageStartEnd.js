@@ -2,7 +2,7 @@ import React from "react";
 import { eatMouseDown } from "./utils";
 
 export default function(props) {
-  const { message, type, msgLayout, controlsColor, onStartEndClick } = props;
+  const { message, type, msgLayout, onStartEndClick, isHovered } = props;
 
   const padding = 15;
   const width = 30;
@@ -23,7 +23,6 @@ export default function(props) {
   if (right) {
     right -= padding + margin;
   }
-  const showControls = controlsColor !== "transparent" ? true : undefined;
   const style = {
     cursor: "default",
     position: "absolute",
@@ -32,10 +31,10 @@ export default function(props) {
     width: width,
     bottom: -25,
     padding,
-    background: showControls && "#f8f8f8",
+    background: isHovered && "#f8f8f8",
     zIndex: 999,
     fontWeight: "bold",
-    color: showControls ? "#888" : "transparent",
+    color: isHovered ? "#888" : "transparent",
   };
 
   return (

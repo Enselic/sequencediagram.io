@@ -127,16 +127,6 @@ export default class App extends React.Component {
       };
     }
 
-    function controlsColorProp(componentKey) {
-      const show =
-        pending.hoveredComponentKey === componentKey &&
-        !pending.componentMoved &&
-        !pending.componentRenamed &&
-        !thiz.state.messageStartEndMoved;
-      return {
-        controlsColor: show ? "black" : "transparent",
-      };
-    }
     const showControls =
       !pending.message &&
       !(pending.componentMoved && pending.componentMoved.part) &&
@@ -172,7 +162,6 @@ export default class App extends React.Component {
               onLifelineClick={handleLifelineClick(object)}
               showControls={showControls}
               {...usefulProps}
-              {...controlsColorProp(object.key)}
             />
           ))}
 
@@ -190,7 +179,6 @@ export default class App extends React.Component {
                   this.state.messageStartEndMoved.message.key === message.key
                 }
                 {...usefulProps}
-                {...controlsColorProp(message.key)}
               />
             ) : null;
           })}

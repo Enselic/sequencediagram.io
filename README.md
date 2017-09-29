@@ -91,6 +91,7 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- Hover to right of object is counted as hover but it's not
 - Default to using permalinks:
   - https://sequencediagram.io/1234 points to latest version
   - https://sequencediagram.io/1234/12 points to revision 12

@@ -16,7 +16,7 @@ import { hoverHelper, hoverLifelineHelper } from "./utils";
  * Instead, it is the concrete thing in the diagram with a lifeline that
  * the user can add.
  */
-export default function(props) {
+function DiagramObject(props) {
   const {
     dispatch,
     object,
@@ -24,7 +24,7 @@ export default function(props) {
     objects,
     messages,
     pending,
-    controlsColor,
+    isHovered,
     onLifelineClick,
     showControls,
   } = props;
@@ -52,13 +52,16 @@ export default function(props) {
 
   return (
     <div style={style} id={object.key} key={object.key}>
-      <div {...hoverHelper(pending, dispatch, object.key)}>
+      <div
+        onMouseEnter={props.onMouseEnter}
+        onMouseMove={props.onMouseMove}
+        onMouseLeave={props.onMouseLeave}
+      >
         {showControls && (
           <RemoveButton
-            controlsColor={controlsColor}
+            isHovered={isHovered}
             keyToRemove={object.key}
             dispatch={dispatch}
-            pending={pending}
             extraStyle={{ transform: "translateX(-50%)" }}
           />
         )}
@@ -92,3 +95,5 @@ export default function(props) {
     </div>
   );
 }
+
+export default hoverHelper(DiagramObject);

@@ -7,7 +7,7 @@ import MessageStartEnd from "./MessageStartEnd";
 import MessageArrow from "./MessageArrow";
 import { hoverHelper } from "./utils";
 
-export default function(props) {
+function Message(props) {
   const {
     dispatch,
     message,
@@ -15,7 +15,7 @@ export default function(props) {
     objects,
     messages,
     pending,
-    controlsColor,
+    isHovered,
     isPending,
     isMarker,
     showControls,
@@ -66,14 +66,16 @@ export default function(props) {
       style={{ ...msgLayout, ...style }}
       id={message.key}
       key={message.key}
-      {...hoverHelper(pending, dispatch, message.key)}
+      onMouseEnter={props.onMouseEnter}
+      onMouseMove={props.onMouseMove}
+      onMouseLeave={props.onMouseLeave}
     >
       {showControlsEffective && (
         <RemoveButton
           keyToRemove={message.key}
           dispatch={dispatch}
           pending={pending}
-          controlsColor={controlsColor}
+          isHovered={isHovered}
           extraStyle={Object.assign({}, selfSent ? {} : { margin: "0px 30px" })}
         />
       )}
@@ -107,3 +109,5 @@ export default function(props) {
     </div>
   );
 }
+
+export default hoverHelper(Message);

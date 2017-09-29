@@ -3,17 +3,16 @@ import React from "react";
 import { eatMouseDown } from "./utils";
 
 export default function(props) {
-  const { keyToRemove, dispatch, controlsColor, extraStyle } = props;
+  const { keyToRemove, dispatch, extraStyle, isHovered } = props;
 
-  const showControls = controlsColor !== "transparent" ? true : undefined;
   const style = {
     position: "absolute",
     bottom: "100%",
     left: 0,
     right: 0,
-    background: showControls && "#e6e6e6",
+    background: isHovered && "#e6e6e6",
     textAlign: "center",
-    color: showControls ? "#888" : "transparent",
+    color: isHovered ? "#888" : "transparent",
     display: "block",
     cursor: "default",
     padding: 10,
