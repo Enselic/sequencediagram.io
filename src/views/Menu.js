@@ -1,6 +1,7 @@
 import React from "react";
 import { ActionCreators } from "redux-undo";
 import * as ac from "./../reducers";
+import { boxShadow, backgroundLight } from "./common";
 
 export default function(props) {
   const { dispatch, pending, showUndo, showRedo, showTipIfSpace } = props;
@@ -14,6 +15,7 @@ export default function(props) {
   function Button(props) {
     return (
       <button
+        className="button"
         style={{
           backgroundColor: "transparent",
           border: "none",
@@ -49,8 +51,8 @@ export default function(props) {
   return (
     <div
       style={{
-        backgroundColor: "#8ecaef",
-        boxShadow: "0 3px 3px 0 rgba(0,0,0,.33)",
+        backgroundColor: backgroundLight,
+        boxShadow,
       }}
     >
       <Button text="Add object" onClick={addObjectAndEditName} />

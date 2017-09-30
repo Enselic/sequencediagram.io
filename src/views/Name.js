@@ -59,6 +59,7 @@ export default function(props) {
   } else {
     return (
       <div
+        className="message-end"
         style={
           showBackground ? (
             {

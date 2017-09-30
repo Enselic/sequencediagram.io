@@ -1,11 +1,14 @@
 import devUtils from "./devUtils";
 
-export const DIAGRAM_PADDING = { LEFT_RIGHT: 100, TOP_BOTTOM: 70 };
+export const DIAGRAM_PADDING = { LEFT_RIGHT: 140, TOP_BOTTOM: 90 };
 export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
 export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
 export const OBJECT_NAME_FONT_SIZE_PX = 18;
 export const MESSAGE_SPACING = 100;
-export const MESSAGE_MIN_WIDTH = 42; // Width of self-sent SVG
+export const MESSAGE_MIN_WIDTH = Math.max(
+  42 /* Width of self-sent SVG */,
+  80 /* enough width for two buttons */
+);
 export const MESSAGE_START_Y =
   DIAGRAM_PADDING.TOP_BOTTOM +
   OBJECT_NAME_PADDING.TOP_BOTTOM * 2 +

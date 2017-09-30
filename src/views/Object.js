@@ -63,7 +63,14 @@ function DiagramObject(props) {
             isHovered={isHovered}
             keyToRemove={object.key}
             onRemove={onRemove}
-            extraStyle={{ transform: "translateX(-50%)" }}
+            extraStyle={{
+              transform: "translateX(-50%)",
+              position: "absolute",
+              bottom: "100%",
+              width: undefined,
+              left: 0,
+              right: 0,
+            }}
           />
         )}
         <div

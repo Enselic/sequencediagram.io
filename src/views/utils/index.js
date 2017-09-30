@@ -2,12 +2,14 @@ import React from "react";
 import * as ac from "./../../reducers";
 
 export function hoverHelper(WrappedComponent) {
+  // Useful to set to true when inspecting layout
+  const DEFAULT = false;
   return class extends React.Component {
     constructor(props) {
       super(props);
 
       this.state = {
-        isHovered: false,
+        isHovered: DEFAULT,
       };
 
       this.onMouseEnter = () => {
@@ -19,7 +21,7 @@ export function hoverHelper(WrappedComponent) {
         }
       };
       this.onMouseLeave = () => {
-        this.setState({ isHovered: false });
+        this.setState({ isHovered: DEFAULT });
       };
     }
 

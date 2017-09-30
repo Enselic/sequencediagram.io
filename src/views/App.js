@@ -103,7 +103,12 @@ export default class App extends React.Component {
       return e => {
         let action;
         if (thiz.state.messageStartEndMoved) {
-          const newMessage = { ...thiz.state.messageStartEndMoved.message };
+          const newMessage = {
+            ...messages.find(
+              message =>
+                message.key === thiz.state.messageStartEndMoved.message.key
+            ),
+          };
           newMessage[thiz.state.messageStartEndMoved.type] = object.key;
           action = ac.replaceMessage(newMessage);
           thiz.setState({

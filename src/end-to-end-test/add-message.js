@@ -64,6 +64,7 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
     return assertFragment(expected);
   };
 }
+const OFFSET_FROM_MESSAGE_TO_BELOW = 60;
 
 test(
   "add message just below existing single message",
@@ -71,10 +72,10 @@ test(
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
     "this-is-a-message-reference()",
     size => {
-      return { x: 0, y: size.height + 30 };
+      return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     size => {
-      return { x: size.width, y: size.height + 30 };
+      return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o1,o2,newMessage()"
   )
@@ -86,10 +87,10 @@ test(
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
     "this-is-a-message-reference()",
     size => {
-      return { x: size.width, y: size.height + 30 };
+      return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     size => {
-      return { x: 0, y: size.height + 30 };
+      return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,newMessage()"
   )
@@ -131,10 +132,10 @@ test(
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()",
     "this-is-a-message-reference()",
     size => {
-      return { x: 0, y: size.height + 30 };
+      return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     size => {
-      return { x: size.width, y: size.height + 30 };
+      return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o1,o2,newMessage();m2,o2,o1,M2()"
   )
@@ -146,10 +147,10 @@ test(
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()",
     "this-is-a-message-reference()",
     size => {
-      return { x: size.width, y: size.height + 30 };
+      return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     size => {
-      return { x: 0, y: size.height + 30 };
+      return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()"
   )
