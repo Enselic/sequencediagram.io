@@ -19,6 +19,7 @@ function Message(props) {
     isPending,
     isMarker,
     showControls,
+    onRemove,
   } = props;
 
   let onMouseDown;
@@ -73,9 +74,8 @@ function Message(props) {
       {showControlsEffective && (
         <RemoveButton
           keyToRemove={message.key}
-          dispatch={dispatch}
-          pending={pending}
           isHovered={isHovered}
+          onRemove={onRemove}
           extraStyle={Object.assign({}, selfSent ? {} : { margin: "0px 30px" })}
         />
       )}

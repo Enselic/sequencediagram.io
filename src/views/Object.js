@@ -27,6 +27,7 @@ function DiagramObject(props) {
     isHovered,
     onLifelineClick,
     showControls,
+    onRemove,
   } = props;
 
   const onMouseDown = moveHelper(
@@ -61,7 +62,7 @@ function DiagramObject(props) {
           <RemoveButton
             isHovered={isHovered}
             keyToRemove={object.key}
-            dispatch={dispatch}
+            onRemove={onRemove}
             extraStyle={{ transform: "translateX(-50%)" }}
           />
         )}

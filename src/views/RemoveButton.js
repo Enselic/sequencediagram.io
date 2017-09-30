@@ -1,9 +1,8 @@
-import { removeComponent } from "./../reducers";
 import React from "react";
 import { eatMouseDown } from "./utils";
 
 export default function(props) {
-  const { keyToRemove, dispatch, extraStyle, isHovered } = props;
+  const { keyToRemove, onRemove, extraStyle, isHovered } = props;
 
   const style = {
     position: "absolute",
@@ -28,7 +27,7 @@ export default function(props) {
       id={"remove-" + keyToRemove}
       {...eatMouseDown}
       style={style}
-      onClick={() => dispatch(removeComponent(keyToRemove))}
+      onClick={onRemove}
     >
       remove
     </div>

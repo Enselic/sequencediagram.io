@@ -160,6 +160,7 @@ export default class App extends React.Component {
               key={object.key}
               object={object}
               onLifelineClick={handleLifelineClick(object)}
+              onRemove={() => dispatch(ac.removeComponent(object.key))}
               showControls={showControls}
               {...usefulProps}
             />
@@ -173,6 +174,7 @@ export default class App extends React.Component {
                 message={message}
                 msgLayout={msgLayout}
                 onStartEndClick={this.handleOnStartEndClick}
+                onRemove={() => dispatch(ac.removeComponent(message.key))}
                 showControls={showControls}
                 isPending={
                   this.state.messageStartEndMoved &&
