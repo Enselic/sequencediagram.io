@@ -28,9 +28,9 @@ export function hoverHelper(WrappedComponent) {
     render() {
       return (
         <WrappedComponent
-          onMouseEnter={this.onMouseEnter}
-          onMouseMove={this.onMouseMove}
-          onMouseLeave={this.onMouseLeave}
+          handleHoverMouseEnter={this.onMouseEnter}
+          handleHoverMouseMove={this.onMouseMove}
+          handleHoverMouseLeave={this.onMouseLeave}
           {...this.state}
           {...this.props}
         />

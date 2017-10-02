@@ -55,9 +55,9 @@ function Message(props) {
       style={{ ...msgLayout, ...style }}
       id={message.key}
       key={message.key}
-      onMouseEnter={props.onMouseEnter}
-      onMouseMove={props.onMouseMove}
-      onMouseLeave={props.onMouseLeave}
+      onMouseEnter={props.handleHoverMouseEnter}
+      onMouseMove={props.handleHoverMouseMove}
+      onMouseLeave={props.handleHoverMouseLeave}
     >
       <Name
         showBackground={!isMarker}

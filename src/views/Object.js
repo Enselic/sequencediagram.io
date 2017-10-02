@@ -54,9 +54,12 @@ function DiagramObject(props) {
   return (
     <div style={style} id={object.key} key={object.key}>
       <div
-        onMouseEnter={props.onMouseEnter}
-        onMouseMove={props.onMouseMove}
-        onMouseLeave={props.onMouseLeave}
+        onMouseEnter={props.handleHoverMouseEnter}
+        onMouseMove={props.handleHoverMouseMove}
+        onMouseLeave={props.handleHoverMouseLeave}
+        style={{
+          transform: "translateX(-50%)",
+        }}
       >
         {showControls && (
           <RemoveButton
@@ -64,7 +67,6 @@ function DiagramObject(props) {
             keyToRemove={object.key}
             onRemove={onRemove}
             extraStyle={{
-              transform: "translateX(-50%)",
               position: "absolute",
               bottom: "100%",
               width: undefined,
@@ -78,7 +80,6 @@ function DiagramObject(props) {
           style={{
             background: "#ffe761",
             padding: `${OBJECT_NAME_PADDING.TOP_BOTTOM}px ${OBJECT_NAME_PADDING.LEFT_RIGHT}px`,
-            transform: "translateX(-50%)",
             position: "relative",
             fontSize: `${OBJECT_NAME_FONT_SIZE_PX}px`,
           }}
