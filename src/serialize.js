@@ -3,12 +3,12 @@ export function serialize(components) {
 }
 
 function serializeObject(object) {
-  return object.key + "," + encodeURIComponent(object.name);
+  return object.id + "," + encodeURIComponent(object.name);
 }
 
 function serializeMessage(message) {
   let res =
-    message.key +
+    message.id +
     "," +
     message.start +
     "," +
@@ -30,17 +30,17 @@ function serializeMessage(message) {
 function serializeComponents(components) {
   return components.reduce((acc, component) => {
     let serializedComponent;
-    if (component.key[0] === "o") {
+    if (component.id[0] === "o") {
       serializedComponent = serializeObject(component);
-    } else if (component.key[0] === "m") {
+    } else if (component.id[0] === "m") {
       serializedComponent = serializeMessage(component);
     }
     return acc + (acc ? ";" : "") + serializedComponent;
   }, "");
 }
 
-function parseKey(key) {
-  return key;
+function parseKey(id) {
+  return id;
 }
 
 export function deserialize(serialized) {
@@ -54,7 +54,7 @@ export function deserialize(serialized) {
     let parts = o.split(",");
     if (o[0] === "o" && parts.length >= 2 && parts[0] && parts[1]) {
       objects.push({
-        key: parseKey(parts[0]),
+        id: parseKey(parts[0]),
         name: decodeURIComponent(parts[1]),
       });
     } else if (
@@ -68,7 +68,7 @@ export function deserialize(serialized) {
       const isReply = parts[4] && parts[4].indexOf("r") >= 0;
       const isAsync = parts[4] && parts[4].indexOf("a") >= 0;
       messages.push({
-        key: parseKey(parts[0]),
+        id: parseKey(parts[0]),
         start: parts[1],
         end: parts[2],
         name: decodeURIComponent(parts[3]),
@@ -81,8 +81,8 @@ export function deserialize(serialized) {
   // Make sure all messages only references objects that were
   // successfully deserialized
   messages = messages.filter(message => {
-    const startExists = objects.find(object => object.key === message.start);
-    const endExists = objects.find(object => object.key === message.end);
+    const startExists = objects.find(object => object.id === message.start);
+    const endExists = objects.find(object => object.id === message.end);
     return startExists && endExists;
   });
 

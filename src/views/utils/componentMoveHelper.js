@@ -19,7 +19,7 @@ export default function(
   // disable the move helper if this object is being renamed
   const beingRenamed =
     pending.componentRenamed &&
-    pending.componentRenamed.key === movedComponent.key;
+    pending.componentRenamed.id === movedComponent.id;
 
   return beingRenamed
     ? null
@@ -29,9 +29,9 @@ export default function(
         let movedAwayFromClick = false;
 
         function getUiComponents(component) {
-          const el = document.getElementById(component.key);
+          const el = document.getElementById(component.id);
 
-          if (component.key === movedComponent.key) {
+          if (component.id === movedComponent.id) {
             grabOffset = eventToPos(e) - parseInt(elementToPos(el), 10);
           }
 
@@ -46,7 +46,7 @@ export default function(
         const uiObjects = objects.map(getUiComponents);
         const uiMessages = messages.map(getUiComponents);
 
-        const isMovingObject = movedComponent.key[0] === "o";
+        const isMovingObject = movedComponent.id[0] === "o";
 
         const uiComponents = isMovingObject ? uiObjects : uiMessages;
         const components = isMovingObject ? objects : messages;
@@ -61,7 +61,7 @@ export default function(
 
           uiComponents.sort(function(o1, o2) {
             function toX(uiComponent) {
-              if (uiComponent.component.key === movedComponent.key) {
+              if (uiComponent.component.id === movedComponent.id) {
                 return offsettedPos;
               } else {
                 return parseInt(elementToPos(uiComponent.el), 10);
@@ -79,11 +79,11 @@ export default function(
           uiObjects.forEach((uiObject, index) => {
             let pos;
             let transition;
-            if (uiObject.component.key === movedComponent.key) {
+            if (uiObject.component.id === movedComponent.id) {
               pos = offsettedPos;
               transition = undefined;
             } else {
-              pos = layout[uiObject.component.key].lifelineX;
+              pos = layout[uiObject.component.id].lifelineX;
               transition = uiObject.oldStyle.transition;
             }
             const style = uiObject.el.style;
@@ -91,7 +91,7 @@ export default function(
             style.transition = transition;
           });
           uiMessages.forEach((uiMessage, index) => {
-            const l = layout[uiMessage.component.key];
+            const l = layout[uiMessage.component.id];
             let pos = l.top;
             let left = l.left;
             let width = l.width;
@@ -99,19 +99,19 @@ export default function(
             let borderImage = l.borderImage;
             let transition = uiMessage.oldStyle.transition;
             const o = uiMessage.component;
-            if (o.key === movedComponent.key) {
+            if (o.id === movedComponent.id) {
               pos = offsettedPos;
               transition = undefined;
             }
             if (
-              (o.start && o.start === movedComponent.key) ||
-              (o.end && o.end === movedComponent.key)
+              (o.start && o.start === movedComponent.id) ||
+              (o.end && o.end === movedComponent.id)
             ) {
               transition = undefined;
             }
 
-            const movingStart = o.start === movedComponent.key;
-            const movingEnd = o.end === movedComponent.key;
+            const movingStart = o.start === movedComponent.id;
+            const movingEnd = o.end === movedComponent.id;
             if (isMovingObject && (movingStart || movingEnd)) {
               const tmpLayout = layoutMessageLeftAndWidth(
                 layout,
@@ -164,11 +164,7 @@ export default function(
 
           if (!movedAwayFromClick) {
             dispatch(
-              ac.editComponentName(
-                movedComponent.key,
-                movedComponent.name,
-                true
-              )
+              ac.editComponentName(movedComponent.id, movedComponent.name, true)
             );
           }
         }
@@ -176,6 +172,6 @@ export default function(
 
         updatePositions(e);
 
-        dispatch(beginComponentMove(movedComponent.key));
+        dispatch(beginComponentMove(movedComponent.id));
       };
 }

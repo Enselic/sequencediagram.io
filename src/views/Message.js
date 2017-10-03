@@ -53,8 +53,8 @@ function Message(props) {
     <div
       onMouseDown={onMouseDown}
       style={{ ...msgLayout, ...style }}
-      id={message.key}
-      key={message.key}
+      id={message.id}
+      key={message.id}
       onMouseEnter={props.handleHoverMouseEnter}
       onMouseMove={props.handleHoverMouseMove}
       onMouseLeave={props.handleHoverMouseLeave}
@@ -69,9 +69,9 @@ function Message(props) {
       <MessageArrow
         {...props}
         direction={msgLayout.direction}
-        onLineClicked={() => dispatch(ac.toggleMessageLineStyle(message.key))}
-        onArrowClicked={() => dispatch(ac.toggleMessageArrowStyle(message.key))}
-        onFlipClicked={() => dispatch(ac.flipMessageDirection(message.key))}
+        onLineClicked={() => dispatch(ac.toggleMessageLineStyle(message.id))}
+        onArrowClicked={() => dispatch(ac.toggleMessageArrowStyle(message.id))}
+        onFlipClicked={() => dispatch(ac.flipMessageDirection(message.id))}
       />
     </div>
   );

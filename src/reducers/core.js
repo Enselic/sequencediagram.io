@@ -7,7 +7,7 @@ function getNextId(components) {
   // Doesn't need to be "highest" unused, but it's easy to implement
   let highestUsedId = 0; // Lowest allowed id is 1
   components.forEach(component => {
-    const id = parseInt(component.key.substring(1), 10);
+    const id = parseInt(component.id.substring(1), 10);
     if (id > highestUsedId) {
       highestUsedId = id;
     }
@@ -15,9 +15,9 @@ function getNextId(components) {
   return highestUsedId + 1;
 }
 
-function doRenameComponent(components, key, newName) {
+function doRenameComponent(components, id, newName) {
   return components.map(component => {
-    if (component.key === key) {
+    if (component.id === id) {
       return { ...component, name: newName };
     } else {
       return { ...component };
@@ -27,14 +27,14 @@ function doRenameComponent(components, key, newName) {
 
 function doAddComponentAndAssignKey(
   components,
-  keyPrefix,
+  idPrefix,
   newComponent,
   insertIndex
 ) {
   let newComponents = [...components];
   let newComponentWithKey = {
     ...newComponent,
-    key: keyPrefix + getNextId(components),
+    id: idPrefix + getNextId(components),
   };
 
   if (insertIndex !== undefined) {
@@ -50,8 +50,8 @@ export function addObject(name) {
   return { type: "ADD_OBJECT", newComponent: { name } };
 }
 
-export function removeComponent(key) {
-  return { type: "REMOVE_COMPONENT", key };
+export function removeComponent(id) {
+  return { type: "REMOVE_COMPONENT", id };
 }
 
 export function replaceCore(objects, messages) {
@@ -62,8 +62,8 @@ export function rearrangeObjects(objects) {
   return { type: "REARRANGE_OBJECTS", objects };
 }
 
-export function renameComponent(key, newName) {
-  return { type: "RENAME_COMPONENT", key, newName };
+export function renameComponent(id, newName) {
+  return { type: "RENAME_COMPONENT", id, newName };
 }
 
 export function addMessage(start, end, name, insertIndex) {
@@ -78,16 +78,16 @@ export function replaceMessage(message) {
   return { type: "REPLACE_MESSAGE", message };
 }
 
-export function toggleMessageLineStyle(key) {
-  return { type: "TOGGLE_MESSAGE_LINE_STYLE", key };
+export function toggleMessageLineStyle(id) {
+  return { type: "TOGGLE_MESSAGE_LINE_STYLE", id };
 }
 
-export function toggleMessageArrowStyle(key) {
-  return { type: "TOGGLE_MESSAGE_ARROW_STYLE", key };
+export function toggleMessageArrowStyle(id) {
+  return { type: "TOGGLE_MESSAGE_ARROW_STYLE", id };
 }
 
-export function flipMessageDirection(key) {
-  return { type: "FLIP_MESSAGE_DIRECTION", key };
+export function flipMessageDirection(id) {
+  return { type: "FLIP_MESSAGE_DIRECTION", id };
 }
 
 export function rearrangeMessages(messages) {
@@ -99,9 +99,9 @@ function objects(state = [], action) {
     case "ADD_OBJECT":
       return doAddComponentAndAssignKey(state, "o", action.newComponent);
     case "REMOVE_COMPONENT":
-      return state.filter(object => object.key !== action.key);
+      return state.filter(object => object.id !== action.id);
     case "RENAME_COMPONENT":
-      return doRenameComponent(state, action.key, action.newName);
+      return doRenameComponent(state, action.id, action.newName);
     case "REPLACE_CORE":
       return [...action.objects];
     case "REARRANGE_OBJECTS":
@@ -121,16 +121,16 @@ function messages(state = [], action) {
         action.insertIndex
       );
     case "REMOVE_COMPONENT":
-      const key = action.key;
+      const id = action.id;
       return state.filter(
         message =>
-          message.key !== key && message.start !== key && message.end !== key
+          message.id !== id && message.start !== id && message.end !== id
       );
     case "RENAME_COMPONENT":
-      return doRenameComponent(state, action.key, action.newName);
+      return doRenameComponent(state, action.id, action.newName);
     case "REPLACE_MESSAGE":
       return state.map(message => {
-        if (message.key === action.message.key) {
+        if (message.id === action.message.id) {
           return { ...action.message };
         } else {
           return { ...message };
@@ -140,7 +140,7 @@ function messages(state = [], action) {
       return [...action.messages];
     case "TOGGLE_MESSAGE_LINE_STYLE":
       return state.map(message => {
-        if (message.key === action.key) {
+        if (message.id === action.id) {
           return { ...message, isReply: message.isReply ? undefined : true };
         } else {
           return { ...message };
@@ -148,7 +148,7 @@ function messages(state = [], action) {
       });
     case "TOGGLE_MESSAGE_ARROW_STYLE":
       return state.map(message => {
-        if (message.key === action.key) {
+        if (message.id === action.id) {
           return { ...message, isAsync: message.isAsync ? undefined : true };
         } else {
           return { ...message };
@@ -158,7 +158,7 @@ function messages(state = [], action) {
       return [...action.messages];
     case "FLIP_MESSAGE_DIRECTION":
       return state.map(message => {
-        if (message.key === action.key) {
+        if (message.id === action.id) {
           return { ...message, start: message.end, end: message.start };
         } else {
           return { ...message };

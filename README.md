@@ -93,7 +93,6 @@ TODO
 
 List of minor/uninteresting things to do, roughly sorted by priority.
 - start -> sender, end -> receiver
-- key -> id
 - Hover to right of object is counted as hover but it's not
 - Default to using permalinks:
   - https://sequencediagram.io/1234 points to latest version

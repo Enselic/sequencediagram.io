@@ -11,7 +11,7 @@ function createStartOrEndButton(type, message) {
   return props => {
     return (
       <MessageButton
-        id={message.key + "-" + type}
+        id={message.id + "-" + type}
         onClick={e => {
           props.onStartEndClick(message, type, e.pageX);
         }}
@@ -43,7 +43,7 @@ export default class MessageArrow extends React.Component {
       isPending,
       onRemove,
     } = this.props;
-    const { key, isReply, isAsync } = message;
+    const { id, isReply, isAsync } = message;
 
     const selfSentMessage = direction === 0;
     const pointsLeft = direction > 0;
@@ -87,7 +87,7 @@ export default class MessageArrow extends React.Component {
       >
         {showControlsButNotPending && (
           <RemoveButton
-            keyToRemove={message.key}
+            idToRemove={message.id}
             isHovered={isHovered}
             onRemove={onRemove}
             extraStyle={{ width: MESSAGE_BUTTON_WIDTH }}
@@ -109,7 +109,7 @@ export default class MessageArrow extends React.Component {
         >
           {showControlsButNotPending && (
             <MessageButton
-              id={"toggle-line-style-" + key}
+              id={"toggle-line-style-" + id}
               onClick={showControls ? onLineClicked : null}
               isHovered={isHovered}
               bottomText
@@ -125,7 +125,7 @@ export default class MessageArrow extends React.Component {
           {showControlsButNotPending &&
           !selfSentMessage && (
             <MessageButton
-              id={"flip-" + key}
+              id={"flip-" + id}
               onClick={showControls ? onFlipClicked : null}
               isHovered={isHovered}
               background={backgroundDark}
@@ -140,7 +140,7 @@ export default class MessageArrow extends React.Component {
 
           {showControlsButNotPending && (
             <MessageButton
-              id={"toggle-arrow-style-" + key}
+              id={"toggle-arrow-style-" + id}
               className="message-end"
               onClick={showControls ? onArrowClicked : null}
               isHovered={isHovered}

@@ -13,7 +13,7 @@ export default class NewMessageMarker extends React.PureComponent {
     const height = 10;
     const { left, top, isStart, direction } = this.props;
     const tmpMessage = {
-      key: "newMessageMarker",
+      id: "newMessageMarker",
       start: null,
       end: null,
       name: "",

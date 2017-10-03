@@ -10,21 +10,21 @@ export function pendingAddMessage(start, x, y, name) {
 }
 
 /**
- * @param key Key of component. Message or Object.
+ * @param id Key of component. Message or Object.
  * @param part Part of message. "start" or "end". If not specified, entire component is moved.
  */
-export function beginComponentMove(key, part) {
-  return { type: "BEGIN_COMPONENT_MOVE", key, part };
+export function beginComponentMove(id, part) {
+  return { type: "BEGIN_COMPONENT_MOVE", id, part };
 }
 
-export function endComponentMove(key) {
+export function endComponentMove(id) {
   return { type: "END_COMPONENT_MOVE" };
 }
 
-export function editComponentName(key, newName, preselect) {
+export function editComponentName(id, newName, preselect) {
   return {
     type: "EDIT_COMPONENT_NAME",
-    key: key,
+    id: id,
     newName: newName,
     preselect: preselect,
   };
@@ -42,8 +42,8 @@ export function hideShareInfo() {
   return { type: "HIDE_SHARE_INFO" };
 }
 
-export function mouseEnterLifeline(key, x, y) {
-  return { type: "MOUSE_ENTER_LIFELINE", key, x, y };
+export function mouseEnterLifeline(id, x, y) {
+  return { type: "MOUSE_ENTER_LIFELINE", id, x, y };
 }
 
 export function mouseLeaveLifeline() {
@@ -71,7 +71,7 @@ export default function(state = {}, action) {
       return {
         ...state,
         message: {
-          key: "pendingMessage",
+          id: "pendingMessage",
           start: action.start,
           end: action.x,
           name: action.name,
@@ -84,14 +84,14 @@ export default function(state = {}, action) {
       return {
         ...state,
         message:
-          !state.message || state.message.start === action.key
+          !state.message || state.message.start === action.id
             ? undefined
             : state.message,
       };
     case "BEGIN_COMPONENT_MOVE":
       return {
         ...state,
-        componentMoved: { key: action.key, part: action.part },
+        componentMoved: { id: action.id, part: action.part },
       };
     case "END_COMPONENT_MOVE":
       return { ...state, componentMoved: undefined };
@@ -99,7 +99,7 @@ export default function(state = {}, action) {
       return {
         ...state,
         componentRenamed: {
-          key: action.key,
+          id: action.id,
           newName: action.newName,
           preselect: action.preselect,
         },
@@ -120,7 +120,7 @@ export default function(state = {}, action) {
     case "MOUSE_ENTER_LIFELINE":
       return {
         ...state,
-        lifelineHoveredKey: action.key,
+        lifelineHoveredKey: action.id,
         lifelineHoveredX: action.x,
         lifelineHoveredY: action.y,
       };

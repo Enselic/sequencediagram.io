@@ -44,15 +44,15 @@ function DiagramObject(props) {
   );
 
   let style = {
-    left: layout[object.key].lifelineX,
-    top: layout[object.key].top,
+    left: layout[object.id].lifelineX,
+    top: layout[object.id].top,
     position: "absolute",
     transition: devUtils.transitionIfNotDev("left 0.3s"),
     userSelect: "none",
   };
 
   return (
-    <div style={style} id={object.key} key={object.key}>
+    <div style={style} id={object.id} key={object.id}>
       <div
         onMouseEnter={props.handleHoverMouseEnter}
         onMouseMove={props.handleHoverMouseMove}
@@ -64,7 +64,7 @@ function DiagramObject(props) {
         {showControls && (
           <RemoveButton
             isHovered={isHovered}
-            keyToRemove={object.key}
+            idToRemove={object.id}
             onRemove={onRemove}
             extraStyle={{
               position: "absolute",
@@ -88,7 +88,7 @@ function DiagramObject(props) {
         </div>
       </div>
       <div
-        {...hoverLifelineHelper(dispatch, object.key)}
+        {...hoverLifelineHelper(dispatch, object.id)}
         onClick={onLifelineClick}
         style={{ textAlign: "center", transform: "translateX(-50%)" }}
       >

@@ -47,12 +47,12 @@ export default class App extends React.Component {
     function withPendingNewName(component) {
       if (
         pending.componentRenamed &&
-        pending.componentRenamed.key === component.key
+        pending.componentRenamed.id === component.id
       ) {
         return { ...component, name: pending.componentRenamed.newName };
       } else if (
         thiz.state.messageStartEndMoved &&
-        thiz.state.messageStartEndMoved.message.key === component.key
+        thiz.state.messageStartEndMoved.message.id === component.id
       ) {
         const newComponent = { ...component };
         newComponent[thiz.state.messageStartEndMoved.type] =
@@ -85,7 +85,7 @@ export default class App extends React.Component {
           )
         );
       };
-      pendingMessageLayout = layout[pending.message.key];
+      pendingMessageLayout = layout[pending.message.id];
     } else if (this.state.messageStartEndMoved) {
       handleMouseMove = e => {
         this.setState({
@@ -95,8 +95,7 @@ export default class App extends React.Component {
           },
         });
       };
-      pendingMessageLayout =
-        layout[this.state.messageStartEndMoved.message.key];
+      pendingMessageLayout = layout[this.state.messageStartEndMoved.message.id];
     }
 
     function handleLifelineClick(object) {
@@ -106,26 +105,26 @@ export default class App extends React.Component {
           const newMessage = {
             ...messages.find(
               message =>
-                message.key === thiz.state.messageStartEndMoved.message.key
+                message.id === thiz.state.messageStartEndMoved.message.id
             ),
           };
-          newMessage[thiz.state.messageStartEndMoved.type] = object.key;
+          newMessage[thiz.state.messageStartEndMoved.type] = object.id;
           action = ac.replaceMessage(newMessage);
           thiz.setState({
             messageStartEndMoved: undefined,
           });
         } else if (!pending.message || !pending.message.start) {
           action = ac.pendingAddMessage(
-            object.key,
+            object.id,
             ...eventToDiagramCoords(e),
             "newMessage()"
           );
         } else {
           action = ac.addMessage(
             pending.message.start,
-            object.key,
+            object.id,
             pending.message.name,
-            layout[pending.message.key].index
+            layout[pending.message.id].index
           );
         }
         dispatch(action);
@@ -162,28 +161,28 @@ export default class App extends React.Component {
         >
           {mapWithSameDomOrder(objects, this.objectsMemory, object => (
             <Objekt
-              key={object.key}
+              key={object.id}
               object={object}
               onLifelineClick={handleLifelineClick(object)}
-              onRemove={() => dispatch(ac.removeComponent(object.key))}
+              onRemove={() => dispatch(ac.removeComponent(object.id))}
               showControls={showControls}
               {...usefulProps}
             />
           ))}
 
           {mapWithSameDomOrder(messages, this.messagesMemory, message => {
-            const msgLayout = layout[message.key];
+            const msgLayout = layout[message.id];
             return msgLayout ? (
               <Message
-                key={message.key}
+                key={message.id}
                 message={message}
                 msgLayout={msgLayout}
                 onStartEndClick={this.handleOnStartEndClick}
-                onRemove={() => dispatch(ac.removeComponent(message.key))}
+                onRemove={() => dispatch(ac.removeComponent(message.id))}
                 showControls={showControls}
                 isPending={
                   this.state.messageStartEndMoved &&
-                  this.state.messageStartEndMoved.message.key === message.key
+                  this.state.messageStartEndMoved.message.id === message.id
                 }
                 {...usefulProps}
               />
@@ -192,7 +191,7 @@ export default class App extends React.Component {
 
           {pending.message && (
             <Message
-              key={pending.message.key}
+              key={pending.message.id}
               message={pending.message}
               msgLayout={pendingMessageLayout}
               {...usefulProps}

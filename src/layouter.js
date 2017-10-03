@@ -114,7 +114,7 @@ function layoutObjects(layout, objects) {
       currentX,
       object
     );
-    layout[object.key] = objectLayout;
+    layout[object.id] = objectLayout;
     currentX = newX;
   });
 
@@ -139,7 +139,7 @@ export default function(getTextWidth, objects, messages, extraMessage) {
   let currentY = MESSAGE_START_Y;
 
   function insertExtraMessage(index) {
-    layout[extraMessage.key] = {
+    layout[extraMessage.id] = {
       ...layoutMessageLeftAndWidth(
         layout,
         extraMessage,
@@ -153,7 +153,7 @@ export default function(getTextWidth, objects, messages, extraMessage) {
   }
 
   function extraMessageToBeInserted() {
-    return extraMessage && !(extraMessage.key in layout);
+    return extraMessage && !(extraMessage.id in layout);
   }
 
   messages.forEach((message, index) => {
@@ -169,7 +169,7 @@ export default function(getTextWidth, objects, messages, extraMessage) {
       return;
     }
 
-    layout[message.key] = {
+    layout[message.id] = {
       ...leftRightValues,
       top: currentY,
     };

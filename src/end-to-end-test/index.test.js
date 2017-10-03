@@ -319,42 +319,42 @@ global.moveEndPointToActor = async function(
     .perform();
 };
 
-global.flip = async function(key) {
+global.flip = async function(id) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // flip buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("flip-" + key)))
+    .click(await driver.findElement(By.id("flip-" + id)))
     .perform();
   return sleepIfHumanObserver(0.7);
 };
 
-global.toggleArrowStyle = async function(key) {
+global.toggleArrowStyle = async function(id) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("toggle-arrow-style-" + key)))
+    .click(await driver.findElement(By.id("toggle-arrow-style-" + id)))
     .perform();
   return sleepIfHumanObserver(0.7);
 };
 
-global.toggleLineStyle = async function(key) {
+global.toggleLineStyle = async function(id) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("toggle-line-style-" + key)))
+    .click(await driver.findElement(By.id("toggle-line-style-" + id)))
     .perform();
   return sleepIfHumanObserver(0.7);
 };
 
-global.removeComponentWithKey = async function(key) {
+global.removeComponentWithKey = async function(id) {
   // Low prio todo: Stop depending on the implementation detail that components have
   // remove buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("remove-" + key)))
+    .click(await driver.findElement(By.id("remove-" + id)))
     .perform();
   return waitForCssTransitions();
 };

@@ -5,7 +5,7 @@ import nameBackground from "./pngs/name-background.png";
 export default function(props) {
   const { pending, dispatch, component, showBackground } = props;
 
-  // pending.componentRenamed && pending.componentRenamed.key === message.key
+  // pending.componentRenamed && pending.componentRenamed.id === message.id
 
   function handleKeyDown(e) {
     const Ret = 13;
@@ -28,20 +28,20 @@ export default function(props) {
   function commit() {
     if (pending.componentRenamed) {
       dispatch(
-        ac.renameComponent(component.key, pending.componentRenamed.newName)
+        ac.renameComponent(component.id, pending.componentRenamed.newName)
       );
       dispatch(ac.escapePendingOperation());
     }
   }
 
   function onChange(e) {
-    dispatch(ac.editComponentName(component.key, e.target.value, false));
+    dispatch(ac.editComponentName(component.id, e.target.value, false));
   }
 
   if (
     pending &&
     pending.componentRenamed &&
-    pending.componentRenamed.key === component.key
+    pending.componentRenamed.id === component.id
   ) {
     const value = pending.componentRenamed.newName;
     return (

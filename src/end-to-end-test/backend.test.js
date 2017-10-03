@@ -24,7 +24,7 @@ const sequenceDiagramInitialRevision = {
 };
 
 const sequenceDiagramRevision2 = {
-  objects: [{ key: "o1", name: "This works" }],
+  objects: [{ id: "o1", name: "This works" }],
   messages: [],
 };
 
@@ -136,7 +136,7 @@ it("POST > 50 kB payload", async () => {
   let kBsLeft = 50;
   while (kBsLeft-- > 0) {
     hugeSequenceDiagram.objects.push({
-      key: "o" + kBsLeft,
+      id: "o" + kBsLeft,
       name: "x".repeat(1000),
     });
   }

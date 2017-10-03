@@ -53,13 +53,13 @@ export function eventToDiagramCoords(event) {
   ];
 }
 
-export function hoverLifelineHelper(dispatch, key) {
+export function hoverLifelineHelper(dispatch, id) {
   return {
     onMouseEnter(e) {
-      dispatch(ac.mouseEnterLifeline(key, ...eventToDiagramCoords(e)));
+      dispatch(ac.mouseEnterLifeline(id, ...eventToDiagramCoords(e)));
     },
     onMouseMove(e) {
-      dispatch(ac.mouseEnterLifeline(key, ...eventToDiagramCoords(e)));
+      dispatch(ac.mouseEnterLifeline(id, ...eventToDiagramCoords(e)));
     },
     onMouseLeave() {
       dispatch(ac.mouseLeaveLifeline());
@@ -135,14 +135,14 @@ function renderItems(items) {
       {mapWithSameDomOrder(items, memoryArray, (item, index) => {
         return (
           <div
-            key={item.key}
+            key={item.id}
             style={{
               position: "absolute",
               left: index * 200,
               transition: "left 5s"
             }}
           >
-            {item.key}
+            {item.id}
           </div>
         );
       })}
@@ -151,8 +151,8 @@ function renderItems(items) {
   );
 }
 
-renderItems([{ key: "A" }, { key: "B" }]);
-setTimeout(renderItems, 500, [{ key: "B" }, { key: "A" }]);
+renderItems([{ id: "A" }, { id: "B" }]);
+setTimeout(renderItems, 500, [{ id: "B" }, { id: "A" }]);
 
 </code></pre>
  *
@@ -165,23 +165,23 @@ setTimeout(renderItems, 500, [{ key: "B" }, { key: "A" }]);
  */
 export function mapWithSameDomOrder(arrayToMap, memoryArray, callback) {
   // Create new elements
-  let keyToElement = {};
+  let idToElement = {};
   arrayToMap.forEach((item, index, array) => {
     const element = callback(item, index, array);
-    keyToElement[item.key] = element;
+    idToElement[item.id] = element;
   });
 
   // Rearrange them according to previous order
   let elements = [];
   memoryArray.forEach(prevElement => {
-    if (prevElement.key in keyToElement) {
-      elements.push(keyToElement[prevElement.key]);
-      delete keyToElement[prevElement.key];
+    if (prevElement.id in idToElement) {
+      elements.push(idToElement[prevElement.id]);
+      delete idToElement[prevElement.id];
     }
   });
 
   // Finally, append remaining (new) elements
-  elements.splice(elements.length, 0, ...Object.values(keyToElement));
+  elements.splice(elements.length, 0, ...Object.values(idToElement));
 
   // Move 'elements' contents to 'memoryArray'
   memoryArray.splice(0, memoryArray.length, ...elements);
