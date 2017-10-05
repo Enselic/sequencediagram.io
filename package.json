@@ -24,8 +24,8 @@
     "serve": "^6.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start-backend": "backend/start.sh",
+    "start": "scripts/start.sh",
+    "start-local": "backend/start.sh local",
     "build": "react-scripts build",
     "test": "npm run prettier -- --list-different && react-scripts test",
     "eject": "react-scripts eject",
