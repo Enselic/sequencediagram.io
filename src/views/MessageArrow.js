@@ -7,13 +7,13 @@ import RemoveButton from "./RemoveButton";
 import { eatMouseDownCallback } from "./utils";
 import { boxShadow, backgroundDark } from "./common";
 
-function createStartOrEndButton(type, message) {
+function createAnchorButton(type, message) {
   return props => {
     return (
       <MessageButton
         id={message.id + "-" + type}
         onClick={e => {
-          props.onStartEndClick(message, type, e.pageX);
+          props.onAnchorClick(message, type, e.pageX);
         }}
         {...props}
       >
@@ -28,8 +28,8 @@ export default class MessageArrow extends React.Component {
     super(props);
 
     const { message } = props;
-    this.MessageStartButton = createStartOrEndButton("start", message);
-    this.MessageEndButton = createStartOrEndButton("end", message);
+    this.MessageSenderButton = createAnchorButton("sender", message);
+    this.MessageReceiverButton = createAnchorButton("receiver", message);
   }
   render() {
     const {
@@ -96,9 +96,9 @@ export default class MessageArrow extends React.Component {
 
         {showControlsButNotPending &&
           (pointsLeft || selfSentMessage ? (
-            <this.MessageStartButton {...this.props} />
+            <this.MessageSenderButton {...this.props} />
           ) : (
-            <this.MessageEndButton {...this.props} />
+            <this.MessageReceiverButton {...this.props} />
           ))}
 
         <div
@@ -141,7 +141,6 @@ export default class MessageArrow extends React.Component {
           {showControlsButNotPending && (
             <MessageButton
               id={"toggle-arrow-style-" + id}
-              className="message-end"
               onClick={showControls ? onArrowClicked : null}
               isHovered={isHovered}
               background={backgroundDark}
@@ -222,9 +221,9 @@ export default class MessageArrow extends React.Component {
         {showControlsButNotPending &&
           !selfSentMessage &&
           (pointsLeft ? (
-            <this.MessageEndButton {...this.props} />
+            <this.MessageReceiverButton {...this.props} />
           ) : (
-            <this.MessageStartButton {...this.props} />
+            <this.MessageSenderButton {...this.props} />
           ))}
       </div>
     );

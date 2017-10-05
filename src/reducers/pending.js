@@ -1,17 +1,17 @@
 /**
- * @start The determined start/origin of the message (id of Object)
- * @x The current and temporary X position of the end/destination. Will
+ * @sender The sender of the message (id of Object)
+ * @x The current and temporary X position of the receiver. Will
  *    change when the mouse is moved.
  * @name Name.
  * @y The Y position of the new message
  */
-export function pendingAddMessage(start, x, y, name) {
-  return { type: "PENDING_ADD_MESSAGE", start, x, y, name };
+export function pendingAddMessage(sender, x, y, name) {
+  return { type: "PENDING_ADD_MESSAGE", sender, x, y, name };
 }
 
 /**
  * @param id Key of component. Message or Object.
- * @param part Part of message. "start" or "end". If not specified, entire component is moved.
+ * @param part Part of message. "sender" or "receiver". If not specified, entire component is moved.
  */
 export function beginComponentMove(id, part) {
   return { type: "BEGIN_COMPONENT_MOVE", id, part };
@@ -72,8 +72,8 @@ export default function(state = {}, action) {
         ...state,
         message: {
           id: "pendingMessage",
-          start: action.start,
-          end: action.x,
+          sender: action.sender,
+          receiver: action.x,
           name: action.name,
           y: action.y,
         },
@@ -84,7 +84,7 @@ export default function(state = {}, action) {
       return {
         ...state,
         message:
-          !state.message || state.message.start === action.id
+          !state.message || state.message.sender === action.id
             ? undefined
             : state.message,
       };

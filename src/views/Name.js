@@ -59,7 +59,7 @@ export default function(props) {
   } else {
     return (
       <div
-        className="message-end"
+        className="message-button"
         style={
           showBackground ? (
             {

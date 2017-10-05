@@ -23,7 +23,7 @@ export default class MessageButton extends React.Component {
           color: isHovered && "#002456",
           ...props.extraStyle,
         }}
-        className={props.className || "message-end"}
+        className={props.className || "message-button"}
         {...eatMouseDown}
       >
         {isHovered && (

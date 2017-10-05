@@ -104,20 +104,20 @@ export default function(
               transition = undefined;
             }
             if (
-              (o.start && o.start === movedComponent.id) ||
-              (o.end && o.end === movedComponent.id)
+              (o.sender && o.sender === movedComponent.id) ||
+              (o.receiver && o.receiver === movedComponent.id)
             ) {
               transition = undefined;
             }
 
-            const movingStart = o.start === movedComponent.id;
-            const movingEnd = o.end === movedComponent.id;
-            if (isMovingObject && (movingStart || movingEnd)) {
+            const movingSender = o.sender === movedComponent.id;
+            const movingReceiver = o.receiver === movedComponent.id;
+            if (isMovingObject && (movingSender || movingReceiver)) {
               const tmpLayout = layoutMessageLeftAndWidth(
                 layout,
                 uiMessage.component,
-                movingStart ? offsettedPos : undefined,
-                movingEnd ? offsettedPos : undefined
+                movingSender ? offsettedPos : undefined,
+                movingReceiver ? offsettedPos : undefined
               );
               left = tmpLayout.left;
               width = tmpLayout.width;

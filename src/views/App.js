@@ -15,16 +15,16 @@ export default class App extends React.Component {
     this.messagesMemory = [];
 
     this.state = {
-      messageStartEndMoved: undefined,
+      messageAnchorMoved: undefined,
     };
 
-    this.handleOnStartEndClick = (message, type, newX) => {
-      this.setState({ messageStartEndMoved: { message, type, newX } });
+    this.handleOnAnchorClick = (message, type, newX) => {
+      this.setState({ messageAnchorMoved: { message, type, newX } });
     };
 
     this.handleKeyDown = e => {
       if (e.keyCode === 27) {
-        this.setState({ messageStartEndMoved: undefined });
+        this.setState({ messageAnchorMoved: undefined });
       }
     };
   }
@@ -51,12 +51,12 @@ export default class App extends React.Component {
       ) {
         return { ...component, name: pending.componentRenamed.newName };
       } else if (
-        thiz.state.messageStartEndMoved &&
-        thiz.state.messageStartEndMoved.message.id === component.id
+        thiz.state.messageAnchorMoved &&
+        thiz.state.messageAnchorMoved.message.id === component.id
       ) {
         const newComponent = { ...component };
-        newComponent[thiz.state.messageStartEndMoved.type] =
-          thiz.state.messageStartEndMoved.newX;
+        newComponent[thiz.state.messageAnchorMoved.type] =
+          thiz.state.messageAnchorMoved.newX;
         return newComponent;
       } else {
         return component;
@@ -78,7 +78,7 @@ export default class App extends React.Component {
       handleMouseMove = e => {
         dispatch(
           ac.pendingAddMessage(
-            pending.message.start,
+            pending.message.sender,
             eventToDiagramCoords(e)[0],
             pending.message.y,
             pending.message.name
@@ -86,34 +86,33 @@ export default class App extends React.Component {
         );
       };
       pendingMessageLayout = layout[pending.message.id];
-    } else if (this.state.messageStartEndMoved) {
+    } else if (this.state.messageAnchorMoved) {
       handleMouseMove = e => {
         this.setState({
-          messageStartEndMoved: {
-            ...this.state.messageStartEndMoved,
+          messageAnchorMoved: {
+            ...this.state.messageAnchorMoved,
             newX: e.pageX,
           },
         });
       };
-      pendingMessageLayout = layout[this.state.messageStartEndMoved.message.id];
+      pendingMessageLayout = layout[this.state.messageAnchorMoved.message.id];
     }
 
     function handleLifelineClick(object) {
       return e => {
         let action;
-        if (thiz.state.messageStartEndMoved) {
+        if (thiz.state.messageAnchorMoved) {
           const newMessage = {
             ...messages.find(
-              message =>
-                message.id === thiz.state.messageStartEndMoved.message.id
+              message => message.id === thiz.state.messageAnchorMoved.message.id
             ),
           };
-          newMessage[thiz.state.messageStartEndMoved.type] = object.id;
+          newMessage[thiz.state.messageAnchorMoved.type] = object.id;
           action = ac.replaceMessage(newMessage);
           thiz.setState({
-            messageStartEndMoved: undefined,
+            messageAnchorMoved: undefined,
           });
-        } else if (!pending.message || !pending.message.start) {
+        } else if (!pending.message || !pending.message.sender) {
           action = ac.pendingAddMessage(
             object.id,
             ...eventToDiagramCoords(e),
@@ -121,7 +120,7 @@ export default class App extends React.Component {
           );
         } else {
           action = ac.addMessage(
-            pending.message.start,
+            pending.message.sender,
             object.id,
             pending.message.name,
             layout[pending.message.id].index
@@ -134,7 +133,7 @@ export default class App extends React.Component {
     const showControls =
       !pending.message &&
       !(pending.componentMoved && pending.componentMoved.part) &&
-      !thiz.state.messageStartEndMoved;
+      !thiz.state.messageAnchorMoved;
 
     return (
       <div
@@ -177,12 +176,12 @@ export default class App extends React.Component {
                 key={message.id}
                 message={message}
                 msgLayout={msgLayout}
-                onStartEndClick={this.handleOnStartEndClick}
+                onAnchorClick={this.handleOnAnchorClick}
                 onRemove={() => dispatch(ac.removeComponent(message.id))}
                 showControls={showControls}
                 isPending={
-                  this.state.messageStartEndMoved &&
-                  this.state.messageStartEndMoved.message.id === message.id
+                  this.state.messageAnchorMoved &&
+                  this.state.messageAnchorMoved.message.id === message.id
                 }
                 {...usefulProps}
               />
@@ -202,7 +201,7 @@ export default class App extends React.Component {
           {pending.lifelineHoveredKey &&
           (!pending.componentMoved ||
             pending.componentMoved.part ||
-            this.state.messageStartEndMoved) && (
+            this.state.messageAnchorMoved) && (
             <NewMessageMarker
               left={layout[pending.lifelineHoveredKey].lifelineX}
               top={
@@ -215,7 +214,7 @@ export default class App extends React.Component {
               isStart={
                 !!!pending.message &&
                 !(pending.componentMoved && pending.componentMoved.part) &&
-                !this.state.messageStartEndMoved
+                !this.state.messageAnchorMoved
               }
               direction={
                 layout[pending.lifelineHoveredKey].lifelineX >

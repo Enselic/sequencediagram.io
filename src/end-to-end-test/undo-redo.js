@@ -94,7 +94,7 @@ test(
       "o1,Undoer;o2,Redoer;o3,User;m1,o1,o2,invoke()"
     );
 
-    await moveEndPointToActor("m1", "start", "User");
+    await moveAnchorPointToActor("m1", "sender", "User");
     await asserter.assertFragmentAndPush(
       "o1,Undoer;o2,Redoer;o3,User;m1,o3,o2,invoke()"
     );

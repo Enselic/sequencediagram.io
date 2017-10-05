@@ -11,11 +11,11 @@ export default class NewMessageMarker extends React.PureComponent {
   render() {
     const width = 10;
     const height = 10;
-    const { left, top, isStart, direction } = this.props;
+    const { left, top, isSender, direction } = this.props;
     const tmpMessage = {
       id: "newMessageMarker",
-      start: null,
-      end: null,
+      sender: null,
+      receiver: null,
       name: "",
     };
     const messageHeight = 20;
@@ -29,7 +29,7 @@ export default class NewMessageMarker extends React.PureComponent {
       top: top - messageHeight / 2,
     };
 
-    return isStart ? (
+    return isSender ? (
       <Message
         message={tmpMessage}
         msgLayout={msgLayout}

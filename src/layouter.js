@@ -18,43 +18,43 @@ export const MESSAGE_START_Y =
 export function layoutMessageLeftAndWidth(
   layout,
   message,
-  overrideStartX,
-  overrideEndX
+  overrideSenderX,
+  overrideReceiverX
 ) {
-  let startX;
-  let endX;
+  let senderX;
+  let receiverX;
   let transition = devUtils.transitionIfNotDev(
     "left 0.3s, width 0.3s, top 0.3s, height 0.3s"
   );
-  if (overrideStartX !== undefined) {
+  if (overrideSenderX !== undefined) {
     transition = null;
-    startX = overrideStartX;
-  } else if (typeof message.start === "number") {
+    senderX = overrideSenderX;
+  } else if (typeof message.sender === "number") {
     transition = null;
-    startX = message.start;
+    senderX = message.sender;
   } else {
-    const start = layout[message.start];
-    if (!start) {
+    const sender = layout[message.sender];
+    if (!sender) {
       return undefined;
     }
-    startX = start.lifelineX;
+    senderX = sender.lifelineX;
   }
 
-  if (overrideEndX !== undefined) {
+  if (overrideReceiverX !== undefined) {
     transition = null;
-    endX = overrideEndX;
-  } else if (typeof message.end === "number") {
+    receiverX = overrideReceiverX;
+  } else if (typeof message.receiver === "number") {
     transition = null;
-    endX = message.end;
+    receiverX = message.receiver;
   } else {
-    const end = layout[message.end];
-    if (!end) {
+    const receiver = layout[message.receiver];
+    if (!receiver) {
       return undefined;
     }
-    endX = end.lifelineX;
+    receiverX = receiver.lifelineX;
   }
 
-  let direction = endX - startX;
+  let direction = receiverX - senderX;
 
   let left;
   let width;
@@ -64,18 +64,18 @@ export function layoutMessageLeftAndWidth(
       : 100 /* arbitrary */;
   if (Math.abs(direction) < 0.5) {
     direction = 0;
-    left = startX;
+    left = senderX;
     const maxLineWidth = 150;
     width = Math.min(
       maxLineWidth,
       Math.max(MESSAGE_MIN_WIDTH, messageTextWidth)
     );
   } else {
-    width = Math.max(Math.abs(startX - endX), MESSAGE_MIN_WIDTH);
+    width = Math.max(Math.abs(senderX - receiverX), MESSAGE_MIN_WIDTH);
     if (direction > 0) {
-      left = startX;
+      left = senderX;
     } else {
-      left = Math.min(endX, startX - width);
+      left = Math.min(receiverX, senderX - width);
     }
   }
 
@@ -143,8 +143,8 @@ export default function(getTextWidth, objects, messages, extraMessage) {
       ...layoutMessageLeftAndWidth(
         layout,
         extraMessage,
-        undefined /*overrideStartX*/,
-        extraMessage.end /*overrideEndX*/
+        undefined /*overrideSenderX*/,
+        extraMessage.receiver /*overrideReceiverX*/
       ),
       top: currentY,
       index,

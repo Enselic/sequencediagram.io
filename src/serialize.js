@@ -10,9 +10,9 @@ function serializeMessage(message) {
   let res =
     message.id +
     "," +
-    message.start +
+    message.sender +
     "," +
-    message.end +
+    message.receiver +
     "," +
     encodeURIComponent(message.name);
   if (message.isReply || message.isAsync) {
@@ -69,8 +69,8 @@ export function deserialize(serialized) {
       const isAsync = parts[4] && parts[4].indexOf("a") >= 0;
       messages.push({
         id: parseKey(parts[0]),
-        start: parts[1],
-        end: parts[2],
+        sender: parts[1],
+        receiver: parts[2],
         name: decodeURIComponent(parts[3]),
         isReply: isReply ? true : undefined,
         isAsync: isAsync ? true : undefined,
@@ -81,9 +81,11 @@ export function deserialize(serialized) {
   // Make sure all messages only references objects that were
   // successfully deserialized
   messages = messages.filter(message => {
-    const startExists = objects.find(object => object.id === message.start);
-    const endExists = objects.find(object => object.id === message.end);
-    return startExists && endExists;
+    const senderExists = objects.find(object => object.id === message.sender);
+    const receiverExists = objects.find(
+      object => object.id === message.receiver
+    );
+    return senderExists && receiverExists;
   });
 
   return {

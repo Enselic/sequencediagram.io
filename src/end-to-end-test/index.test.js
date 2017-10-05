@@ -265,9 +265,9 @@ global.clickAddObject = async function() {
   return sleepIfHumanObserver(0.7);
 };
 
-global.addMessage = async function(start, end) {
-  const startEl = await findElementByText(start);
-  const endEl = await findElementByText(end);
+global.addMessage = async function(sender, receiver) {
+  const startEl = await findElementByText(sender);
+  const endEl = await findElementByText(receiver);
   const startLoc = await startEl.getLocation();
   const endLoc = await endEl.getLocation();
   const fromObjectNameToLifelineOffset = { x: 30, y: 70 };
@@ -292,25 +292,25 @@ function calcOffset(startLoc, endLoc) {
   return { x: endLoc.x - startLoc.x, y: endLoc.y - startLoc.y };
 }
 
-global.moveEndPointToActor = async function(
+global.moveAnchorPointToActor = async function(
   messageKey,
-  endPointType,
+  anchorPointType,
   actorName
 ) {
   // Low prio todo: Stop depending on the implementation detail that messages have
-  // end point buttons with certain IDs without complicating testing code too much
-  const messageEndPointEl = await driver.findElement(
-    By.id(messageKey + "-" + endPointType)
+  // anchor point buttons with certain IDs without complicating testing code too much
+  const messageAnchorPointEl = await driver.findElement(
+    By.id(messageKey + "-" + anchorPointType)
   );
   const actorNameEl = await findElementByText(actorName);
-  const messageEndPointLoc = await messageEndPointEl.getLocation();
+  const messageAnchorPointLoc = await messageAnchorPointEl.getLocation();
   const actorNameLoc = await actorNameEl.getLocation();
-  let offsetToMove = calcOffset(messageEndPointLoc, actorNameLoc);
+  let offsetToMove = calcOffset(messageAnchorPointLoc, actorNameLoc);
   offsetToMove.y = 0;
 
   await driver
     .actions()
-    .click(messageEndPointEl)
+    .click(messageAnchorPointEl)
     .perform();
   await mouseMoveInSteps(offsetToMove);
   await driver

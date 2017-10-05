@@ -66,10 +66,10 @@ export function renameComponent(id, newName) {
   return { type: "RENAME_COMPONENT", id, newName };
 }
 
-export function addMessage(start, end, name, insertIndex) {
+export function addMessage(sender, receiver, name, insertIndex) {
   return {
     type: "ADD_MESSAGE",
-    newComponent: { start, end, name },
+    newComponent: { sender, receiver, name },
     insertIndex,
   };
 }
@@ -124,7 +124,7 @@ function messages(state = [], action) {
       const id = action.id;
       return state.filter(
         message =>
-          message.id !== id && message.start !== id && message.end !== id
+          message.id !== id && message.sender !== id && message.receiver !== id
       );
     case "RENAME_COMPONENT":
       return doRenameComponent(state, action.id, action.newName);
@@ -159,7 +159,11 @@ function messages(state = [], action) {
     case "FLIP_MESSAGE_DIRECTION":
       return state.map(message => {
         if (message.id === action.id) {
-          return { ...message, start: message.end, end: message.start };
+          return {
+            ...message,
+            sender: message.receiver,
+            receiver: message.sender,
+          };
         } else {
           return { ...message };
         }
