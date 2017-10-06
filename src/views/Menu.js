@@ -15,7 +15,7 @@ export default function(props) {
   function Button(props) {
     return (
       <button
-        className="button"
+        className="menu-button"
         style={{
           backgroundColor: "transparent",
           border: "none",

@@ -5,7 +5,6 @@ import {
 } from "./MessageButton";
 import RemoveButton from "./RemoveButton";
 import { eatMouseDownCallback } from "./utils";
-import { boxShadow, backgroundDark } from "./common";
 
 function createAnchorButton(type, message) {
   return props => {
@@ -64,16 +63,15 @@ export default class MessageArrow extends React.Component {
 
     const lineExtraStyle = {
       position: "absolute",
-      left: 0,
-      right: 0,
+      left: MESSAGE_BUTTON_WIDTH,
+      right: MESSAGE_BUTTON_WIDTH,
     };
 
     return (
       <div
         onMouseDown={showControls ? eatMouseDownCallback : null}
         style={{
-          boxShadow: isHovered && boxShadow,
-          top: "calc(100% - 10px)",
+          top: "calc(100% - 5px)",
           display: "flex",
           position: "absolute",
           left: showControlsButNotPending
@@ -112,9 +110,11 @@ export default class MessageArrow extends React.Component {
               id={"toggle-line-style-" + id}
               onClick={showControls ? onLineClicked : null}
               isHovered={isHovered}
-              bottomText
+              bottomText={!selfSentMessage && 10}
               extraStyle={{
-                width: selfSentMessage ? "50%" : "100%",
+                width: selfSentMessage
+                  ? "50%"
+                  : `calc(100% - ${MESSAGE_BUTTON_WIDTH * 2}px)`,
                 ...(selfSentMessage ? flipExtraStyle : lineExtraStyle),
               }}
             >
@@ -128,8 +128,7 @@ export default class MessageArrow extends React.Component {
               id={"flip-" + id}
               onClick={showControls ? onFlipClicked : null}
               isHovered={isHovered}
-              background={backgroundDark}
-              bottomText
+              bottomText={10}
               extraStyle={{
                 ...flipExtraStyle,
               }}
@@ -143,8 +142,7 @@ export default class MessageArrow extends React.Component {
               id={"toggle-arrow-style-" + id}
               onClick={showControls ? onArrowClicked : null}
               isHovered={isHovered}
-              background={backgroundDark}
-              bottomText
+              bottomText={selfSentMessage ? 3 : 8}
               extraStyle={{
                 ...Object.assign({}, selfSentMessage && { width: "50%" }),
                 ...arrowExtraStyle,
@@ -156,8 +154,10 @@ export default class MessageArrow extends React.Component {
 
           <div
             style={{
-              ...lineExtraStyle,
-              top: selfSentMessage ? 0 : 10,
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: selfSentMessage ? 0 : 5,
               height: 30,
               pointerEvents: "none",
             }}
@@ -194,7 +194,7 @@ export default class MessageArrow extends React.Component {
             style={{
               ...arrowExtraStyle,
               pointerEvents: "none",
-              top: selfSentMessage ? 20 : 10,
+              top: selfSentMessage ? 20 : 5,
             }}
           >
             <svg

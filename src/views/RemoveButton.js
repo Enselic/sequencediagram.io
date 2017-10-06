@@ -9,7 +9,7 @@ const RemoveButton = props => {
       id={"remove-" + props.idToRemove}
       onClick={props.onRemove}
       background="#f88"
-      className="remove-button button"
+      className="remove-button"
       {...props}
     >
       remove

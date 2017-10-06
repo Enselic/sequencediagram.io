@@ -7,7 +7,7 @@ export const OBJECT_NAME_FONT_SIZE_PX = 18;
 export const MESSAGE_SPACING = 100;
 export const MESSAGE_MIN_WIDTH = Math.max(
   42 /* Width of self-sent SVG */,
-  80 /* enough width for two buttons */
+  100 /* enough width for two buttons */
 );
 export const MESSAGE_START_Y =
   DIAGRAM_PADDING.TOP_BOTTOM +

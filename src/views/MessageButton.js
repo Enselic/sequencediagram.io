@@ -19,8 +19,12 @@ export default class MessageButton extends React.Component {
           width: MESSAGE_BUTTON_WIDTH,
           height: 60,
           fontSize: 16,
-          background: isHovered && (props.background || "#8ecaef"),
-          color: isHovered && "#002456",
+          border: isHovered
+            ? "1px dashed " + (props.background || "#8ecaef")
+            : "none",
+          background: isHovered && "#f8f8f8",
+          boxSizing: "border-box",
+          color: isHovered && "#555",
           ...props.extraStyle,
         }}
         className={props.className || "message-button"}
@@ -30,7 +34,7 @@ export default class MessageButton extends React.Component {
           <span
             style={{
               position: "absolute",
-              bottom: props.bottomText ? 5 : 20,
+              bottom: props.bottomText || 20,
               left: 0,
               width: "100%",
             }}
