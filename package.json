@@ -25,8 +25,8 @@
   },
   "scripts": {
     "start": "scripts/start.sh",
-    "start-local": "backend/start.sh local",
-    "build": "react-scripts build",
+    "start-local": "scripts/start.sh local",
+    "build": "scripts/start.sh build",
     "test": "npm run prettier -- --list-different && react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "node_modules/.bin/prettier 'src/**/*.js' 'backend/**/*.js'"
