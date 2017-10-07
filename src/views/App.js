@@ -164,6 +164,7 @@ export default class App extends React.Component {
           if (component.id[0] === "o") {
             newComponent.overrideLifelineX = newPos;
           } else {
+            newComponent.overrideNoTransition = true;
             newComponent.overrideTop = newPos;
           }
         } else if (
