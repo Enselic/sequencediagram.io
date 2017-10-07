@@ -258,9 +258,7 @@ export default class App extends React.Component {
 
     const showControls =
       !pending.message &&
-      !(
-        this.state.componentMoved && this.state.componentMoved.component.part
-      ) &&
+      !this.state.componentMoved &&
       !this.state.messageAnchorMoved;
 
     return (
