@@ -9,18 +9,6 @@ export function pendingAddMessage(sender, x, y, name) {
   return { type: "PENDING_ADD_MESSAGE", sender, x, y, name };
 }
 
-/**
- * @param id Key of component. Message or Object.
- * @param part Part of message. "sender" or "receiver". If not specified, entire component is moved.
- */
-export function beginComponentMove(id, part) {
-  return { type: "BEGIN_COMPONENT_MOVE", id, part };
-}
-
-export function endComponentMove(id) {
-  return { type: "END_COMPONENT_MOVE" };
-}
-
 export function editComponentName(id, newName, preselect) {
   return {
     type: "EDIT_COMPONENT_NAME",
@@ -88,13 +76,6 @@ export default function(state = {}, action) {
             ? undefined
             : state.message,
       };
-    case "BEGIN_COMPONENT_MOVE":
-      return {
-        ...state,
-        componentMoved: { id: action.id, part: action.part },
-      };
-    case "END_COMPONENT_MOVE":
-      return { ...state, componentMoved: undefined };
     case "EDIT_COMPONENT_NAME":
       return {
         ...state,

@@ -5,7 +5,11 @@ import Message from "./Message";
 import Header from "./Header";
 import Menu from "./Menu";
 import NewMessageMarker from "./NewMessageMarker";
-import { eventToDiagramCoords, mapWithSameDomOrder } from "./utils";
+import {
+  eventToDiagramCoords,
+  mapWithSameDomOrder,
+  isJsonDifferent,
+} from "./utils";
 import * as ac from "./../reducers";
 
 export default class App extends React.Component {
@@ -16,6 +20,7 @@ export default class App extends React.Component {
 
     this.state = {
       messageAnchorMoved: undefined,
+      componentMoved: undefined,
     };
 
     this.handleOnAnchorClick = (message, type, newX) => {
@@ -26,6 +31,99 @@ export default class App extends React.Component {
       if (e.keyCode === 27) {
         this.setState({ messageAnchorMoved: undefined });
       }
+    };
+
+    this.handleComponentMouseDown = (e, movedComponent) => {
+      if (
+        this.props.state.pending.componentRenamed &&
+        this.props.state.pending.componentRenamed.key === movedComponent.key
+      ) {
+        // The move helper eats mouse events, causing e.g. "click in text to place cursor" to break, so
+        // disable the move helper if this object is being renamed
+        return;
+      }
+
+      const thiz = this;
+      const isMovingObject = movedComponent.id[0] === "o";
+
+      const eventToPos = isMovingObject ? e => e.pageX : e => e.pageY;
+
+      const downPos = eventToPos(e);
+      let movedAwayFromClick = false;
+
+      const idToStylePos = id => {
+        const style = document.getElementById(id).style;
+        return parseInt(isMovingObject ? style.left : style.top, 10);
+      };
+      let grabOffset = isMovingObject
+        ? downPos - idToStylePos(movedComponent.id)
+        : e.nativeEvent.offsetY + 10 /* message name background border */;
+
+      const { objects, messages } = this.props.state.core.present;
+      const components = isMovingObject ? objects : messages;
+      let pendingComponents = components.map(value => {
+        return { ...value };
+      });
+
+      function updatePositions(e) {
+        const diagramCoords = eventToDiagramCoords(e);
+        const offsettedPos =
+          (isMovingObject ? diagramCoords[0] : diagramCoords[1]) - grabOffset;
+
+        pendingComponents.sort(function(o1, o2) {
+          function toX(component) {
+            if (component.id === movedComponent.id) {
+              return offsettedPos;
+            } else {
+              return idToStylePos(component.id);
+            }
+          }
+
+          return toX(o1) - toX(o2);
+        });
+
+        thiz.setState({
+          componentMoved: { component: movedComponent, newPos: offsettedPos },
+          pendingComponents,
+        });
+
+        const newPos = eventToPos(e);
+        if (Math.abs(newPos - downPos) > 20) {
+          movedAwayFromClick = true;
+        }
+      }
+
+      function mousemove(e) {
+        e.preventDefault();
+
+        updatePositions(e);
+      }
+      window.addEventListener("mousemove", mousemove);
+
+      function mouseup(e) {
+        e.preventDefault();
+
+        if (isJsonDifferent(pendingComponents, components)) {
+          const fn = isMovingObject
+            ? ac.rearrangeObjects
+            : ac.rearrangeMessages;
+          thiz.props.dispatch(fn(pendingComponents));
+        }
+
+        window.removeEventListener("mousemove", mousemove);
+
+        thiz.setState({
+          componentMoved: undefined,
+          pendingComponents: undefined,
+        });
+
+        if (!movedAwayFromClick) {
+          thiz.props.dispatch(
+            ac.editComponentName(movedComponent.id, movedComponent.name, true)
+          );
+        }
+      }
+      window.addEventListener("mouseup", mouseup, { once: true });
     };
   }
 
@@ -44,7 +142,7 @@ export default class App extends React.Component {
     // We want to perform the layout as if the pending names were commited, so that
     // the diagram layout adapts to the pending names which we show as part of the
     // diagram
-    function withPendingNewName(component) {
+    function withPendingChanges(component) {
       if (
         pending.componentRenamed &&
         pending.componentRenamed.id === component.id
@@ -58,16 +156,43 @@ export default class App extends React.Component {
         newComponent[thiz.state.messageAnchorMoved.type] =
           thiz.state.messageAnchorMoved.newX;
         return newComponent;
+      } else if (thiz.state.componentMoved) {
+        const theMovedComponent = thiz.state.componentMoved.component;
+        const newComponent = { ...component };
+        const newPos = thiz.state.componentMoved.newPos;
+        if (theMovedComponent.id === component.id) {
+          if (component.id[0] === "o") {
+            newComponent.overrideLifelineX = newPos;
+          } else {
+            newComponent.overrideTop = newPos;
+          }
+        } else if (
+          theMovedComponent.id === component.sender ||
+          theMovedComponent.id === component.receiver
+        ) {
+          newComponent.overrideNoTransition = true;
+        }
+
+        return newComponent;
       } else {
         return component;
       }
     }
-    const objectsWithPendingNames = objects.map(withPendingNewName);
-    const messagesWithPendingNames = messages.map(withPendingNewName);
+    let objectsToUse = objects;
+    let messagesToUse = messages;
+    if (this.state.componentMoved) {
+      if (this.state.componentMoved.component.id[0] === "o") {
+        objectsToUse = this.state.pendingComponents;
+      } else {
+        messagesToUse = this.state.pendingComponents;
+      }
+    }
+    const objectsWithPendingChanges = objectsToUse.map(withPendingChanges);
+    const messagesWithPendingChanges = messagesToUse.map(withPendingChanges);
     const layout = layouter(
       name => name.length * 7 /* TODO: hack */,
-      objectsWithPendingNames,
-      messagesWithPendingNames,
+      objectsWithPendingChanges,
+      messagesWithPendingChanges,
       pending.message
     );
     const usefulProps = { objects, messages, pending, dispatch, layout };
@@ -132,8 +257,10 @@ export default class App extends React.Component {
 
     const showControls =
       !pending.message &&
-      !(pending.componentMoved && pending.componentMoved.part) &&
-      !thiz.state.messageAnchorMoved;
+      !(
+        this.state.componentMoved && this.state.componentMoved.component.part
+      ) &&
+      !this.state.messageAnchorMoved;
 
     return (
       <div
@@ -164,6 +291,7 @@ export default class App extends React.Component {
               object={object}
               onLifelineClick={handleLifelineClick(object)}
               onRemove={() => dispatch(ac.removeComponent(object.id))}
+              onComponentMouseDown={this.handleComponentMouseDown}
               showControls={showControls}
               {...usefulProps}
             />
@@ -178,6 +306,7 @@ export default class App extends React.Component {
                 msgLayout={msgLayout}
                 onAnchorClick={this.handleOnAnchorClick}
                 onRemove={() => dispatch(ac.removeComponent(message.id))}
+                onComponentMouseDown={this.handleComponentMouseDown}
                 showControls={showControls}
                 isPending={
                   this.state.messageAnchorMoved &&
@@ -199,8 +328,8 @@ export default class App extends React.Component {
           )}
 
           {pending.lifelineHoveredKey &&
-          (!pending.componentMoved ||
-            pending.componentMoved.part ||
+          (!this.state.componentMoved ||
+            this.state.componentMoved.component.part ||
             this.state.messageAnchorMoved) && (
             <NewMessageMarker
               left={layout[pending.lifelineHoveredKey].lifelineX}
@@ -213,7 +342,10 @@ export default class App extends React.Component {
               }
               isStart={
                 !!!pending.message &&
-                !(pending.componentMoved && pending.componentMoved.part) &&
+                !(
+                  this.state.componentMoved &&
+                  this.state.componentMoved.component.part
+                ) &&
                 !this.state.messageAnchorMoved
               }
               direction={

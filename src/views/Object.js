@@ -1,9 +1,6 @@
-import * as ac from "./../reducers";
 import React from "react";
-import moveHelper from "./utils/componentMoveHelper";
 import Name from "./Name";
 import RemoveButton from "./RemoveButton";
-import devUtils from "./../devUtils";
 import {
   OBJECT_NAME_PADDING,
   OBJECT_NAME_FONT_SIZE_PX,
@@ -21,33 +18,25 @@ function DiagramObject(props) {
     dispatch,
     object,
     layout,
-    objects,
-    messages,
     pending,
     isHovered,
     onLifelineClick,
+    onComponentMouseDown,
     showControls,
     onRemove,
   } = props;
 
-  const onMouseDown = moveHelper(
-    objects,
-    messages,
-    object,
-    e => e.pageX,
-    el => el.style.left,
-    ac.beginComponentMove,
-    ac.endComponentMove,
-    ac.rearrangeObjects,
-    dispatch,
-    pending
-  );
+  const handleMouseDown = e => {
+    if (onComponentMouseDown) {
+      onComponentMouseDown(e, object);
+    }
+  };
 
   let style = {
     left: layout[object.id].lifelineX,
     top: layout[object.id].top,
+    transition: layout[object.id].transition,
     position: "absolute",
-    transition: devUtils.transitionIfNotDev("left 0.3s"),
     userSelect: "none",
   };
 
@@ -76,7 +65,7 @@ function DiagramObject(props) {
           />
         )}
         <div
-          onMouseDown={onMouseDown}
+          onMouseDown={handleMouseDown}
           style={{
             background: "#ffe761",
             padding: `${OBJECT_NAME_PADDING.TOP_BOTTOM}px ${OBJECT_NAME_PADDING.LEFT_RIGHT}px`,

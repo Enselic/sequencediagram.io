@@ -54,6 +54,10 @@ export function layoutMessageLeftAndWidth(
     receiverX = receiver.lifelineX;
   }
 
+  if (message.overrideNoTransition) {
+    transition = null;
+  }
+
   let direction = receiverX - senderX;
 
   let left;
@@ -95,11 +99,19 @@ export function layoutMessageLeftAndWidth(
 }
 
 function layoutObject(getTextWidth, currentX, object) {
+  let transition = devUtils.transitionIfNotDev("left 0.3s");
   const objectNameWidth =
     getTextWidth(object.name) + OBJECT_NAME_PADDING.LEFT_RIGHT;
+  let lifelineX = currentX + objectNameWidth / 2;
+
+  if (object.overrideLifelineX) {
+    transition = "none";
+    lifelineX = object.overrideLifelineX;
+  }
   const objectLayout = {
-    lifelineX: currentX + objectNameWidth / 2,
+    lifelineX,
     top: DIAGRAM_PADDING.TOP_BOTTOM,
+    transition,
   };
   const newX = currentX + objectNameWidth + OBJECT_SPACING;
   return { newX, objectLayout };
@@ -171,7 +183,7 @@ export default function(getTextWidth, objects, messages, extraMessage) {
 
     layout[message.id] = {
       ...leftRightValues,
-      top: currentY,
+      top: message.overrideTop ? message.overrideTop : currentY,
     };
 
     currentY += MESSAGE_SPACING + leftRightValues.approximateHeight;

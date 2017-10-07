@@ -1,6 +1,5 @@
 import * as ac from "./../reducers";
 import React from "react";
-import moveHelper from "./utils/componentMoveHelper";
 import Name from "./Name";
 import MessageArrow from "./MessageArrow";
 import { hoverHelper } from "./utils";
@@ -10,29 +9,20 @@ function Message(props) {
     dispatch,
     message,
     msgLayout,
-    objects,
-    messages,
     pending,
     isPending,
     isMarker,
+    onComponentMouseDown,
   } = props;
 
-  let onMouseDown;
+  const handleMouseDown = e => {
+    if (onComponentMouseDown) {
+      onComponentMouseDown(e, message);
+    }
+  };
+
   let style;
   if (!isPending) {
-    onMouseDown = moveHelper(
-      objects,
-      messages,
-      message,
-      e => e.pageY,
-      el => el.style.top,
-      ac.beginComponentMove,
-      ac.endComponentMove,
-      ac.rearrangeMessages,
-      dispatch,
-      pending
-    );
-
     style = {
       pointerEvents: pending.componentMoved ? "none" : "auto",
     };
@@ -51,7 +41,7 @@ function Message(props) {
 
   return (
     <div
-      onMouseDown={onMouseDown}
+      onMouseDown={handleMouseDown}
       style={{ ...msgLayout, ...style }}
       id={message.id}
       key={message.id}

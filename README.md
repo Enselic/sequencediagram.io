@@ -92,16 +92,13 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- start -> sender, end -> receiver
-- Hover to right of object is counted as hover but it's not
 - Default to using permalinks:
   - https://sequencediagram.io/1234 points to latest version
   - https://sequencediagram.io/1234/12 points to revision 12
   - optional login/authentication
   - custom names
-- Improve visual design of this kind of diagram: https://sequencediagram.io/#o1,asdf;o5,fghj;o2,sdfgsdgfsdfg;o4,dsfgsdfgsdfgsdfg;o3,adsfadsf;m1,o1,o2,asdf%20asdf%20asd%20fasdf%20sdafadsf;m2,o2,o4,ads%20fdasf%20das%20fasdfdas%20f;m3,o4,o2,adsfasdfasdf,r;m4,o2,o3,asdf%20asdf%20asd%20fasdf%20as%20df;m5,o3,o5,adsfasdf%20asd%20fdas%20fdas%20fads%20f,a;m7,o5,o4,asdf%20asd%20fdas%20fdas%20fasdf%20asd%20;m8,o4,o5,asdf%20asd%20fasd%20f;m6,o5,o3,asd%20fasdf%20das%20fasd%20fasdf%20asdf%20%20adf
-- Add beta.sequencediagram.io, alpha.sequencediagram.io and disable service worker there
-- layout message buttons better and with colors
+- smooth transition of object when releasing after moving it to the right
+- Allow move object when other object is being renamed
 - 'a' to add Object
 - Make adding a component edit its text directly
 - make NewMesssageMarker only be where messages will be added
