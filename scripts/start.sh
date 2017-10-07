@@ -1,12 +1,12 @@
 #!/bin/bash -e
 
-trap 'kill -TERM 0' EXIT
-
 export REACT_APP_VERSION=$(git describe)
 
 if [ "$1" = "build" ]; then
   node_modules/.bin/react-scripts build
 else
+  trap 'kill -TERM 0' EXIT
+
   # By default, start what is needed for npm test to pass all tests
   node backend/dynamodb-local.js &
   node_modules/.bin/react-scripts start &
