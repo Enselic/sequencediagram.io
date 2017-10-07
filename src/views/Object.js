@@ -43,9 +43,7 @@ function DiagramObject(props) {
   return (
     <div style={style} id={object.id} key={object.id}>
       <div
-        onMouseEnter={props.handleHoverMouseEnter}
-        onMouseMove={props.handleHoverMouseMove}
-        onMouseLeave={props.handleHoverMouseLeave}
+        {...hoverHelper(pending, dispatch, object.id)}
         style={{
           transform: "translateX(-50%)",
         }}
@@ -94,4 +92,4 @@ function DiagramObject(props) {
   );
 }
 
-export default hoverHelper(DiagramObject);
+export default DiagramObject;

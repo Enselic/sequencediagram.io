@@ -26,7 +26,7 @@ test("remove message does not trigger name change", async () => {
   );
 });
 
-test("MANUAL TEST (VISUAL): hover is triggered when component moves in under cursor", async () => {
+test("MANUAL: hover is triggered when component moves in under cursor", async () => {
   await goTo(
     "o1,Foo;o3,Baz;m2,o1,o3,after this is removed;m3,o1,o3,mouse move should show controls, if not => failed test"
   );

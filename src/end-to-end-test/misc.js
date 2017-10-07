@@ -125,3 +125,21 @@ test("MANUAL: can't remove object while pending message", async () => {
   // TODO: instructions
   return sleepIfHumanObserver(7);
 });
+
+test("MANUAL: remove button does not hang around", async () => {
+  await goTo("empty");
+
+  await clickAddObject();
+  await assertFragment("o1,NewObject");
+
+  await clickAndType("NewObject", "Remove button should disappear");
+  await assertFragment("o1,Remove%20button%20should%20disappear");
+
+  await clickAddObject();
+  await assertFragment("o1,Remove%20button%20should%20disappear;o2,NewObject");
+
+  await clickAndType("NewObject", "... when it is shown above");
+  await assertFragment(
+    "o1,Remove%20button%20should%20disappear;o2,...%20when%20it%20is%20shown%20above"
+  );
+});

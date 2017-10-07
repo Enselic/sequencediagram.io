@@ -102,10 +102,10 @@ test(
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
     "this-is-a-message-reference()",
     size => {
-      return { x: 0, y: -30 };
+      return { x: 0, y: -20 };
     },
     size => {
-      return { x: size.width, y: -30 };
+      return { x: size.width, y: -20 };
     },
     "o1,Foo;o2,Bar;m2,o1,o2,newMessage();m1,o1,o2,this-is-a-message-reference()"
   )
@@ -117,10 +117,10 @@ test(
     "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
     "this-is-a-message-reference()",
     size => {
-      return { x: size.width, y: -30 };
+      return { x: size.width, y: -20 };
     },
     size => {
-      return { x: 0, y: -30 };
+      return { x: 0, y: -20 };
     },
     "o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,this-is-a-message-reference()"
   )

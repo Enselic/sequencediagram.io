@@ -13,7 +13,7 @@ export const MESSAGE_START_Y =
   DIAGRAM_PADDING.TOP_BOTTOM +
   OBJECT_NAME_PADDING.TOP_BOTTOM * 2 +
   OBJECT_NAME_FONT_SIZE_PX +
-  MESSAGE_SPACING * 0.7;
+  MESSAGE_SPACING * 0.3;
 
 export function layoutMessageLeftAndWidth(
   layout,
