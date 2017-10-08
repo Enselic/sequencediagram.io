@@ -24,9 +24,9 @@
     "serve": "^6.0.4"
   },
   "scripts": {
-    "start": "scripts/start.sh",
-    "start-local": "scripts/start.sh local",
-    "build": "scripts/start.sh build",
+    "start": "./scripts.sh",
+    "start-local": "./scripts.sh local",
+    "build": "./scripts.sh build",
     "test": "npm run prettier -- --list-different && react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "node_modules/.bin/prettier 'src/**/*.js' 'backend/**/*.js'"
