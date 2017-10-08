@@ -137,15 +137,16 @@ export function mapWithSameDomOrder(arrayToMap, memoryArray, callback) {
   let idToElement = {};
   arrayToMap.forEach((item, index, array) => {
     const element = callback(item, index, array);
+    // Note that items use 'id' but react elements use 'key'
     idToElement[item.id] = element;
   });
 
   // Rearrange them according to previous order
   let elements = [];
   memoryArray.forEach(prevElement => {
-    if (prevElement.id in idToElement) {
-      elements.push(idToElement[prevElement.id]);
-      delete idToElement[prevElement.id];
+    if (prevElement.key in idToElement) {
+      elements.push(idToElement[prevElement.key]);
+      delete idToElement[prevElement.key];
     }
   });
 

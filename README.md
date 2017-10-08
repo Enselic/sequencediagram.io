@@ -97,7 +97,6 @@ List of minor/uninteresting things to do, roughly sorted by priority.
   - https://sequencediagram.io/1234/12 points to revision 12
   - optional login/authentication
   - custom names
-- smooth transition of object when releasing after moving it to the right
 - Allow move object when other object is being renamed
 - 'a' to add Object
 - Make adding a component edit its text directly
