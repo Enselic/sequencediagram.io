@@ -44,14 +44,6 @@ export function hoverLifelineHelper(dispatch, id) {
   };
 }
 
-export function transferPropsToStyle(object, style) {
-  for (let prop in object) {
-    if (object.hasOwnProperty(prop)) {
-      style[prop] = object[prop];
-    }
-  }
-}
-
 export function transferStyleToProps(style) {
   return {
     transition: style.transition,
