@@ -38,6 +38,9 @@ let {
 let { Options } = require("selenium-webdriver/chrome");
 let devUtils = require("../devUtils");
 
+const lib = require("./lib");
+const { getSchemeAndHost, getPort } = lib;
+
 global.devMode = devUtils.devMode;
 
 global.Key = Key;
@@ -221,13 +224,9 @@ global.urlParsing = function(url, expected) {
 };
 
 global.goTo = async function(startState) {
-  // CI scripts run from npm run build with serve (port 5000)
-  // while you (typically) you run from npm start (port 3000)
-  const port = process.env.PORT || (HEADLESS ? "5000" : "3000");
-
   // When no fragment is requsted, make sure to not even include '#'
   const fragment = startState ? "#" + startState : "";
-  await driver.get(`http://localhost:${port}/${fragment}`);
+  await driver.get(`${getSchemeAndHost()}:${getPort()}/${fragment}`);
   /* We use 0.3 second CSS transitions, so make sure those have
      * settled before we move on.
      */

@@ -3,14 +3,16 @@ import ReactDOM from "react-dom";
 import * as ac from "./reducers";
 import App from "./views/App";
 import registerServiceWorker from "./registerServiceWorker";
-import { initMouseOverlayIfDebug } from "./debug/mouseDebug";
+import { initMouseOverlay } from "./debug/mouseDebug";
 import { createStore, bindActionCreators } from "redux";
 import { ActionCreators } from "redux-undo";
 import { serialize, deserialize } from "./serialize";
 
 // Enable with "REACT_APP_MOUSE_DEBUG=1 npm start"
 // Useful when running automated tests
-initMouseOverlayIfDebug();
+if (new URLSearchParams(window.location.search).has("mouseDebug")) {
+  initMouseOverlay();
+}
 
 var store = createStore(
   ac.default,

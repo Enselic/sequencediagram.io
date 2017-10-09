@@ -1,3 +1,6 @@
+const lib = require("./lib");
+const { getSchemeAndHost, getPort } = lib;
+
 test("change to state without messages after state with messages", async () => {
   await goTo("o1,Foo;o2,Bar;m1,o1,o2,baz()");
   await goTo("o100,Hello");
@@ -142,4 +145,16 @@ test("MANUAL: remove button does not hang around", async () => {
   await assertFragment(
     "o1,Remove%20button%20should%20disappear;o2,...%20when%20it%20is%20shown%20above"
   );
+});
+
+test("MANUAL: mouseDebug overlay works", async () => {
+  await driver.get(
+    `${getSchemeAndHost()}:${getPort()}/?mouseDebug#o1,MouseStartsHere;o2,AndVisiblyMovesHere`
+  );
+  await driver
+    .actions()
+    .mouseMove(await findElementByText("MouseStartsHere"))
+    .perform();
+  await mouseMoveInSteps({ x: 400, y: 0 });
+  return sleepIfHumanObserver(5);
 });
