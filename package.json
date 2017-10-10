@@ -15,6 +15,7 @@
     "cors": "^2.8.4",
     "dynamodb-local": "0.0.18",
     "express": "^4.15.4",
+    "glob": "^7.1.2",
     "morgan": "^1.8.2",
     "morgan-body": "^0.10.9",
     "node-fetch": "^1.7.3",
@@ -27,7 +28,7 @@
     "start": "./scripts.sh",
     "start-local": "./scripts.sh local",
     "build": "./scripts.sh build",
-    "test": "npm run prettier -- --list-different && react-scripts test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "node_modules/.bin/prettier 'src/**/*.js' 'backend/**/*.js'"
   },
