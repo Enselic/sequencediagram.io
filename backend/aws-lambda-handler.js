@@ -29,7 +29,6 @@ function generateRandomId() {
 
     randomString += CHARS[char1] + CHARS[char2] + CHARS[char3];
   }
-  // TODO: Check how random the output is... seems fishy
 
   return randomString;
 }
