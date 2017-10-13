@@ -1,20 +1,20 @@
-const AWS = require("aws-sdk");
-const DynamoDbLocal = require("dynamodb-local");
-const path = require("path");
+const AWS = require('aws-sdk');
+const DynamoDbLocal = require('dynamodb-local');
+const path = require('path');
 
 AWS.config.update({
-  accessKeyId: "AKID",
-  secretAccessKey: "SECRET",
-  region: "eu-west-1",
-  endpoint: "http://localhost:8000",
+  accessKeyId: 'AKID',
+  secretAccessKey: 'SECRET',
+  region: 'eu-west-1',
+  endpoint: 'http://localhost:8000',
 });
-const tableName = "io.sequencediagram.dynamodb.test";
+const tableName = 'io.sequencediagram.dynamodb.test';
 const port = 8000;
 
 DynamoDbLocal.configureInstaller({
-  installPath: path.join(process.env.HOME || "/tmp", "dynamodb-local"),
+  installPath: path.join(process.env.HOME || '/tmp', 'dynamodb-local'),
 });
-DynamoDbLocal.launch(port, null, ["-sharedDb", "-inMemory"])
+DynamoDbLocal.launch(port, null, ['-sharedDb', '-inMemory'])
   .then(_ => {
     return new Promise((resolve, reject) => {
       var dynamodb = new AWS.DynamoDB();
@@ -23,12 +23,12 @@ DynamoDbLocal.launch(port, null, ["-sharedDb", "-inMemory"])
         {
           TableName: tableName,
           KeySchema: [
-            { AttributeName: "id", KeyType: "HASH" },
-            { AttributeName: "revision", KeyType: "RANGE" },
+            { AttributeName: 'id', KeyType: 'HASH' },
+            { AttributeName: 'revision', KeyType: 'RANGE' },
           ],
           AttributeDefinitions: [
-            { AttributeName: "id", AttributeType: "S" },
-            { AttributeName: "revision", AttributeType: "N" },
+            { AttributeName: 'id', AttributeType: 'S' },
+            { AttributeName: 'revision', AttributeType: 'N' },
           ],
           ProvisionedThroughput: {
             ReadCapacityUnits: 5,
@@ -39,7 +39,7 @@ DynamoDbLocal.launch(port, null, ["-sharedDb", "-inMemory"])
           if (err) {
             console.log(err);
           } else {
-            console.log("dynamodb-local listening on port " + port);
+            console.log('dynamodb-local listening on port ' + port);
           }
         }
       );

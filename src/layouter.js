@@ -1,4 +1,4 @@
-import devUtils from "./devUtils";
+import devUtils from './devUtils';
 
 export const DIAGRAM_PADDING = { LEFT_RIGHT: 140, TOP_BOTTOM: 90 };
 export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
@@ -24,12 +24,12 @@ export function layoutMessageLeftAndWidth(
   let senderX;
   let receiverX;
   let transition = devUtils.transitionIfNotDev(
-    "left 0.3s, width 0.3s, top 0.3s, height 0.3s"
+    'left 0.3s, width 0.3s, top 0.3s, height 0.3s'
   );
   if (overrideSenderX !== undefined) {
     transition = null;
     senderX = overrideSenderX;
-  } else if (typeof message.sender === "number") {
+  } else if (typeof message.sender === 'number') {
     transition = null;
     senderX = message.sender;
   } else {
@@ -43,7 +43,7 @@ export function layoutMessageLeftAndWidth(
   if (overrideReceiverX !== undefined) {
     transition = null;
     receiverX = overrideReceiverX;
-  } else if (typeof message.receiver === "number") {
+  } else if (typeof message.receiver === 'number') {
     transition = null;
     receiverX = message.receiver;
   } else {
@@ -99,13 +99,13 @@ export function layoutMessageLeftAndWidth(
 }
 
 function layoutObject(getTextWidth, currentX, object) {
-  let transition = devUtils.transitionIfNotDev("left 0.3s");
+  let transition = devUtils.transitionIfNotDev('left 0.3s');
   const objectNameWidth =
     getTextWidth(object.name) + OBJECT_NAME_PADDING.LEFT_RIGHT;
   let lifelineX = currentX + objectNameWidth / 2;
 
   if (object.overrideLifelineX) {
-    transition = "none";
+    transition = 'none';
     lifelineX = object.overrideLifelineX;
   }
   const objectLayout = {

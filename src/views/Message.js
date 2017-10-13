@@ -1,8 +1,8 @@
-import * as ac from "./../reducers";
-import React from "react";
-import Name from "./Name";
-import MessageArrow from "./MessageArrow";
-import { hoverHelper } from "./utils";
+import * as ac from './../reducers';
+import React from 'react';
+import Name from './Name';
+import MessageArrow from './MessageArrow';
+import { hoverHelper } from './utils';
 
 function Message(props) {
   const {
@@ -24,19 +24,19 @@ function Message(props) {
   let style;
   if (!isPending) {
     style = {
-      pointerEvents: pending.componentMoved ? "none" : "auto",
+      pointerEvents: pending.componentMoved ? 'none' : 'auto',
     };
   } else {
     style = {
-      pointerEvents: "none",
+      pointerEvents: 'none',
     };
   }
 
   style = {
     ...style,
-    position: "absolute",
-    textAlign: "center",
-    userSelect: "none",
+    position: 'absolute',
+    textAlign: 'center',
+    userSelect: 'none',
   };
 
   return (

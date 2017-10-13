@@ -1,13 +1,13 @@
-const fetch = require("node-fetch");
-const ApiServerLocal = require("./../../backend/api-server-local");
+const fetch = require('node-fetch');
+const ApiServerLocal = require('./../../backend/api-server-local');
 
 async function doFetch(path, method, sequenceDiagram) {
-  const response = await fetch("http://localhost:4000" + path, {
+  const response = await fetch('http://localhost:4000' + path, {
     method,
     body: JSON.stringify(sequenceDiagram),
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
   const body = await response.json();
@@ -24,7 +24,7 @@ const sequenceDiagramInitialRevision = {
 };
 
 const sequenceDiagramRevision2 = {
-  objects: [{ id: "o1", name: "This works" }],
+  objects: [{ id: 'o1', name: 'This works' }],
   messages: [],
 };
 
@@ -53,10 +53,10 @@ afterAll(async () => {
   await server.close();
 });
 
-it("POST /sequencediagrams", async () => {
+it('POST /sequencediagrams', async () => {
   const { status, body } = await doFetch(
-    "/sequencediagrams",
-    "POST",
+    '/sequencediagrams',
+    'POST',
     sequenceDiagramInitialRevision
   );
   expectSuccessfulPostOrGet(status, body, sequenceDiagramInitialRevision);
@@ -67,68 +67,68 @@ it("POST /sequencediagrams", async () => {
 
 // We don't support getting a list of all diagrams everyone
 // has ever created...
-it("GET /sequencediagrams", async () => {
-  const { status, body } = await doFetch("/sequencediagrams", "GET");
+it('GET /sequencediagrams', async () => {
+  const { status, body } = await doFetch('/sequencediagrams', 'GET');
   expect(status).toBeGreaterThanOrEqual(400);
   expect(status).toBeLessThan(500);
 });
 
-it("POST /sequencediagrams/{id}", async () => {
+it('POST /sequencediagrams/{id}', async () => {
   const { status, body } = await doFetch(
-    "/sequencediagrams/" + idToTest,
-    "POST",
+    '/sequencediagrams/' + idToTest,
+    'POST',
     sequenceDiagramRevision2
   );
   expectSuccessfulPostOrGet(status, body, sequenceDiagramRevision2);
   expect(body.revision).toEqual(2);
 });
 
-it("GET /sequencediagrams/{id} latest revision", async () => {
+it('GET /sequencediagrams/{id} latest revision', async () => {
   const { status, body } = await doFetch(
-    "/sequencediagrams/" + idToTest,
-    "GET"
+    '/sequencediagrams/' + idToTest,
+    'GET'
   );
   expectSuccessfulPostOrGet(status, body, sequenceDiagramRevision2);
 });
 
-it("GET /sequencediagrams/{id}/{revision}", async () => {
+it('GET /sequencediagrams/{id}/{revision}', async () => {
   const { status, body } = await doFetch(
-    "/sequencediagrams/" + idToTest + "/1",
-    "GET"
+    '/sequencediagrams/' + idToTest + '/1',
+    'GET'
   );
   expectSuccessfulPostOrGet(status, body, sequenceDiagramInitialRevision);
 });
 
-it("POST invalid bodies", async () => {
+it('POST invalid bodies', async () => {
   const invalidValues = [{}, { objects: [] }, { messages: [] }, []];
   // forEach() does not work with async/await :(
   for (let i = 0; i < invalidValues.length; i++) {
-    const paths = ["/sequencediagrams", "/sequencediagrams/" + idToTest];
+    const paths = ['/sequencediagrams', '/sequencediagrams/' + idToTest];
     for (let j = 0; j < paths.length; j++) {
       const { status, body } = await doFetch(
         paths[j],
-        "POST",
+        'POST',
         invalidValues[i]
       );
-      expectError(status, body, "missing", "MissingProperties");
+      expectError(status, body, 'missing', 'MissingProperties');
     }
   }
 });
 
-it("POST /sequencediagrams/doesnotexist", async () => {
+it('POST /sequencediagrams/doesnotexist', async () => {
   const sequenceDiagram = {
     objects: [],
     messages: [],
   };
   const { status, body } = await doFetch(
-    "/sequencediagrams/doesnotexist",
-    "POST",
+    '/sequencediagrams/doesnotexist',
+    'POST',
     sequenceDiagram
   );
-  expectError(status, body, "empty", "EmptyQuery");
+  expectError(status, body, 'empty', 'EmptyQuery');
 });
 
-it("POST > 50 kB payload", async () => {
+it('POST > 50 kB payload', async () => {
   const hugeSequenceDiagram = {
     objects: [],
     messages: [],
@@ -136,18 +136,18 @@ it("POST > 50 kB payload", async () => {
   let kBsLeft = 50;
   while (kBsLeft-- > 0) {
     hugeSequenceDiagram.objects.push({
-      id: "o" + kBsLeft,
-      name: "x".repeat(1000),
+      id: 'o' + kBsLeft,
+      name: 'x'.repeat(1000),
     });
   }
 
-  const paths = ["/sequencediagrams", "/sequencediagrams/" + idToTest];
+  const paths = ['/sequencediagrams', '/sequencediagrams/' + idToTest];
   for (let i = 0; i < paths.length; i++) {
     const { status, body } = await doFetch(
       paths[i],
-      "POST",
+      'POST',
       hugeSequenceDiagram
     );
-    expectError(status, body, "50 kB", "TooLarge");
+    expectError(status, body, '50 kB', 'TooLarge');
   }
 });

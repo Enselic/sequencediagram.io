@@ -4,7 +4,7 @@ const devMode = 0;
 
 let devUtils = {
   transitionIfNotDev(transition) {
-    return devMode ? "none" : transition;
+    return devMode ? 'none' : transition;
   },
   devMode,
 };

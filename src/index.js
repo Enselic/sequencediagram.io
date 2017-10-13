@@ -1,16 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import * as ac from "./reducers";
-import App from "./views/App";
-import registerServiceWorker from "./registerServiceWorker";
-import { initMouseOverlay } from "./debug/mouseDebug";
-import { createStore, bindActionCreators } from "redux";
-import { ActionCreators } from "redux-undo";
-import { serialize, deserialize } from "./serialize";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import * as ac from './reducers';
+import App from './views/App';
+import registerServiceWorker from './registerServiceWorker';
+import { initMouseOverlay } from './debug/mouseDebug';
+import { createStore, bindActionCreators } from 'redux';
+import { ActionCreators } from 'redux-undo';
+import { serialize, deserialize } from './serialize';
 
 // Enable with "REACT_APP_MOUSE_DEBUG=1 npm start"
 // Useful when running automated tests
-if (new URLSearchParams(window.location.search).has("mouseDebug")) {
+if (new URLSearchParams(window.location.search).has('mouseDebug')) {
   initMouseOverlay();
 }
 
@@ -28,7 +28,7 @@ function dispatch(action) {
 }
 const boundActionCreators = bindActionCreators(ac, dispatch);
 
-const defaultDiagram = "#o1,Foo;o2,Bar;m1,o1,o2,message()";
+const defaultDiagram = '#o1,Foo;o2,Bar;m1,o1,o2,message()';
 
 function setupFromHash(hash) {
   let { objects, messages } = deserialize(hash.substring(1));
@@ -43,7 +43,7 @@ if (hash.length > 1) {
   setupFromHash(defaultDiagram);
 }
 
-window.addEventListener("keydown", function(e) {
+window.addEventListener('keydown', function(e) {
   const z = 90;
   const Esc = 27;
 
@@ -54,7 +54,7 @@ window.addEventListener("keydown", function(e) {
   }
 });
 
-window.addEventListener("hashchange", e => {
+window.addEventListener('hashchange', e => {
   if (!window.location.hash) {
     return;
   }
@@ -73,7 +73,7 @@ function serializeState() {
 function renderAndSerialize() {
   ReactDOM.render(
     <App state={store.getState()} dispatch={dispatch} />,
-    document.getElementById("root")
+    document.getElementById('root')
   );
 
   const result = serializeState();

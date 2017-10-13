@@ -1,4 +1,4 @@
-import * as ac from "./../../reducers";
+import * as ac from './../../reducers';
 
 export function hoverHelper(pending, dispatch, id) {
   return {
@@ -22,7 +22,7 @@ export function isJsonDifferent(object1, object2) {
 
 export function eventToDiagramCoords(event) {
   const boundingClientRect = document
-    .getElementById("diagram-root")
+    .getElementById('diagram-root')
     .getBoundingClientRect();
   return [
     event.clientX - boundingClientRect.left,
@@ -59,16 +59,16 @@ export function isChrome() {
   var isChromium = window.chrome,
     winNav = window.navigator,
     vendorName = winNav.vendor,
-    isOpera = winNav.userAgent.indexOf("OPR") > -1,
-    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-    isIOSChrome = winNav.userAgent.match("CriOS");
+    isOpera = winNav.userAgent.indexOf('OPR') > -1,
+    isIEedge = winNav.userAgent.indexOf('Edge') > -1,
+    isIOSChrome = winNav.userAgent.match('CriOS');
 
   if (isIOSChrome) {
     return true;
   } else if (
     isChromium !== null &&
     isChromium !== undefined &&
-    vendorName === "Google Inc." &&
+    vendorName === 'Google Inc.' &&
     !isOpera &&
     !isIEedge
   ) {

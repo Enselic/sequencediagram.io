@@ -1,17 +1,17 @@
-import React from "react";
-import { isChrome } from "./utils";
+import React from 'react';
+import { isChrome } from './utils';
 
-const gitMasterBuild = document.location.host.indexOf("git-master") !== -1;
+const gitMasterBuild = document.location.host.indexOf('git-master') !== -1;
 
 function Kbd(props) {
   return (
     <kbd
       style={{
-        display: "inline-block",
-        padding: "0.2em",
-        color: "black",
-        backgroundColor: "#ccc",
-        borderRadius: "4px",
+        display: 'inline-block',
+        padding: '0.2em',
+        color: 'black',
+        backgroundColor: '#ccc',
+        borderRadius: '4px',
       }}
     >
       {props.children}
@@ -21,7 +21,7 @@ function Kbd(props) {
 
 function Info(props) {
   return (
-    <div style={{ color: "#002456", padding: "10px 20px", paddingTop: 0 }}>
+    <div style={{ color: '#002456', padding: '10px 20px', paddingTop: 0 }}>
       {props.children}
     </div>
   );
@@ -33,7 +33,7 @@ export default function(props) {
   return (
     <div
       style={{
-        backgroundColor: "#64b9ef",
+        backgroundColor: '#64b9ef',
       }}
     >
       {gitMasterBuild && (
@@ -68,8 +68,8 @@ export default function(props) {
 
       {showShareInfo && (
         <Info>
-          <b>Share by PNG:</b> <Kbd>F12</Kbd> (for <i>Developer Tools</i>) then{" "}
-          <Kbd>Ctrl/Cmd + Shift + P</Kbd> (for <i>Command Menu</i>) then{" "}
+          <b>Share by PNG:</b> <Kbd>F12</Kbd> (for <i>Developer Tools</i>) then{' '}
+          <Kbd>Ctrl/Cmd + Shift + P</Kbd> (for <i>Command Menu</i>) then{' '}
           <Kbd>Capture full size screenshot</Kbd>.
         </Info>
       )}

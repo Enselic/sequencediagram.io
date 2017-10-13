@@ -1,6 +1,6 @@
-import React from "react";
-import Message from "./Message";
-import { layoutMessageLeftAndWidth, MESSAGE_MIN_WIDTH } from "./../layouter";
+import React from 'react';
+import Message from './Message';
+import { layoutMessageLeftAndWidth, MESSAGE_MIN_WIDTH } from './../layouter';
 
 /**
  * When the user hovers a lifeline, this is what gets shown
@@ -13,10 +13,10 @@ export default class NewMessageMarker extends React.PureComponent {
     const height = 10;
     const { left, top, isSender, direction } = this.props;
     const tmpMessage = {
-      id: "newMessageMarker",
+      id: 'newMessageMarker',
       sender: null,
       receiver: null,
-      name: "",
+      name: '',
     };
     const messageHeight = 20;
     const msgLayout = {
@@ -39,15 +39,15 @@ export default class NewMessageMarker extends React.PureComponent {
     ) : (
       <div
         style={{
-          border: "1px dotted black",
+          border: '1px dotted black',
           width: width,
           height: height,
           borderRadius: width / 2,
           left: left - width / 2,
           top: top - height / 2,
-          position: "relative",
-          pointerEvents: "none",
-          background: "#000",
+          position: 'relative',
+          pointerEvents: 'none',
+          background: '#000',
         }}
       />
     );

@@ -1,21 +1,21 @@
-import fs from "fs";
-import glob from "glob";
-import prettier from "prettier";
-import packageJson from "../../package.json";
+import fs from 'fs';
+import glob from 'glob';
+import prettier from 'prettier';
+import packageJson from '../../package.json';
 
 // It is useful to remove .travis.yml for work-in-progress
 // branches, but make sure we don't forget to restore it
-it(".travis.yml is present", async () => {
-  return fs.readFileSync(".travis.yml");
+it('.travis.yml is present', async () => {
+  return fs.readFileSync('.travis.yml');
 });
 
 // When we want to rebase the code coverage branch by doing
 // a fresh `npm run eject`, having a scripts/ dir will trigger
 // an error, so we have to live without it
-it("scripts/ is not present", async () => {
+it('scripts/ is not present', async () => {
   let success;
   try {
-    fs.statSync("scripts").isDirectory();
+    fs.statSync('scripts').isDirectory();
     success = false;
   } catch (e) {
     success = true;
@@ -23,13 +23,13 @@ it("scripts/ is not present", async () => {
   expect(success).toBeTruthy();
 });
 
-it("is formated with prettier", () => {
-  const files = glob.sync("{backend,src}/**/*.js");
+it('is formated with prettier', () => {
+  const files = glob.sync('{backend,src}/**/*.js');
   expect(files.length).toBeGreaterThan(35); // Sanity check
 
   const notProperlyFormated = [];
   files.forEach(file => {
-    if (!prettier.check(fs.readFileSync(file, "utf-8"), packageJson.prettier)) {
+    if (!prettier.check(fs.readFileSync(file, 'utf-8'), packageJson.prettier)) {
       notProperlyFormated.push(file);
     }
   });

@@ -34,11 +34,11 @@ let {
   until,
   Key,
   promise,
-} = require("selenium-webdriver");
-let { Options } = require("selenium-webdriver/chrome");
-let devUtils = require("../devUtils");
+} = require('selenium-webdriver');
+let { Options } = require('selenium-webdriver/chrome');
+let devUtils = require('../devUtils');
 
-const lib = require("./lib");
+const lib = require('./lib');
 const { getSchemeAndHost, getPort } = lib;
 
 global.devMode = devUtils.devMode;
@@ -47,9 +47,9 @@ global.Key = Key;
 global.logging = logging;
 
 let options = new Options();
-let args = ["window-size=1280,1050"];
+let args = ['window-size=1280,1050'];
 if (HEADLESS) {
-  args = args.concat(["headless", "disable-gpu"]);
+  args = args.concat(['headless', 'disable-gpu']);
 }
 options.addArguments(...args);
 const prefs = new logging.Preferences();
@@ -57,7 +57,7 @@ const prefs = new logging.Preferences();
 prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
 options.setLoggingPrefs(prefs);
 global.driver = new Builder()
-  .forBrowser("chrome")
+  .forBrowser('chrome')
   .setChromeOptions(options)
   .build();
 
@@ -204,11 +204,11 @@ global.assertFragment = async function(expected) {
     driver
       .getCurrentUrl()
       .then(url => {
-        const fragment = url.substring(url.indexOf("#") + 1);
+        const fragment = url.substring(url.indexOf('#') + 1);
         if (fragment === expected) {
           resolve();
         } else {
-          const msg = "expected: " + expected + " got: " + fragment;
+          const msg = 'expected: ' + expected + ' got: ' + fragment;
           reject(msg);
         }
       })
@@ -225,7 +225,7 @@ global.urlParsing = function(url, expected) {
 
 global.goTo = async function(startState) {
   // When no fragment is requsted, make sure to not even include '#'
-  const fragment = startState ? "#" + startState : "";
+  const fragment = startState ? '#' + startState : '';
   await driver.get(`${getSchemeAndHost()}:${getPort()}/${fragment}`);
   /* We use 0.3 second CSS transitions, so make sure those have
      * settled before we move on.
@@ -259,7 +259,7 @@ global.moveToComponentWithText = async function(componentText) {
 };
 
 global.clickAddObject = async function() {
-  await click("Add object");
+  await click('Add object');
   await waitForCssTransitions();
   return sleepIfHumanObserver(0.7);
 };
@@ -299,7 +299,7 @@ global.moveAnchorPointToActor = async function(
   // Low prio todo: Stop depending on the implementation detail that messages have
   // anchor point buttons with certain IDs without complicating testing code too much
   const messageAnchorPointEl = await driver.findElement(
-    By.id(messageKey + "-" + anchorPointType)
+    By.id(messageKey + '-' + anchorPointType)
   );
   const actorNameEl = await findElementByText(actorName);
   const messageAnchorPointLoc = await messageAnchorPointEl.getLocation();
@@ -323,7 +323,7 @@ global.flip = async function(id) {
   // flip buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("flip-" + id)))
+    .click(await driver.findElement(By.id('flip-' + id)))
     .perform();
   return sleepIfHumanObserver(0.7);
 };
@@ -333,7 +333,7 @@ global.toggleArrowStyle = async function(id) {
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("toggle-arrow-style-" + id)))
+    .click(await driver.findElement(By.id('toggle-arrow-style-' + id)))
     .perform();
   return sleepIfHumanObserver(0.7);
 };
@@ -343,7 +343,7 @@ global.toggleLineStyle = async function(id) {
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("toggle-line-style-" + id)))
+    .click(await driver.findElement(By.id('toggle-line-style-' + id)))
     .perform();
   return sleepIfHumanObserver(0.7);
 };
@@ -353,38 +353,38 @@ global.removeComponentWithKey = async function(id) {
   // remove buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id("remove-" + id)))
+    .click(await driver.findElement(By.id('remove-' + id)))
     .perform();
   return waitForCssTransitions();
 };
 
 const filesWithTests = [
-  "move-object.js",
-  "add-object.js",
-  "remove-object.js",
-  "misc-object.js",
+  'move-object.js',
+  'add-object.js',
+  'remove-object.js',
+  'misc-object.js',
 
-  "move-message.js",
-  "add-message.js",
-  "remove-message.js",
-  "change-message-appearance.js",
+  'move-message.js',
+  'add-message.js',
+  'remove-message.js',
+  'change-message-appearance.js',
 
-  "misc.js",
-  "undo-redo.js",
-  "serialize-and-deserialize.js",
+  'misc.js',
+  'undo-redo.js',
+  'serialize-and-deserialize.js',
 ];
 
 filesWithTests.forEach(file => {
   describe(file, () => {
-    require("./" + file);
+    require('./' + file);
   });
 });
 
-test("no browser log output", async () => {
+test('no browser log output', async () => {
   const okEntries = [
-    "Download the React DevTools for a better development experience",
-    "Content is cached for offline use.",
-    "New content is available; please refresh.",
+    'Download the React DevTools for a better development experience',
+    'Content is cached for offline use.',
+    'New content is available; please refresh.',
   ];
 
   let logEntries = await driver

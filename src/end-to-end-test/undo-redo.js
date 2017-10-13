@@ -1,7 +1,7 @@
 async function ctrlZ() {
   await driver
     .actions()
-    .sendKeys([Key.CONTROL, "z", Key.NULL])
+    .sendKeys([Key.CONTROL, 'z', Key.NULL])
     .perform();
   await waitForCssTransitions();
   return sleepIfHumanObserver(0.7);
@@ -10,7 +10,7 @@ async function ctrlZ() {
 async function ctrlShiftZ() {
   await driver
     .actions()
-    .sendKeys([Key.CONTROL, Key.SHIFT, "z", Key.NULL])
+    .sendKeys([Key.CONTROL, Key.SHIFT, 'z', Key.NULL])
     .perform();
   await waitForCssTransitions();
   return sleepIfHumanObserver(0.7);
@@ -20,19 +20,19 @@ async function ctrlZOrUndo(i) {
   if (i % 2 > 0) {
     return ctrlZ();
   } else {
-    return click("Undo");
+    return click('Undo');
   }
 }
 async function ctrlShiftZOrRedo(i) {
   if (i % 2 > 0) {
     return ctrlShiftZ();
   } else {
-    return click("Redo");
+    return click('Redo');
   }
 }
 
 test(
-  "use all features, then undo all, then redo all",
+  'use all features, then undo all, then redo all',
   async () => {
     class UndoRedoAsserter {
       constructor() {
@@ -60,78 +60,78 @@ test(
 
     let asserter = new UndoRedoAsserter();
 
-    await goTo("empty");
+    await goTo('empty');
 
     await clickAddObject();
-    await asserter.assertFragmentAndPush("o1,NewObject");
+    await asserter.assertFragmentAndPush('o1,NewObject');
 
-    await clickAndType("NewObject", "Undoer");
-    await asserter.assertFragmentAndPush("o1,Undoer");
-
-    await clickAddObject();
-    await asserter.assertFragmentAndPush("o1,Undoer;o2,NewObject");
-
-    await clickAndType("NewObject", "Redoer");
-    await asserter.assertFragmentAndPush("o1,Undoer;o2,Redoer");
-
-    await addMessage("Undoer", "Redoer");
-    await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;m1,o1,o2,newMessage()"
-    );
-
-    await clickAndType("newMessage()", "invoke()");
-    await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;m1,o1,o2,invoke()"
-    );
+    await clickAndType('NewObject', 'Undoer');
+    await asserter.assertFragmentAndPush('o1,Undoer');
 
     await clickAddObject();
+    await asserter.assertFragmentAndPush('o1,Undoer;o2,NewObject');
+
+    await clickAndType('NewObject', 'Redoer');
+    await asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer');
+
+    await addMessage('Undoer', 'Redoer');
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,NewObject;m1,o1,o2,invoke()"
+      'o1,Undoer;o2,Redoer;m1,o1,o2,newMessage()'
     );
 
-    await clickAndType("NewObject", "User");
+    await clickAndType('newMessage()', 'invoke()');
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,User;m1,o1,o2,invoke()"
+      'o1,Undoer;o2,Redoer;m1,o1,o2,invoke()'
     );
 
-    await moveAnchorPointToActor("m1", "sender", "User");
+    await clickAddObject();
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,User;m1,o3,o2,invoke()"
+      'o1,Undoer;o2,Redoer;o3,NewObject;m1,o1,o2,invoke()'
     );
 
-    await addMessage("Redoer", "User", "invoke()");
+    await clickAndType('NewObject', 'User');
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,User;m2,o2,o3,newMessage();m1,o3,o2,invoke()"
+      'o1,Undoer;o2,Redoer;o3,User;m1,o1,o2,invoke()'
     );
 
-    await flip("m2");
+    await moveAnchorPointToActor('m1', 'sender', 'User');
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,newMessage();m1,o3,o2,invoke()"
+      'o1,Undoer;o2,Redoer;o3,User;m1,o3,o2,invoke()'
     );
 
-    await clickAndType("newMessage()", "call()"); // Use a different term so we can search by text uniquely
+    await addMessage('Redoer', 'User', 'invoke()');
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call();m1,o3,o2,invoke()"
+      'o1,Undoer;o2,Redoer;o3,User;m2,o2,o3,newMessage();m1,o3,o2,invoke()'
     );
 
-    await toggleArrowStyle("m2");
+    await flip('m2');
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke()"
+      'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,newMessage();m1,o3,o2,invoke()'
     );
 
-    await toggleLineStyle("m1");
+    await clickAndType('newMessage()', 'call()'); // Use a different term so we can search by text uniquely
     await asserter.assertFragmentAndPush(
-      "o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r"
+      'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call();m1,o3,o2,invoke()'
     );
 
-    await dragAndDrop("User", { x: -700, y: 0 });
+    await toggleArrowStyle('m2');
     await asserter.assertFragmentAndPush(
-      "o3,User;o1,Undoer;o2,Redoer;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r"
+      'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke()'
     );
 
-    await dragAndDrop("call()", { x: 0, y: 500 });
+    await toggleLineStyle('m1');
     await asserter.assertFragmentAndPush(
-      "o3,User;o1,Undoer;o2,Redoer;m1,o3,o2,invoke(),r;m2,o3,o2,call(),a"
+      'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r'
+    );
+
+    await dragAndDrop('User', { x: -700, y: 0 });
+    await asserter.assertFragmentAndPush(
+      'o3,User;o1,Undoer;o2,Redoer;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r'
+    );
+
+    await dragAndDrop('call()', { x: 0, y: 500 });
+    await asserter.assertFragmentAndPush(
+      'o3,User;o1,Undoer;o2,Redoer;m1,o3,o2,invoke(),r;m2,o3,o2,call(),a'
     );
 
     return asserter.undoRedoAll();

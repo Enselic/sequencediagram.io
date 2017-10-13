@@ -6,12 +6,12 @@
  * @y The Y position of the new message
  */
 export function pendingAddMessage(sender, x, y, name) {
-  return { type: "PENDING_ADD_MESSAGE", sender, x, y, name };
+  return { type: 'PENDING_ADD_MESSAGE', sender, x, y, name };
 }
 
 export function editComponentName(id, newName, preselect) {
   return {
-    type: "EDIT_COMPONENT_NAME",
+    type: 'EDIT_COMPONENT_NAME',
     id: id,
     newName: newName,
     preselect: preselect,
@@ -19,43 +19,43 @@ export function editComponentName(id, newName, preselect) {
 }
 
 export function escapePendingOperation() {
-  return { type: "ESCAPE_PENDING_OPERATION" };
+  return { type: 'ESCAPE_PENDING_OPERATION' };
 }
 
 export function hoverOverComponent(id) {
-  return { type: "HOVER_OVER_COMPONENT", id };
+  return { type: 'HOVER_OVER_COMPONENT', id };
 }
 
 export function endHoverOverComponent() {
-  return { type: "END_HOVER_OVER_COMPONENT" };
+  return { type: 'END_HOVER_OVER_COMPONENT' };
 }
 
 export function showShareInfo() {
-  return { type: "SHOW_SHARE_INFO" };
+  return { type: 'SHOW_SHARE_INFO' };
 }
 
 export function hideShareInfo() {
-  return { type: "HIDE_SHARE_INFO" };
+  return { type: 'HIDE_SHARE_INFO' };
 }
 
 export function mouseEnterLifeline(id, x, y) {
-  return { type: "MOUSE_ENTER_LIFELINE", id, x, y };
+  return { type: 'MOUSE_ENTER_LIFELINE', id, x, y };
 }
 
 export function mouseLeaveLifeline() {
-  return { type: "MOUSE_LEAVE_LIFEILNE" };
+  return { type: 'MOUSE_LEAVE_LIFEILNE' };
 }
 
 export function touchWarn() {
-  return { type: "TOUCH_WARN" };
+  return { type: 'TOUCH_WARN' };
 }
 
 export function showWorksOffline() {
-  return { type: "SHOW_WORKS_OFFLINE" };
+  return { type: 'SHOW_WORKS_OFFLINE' };
 }
 
 export function showNewContentAvailable() {
-  return { type: "SHOW_NEW_CONTENT_AVAILABLE" };
+  return { type: 'SHOW_NEW_CONTENT_AVAILABLE' };
 }
 
 /* Various "in-between" states like partially constructed messages
@@ -63,20 +63,20 @@ export function showNewContentAvailable() {
  */
 export default function(state = {}, action) {
   switch (action.type) {
-    case "PENDING_ADD_MESSAGE":
+    case 'PENDING_ADD_MESSAGE':
       return {
         ...state,
         message: {
-          id: "pendingMessage",
+          id: 'pendingMessage',
           sender: action.sender,
           receiver: action.x,
           name: action.name,
           y: action.y,
         },
       };
-    case "ADD_MESSAGE":
+    case 'ADD_MESSAGE':
       return { ...state, message: undefined };
-    case "REMOVE_COMPONENT":
+    case 'REMOVE_COMPONENT':
       return {
         ...state,
         message:
@@ -84,7 +84,7 @@ export default function(state = {}, action) {
             ? undefined
             : state.message,
       };
-    case "EDIT_COMPONENT_NAME":
+    case 'EDIT_COMPONENT_NAME':
       return {
         ...state,
         componentRenamed: {
@@ -93,7 +93,7 @@ export default function(state = {}, action) {
           preselect: action.preselect,
         },
       };
-    case "ESCAPE_PENDING_OPERATION":
+    case 'ESCAPE_PENDING_OPERATION':
       return {
         ...state,
         componentRenamed: undefined,
@@ -102,34 +102,34 @@ export default function(state = {}, action) {
         touchWarn: undefined,
         showWorksOffline: undefined,
       };
-    case "HOVER_OVER_COMPONENT":
+    case 'HOVER_OVER_COMPONENT':
       return { ...state, hoveredComponentId: action.id };
-    case "END_HOVER_OVER_COMPONENT":
+    case 'END_HOVER_OVER_COMPONENT':
       return { ...state, hoveredComponentId: undefined };
-    case "SHOW_SHARE_INFO":
+    case 'SHOW_SHARE_INFO':
       return { ...state, showShareInfo: true };
-    case "HIDE_SHARE_INFO":
+    case 'HIDE_SHARE_INFO':
       return { ...state, showShareInfo: undefined };
-    case "MOUSE_ENTER_LIFELINE":
+    case 'MOUSE_ENTER_LIFELINE':
       return {
         ...state,
         lifelineHoveredKey: action.id,
         lifelineHoveredX: action.x,
         lifelineHoveredY: action.y,
       };
-    case "MOUSE_LEAVE_LIFEILNE":
+    case 'MOUSE_LEAVE_LIFEILNE':
       return {
         ...state,
         lifelineHoveredKey: undefined,
         lifelineHoveredY: undefined,
       };
-    case "REPLACE_CORE":
+    case 'REPLACE_CORE':
       return {};
-    case "TOUCH_WARN":
+    case 'TOUCH_WARN':
       return { ...state, touchWarn: true };
-    case "SHOW_WORKS_OFFLINE":
+    case 'SHOW_WORKS_OFFLINE':
       return { ...state, showWorksOffline: true };
-    case "SHOW_NEW_CONTENT_AVAILABLE":
+    case 'SHOW_NEW_CONTENT_AVAILABLE':
       return { ...state, showNewContentAvailable: true };
     default:
       return state;

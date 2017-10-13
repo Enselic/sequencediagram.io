@@ -1,13 +1,13 @@
-import React from "react";
-import { ActionCreators } from "redux-undo";
-import * as ac from "./../reducers";
-import { boxShadow, backgroundLight } from "./common";
+import React from 'react';
+import { ActionCreators } from 'redux-undo';
+import * as ac from './../reducers';
+import { boxShadow, backgroundLight } from './common';
 
 export default function(props) {
   const { dispatch, pending, showUndo, showRedo, showTipIfSpace } = props;
 
   function addObjectAndEditName() {
-    const newName = "NewObject";
+    const newName = 'NewObject';
     dispatch(ac.addObject(newName));
     // TODO: dispatch(ac.editComponentName(, newName, true /*preselect*/));
   }
@@ -17,11 +17,11 @@ export default function(props) {
       <button
         className="menu-button"
         style={{
-          backgroundColor: "transparent",
-          border: "none",
+          backgroundColor: 'transparent',
+          border: 'none',
           fontSize: 25,
-          padding: "5px 20px",
-          color: "#002456",
+          padding: '5px 20px',
+          color: '#002456',
         }}
         disabled={props.disabled}
         onClick={props.onClick}
@@ -73,19 +73,19 @@ export default function(props) {
       {showShare && (
         <Button
           disabled={!showUndo && !showRedo}
-          text={showShareInfo ? "Hide share info" : "Share"}
+          text={showShareInfo ? 'Hide share info' : 'Share'}
           onClick={() =>
             dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())}
         />
       )}
       {showTip && (
         <span className="tip">
-          ⇐{" "}
+          ⇐{' '}
           <span
             style={{
-              backgroundColor: "#000",
-              padding: "2px 5px",
-              color: "#fff",
+              backgroundColor: '#000',
+              padding: '2px 5px',
+              color: '#fff',
               borderRadius: 2,
             }}
           >

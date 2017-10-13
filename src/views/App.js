@@ -1,16 +1,16 @@
-import React from "react";
-import layouter from "./../layouter";
-import Objekt from "./Object";
-import Message from "./Message";
-import Header from "./Header";
-import Menu from "./Menu";
-import NewMessageMarker from "./NewMessageMarker";
+import React from 'react';
+import layouter from './../layouter';
+import Objekt from './Object';
+import Message from './Message';
+import Header from './Header';
+import Menu from './Menu';
+import NewMessageMarker from './NewMessageMarker';
 import {
   eventToDiagramCoords,
   mapWithSameDomOrder,
   isJsonDifferent,
-} from "./utils";
-import * as ac from "./../reducers";
+} from './utils';
+import * as ac from './../reducers';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ export default class App extends React.Component {
       }
 
       const thiz = this;
-      const isMovingObject = movedComponent.id[0] === "o";
+      const isMovingObject = movedComponent.id[0] === 'o';
 
       const eventToPos = isMovingObject ? e => e.pageX : e => e.pageY;
 
@@ -98,7 +98,7 @@ export default class App extends React.Component {
 
         updatePositions(e);
       }
-      window.addEventListener("mousemove", mousemove);
+      window.addEventListener('mousemove', mousemove);
 
       function mouseup(e) {
         e.preventDefault();
@@ -110,7 +110,7 @@ export default class App extends React.Component {
           thiz.props.dispatch(fn(pendingComponents));
         }
 
-        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener('mousemove', mousemove);
 
         thiz.setState({
           componentMoved: undefined,
@@ -123,15 +123,15 @@ export default class App extends React.Component {
           );
         }
       }
-      window.addEventListener("mouseup", mouseup, { once: true });
+      window.addEventListener('mouseup', mouseup, { once: true });
     };
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyDown, false);
+    document.addEventListener('keydown', this.handleKeyDown, false);
   }
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown, false);
+    document.removeEventListener('keydown', this.handleKeyDown, false);
   }
   render() {
     const { state, dispatch } = this.props;
@@ -161,7 +161,7 @@ export default class App extends React.Component {
         const newComponent = { ...component };
         const newPos = thiz.state.componentMoved.newPos;
         if (theMovedComponent.id === component.id) {
-          if (component.id[0] === "o") {
+          if (component.id[0] === 'o') {
             newComponent.overrideLifelineX = newPos;
           } else {
             newComponent.overrideNoTransition = true;
@@ -182,7 +182,7 @@ export default class App extends React.Component {
     let objectsToUse = objects;
     let messagesToUse = messages;
     if (this.state.componentMoved) {
-      if (this.state.componentMoved.component.id[0] === "o") {
+      if (this.state.componentMoved.component.id[0] === 'o') {
         objectsToUse = this.state.pendingComponents;
       } else {
         messagesToUse = this.state.pendingComponents;
@@ -242,7 +242,7 @@ export default class App extends React.Component {
           action = ac.pendingAddMessage(
             object.id,
             ...eventToDiagramCoords(e),
-            "newMessage()"
+            'newMessage()'
           );
         } else {
           action = ac.addMessage(
@@ -267,7 +267,7 @@ export default class App extends React.Component {
         onKeyDown={this.handleKeyDown}
         style={{
           minWidth: layout.width,
-          position: "relative",
+          position: 'relative',
         }}
       >
         <Header {...usefulProps} />
@@ -281,7 +281,7 @@ export default class App extends React.Component {
 
         <div
           onMouseMove={handleMouseMove}
-          style={{ position: "relative", height: layout.height + 50 }}
+          style={{ position: 'relative', height: layout.height + 50 }}
           id="diagram-root"
         >
           {mapWithSameDomOrder(objects, this.objectsMemory, object => (

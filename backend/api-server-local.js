@@ -14,24 +14,24 @@ curl -v localhost:4000/sequencediagrams/${id}
 
 */
 
-"use strict";
+'use strict';
 
-const crypto = require("crypto");
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const morganBody = require("morgan-body");
-const AWS = require("aws-sdk");
-const awsLambda = require("./aws-lambda-handler");
+const crypto = require('crypto');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const morganBody = require('morgan-body');
+const AWS = require('aws-sdk');
+const awsLambda = require('./aws-lambda-handler');
 
 AWS.config.update({
-  accessKeyId: "AKID",
-  secretAccessKey: "SECRET",
-  region: "eu-west-1",
-  endpoint: "http://localhost:8000",
+  accessKeyId: 'AKID',
+  secretAccessKey: 'SECRET',
+  region: 'eu-west-1',
+  endpoint: 'http://localhost:8000',
 });
-const tableName = "io.sequencediagram.dynamodb.test";
+const tableName = 'io.sequencediagram.dynamodb.test';
 const dynamoLocalPort = 8000;
 const port = 4000;
 
@@ -42,7 +42,7 @@ function ApiServerLocal(sequencediagrams) {
 
   const logging = 0;
   if (logging) {
-    this.app.use(morgan("combined"));
+    this.app.use(morgan('combined'));
     morganBody(this.app);
   }
 
@@ -68,19 +68,19 @@ function ApiServerLocal(sequencediagrams) {
     });
   }
 
-  this.app.all("/sequencediagrams", (req, res) => {
+  this.app.all('/sequencediagrams', (req, res) => {
     awsLambdaWrapper(req, res, req.url);
   });
 
-  this.app.all("/sequencediagrams/:sequenceDiagramId", (req, res) => {
-    awsLambdaWrapper(req, res, "/sequencediagrams/{sequenceDiagramId}");
+  this.app.all('/sequencediagrams/:sequenceDiagramId', (req, res) => {
+    awsLambdaWrapper(req, res, '/sequencediagrams/{sequenceDiagramId}');
   });
 
-  this.app.all("/sequencediagrams/:sequenceDiagramId/:revision", (req, res) => {
+  this.app.all('/sequencediagrams/:sequenceDiagramId/:revision', (req, res) => {
     awsLambdaWrapper(
       req,
       res,
-      "/sequencediagrams/{sequenceDiagramId}/{revision}"
+      '/sequencediagrams/{sequenceDiagramId}/{revision}'
     );
   });
 }
@@ -96,7 +96,7 @@ ApiServerLocal.prototype = {
         const timeoutInMs = 1000;
         this.server.setTimeout(timeoutInMs);
 
-        this.server.on("error", e => {
+        this.server.on('error', e => {
           this.server = null;
           reject();
         });
@@ -109,7 +109,7 @@ ApiServerLocal.prototype = {
   close() {
     return new Promise((resolve, reject) => {
       if (this.server) {
-        this.server.on("error", reject);
+        this.server.on('error', reject);
         this.server.close(resolve);
       } else {
         resolve();
@@ -124,7 +124,7 @@ if (require.main === module) {
   server
     .listen()
     .then(
-      _ => console.log("API server listening on port " + port),
+      _ => console.log('API server listening on port ' + port),
       console.log
     );
 } else {

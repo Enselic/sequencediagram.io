@@ -3,20 +3,20 @@
  * Is also run by end-to-end test cases without involvement of AWS.
  */
 
-"use strict";
+'use strict';
 
-const AWS = require("aws-sdk");
-const crypto = require("crypto");
+const AWS = require('aws-sdk');
+const crypto = require('crypto');
 
 AWS.config.update({
-  region: "eu-west-1",
+  region: 'eu-west-1',
 });
 
 function generateRandomId() {
   // Somewhat unamgious numbers and chars. Length should be power of 2.
-  const CHARS = "023456789abcdefghijkmnpqrstuvxyz";
+  const CHARS = '023456789abcdefghijkmnpqrstuvxyz';
 
-  let randomString = "";
+  let randomString = '';
 
   let chunks = 4;
   const buffer = crypto.pseudoRandomBytes(chunks * 2);
@@ -40,24 +40,24 @@ function createError(message, code) {
 module.exports.handler = (event, context, callback) => {
   const done = (error, res) => {
     callback(null, {
-      statusCode: error ? "400" : "200",
+      statusCode: error ? '400' : '200',
       body: JSON.stringify(error ? error : res),
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": event.stageVariables.allowedOrigin
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': event.stageVariables.allowedOrigin
           ? event.stageVariables.allowedOrigin
-          : "*",
+          : '*',
       },
     });
   };
 
-  if (event.httpMethod === "POST" && (!event.body || event.body.length <= 0)) {
-    done(createError("Need body of length > 0 when POST:ing", "MissingBody"));
-  } else if (event.httpMethod === "POST" && event.body.length > 50000) {
+  if (event.httpMethod === 'POST' && (!event.body || event.body.length <= 0)) {
+    done(createError('Need body of length > 0 when POST:ing', 'MissingBody'));
+  } else if (event.httpMethod === 'POST' && event.body.length > 50000) {
     done(
       createError(
-        "Max diagram size 50 kB (let us know if you need more)",
-        "TooLarge"
+        'Max diagram size 50 kB (let us know if you need more)',
+        'TooLarge'
       )
     );
   } else {
@@ -86,7 +86,7 @@ module.exports.handler = (event, context, callback) => {
           // by different users to overwrite one another (instead they will)
           // get an error message/warning in the UI
           ConditionExpression:
-            "attribute_not_exists(id) and attribute_not_exists(revision)",
+            'attribute_not_exists(id) and attribute_not_exists(revision)',
         },
         function(err, data) {
           done(err, Item);
@@ -99,22 +99,22 @@ module.exports.handler = (event, context, callback) => {
       let ExpressionAttributeNames;
       let ExpressionAttributeValues;
       if (revision) {
-        KeyConditionExpression = "#id = :id AND #revision = :revision";
+        KeyConditionExpression = '#id = :id AND #revision = :revision';
         ExpressionAttributeNames = {
-          "#id": "id",
-          "#revision": "revision",
+          '#id': 'id',
+          '#revision': 'revision',
         };
         ExpressionAttributeValues = {
-          ":id": id,
-          ":revision": parseInt(revision, 10),
+          ':id': id,
+          ':revision': parseInt(revision, 10),
         };
       } else {
-        KeyConditionExpression = "#id = :id";
+        KeyConditionExpression = '#id = :id';
         ExpressionAttributeNames = {
-          "#id": "id",
+          '#id': 'id',
         };
         ExpressionAttributeValues = {
-          ":id": id,
+          ':id': id,
         };
       }
 
@@ -133,7 +133,7 @@ module.exports.handler = (event, context, callback) => {
             callback(null, Item);
           } else {
             callback(
-              err ? err : createError("Query result was empty", "EmptyQuery")
+              err ? err : createError('Query result was empty', 'EmptyQuery')
             );
           }
         }
@@ -141,37 +141,37 @@ module.exports.handler = (event, context, callback) => {
     }
 
     if (
-      event.httpMethod === "POST" &&
-      (typeof sequenceDiagram !== "object" ||
+      event.httpMethod === 'POST' &&
+      (typeof sequenceDiagram !== 'object' ||
         !Array.isArray(sequenceDiagram.objects) ||
         !Array.isArray(sequenceDiagram.messages))
     ) {
       done(
         createError(
           "JSON request body missing 'objects' or 'messages' array properties. " +
-            "Got: " +
+            'Got: ' +
             JSON.stringify(sequenceDiagram),
-          "MissingProperties"
+          'MissingProperties'
         )
       );
     } else if (
-      event.resource === "/sequencediagrams" &&
-      event.httpMethod === "POST"
+      event.resource === '/sequencediagrams' &&
+      event.httpMethod === 'POST'
     ) {
       putHelper(generateRandomId(), 1);
     } else if (
-      event.resource === "/sequencediagrams/{sequenceDiagramId}" &&
-      event.httpMethod === "GET"
+      event.resource === '/sequencediagrams/{sequenceDiagramId}' &&
+      event.httpMethod === 'GET'
     ) {
       getRevisionHelper(id, undefined, done);
     } else if (
-      event.resource === "/sequencediagrams/{sequenceDiagramId}/{revision}" &&
-      event.httpMethod === "GET"
+      event.resource === '/sequencediagrams/{sequenceDiagramId}/{revision}' &&
+      event.httpMethod === 'GET'
     ) {
       getRevisionHelper(id, revision, done);
     } else if (
-      event.resource === "/sequencediagrams/{sequenceDiagramId}" &&
-      event.httpMethod === "POST"
+      event.resource === '/sequencediagrams/{sequenceDiagramId}' &&
+      event.httpMethod === 'POST'
     ) {
       getRevisionHelper(id, undefined, function(err, Item) {
         if (err) {
@@ -185,7 +185,7 @@ module.exports.handler = (event, context, callback) => {
       done(
         createError(
           "I don't know what to do with: " + JSON.stringify(event),
-          "UnknownRequest"
+          'UnknownRequest'
         )
       );
     }

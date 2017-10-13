@@ -1,6 +1,6 @@
-import React from "react";
-import * as ac from "./../reducers";
-import nameBackground from "./pngs/name-background.png";
+import React from 'react';
+import * as ac from './../reducers';
+import nameBackground from './pngs/name-background.png';
 
 export default function(props) {
   const { pending, dispatch, component, showBackground } = props;
@@ -61,10 +61,10 @@ export default function(props) {
       <div
         style={
           showBackground && {
-            display: "inline-block",
+            display: 'inline-block',
             borderImage: `url(${nameBackground}) 10 fill repeat`,
             borderWidth: 10,
-            borderStyle: "solid",
+            borderStyle: 'solid',
           }
         }
       >

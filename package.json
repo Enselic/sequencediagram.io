@@ -30,9 +30,10 @@
     "build": "./scripts.sh build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "node_modules/.bin/prettier 'src/**/*.js' 'backend/**/*.js'"
+    "prettier-write": "node_modules/.bin/prettier --write 'src/**/*.js' 'backend/**/*.js'"
   },
   "prettier": {
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "singleQuote": true
   }
 }

@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
-import undoable from "redux-undo";
+import { combineReducers } from 'redux';
+import undoable from 'redux-undo';
 
 // Helper functions
 
@@ -47,64 +47,64 @@ function doAddComponentAndAssignKey(
 }
 
 export function addObject(name) {
-  return { type: "ADD_OBJECT", newComponent: { name } };
+  return { type: 'ADD_OBJECT', newComponent: { name } };
 }
 
 export function removeComponent(id) {
-  return { type: "REMOVE_COMPONENT", id };
+  return { type: 'REMOVE_COMPONENT', id };
 }
 
 export function replaceCore(objects, messages) {
-  return { type: "REPLACE_CORE", objects, messages };
+  return { type: 'REPLACE_CORE', objects, messages };
 }
 
 export function rearrangeObjects(objects) {
-  return { type: "REARRANGE_OBJECTS", objects };
+  return { type: 'REARRANGE_OBJECTS', objects };
 }
 
 export function renameComponent(id, newName) {
-  return { type: "RENAME_COMPONENT", id, newName };
+  return { type: 'RENAME_COMPONENT', id, newName };
 }
 
 export function addMessage(sender, receiver, name, insertIndex) {
   return {
-    type: "ADD_MESSAGE",
+    type: 'ADD_MESSAGE',
     newComponent: { sender, receiver, name },
     insertIndex,
   };
 }
 
 export function replaceMessage(message) {
-  return { type: "REPLACE_MESSAGE", message };
+  return { type: 'REPLACE_MESSAGE', message };
 }
 
 export function toggleMessageLineStyle(id) {
-  return { type: "TOGGLE_MESSAGE_LINE_STYLE", id };
+  return { type: 'TOGGLE_MESSAGE_LINE_STYLE', id };
 }
 
 export function toggleMessageArrowStyle(id) {
-  return { type: "TOGGLE_MESSAGE_ARROW_STYLE", id };
+  return { type: 'TOGGLE_MESSAGE_ARROW_STYLE', id };
 }
 
 export function flipMessageDirection(id) {
-  return { type: "FLIP_MESSAGE_DIRECTION", id };
+  return { type: 'FLIP_MESSAGE_DIRECTION', id };
 }
 
 export function rearrangeMessages(messages) {
-  return { type: "REARRANGE_MESSAGES", messages };
+  return { type: 'REARRANGE_MESSAGES', messages };
 }
 
 function objects(state = [], action) {
   switch (action.type) {
-    case "ADD_OBJECT":
-      return doAddComponentAndAssignKey(state, "o", action.newComponent);
-    case "REMOVE_COMPONENT":
+    case 'ADD_OBJECT':
+      return doAddComponentAndAssignKey(state, 'o', action.newComponent);
+    case 'REMOVE_COMPONENT':
       return state.filter(object => object.id !== action.id);
-    case "RENAME_COMPONENT":
+    case 'RENAME_COMPONENT':
       return doRenameComponent(state, action.id, action.newName);
-    case "REPLACE_CORE":
+    case 'REPLACE_CORE':
       return [...action.objects];
-    case "REARRANGE_OBJECTS":
+    case 'REARRANGE_OBJECTS':
       return [...action.objects];
     default:
       return state;
@@ -113,22 +113,22 @@ function objects(state = [], action) {
 
 function messages(state = [], action) {
   switch (action.type) {
-    case "ADD_MESSAGE":
+    case 'ADD_MESSAGE':
       return doAddComponentAndAssignKey(
         state,
-        "m",
+        'm',
         action.newComponent,
         action.insertIndex
       );
-    case "REMOVE_COMPONENT":
+    case 'REMOVE_COMPONENT':
       const id = action.id;
       return state.filter(
         message =>
           message.id !== id && message.sender !== id && message.receiver !== id
       );
-    case "RENAME_COMPONENT":
+    case 'RENAME_COMPONENT':
       return doRenameComponent(state, action.id, action.newName);
-    case "REPLACE_MESSAGE":
+    case 'REPLACE_MESSAGE':
       return state.map(message => {
         if (message.id === action.message.id) {
           return { ...action.message };
@@ -136,9 +136,9 @@ function messages(state = [], action) {
           return { ...message };
         }
       });
-    case "REPLACE_CORE":
+    case 'REPLACE_CORE':
       return [...action.messages];
-    case "TOGGLE_MESSAGE_LINE_STYLE":
+    case 'TOGGLE_MESSAGE_LINE_STYLE':
       return state.map(message => {
         if (message.id === action.id) {
           return { ...message, isReply: message.isReply ? undefined : true };
@@ -146,7 +146,7 @@ function messages(state = [], action) {
           return { ...message };
         }
       });
-    case "TOGGLE_MESSAGE_ARROW_STYLE":
+    case 'TOGGLE_MESSAGE_ARROW_STYLE':
       return state.map(message => {
         if (message.id === action.id) {
           return { ...message, isAsync: message.isAsync ? undefined : true };
@@ -154,9 +154,9 @@ function messages(state = [], action) {
           return { ...message };
         }
       });
-    case "REARRANGE_MESSAGES":
+    case 'REARRANGE_MESSAGES':
       return [...action.messages];
-    case "FLIP_MESSAGE_DIRECTION":
+    case 'FLIP_MESSAGE_DIRECTION':
       return state.map(message => {
         if (message.id === action.id) {
           return {
