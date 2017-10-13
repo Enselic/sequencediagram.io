@@ -1,16 +1,16 @@
-test('remove single message', async () => {
+it('remove single message', async () => {
   await goTo('o1,A1;o2,A2;m1,o1,o2,m1');
   await removeComponentWithKey('m1');
   return assertFragment('o1,A1;o2,A2');
 });
 
-test('remove last message of two', async () => {
+it('remove last message of two', async () => {
   await goTo('o1,A1;o2,A2;m1,o1,o2,m1;m2,o2,o1,m2');
   await removeComponentWithKey('m2');
   return assertFragment('o1,A1;o2,A2;m1,o1,o2,m1');
 });
 
-test('remove message does not trigger name change', async () => {
+it('remove message does not trigger name change', async () => {
   // Since the remove message button is within the name div, clicking the
   // remove button might trigger a name change state change unless the code
   // is careful
@@ -26,7 +26,7 @@ test('remove message does not trigger name change', async () => {
   );
 });
 
-test('MANUAL: hover is triggered when component moves in under cursor', async () => {
+it('MANUAL: hover is triggered when component moves in under cursor', async () => {
   await goTo(
     'o1,Foo;o3,Baz;m2,o1,o3,after this is removed;m3,o1,o3,mouse move should show controls, if not => failed test'
   );

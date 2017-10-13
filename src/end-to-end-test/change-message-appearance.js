@@ -1,21 +1,21 @@
-test(
+it(
   'make sure reply messages are not lost during parsing',
   urlParsing('o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,r')
 );
 
-test(
+it(
   'make sure async messages are not lost during parsing',
   urlParsing('o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,a')
 );
 
-test(
+it(
   'make sure async replies are not lost during parsing',
   urlParsing(
     'o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,ra'
   )
 );
 
-test(
+it(
   'make sure extra chars are discarted',
   urlParsing(
     'o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,grad',
@@ -23,7 +23,7 @@ test(
   )
 );
 
-test('toggle arrow style', async () => {
+it('toggle arrow style', async () => {
   await goTo('o1,An%20Object;o2,Another%20Object;m1,o1,o2,message()');
   await toggleArrowStyle('m1');
   await assertFragment(
@@ -35,7 +35,7 @@ test('toggle arrow style', async () => {
   );
 });
 
-test('toggle line style', async () => {
+it('toggle line style', async () => {
   await goTo('o1,An%20Object;o2,Another%20Object;m333,o1,o2,message()');
   await toggleLineStyle('m333');
   await assertFragment(

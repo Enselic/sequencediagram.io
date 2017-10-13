@@ -6,17 +6,17 @@ function addingMessage(start, firstClick, secondClick, expected) {
   };
 }
 
-test(
+it(
   'add message between two objects',
   addingMessage('o1,O1;o2,O2', 'O1', 'O2', 'o1,O1;o2,O2;m1,o1,o2,newMessage()')
 );
 
-test(
+it(
   'add message between two objects reversed',
   addingMessage('o1,O1;o2,O2', 'O2', 'O1', 'o1,O1;o2,O2;m1,o2,o1,newMessage()')
 );
 
-test(
+it(
   'add message between next first and next last object',
   addingMessage(
     'o1,O1;o2,O2;o3,O3;o4,O4',
@@ -26,7 +26,7 @@ test(
   )
 );
 
-test(
+it(
   'add message between next last and next first object',
   addingMessage(
     'o1,O1;o2,O2;o3,O3;o4,O4',
@@ -66,7 +66,7 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
 }
 const OFFSET_FROM_MESSAGE_TO_BELOW = 60;
 
-test(
+it(
   'add message just below existing single message',
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
@@ -81,7 +81,7 @@ test(
   )
 );
 
-test(
+it(
   'add message just below existing single message reversed',
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
@@ -96,7 +96,7 @@ test(
   )
 );
 
-test(
+it(
   'add message just above existing single message',
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
@@ -111,7 +111,7 @@ test(
   )
 );
 
-test(
+it(
   'add message just above existing single message reversed',
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
@@ -126,7 +126,7 @@ test(
   )
 );
 
-test(
+it(
   'add message between two messages',
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()',
@@ -141,7 +141,7 @@ test(
   )
 );
 
-test(
+it(
   'add message between two messages reversed',
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()',

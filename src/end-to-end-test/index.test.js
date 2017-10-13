@@ -380,7 +380,7 @@ filesWithTests.forEach(file => {
   });
 });
 
-test('no browser log output', async () => {
+it('no browser log output', async () => {
   const okEntries = [
     'Download the React DevTools for a better development experience',
     'Content is cached for offline use.',

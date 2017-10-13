@@ -4,7 +4,7 @@ function moveMessage(startState, grabbedText, yToMove, expectedEndState) {
 
 // single messsage
 
-test(
+it(
   'EDGE CASE: move a single message up',
   moveMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,singleMessage()',
@@ -14,7 +14,7 @@ test(
   )
 );
 
-test(
+it(
   'EDGE CASE: move a single message down',
   moveMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,singleMessage()',
@@ -26,7 +26,7 @@ test(
 
 // two messsages
 
-test(
+it(
   'move top message of two to the bottom',
   moveMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,first();m2,o2,o1,second()',
@@ -36,7 +36,7 @@ test(
   )
 );
 
-test(
+it(
   'move bottom message of two to the top',
   moveMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,first();m2,o2,o1,second()',
@@ -46,7 +46,7 @@ test(
   )
 );
 
-test(
+it(
   'EDGE CASE: move top message of two to top again',
   moveMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,first();m2,o2,o1,second()',
@@ -56,7 +56,7 @@ test(
   )
 );
 
-test(
+it(
   'EDGE CASE: move bottom message of two to bottom again',
   moveMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,first();m2,o2,o1,second()',
@@ -70,7 +70,7 @@ test(
 // %3C is <
 // %3E is >
 
-test(
+it(
   'move top message to middle',
   moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
@@ -80,7 +80,7 @@ test(
   )
 );
 
-test(
+it(
   'move top message to bottom',
   moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
@@ -94,7 +94,7 @@ test(
 // %3C is <
 // %3E is >
 
-test(
+it(
   'move middle message to top',
   moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
@@ -104,7 +104,7 @@ test(
   )
 );
 
-test(
+it(
   'move middle message to bottom',
   moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
@@ -118,7 +118,7 @@ test(
 // %3C is <
 // %3E is >
 
-test(
+it(
   'move bottom message to top',
   moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
@@ -128,7 +128,7 @@ test(
   )
 );
 
-test(
+it(
   'move bottom message to middle',
   moveMessage(
     'o1,A1;o2,A2;o3,A3;m1,o1,o2,A1-%3EA2;m2,o3,o2,A2%3C-A3;m3,o3,o1,A1%3C-A3',
@@ -140,7 +140,7 @@ test(
 
 // Move anchorpoints
 
-test('move anchorpoints', async () => {
+it('move anchorpoints', async () => {
   await goTo(
     'o1,o1;o2,o2;o3,o3;m1,o2,o3,m1%20start%20to%20o1;m2,o1,o3,m2%20start%20to%20o2;m3,o2,o2,m3%20start%20to%20o3;m4,o2,o3,m4%20end%20to%20o1;m5,o1,o3,m5%20end%20to%20o2;m6,o2,o3,m6%20end%20to%20o2'
   );

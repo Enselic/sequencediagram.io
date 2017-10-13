@@ -31,7 +31,7 @@ async function ctrlShiftZOrRedo(i) {
   }
 }
 
-test(
+it(
   'use all features, then undo all, then redo all',
   async () => {
     class UndoRedoAsserter {
