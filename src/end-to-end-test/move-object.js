@@ -149,13 +149,13 @@ it('can click in renamed component text to place cursor', async () => {
     .mouseDown()
     .mouseUp()
     .perform();
-  await sleepIfHumanObserver(1);
+  await sleepIfHumanObserver(driver, 1);
   await driver
     .actions()
     .mouseDown()
     .mouseUp()
     .perform();
-  await sleepIfHumanObserver(1);
+  await sleepIfHumanObserver(driver, 1);
   await typeAndConfirmm('prefix');
   return assertFragment('o1,prefixPrefixMe');
 });

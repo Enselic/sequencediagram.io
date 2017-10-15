@@ -35,7 +35,7 @@ it('MANUAL: hover is triggered when component moves in under cursor', async () =
     .actions()
     .mouseMove({ x: -2, y: -2 })
     .perform();
-  await sleepIfHumanObserver(1);
+  await sleepIfHumanObserver(driver, 1);
   await removeComponentWithKey('m3');
   return assertFragment('o1,Foo;o3,Baz');
 });

@@ -3,8 +3,8 @@ async function ctrlZ() {
     .actions()
     .sendKeys([Key.CONTROL, 'z', Key.NULL])
     .perform();
-  await waitForCssTransitions();
-  return sleepIfHumanObserver(0.7);
+  await waitForCssTransitions(driver);
+  return sleepIfHumanObserver(driver, 0.7);
 }
 
 async function ctrlShiftZ() {
@@ -12,8 +12,8 @@ async function ctrlShiftZ() {
     .actions()
     .sendKeys([Key.CONTROL, Key.SHIFT, 'z', Key.NULL])
     .perform();
-  await waitForCssTransitions();
-  return sleepIfHumanObserver(0.7);
+  await waitForCssTransitions(driver);
+  return sleepIfHumanObserver(driver, 0.7);
 }
 
 async function ctrlZOrUndo(i) {

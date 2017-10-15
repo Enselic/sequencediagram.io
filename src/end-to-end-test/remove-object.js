@@ -7,7 +7,7 @@ it('remove single object', async () => {
 it('remove two objects of two', async () => {
   await goTo('o1,Remove%20me;o2,Remove%20me%20too');
   await removeComponentWithKey('o1');
-  await waitForCssTransitions();
+  await waitForCssTransitions(driver);
   await removeComponentWithKey('o2');
   return assertFragment('');
 });

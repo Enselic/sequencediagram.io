@@ -41,22 +41,22 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
     await goTo(start);
     const message = await findElementByText(messageText);
     const size = await message.getSize();
-    await sleepIfHumanObserver(1);
+    await sleepIfHumanObserver(driver, 1);
     await driver
       .actions()
       .mouseMove(message, offsetFunc1(size))
       .perform();
-    await sleepIfHumanObserver(1);
+    await sleepIfHumanObserver(driver, 1);
     await driver
       .actions()
       .click()
       .perform();
-    await sleepIfHumanObserver(1);
+    await sleepIfHumanObserver(driver, 1);
     await driver
       .actions()
       .mouseMove(message, offsetFunc2(size))
       .perform();
-    await sleepIfHumanObserver(1);
+    await sleepIfHumanObserver(driver, 1);
     await driver
       .actions()
       .click()

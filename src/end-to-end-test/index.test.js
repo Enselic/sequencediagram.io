@@ -73,7 +73,7 @@ function transitionsDisabled() {
   return devUtils.devMode;
 }
 
-global.waitForCssTransitions = async function() {
+global.waitForCssTransitions = async function(driver) {
   if (!transitionsDisabled()) {
     return driver.sleep(300);
   } else {
@@ -81,7 +81,7 @@ global.waitForCssTransitions = async function() {
   }
 };
 
-global.sleepIfHumanObserver = async function(seconds) {
+global.sleepIfHumanObserver = async function(driver, seconds) {
   if (!SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
     return true;
   }
@@ -131,7 +131,7 @@ global.mouseMoveInSteps = async function(totalOffset) {
       .actions()
       .mouseMove(offsetStep)
       .perform();
-    await sleepIfHumanObserver(1.5 / steps);
+    await sleepIfHumanObserver(driver, 1.5 / steps);
   }
   return true;
 };
@@ -141,7 +141,7 @@ global.dragAndDrop = async function(elementText, offset) {
     .actions()
     .mouseDown(await findElementByText(elementText))
     .perform();
-  await sleepIfHumanObserver(0.7);
+  await sleepIfHumanObserver(driver, 0.7);
 
   await mouseMoveInSteps(offset);
 
@@ -149,7 +149,7 @@ global.dragAndDrop = async function(elementText, offset) {
     .actions()
     .mouseUp()
     .perform();
-  return sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(driver, 0.7);
 };
 
 global.click = async function(elementText) {
@@ -161,7 +161,7 @@ global.clickElement = async function(element) {
     .actions()
     .click(element)
     .perform();
-  return waitForCssTransitions();
+  return waitForCssTransitions(driver);
 };
 
 global.typeAndConfirmm = async function(typedText) {
@@ -182,11 +182,11 @@ global.type = async function(typedText) {
 global.clickAndType = async function(elementText, typedText) {
   await click(elementText);
   await typeAndConfirmm(typedText);
-  return waitForCssTransitions();
+  return waitForCssTransitions(driver);
 };
 
 global.assertFragment = async function(expected) {
-  await sleepIfHumanObserver(0.7);
+  await sleepIfHumanObserver(driver, 0.7);
   return new SPromise((resolve, reject) => {
     driver
       .getCurrentUrl()
@@ -217,7 +217,7 @@ global.goTo = async function(startState) {
   /* We use 0.3 second CSS transitions, so make sure those have
      * settled before we move on.
      */
-  return waitForCssTransitions();
+  return waitForCssTransitions(driver);
 };
 
 global.move = function(startState, grabbedText, toMove, expectedEndState) {
@@ -234,8 +234,8 @@ global.clickLifelineForObjectWithText = async function(objectText) {
     .mouseMove(await findElementByText(objectText), { x: 30, y: 100 })
     .click()
     .perform();
-  await waitForCssTransitions();
-  return sleepIfHumanObserver(0.7);
+  await waitForCssTransitions(driver);
+  return sleepIfHumanObserver(driver, 0.7);
 };
 
 global.moveToComponentWithText = async function(componentText) {
@@ -247,8 +247,8 @@ global.moveToComponentWithText = async function(componentText) {
 
 global.clickAddObject = async function() {
   await click('Add object');
-  await waitForCssTransitions();
-  return sleepIfHumanObserver(0.7);
+  await waitForCssTransitions(driver);
+  return sleepIfHumanObserver(driver, 0.7);
 };
 
 global.addMessage = async function(sender, receiver) {
@@ -263,7 +263,7 @@ global.addMessage = async function(sender, receiver) {
     .mouseMove(startEl, fromObjectNameToLifelineOffset)
     .click()
     .perform();
-  await sleepIfHumanObserver(0.7);
+  await sleepIfHumanObserver(driver, 0.7);
 
   await mouseMoveInSteps(calcOffset(startLoc, endLoc));
 
@@ -271,7 +271,7 @@ global.addMessage = async function(sender, receiver) {
     .actions()
     .click()
     .perform();
-  return sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(driver, 0.7);
 };
 
 function calcOffset(startLoc, endLoc) {
@@ -312,7 +312,7 @@ global.flip = async function(id) {
     .actions()
     .click(await driver.findElement(By.id('flip-' + id)))
     .perform();
-  return sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(driver, 0.7);
 };
 
 global.toggleArrowStyle = async function(id) {
@@ -322,7 +322,7 @@ global.toggleArrowStyle = async function(id) {
     .actions()
     .click(await driver.findElement(By.id('toggle-arrow-style-' + id)))
     .perform();
-  return sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(driver, 0.7);
 };
 
 global.toggleLineStyle = async function(id) {
@@ -332,7 +332,7 @@ global.toggleLineStyle = async function(id) {
     .actions()
     .click(await driver.findElement(By.id('toggle-line-style-' + id)))
     .perform();
-  return sleepIfHumanObserver(0.7);
+  return sleepIfHumanObserver(driver, 0.7);
 };
 
 global.removeComponentWithKey = async function(id) {
@@ -342,7 +342,7 @@ global.removeComponentWithKey = async function(id) {
     .actions()
     .click(await driver.findElement(By.id('remove-' + id)))
     .perform();
-  return waitForCssTransitions();
+  return waitForCssTransitions(driver);
 };
 
 const filesWithTests = [
