@@ -105,7 +105,7 @@ it('MANUAL: Controls are removed when a message is pending', async () => {
 it.only('Clicking Acknowledgements brings us to Acknowledgements', async () => {
     goTo('');
     await click('Acknowledgements');
-    await sleep(3);
+    await driver.sleep(300);
     const title = await driver.getTitle();
     expect(title).toEqual("Acknowledgements for https://sequencediagram.io");
 });

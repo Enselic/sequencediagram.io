@@ -69,10 +69,6 @@ afterAll(() => {
 
 // Helper functions
 
-global.sleep = async function(seconds) {
-  return driver.sleep(seconds * 1000);
-};
-
 function transitionsDisabled() {
   return devUtils.devMode;
 }
@@ -82,13 +78,13 @@ global.sleepIfTransitionsEnabled = async function(seconds) {
     // The UI reacts immediately to input, no need to sleep
     return true;
   } else {
-    return sleep(seconds);
+    return driver.sleep(seconds * 1000);
   }
 };
 
 global.waitForCssTransitions = async function() {
   if (!transitionsDisabled()) {
-    return sleep(0.3);
+    return driver.sleep(300);
   } else {
     return true;
   }
@@ -99,7 +95,7 @@ global.sleepIfHumanObserver = async function(seconds) {
     return true;
   }
 
-  return sleep(seconds);
+  return driver.sleep(seconds * 1000);
 };
 
 global.getTextCenterPos = async function(text) {
