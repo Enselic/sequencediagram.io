@@ -73,15 +73,6 @@ function transitionsDisabled() {
   return devUtils.devMode;
 }
 
-global.sleepIfTransitionsEnabled = async function(seconds) {
-  if (transitionsDisabled()) {
-    // The UI reacts immediately to input, no need to sleep
-    return true;
-  } else {
-    return driver.sleep(seconds * 1000);
-  }
-};
-
 global.waitForCssTransitions = async function() {
   if (!transitionsDisabled()) {
     return driver.sleep(300);
