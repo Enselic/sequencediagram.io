@@ -3,6 +3,7 @@ import {
   buildDriverAndSetupEnv,
   clickAndType,
   goTo,
+  setupNoBrowserLogOutputTest,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
@@ -12,3 +13,5 @@ it('change object name', async () => {
   await clickAndType(driver, 'ChangeMyName', 'NewText');
   return assertFragment(driver, 'o1,NewText');
 });
+
+setupNoBrowserLogOutputTest(driver);

@@ -4,6 +4,7 @@ import {
   buildDriverAndSetupEnv,
   findElementByText,
   goTo,
+  setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
 } from './lib';
 
@@ -166,3 +167,5 @@ it(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()'
   )
 );
+
+setupNoBrowserLogOutputTest(driver);

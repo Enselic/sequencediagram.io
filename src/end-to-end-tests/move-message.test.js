@@ -4,6 +4,7 @@ import {
   goTo,
   move,
   moveAnchorPointToActor,
+  setupNoBrowserLogOutputTest,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
@@ -204,3 +205,5 @@ it('move anchorpoints', async () => {
     'o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o2,o3,m2%20start%20to%20o2;m3,o3,o2,m3%20start%20to%20o3;m4,o2,o1,m4%20end%20to%20o1;m5,o1,o2,m5%20end%20to%20o2;m6,o2,o2,m6%20end%20to%20o2'
   );
 });
+
+setupNoBrowserLogOutputTest(driver);

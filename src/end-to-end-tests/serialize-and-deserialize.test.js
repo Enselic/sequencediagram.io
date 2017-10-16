@@ -3,6 +3,7 @@ import {
   buildDriverAndSetupEnv,
   clickText,
   goTo,
+  setupNoBrowserLogOutputTest,
   typeTextAndPressReturn,
 } from './lib';
 
@@ -64,3 +65,5 @@ it('double object ids', () => {
 */
 
 // TODO: negative ids are handled i.e. ignored
+
+setupNoBrowserLogOutputTest(driver);

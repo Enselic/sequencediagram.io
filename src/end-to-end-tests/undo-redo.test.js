@@ -11,6 +11,7 @@ import {
   flip,
   goTo,
   moveAnchorPointToActor,
+  setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   toggleArrowStyle,
   toggleLineStyle,
@@ -159,3 +160,5 @@ it(
   },
   applyTimeoutFactor(80 * 1000)
 );
+
+setupNoBrowserLogOutputTest(driver);

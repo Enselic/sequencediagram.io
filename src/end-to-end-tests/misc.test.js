@@ -13,6 +13,7 @@ import {
   goTo,
   mouseMoveInSteps,
   reversePromise,
+  setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   waitForElement,
 } from './lib';
@@ -178,3 +179,5 @@ it('MANUAL: mouseDebug overlay works', async () => {
   await mouseMoveInSteps(driver, { x: 400, y: 0 });
   return sleepIfHumanObserver(driver, 5);
 });
+
+setupNoBrowserLogOutputTest(driver);

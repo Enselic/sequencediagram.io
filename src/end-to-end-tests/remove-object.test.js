@@ -3,6 +3,7 @@ import {
   buildDriverAndSetupEnv,
   goTo,
   removeComponentWithKey,
+  setupNoBrowserLogOutputTest,
   typeTextAndPressReturn,
   waitForCssTransitions,
 } from './lib';
@@ -42,3 +43,5 @@ it('remove object does not trigger name change', async () => {
 
   return assertFragment(driver, 'o100,SameNameUsedTwiceForIdenticalSizes');
 });
+
+setupNoBrowserLogOutputTest(driver);

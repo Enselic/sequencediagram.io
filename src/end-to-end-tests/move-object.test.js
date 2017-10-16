@@ -7,6 +7,7 @@ import {
   goTo,
   mouseMoveInSteps,
   move,
+  setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   typeText,
   typeTextAndPressReturn,
@@ -214,3 +215,5 @@ it('pending object move changes is stable', async () => {
     .perform();
   return assertFragment(driver, 'o2,EndsUpLeft;o1,EndsUpRight');
 });
+
+setupNoBrowserLogOutputTest(driver);

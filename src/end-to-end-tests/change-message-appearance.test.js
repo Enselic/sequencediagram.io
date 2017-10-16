@@ -2,6 +2,7 @@ import {
   assertFragment,
   buildDriverAndSetupEnv,
   goTo,
+  setupNoBrowserLogOutputTest,
   toggleArrowStyle,
   toggleLineStyle,
   urlParsing,
@@ -69,3 +70,5 @@ it('toggle line style', async () => {
     'o1,An%20Object;o2,Another%20Object;m333,o1,o2,message()'
   );
 });
+
+setupNoBrowserLogOutputTest(driver);

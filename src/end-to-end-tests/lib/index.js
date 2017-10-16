@@ -48,8 +48,6 @@ export function buildDriverAndSetupEnv() {
     return driver.quit();
   });
 
-  setupNoBrowserLogOutputTest(driver);
-
   return driver;
 }
 

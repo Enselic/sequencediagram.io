@@ -3,6 +3,7 @@ import {
   buildDriverAndSetupEnv,
   goTo,
   removeComponentWithKey,
+  setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   typeTextAndPressReturn,
 } from './lib';
@@ -52,3 +53,5 @@ it('MANUAL: hover is triggered when component moves in under cursor', async () =
   await removeComponentWithKey(driver, 'm3');
   return assertFragment(driver, 'o1,Foo;o3,Baz');
 });
+
+setupNoBrowserLogOutputTest(driver);
