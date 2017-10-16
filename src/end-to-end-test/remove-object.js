@@ -27,7 +27,7 @@ it('remove object does not trigger name change', async () => {
   await goTo('o100,SameNameUsedTwiceForIdenticalSizes');
 
   // If o100 text is selected (which it should not), typing text and pressing enter will change the text
-  await typeAndConfirmm(driver, 'This-text-should-not-end-up-anywhere');
+  await typeTextAndPressReturn(driver, 'This-text-should-not-end-up-anywhere');
 
   return assertFragment('o100,SameNameUsedTwiceForIdenticalSizes');
 });

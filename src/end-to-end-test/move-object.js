@@ -126,7 +126,7 @@ it('move away and back does not trigger click', async () => {
     .actions()
     .mouseUp()
     .perform();
-  await typeAndConfirmm(
+  await typeTextAndPressReturn(
     driver,
     'This-text-shall-not-end-up-as-name-for-object'
   );
@@ -159,7 +159,7 @@ it('can click in renamed component text to place cursor', async () => {
     .mouseUp()
     .perform();
   await sleepIfHumanObserver(driver, 1);
-  await typeAndConfirmm(driver, 'prefix');
+  await typeTextAndPressReturn(driver, 'prefix');
   return assertFragment('o1,prefixPrefixMe');
 });
 

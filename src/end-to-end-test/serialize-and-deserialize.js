@@ -20,14 +20,14 @@ it('missing components are handled', async () => {
 it('messages with invalid references are not included in deserialization', async () => {
   await goTo("'o1,Foo;o2,Bar;m1,o1,o2,Baz'");
   await clickText(driver, 'Bar');
-  await typeAndConfirmm(driver, 'NoBoom');
+  await typeTextAndPressReturn(driver, 'NoBoom');
   return assertFragment('o2,NoBoom');
 });
 
 it('invalid message references do not crash', async () => {
   await goTo('o1,Foo;o3,Baz;m2,o2,o3,bar()');
   await clickText(driver, 'Foo');
-  await typeAndConfirmm(driver, 'NoBoom');
+  await typeTextAndPressReturn(driver, 'NoBoom');
   return assertFragment('o1,NoBoom;o3,Baz');
 });
 

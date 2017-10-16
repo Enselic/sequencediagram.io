@@ -164,7 +164,7 @@ global.clickElement = async function(element) {
   return waitForCssTransitions(driver);
 };
 
-global.typeAndConfirmm = async function(driver, typedText) {
+global.typeTextAndPressReturn = async function(driver, typedText) {
   await type(typedText);
   return driver
     .actions()
@@ -181,7 +181,7 @@ global.type = async function(typedText) {
 
 global.clickAndType = async function(elementText, typedText) {
   await clickText(driver, elementText);
-  await typeAndConfirmm(driver, typedText);
+  await typeTextAndPressReturn(driver, typedText);
   return waitForCssTransitions(driver);
 };
 
