@@ -21,7 +21,10 @@ export function getSchemeAndHost() {
   return 'http://localhost';
 }
 
-export function buildDriver() {
+export function buildDriverAndSetupEnv() {
+  // The default timeout is to strict for our UI tests, so increase it
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
+
   let options = new Options();
   let args = ['window-size=1280,1050'];
   if (HEADLESS) {

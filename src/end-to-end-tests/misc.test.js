@@ -2,7 +2,7 @@ import { Key } from 'selenium-webdriver';
 import {
   applyTimeoutFactor,
   assertFragment,
-  buildDriver,
+  buildDriverAndSetupEnv,
   clickAddObject,
   clickAndType,
   clickLifelineForObjectWithText,
@@ -18,7 +18,7 @@ import {
   waitForElement,
 } from './lib';
 
-const driver = buildDriver();
+const driver = buildDriverAndSetupEnv();
 
 afterAll(() => {
   return driver.quit();

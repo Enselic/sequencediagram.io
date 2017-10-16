@@ -12,15 +12,9 @@ the global object
 
 */
 
-import {
-  applyTimeoutFactor,
-  buildDriver,
-  setupNoBrowserLogOutputTest,
-} from './lib';
+import { buildDriverAndSetupEnv, setupNoBrowserLogOutputTest } from './lib';
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
-
-global.driver = buildDriver();
+global.driver = buildDriverAndSetupEnv();
 
 afterAll(() => {
   return driver.quit();

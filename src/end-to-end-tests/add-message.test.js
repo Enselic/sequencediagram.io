@@ -1,14 +1,14 @@
 import {
   addMessage,
   assertFragment,
-  buildDriver,
+  buildDriverAndSetupEnv,
   findElementByText,
   goTo,
   setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
 } from './lib';
 
-const driver = buildDriver();
+const driver = buildDriverAndSetupEnv();
 
 afterAll(() => {
   return driver.quit();
