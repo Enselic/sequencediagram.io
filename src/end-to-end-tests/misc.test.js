@@ -1,4 +1,4 @@
-import { Key, promise } from 'selenium-webdriver';
+import { Key } from 'selenium-webdriver';
 import {
   applyTimeoutFactor,
   assertFragment,
@@ -12,6 +12,7 @@ import {
   getSchemeAndHost,
   goTo,
   mouseMoveInSteps,
+  reversePromise,
   setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   waitForElement,

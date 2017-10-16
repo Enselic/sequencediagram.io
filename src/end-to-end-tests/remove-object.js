@@ -1,25 +1,9 @@
 import {
-  waitForCssTransitions,
-  sleepIfHumanObserver,
-  getTextCenterPos,
-  waitForElement,
-  findElementByText,
-  mouseMoveInSteps,
-  dragAndDrop,
-  clickText,
-  typeTextAndPressReturn,
-  typeText,
-  clickAndType,
   assertFragment,
   goTo,
-  clickLifelineForObjectWithText,
-  clickAddObject,
-  addMessage,
-  moveAnchorPointToActor,
-  flip,
-  toggleArrowStyle,
-  toggleLineStyle,
   removeComponentWithKey,
+  typeTextAndPressReturn,
+  waitForCssTransitions,
 } from './lib';
 
 it('remove single object', async () => {

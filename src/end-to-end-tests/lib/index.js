@@ -62,11 +62,11 @@ export async function getTextCenterPos(driver, text) {
   return { x: pos.x + size.width / 2, y: pos.y + size.height / 2 };
 }
 
-global.reversePromise = function(promise) {
+export function reversePromise(promise) {
   return new SeleniumPromise((resolve, reject) => {
     promise.then(reject).catch(resolve);
   });
-};
+}
 
 function byText(text) {
   return By.xpath("//*[contains(text(),'" + text + "')]");
@@ -169,12 +169,12 @@ export async function assertFragment(driver, expected) {
   });
 }
 
-global.urlParsing = function(driver, url, expected) {
+export function urlParsing(driver, url, expected) {
   return async () => {
     await goTo(driver, url);
     return assertFragment(driver, expected ? expected : url);
   };
-};
+}
 
 export async function goTo(driver, startState) {
   // When no fragment is requsted, make sure to not even include '#'
@@ -186,7 +186,7 @@ export async function goTo(driver, startState) {
   return waitForCssTransitions(driver);
 }
 
-global.move = function(
+export function move(
   driver,
   startState,
   grabbedText,
@@ -198,7 +198,7 @@ global.move = function(
     await dragAndDrop(driver, grabbedText, toMove);
     return assertFragment(driver, expectedEndState);
   };
-};
+}
 
 export async function clickLifelineForObjectWithText(driver, objectText) {
   await driver
