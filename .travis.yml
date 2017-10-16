@@ -2,6 +2,9 @@ dist: trusty
 language: node_js
 node_js:
   - "6"
+cache:
+  directories:
+    - "node_modules"
 addons:
   chrome: stable
   apt:
@@ -11,3 +14,5 @@ before_script:
   - node backend/dynamodb-local.js &
   - npm run build && node_modules/serve/bin/serve.js -s build &
   - sleep 30
+script:
+  - npm test -- --runInBand
