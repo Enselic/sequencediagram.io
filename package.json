@@ -14,6 +14,7 @@
     "chromedriver": "^2.31.0",
     "cors": "^2.8.4",
     "dynamodb-local": "0.0.18",
+    "eslint-config-react-app": "^2.0.1",
     "express": "^4.15.4",
     "glob": "^7.1.2",
     "morgan": "^1.8.2",
@@ -35,5 +36,8 @@
   "prettier": {
     "trailingComma": "es5",
     "singleQuote": true
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }
