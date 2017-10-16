@@ -238,13 +238,6 @@ global.clickLifelineForObjectWithText = async function(objectText) {
   return sleepIfHumanObserver(driver, 0.7);
 };
 
-global.moveToComponentWithText = async function(componentText) {
-  return driver
-    .actions()
-    .mouseMove(await findElementByText(driver, componentText))
-    .perform();
-};
-
 global.clickAddObject = async function() {
   await clickText(driver, 'Add object');
   await waitForCssTransitions(driver);
