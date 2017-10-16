@@ -1,26 +1,18 @@
 import {
-  waitForCssTransitions,
-  sleepIfHumanObserver,
-  getTextCenterPos,
-  waitForElement,
-  findElementByText,
-  mouseMoveInSteps,
-  dragAndDrop,
-  clickText,
-  typeTextAndPressReturn,
-  typeText,
-  clickAndType,
-  assertFragment,
-  goTo,
-  clickLifelineForObjectWithText,
-  clickAddObject,
   addMessage,
-  moveAnchorPointToActor,
-  flip,
-  toggleArrowStyle,
-  toggleLineStyle,
-  removeComponentWithKey,
+  assertFragment,
+  buildDriver,
+  findElementByText,
+  goTo,
+  setupNoBrowserLogOutputTest,
+  sleepIfHumanObserver,
 } from './lib';
+
+const driver = buildDriver();
+
+afterAll(() => {
+  return driver.quit();
+});
 
 function addingMessage(start, firstClick, secondClick, expected) {
   return async () => {
@@ -179,3 +171,5 @@ it(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()'
   )
 );
+
+setupNoBrowserLogOutputTest(driver);

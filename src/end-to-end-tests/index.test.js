@@ -12,13 +12,9 @@ the global object
 
 */
 
-import { logging, Key, promise } from 'selenium-webdriver';
-
 import {
   applyTimeoutFactor,
   buildDriver,
-  getSchemeAndHost,
-  getPort,
   setupNoBrowserLogOutputTest,
 } from './lib';
 
@@ -36,7 +32,6 @@ const filesWithTests = [
   'remove-object.js',
   'misc-object.js',
   'move-message.js',
-  'add-message.js',
   'remove-message.js',
   'change-message-appearance.js',
   'undo-redo.js',
