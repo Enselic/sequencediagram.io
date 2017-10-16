@@ -60,7 +60,7 @@ it(
 
     let asserter = new UndoRedoAsserter();
 
-    await goTo('empty');
+    await goTo(driver, 'empty');
 
     await clickAddObject(driver);
     await asserter.assertFragmentAndPush('o1,NewObject');

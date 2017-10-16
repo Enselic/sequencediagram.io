@@ -1,6 +1,6 @@
 function addingMessage(start, firstClick, secondClick, expected) {
   return async () => {
-    await goTo(start);
+    await goTo(driver, start);
     await addMessage(driver, firstClick, secondClick);
     return assertFragment(driver, expected);
   };
@@ -38,7 +38,7 @@ it(
 
 function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
   return async () => {
-    await goTo(start);
+    await goTo(driver, start);
     const message = await findElementByText(driver, messageText);
     const size = await message.getSize();
     await sleepIfHumanObserver(driver, 1);

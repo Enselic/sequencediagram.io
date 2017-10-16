@@ -205,12 +205,12 @@ global.assertFragment = async function(driver, expected) {
 
 global.urlParsing = function(driver, url, expected) {
   return async () => {
-    await goTo(url);
+    await goTo(driver, url);
     return assertFragment(driver, expected ? expected : url);
   };
 };
 
-global.goTo = async function(startState) {
+global.goTo = async function(driver, startState) {
   // When no fragment is requsted, make sure to not even include '#'
   const fragment = startState ? '#' + startState : '';
   await driver.get(`${getSchemeAndHost()}:${getPort()}/${fragment}`);
@@ -228,7 +228,7 @@ global.move = function(
   expectedEndState
 ) {
   return async () => {
-    await goTo(startState);
+    await goTo(driver, startState);
     await dragAndDrop(driver, grabbedText, toMove);
     return assertFragment(driver, expectedEndState);
   };

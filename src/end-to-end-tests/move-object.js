@@ -121,7 +121,7 @@ it(
 it('move away and back does not trigger click', async () => {
   const text = 'FixedName';
   const expected = 'o1,' + text;
-  await goTo(expected);
+  await goTo(driver, expected);
   await driver
     .actions()
     .mouseDown(await findElementByText(driver, text))
@@ -140,7 +140,7 @@ it('move away and back does not trigger click', async () => {
 });
 
 it('move does not suppress blur event (i.e. text commit) when renaming', async () => {
-  await goTo('o1,Foo;o2,Bar');
+  await goTo(driver, 'o1,Foo;o2,Bar');
   await clickText(driver, 'Foo');
   await typeText(driver, 'CHEEERS');
   await clickText(driver, 'Bar');
@@ -148,7 +148,7 @@ it('move does not suppress blur event (i.e. text commit) when renaming', async (
 });
 
 it('can click in renamed component text to place cursor', async () => {
-  await goTo('o1,PrefixMe');
+  await goTo(driver, 'o1,PrefixMe');
   const el = await findElementByText(driver, 'PrefixMe');
   // To hit upper left coner, to place cursor first
   const topLeft = { x: 1, y: 1 };
@@ -170,7 +170,7 @@ it('can click in renamed component text to place cursor', async () => {
 });
 
 it('pending object move changes is stable', async () => {
-  await goTo('o1,EndsUpRight;o2,EndsUpLeft');
+  await goTo(driver, 'o1,EndsUpRight;o2,EndsUpLeft');
   const el = await findElementByText(driver, 'EndsUpRight');
   const endsUpRightPos = await getTextCenterPos(driver, 'EndsUpRight');
   const endsUpLeftPos = await getTextCenterPos(driver, 'EndsUpLeft');
