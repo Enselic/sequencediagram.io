@@ -41,19 +41,19 @@ it(
 
       async assertFragmentAndPush(expectedFragment) {
         this.fragments.push(expectedFragment);
-        return assertFragment(expectedFragment);
+        return assertFragment(driver, expectedFragment);
       }
 
       async undoRedoAll() {
         // Deterministically mix Ctrl-[Shift-]Z and Undo/Redo menu items
         const len = this.fragments.length;
         for (let i = len - 1; i >= 0; i--) {
-          await assertFragment(this.fragments[i]);
+          await assertFragment(driver, this.fragments[i]);
           await ctrlZOrUndo(i);
         }
         for (let i = 0; i < len; i++) {
           await ctrlShiftZOrRedo(i);
-          await assertFragment(this.fragments[i]);
+          await assertFragment(driver, this.fragments[i]);
         }
       }
     }

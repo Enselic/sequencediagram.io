@@ -2,7 +2,7 @@ function addingMessage(start, firstClick, secondClick, expected) {
   return async () => {
     await goTo(start);
     await addMessage(driver, firstClick, secondClick);
-    return assertFragment(expected);
+    return assertFragment(driver, expected);
   };
 }
 
@@ -61,7 +61,7 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
       .actions()
       .click()
       .perform();
-    return assertFragment(expected);
+    return assertFragment(driver, expected);
   };
 }
 const OFFSET_FROM_MESSAGE_TO_BELOW = 60;

@@ -185,7 +185,7 @@ global.clickAndType = async function(driver, elementText, typedText) {
   return waitForCssTransitions(driver);
 };
 
-global.assertFragment = async function(expected) {
+global.assertFragment = async function(driver, expected) {
   await sleepIfHumanObserver(driver, 0.7);
   return new SPromise((resolve, reject) => {
     driver
@@ -206,7 +206,7 @@ global.assertFragment = async function(expected) {
 global.urlParsing = function(driver, url, expected) {
   return async () => {
     await goTo(url);
-    return assertFragment(expected ? expected : url);
+    return assertFragment(driver, expected ? expected : url);
   };
 };
 
@@ -230,7 +230,7 @@ global.move = function(
   return async () => {
     await goTo(startState);
     await dragAndDrop(driver, grabbedText, toMove);
-    return assertFragment(expectedEndState);
+    return assertFragment(driver, expectedEndState);
   };
 };
 
@@ -350,12 +350,10 @@ const filesWithTests = [
   'add-object.js',
   'remove-object.js',
   'misc-object.js',
-
   'move-message.js',
   'add-message.js',
   'remove-message.js',
   'change-message-appearance.js',
-
   'misc.js',
   'undo-redo.js',
   'serialize-and-deserialize.js',

@@ -1,13 +1,13 @@
 it('remove single message', async () => {
   await goTo('o1,A1;o2,A2;m1,o1,o2,m1');
   await removeComponentWithKey(driver, 'm1');
-  return assertFragment('o1,A1;o2,A2');
+  return assertFragment(driver, 'o1,A1;o2,A2');
 });
 
 it('remove last message of two', async () => {
   await goTo('o1,A1;o2,A2;m1,o1,o2,m1;m2,o2,o1,m2');
   await removeComponentWithKey(driver, 'm2');
-  return assertFragment('o1,A1;o2,A2;m1,o1,o2,m1');
+  return assertFragment(driver, 'o1,A1;o2,A2;m1,o1,o2,m1');
 });
 
 it('remove message does not trigger name change', async () => {
@@ -22,6 +22,7 @@ it('remove message does not trigger name change', async () => {
   await typeTextAndPressReturn(driver, 'This-text-should-not-end-up-anywhere');
 
   return assertFragment(
+    driver,
     'o1,A1;o2,A2;m1,o1,o2,SameNameUsedTwiceForIdenticalSizes'
   );
 });
@@ -37,5 +38,5 @@ it('MANUAL: hover is triggered when component moves in under cursor', async () =
     .perform();
   await sleepIfHumanObserver(driver, 1);
   await removeComponentWithKey(driver, 'm3');
-  return assertFragment('o1,Foo;o3,Baz');
+  return assertFragment(driver, 'o1,Foo;o3,Baz');
 });

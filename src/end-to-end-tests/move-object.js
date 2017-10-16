@@ -136,7 +136,7 @@ it('move away and back does not trigger click', async () => {
     driver,
     'This-text-shall-not-end-up-as-name-for-object'
   );
-  return assertFragment(expected);
+  return assertFragment(driver, expected);
 });
 
 it('move does not suppress blur event (i.e. text commit) when renaming', async () => {
@@ -144,7 +144,7 @@ it('move does not suppress blur event (i.e. text commit) when renaming', async (
   await clickText(driver, 'Foo');
   await typeText(driver, 'CHEEERS');
   await clickText(driver, 'Bar');
-  return assertFragment('o1,CHEEERS;o2,Bar');
+  return assertFragment(driver, 'o1,CHEEERS;o2,Bar');
 });
 
 it('can click in renamed component text to place cursor', async () => {
@@ -166,7 +166,7 @@ it('can click in renamed component text to place cursor', async () => {
     .perform();
   await sleepIfHumanObserver(driver, 1);
   await typeTextAndPressReturn(driver, 'prefix');
-  return assertFragment('o1,prefixPrefixMe');
+  return assertFragment(driver, 'o1,prefixPrefixMe');
 });
 
 it('pending object move changes is stable', async () => {
@@ -196,5 +196,5 @@ it('pending object move changes is stable', async () => {
     .actions()
     .mouseUp()
     .perform();
-  return assertFragment('o2,EndsUpLeft;o1,EndsUpRight');
+  return assertFragment(driver, 'o2,EndsUpLeft;o1,EndsUpRight');
 });

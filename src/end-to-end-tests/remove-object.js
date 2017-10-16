@@ -1,7 +1,7 @@
 it('remove single object', async () => {
   await goTo('o1,Remove%20me');
   await removeComponentWithKey(driver, 'o1');
-  return assertFragment('');
+  return assertFragment(driver, '');
 });
 
 it('remove two objects of two', async () => {
@@ -9,13 +9,13 @@ it('remove two objects of two', async () => {
   await removeComponentWithKey(driver, 'o1');
   await waitForCssTransitions(driver);
   await removeComponentWithKey(driver, 'o2');
-  return assertFragment('');
+  return assertFragment(driver, '');
 });
 
 it('remove middle object also removes messages attached to it', async () => {
   await goTo('o1,A1;o2,A2;o3,A3;m1,o1,o2,M1;m2,o3,o2,M2;m3,o3,o1,M3');
   await removeComponentWithKey(driver, 'o2');
-  return assertFragment('o1,A1;o3,A3;m3,o3,o1,M3');
+  return assertFragment(driver, 'o1,A1;o3,A3;m3,o3,o1,M3');
 });
 
 it('remove object does not trigger name change', async () => {
@@ -29,5 +29,5 @@ it('remove object does not trigger name change', async () => {
   // If o100 text is selected (which it should not), typing text and pressing enter will change the text
   await typeTextAndPressReturn(driver, 'This-text-should-not-end-up-anywhere');
 
-  return assertFragment('o100,SameNameUsedTwiceForIdenticalSizes');
+  return assertFragment(driver, 'o100,SameNameUsedTwiceForIdenticalSizes');
 });
