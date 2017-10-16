@@ -1,5 +1,3 @@
-import devUtils from './devUtils';
-
 export const DIAGRAM_PADDING = { LEFT_RIGHT: 140, TOP_BOTTOM: 90 };
 export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
 export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
@@ -23,9 +21,7 @@ export function layoutMessageLeftAndWidth(
 ) {
   let senderX;
   let receiverX;
-  let transition = devUtils.transitionIfNotDev(
-    'left 0.3s, width 0.3s, top 0.3s, height 0.3s'
-  );
+  let transition = 'left 0.3s, width 0.3s, top 0.3s, height 0.3s';
   if (overrideSenderX !== undefined) {
     transition = null;
     senderX = overrideSenderX;
@@ -99,7 +95,7 @@ export function layoutMessageLeftAndWidth(
 }
 
 function layoutObject(getTextWidth, currentX, object) {
-  let transition = devUtils.transitionIfNotDev('left 0.3s');
+  let transition = 'left 0.3s';
   const objectNameWidth =
     getTextWidth(object.name) + OBJECT_NAME_PADDING.LEFT_RIGHT;
   let lifelineX = currentX + objectNameWidth / 2;

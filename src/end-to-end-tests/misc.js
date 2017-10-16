@@ -90,11 +90,6 @@ it('MANUAL: Drag and drop Object remove button shall not select any text', async
   return sleepIfHumanObserver(driver, 7);
 });
 
-it('ensure devMode == false', () => {
-  // We don't want to deploy in dev mode...
-  expect(devMode).toBeFalsy();
-});
-
 it('MANUAL: Controls are removed when a message is pending', async () => {
   await goTo(
     driver,

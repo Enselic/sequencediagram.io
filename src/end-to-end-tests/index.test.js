@@ -36,12 +36,9 @@ let {
   promise,
 } = require('selenium-webdriver');
 let { Options } = require('selenium-webdriver/chrome');
-let devUtils = require('../devUtils');
 
 const lib = require('./lib');
 const { getSchemeAndHost, getPort } = lib;
-
-global.devMode = devUtils.devMode;
 
 global.Key = Key;
 global.logging = logging;
@@ -69,16 +66,8 @@ afterAll(() => {
 
 // Helper functions
 
-function transitionsDisabled() {
-  return devUtils.devMode;
-}
-
 global.waitForCssTransitions = async function(driver) {
-  if (!transitionsDisabled()) {
-    return driver.sleep(300);
-  } else {
-    return true;
-  }
+  return driver.sleep(300);
 };
 
 global.sleepIfHumanObserver = async function(driver, seconds) {
