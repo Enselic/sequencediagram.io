@@ -153,26 +153,26 @@ global.dragAndDrop = async function(driver, elementText, offset) {
 };
 
 global.clickText = async function(driver, elementText) {
-  return clickElement(await findElementByText(driver, elementText));
+  return clickElement(driver, await findElementByText(driver, elementText));
 };
 
-global.clickElement = async function(element) {
+async function clickElement(driver, element) {
   await driver
     .actions()
     .click(element)
     .perform();
   return waitForCssTransitions(driver);
-};
+}
 
 global.typeTextAndPressReturn = async function(driver, typedText) {
-  await type(typedText);
+  await typeText(driver, typedText);
   return driver
     .actions()
     .sendKeys(Key.RETURN)
     .perform();
 };
 
-global.type = async function(typedText) {
+global.typeText = async function(driver, typedText) {
   await driver
     .actions()
     .sendKeys(typedText)

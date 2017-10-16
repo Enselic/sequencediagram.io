@@ -136,7 +136,7 @@ it('move away and back does not trigger click', async () => {
 it('move does not suppress blur event (i.e. text commit) when renaming', async () => {
   await goTo('o1,Foo;o2,Bar');
   await clickText(driver, 'Foo');
-  await type('CHEEERS');
+  await typeText(driver, 'CHEEERS');
   await clickText(driver, 'Bar');
   return assertFragment('o1,CHEEERS;o2,Bar');
 });
