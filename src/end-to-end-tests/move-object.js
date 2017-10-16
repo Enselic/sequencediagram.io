@@ -1,5 +1,11 @@
 function moveObject(startState, grabbedText, xToMove, expectedEndState) {
-  return move(startState, grabbedText, { x: xToMove, y: 0 }, expectedEndState);
+  return move(
+    driver,
+    startState,
+    grabbedText,
+    { x: xToMove, y: 0 },
+    expectedEndState
+  );
 }
 
 // One object

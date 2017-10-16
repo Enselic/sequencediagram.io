@@ -179,7 +179,7 @@ global.typeText = async function(driver, typedText) {
     .perform();
 };
 
-global.clickAndType = async function(elementText, typedText) {
+global.clickAndType = async function(driver, elementText, typedText) {
   await clickText(driver, elementText);
   await typeTextAndPressReturn(driver, typedText);
   return waitForCssTransitions(driver);
@@ -203,7 +203,7 @@ global.assertFragment = async function(expected) {
   });
 };
 
-global.urlParsing = function(url, expected) {
+global.urlParsing = function(driver, url, expected) {
   return async () => {
     await goTo(url);
     return assertFragment(expected ? expected : url);
@@ -220,7 +220,13 @@ global.goTo = async function(startState) {
   return waitForCssTransitions(driver);
 };
 
-global.move = function(startState, grabbedText, toMove, expectedEndState) {
+global.move = function(
+  driver,
+  startState,
+  grabbedText,
+  toMove,
+  expectedEndState
+) {
   return async () => {
     await goTo(startState);
     await dragAndDrop(driver, grabbedText, toMove);
@@ -228,7 +234,7 @@ global.move = function(startState, grabbedText, toMove, expectedEndState) {
   };
 };
 
-global.clickLifelineForObjectWithText = async function(objectText) {
+global.clickLifelineForObjectWithText = async function(driver, objectText) {
   await driver
     .actions()
     .mouseMove(await findElementByText(driver, objectText), { x: 30, y: 100 })
@@ -238,7 +244,7 @@ global.clickLifelineForObjectWithText = async function(objectText) {
   return sleepIfHumanObserver(driver, 0.7);
 };
 
-global.clickAddObject = async function() {
+global.clickAddObject = async function(driver) {
   await clickText(driver, 'Add object');
   await waitForCssTransitions(driver);
   return sleepIfHumanObserver(driver, 0.7);

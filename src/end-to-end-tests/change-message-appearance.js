@@ -1,16 +1,23 @@
 it(
   'make sure reply messages are not lost during parsing',
-  urlParsing('o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,r')
+  urlParsing(
+    driver,
+    'o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,r'
+  )
 );
 
 it(
   'make sure async messages are not lost during parsing',
-  urlParsing('o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,a')
+  urlParsing(
+    driver,
+    'o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,a'
+  )
 );
 
 it(
   'make sure async replies are not lost during parsing',
   urlParsing(
+    driver,
     'o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,ra'
   )
 );
@@ -18,6 +25,7 @@ it(
 it(
   'make sure extra chars are discarted',
   urlParsing(
+    driver,
     'o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,grad',
     'o1,Foo;o2,Replier;m1,o1,o2,saySomething();m2,o2,o1,%5Breply%5D,ra'
   )

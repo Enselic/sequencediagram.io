@@ -124,7 +124,7 @@ it('MANUAL: Diagram text not visibly selectable', async () => {
 
 it("MANUAL: can't remove object while pending message", async () => {
   await goTo('o2,Bar;o3,Baz;o4,Foo');
-  await clickLifelineForObjectWithText('Bar');
+  await clickLifelineForObjectWithText(driver, 'Bar');
   // TODO: instructions
   return sleepIfHumanObserver(driver, 7);
 });
@@ -132,16 +132,16 @@ it("MANUAL: can't remove object while pending message", async () => {
 it('MANUAL: remove button does not hang around', async () => {
   await goTo('empty');
 
-  await clickAddObject();
+  await clickAddObject(driver);
   await assertFragment('o1,NewObject');
 
-  await clickAndType('NewObject', 'Remove button should disappear');
+  await clickAndType(driver, 'NewObject', 'Remove button should disappear');
   await assertFragment('o1,Remove%20button%20should%20disappear');
 
-  await clickAddObject();
+  await clickAddObject(driver);
   await assertFragment('o1,Remove%20button%20should%20disappear;o2,NewObject');
 
-  await clickAndType('NewObject', '... when it is shown above');
+  await clickAndType(driver, 'NewObject', '... when it is shown above');
   await assertFragment(
     'o1,Remove%20button%20should%20disappear;o2,...%20when%20it%20is%20shown%20above'
   );

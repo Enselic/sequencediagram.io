@@ -62,16 +62,16 @@ it(
 
     await goTo('empty');
 
-    await clickAddObject();
+    await clickAddObject(driver);
     await asserter.assertFragmentAndPush('o1,NewObject');
 
-    await clickAndType('NewObject', 'Undoer');
+    await clickAndType(driver, 'NewObject', 'Undoer');
     await asserter.assertFragmentAndPush('o1,Undoer');
 
-    await clickAddObject();
+    await clickAddObject(driver);
     await asserter.assertFragmentAndPush('o1,Undoer;o2,NewObject');
 
-    await clickAndType('NewObject', 'Redoer');
+    await clickAndType(driver, 'NewObject', 'Redoer');
     await asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer');
 
     await addMessage('Undoer', 'Redoer');
@@ -79,17 +79,17 @@ it(
       'o1,Undoer;o2,Redoer;m1,o1,o2,newMessage()'
     );
 
-    await clickAndType('newMessage()', 'invoke()');
+    await clickAndType(driver, 'newMessage()', 'invoke()');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;m1,o1,o2,invoke()'
     );
 
-    await clickAddObject();
+    await clickAddObject(driver);
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,NewObject;m1,o1,o2,invoke()'
     );
 
-    await clickAndType('NewObject', 'User');
+    await clickAndType(driver, 'NewObject', 'User');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m1,o1,o2,invoke()'
     );
@@ -109,7 +109,7 @@ it(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,newMessage();m1,o3,o2,invoke()'
     );
 
-    await clickAndType('newMessage()', 'call()'); // Use a different term so we can search by text uniquely
+    await clickAndType(driver, 'newMessage()', 'call()'); // Use a different term so we can search by text uniquely
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call();m1,o3,o2,invoke()'
     );

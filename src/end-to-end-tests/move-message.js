@@ -1,5 +1,11 @@
 function moveMessage(startState, grabbedText, yToMove, expectedEndState) {
-  return move(startState, grabbedText, { x: 0, y: yToMove }, expectedEndState);
+  return move(
+    driver,
+    startState,
+    grabbedText,
+    { x: 0, y: yToMove },
+    expectedEndState
+  );
 }
 
 // single messsage
