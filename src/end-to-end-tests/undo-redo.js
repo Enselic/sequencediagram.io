@@ -74,7 +74,7 @@ it(
     await clickAndType(driver, 'NewObject', 'Redoer');
     await asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer');
 
-    await addMessage('Undoer', 'Redoer');
+    await addMessage(driver, 'Undoer', 'Redoer');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;m1,o1,o2,newMessage()'
     );
@@ -94,17 +94,17 @@ it(
       'o1,Undoer;o2,Redoer;o3,User;m1,o1,o2,invoke()'
     );
 
-    await moveAnchorPointToActor('m1', 'sender', 'User');
+    await moveAnchorPointToActor(driver, 'm1', 'sender', 'User');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m1,o3,o2,invoke()'
     );
 
-    await addMessage('Redoer', 'User', 'invoke()');
+    await addMessage(driver, 'Redoer', 'User', 'invoke()');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m2,o2,o3,newMessage();m1,o3,o2,invoke()'
     );
 
-    await flip('m2');
+    await flip(driver, 'm2');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,newMessage();m1,o3,o2,invoke()'
     );
@@ -114,12 +114,12 @@ it(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call();m1,o3,o2,invoke()'
     );
 
-    await toggleArrowStyle('m2');
+    await toggleArrowStyle(driver, 'm2');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke()'
     );
 
-    await toggleLineStyle('m1');
+    await toggleLineStyle(driver, 'm1');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r'
     );

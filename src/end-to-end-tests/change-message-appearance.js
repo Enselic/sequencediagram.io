@@ -33,11 +33,11 @@ it(
 
 it('toggle arrow style', async () => {
   await goTo('o1,An%20Object;o2,Another%20Object;m1,o1,o2,message()');
-  await toggleArrowStyle('m1');
+  await toggleArrowStyle(driver, 'm1');
   await assertFragment(
     'o1,An%20Object;o2,Another%20Object;m1,o1,o2,message(),a'
   );
-  await toggleArrowStyle('m1');
+  await toggleArrowStyle(driver, 'm1');
   return assertFragment(
     'o1,An%20Object;o2,Another%20Object;m1,o1,o2,message()'
   );
@@ -45,11 +45,11 @@ it('toggle arrow style', async () => {
 
 it('toggle line style', async () => {
   await goTo('o1,An%20Object;o2,Another%20Object;m333,o1,o2,message()');
-  await toggleLineStyle('m333');
+  await toggleLineStyle(driver, 'm333');
   await assertFragment(
     'o1,An%20Object;o2,Another%20Object;m333,o1,o2,message(),r'
   );
-  await toggleLineStyle('m333');
+  await toggleLineStyle(driver, 'm333');
   return assertFragment(
     'o1,An%20Object;o2,Another%20Object;m333,o1,o2,message()'
   );

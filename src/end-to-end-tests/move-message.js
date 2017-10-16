@@ -152,37 +152,37 @@ it('move anchorpoints', async () => {
   );
 
   // m1 sender to o1
-  await moveAnchorPointToActor('m1', 'sender', 'o1');
+  await moveAnchorPointToActor(driver, 'm1', 'sender', 'o1');
   await assertFragment(
     'o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o1,o3,m2%20start%20to%20o2;m3,o2,o2,m3%20start%20to%20o3;m4,o2,o3,m4%20end%20to%20o1;m5,o1,o3,m5%20end%20to%20o2;m6,o2,o3,m6%20end%20to%20o2'
   );
 
   // m2 sender to o2
-  await moveAnchorPointToActor('m2', 'sender', 'o2');
+  await moveAnchorPointToActor(driver, 'm2', 'sender', 'o2');
   await assertFragment(
     'o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o2,o3,m2%20start%20to%20o2;m3,o2,o2,m3%20start%20to%20o3;m4,o2,o3,m4%20end%20to%20o1;m5,o1,o3,m5%20end%20to%20o2;m6,o2,o3,m6%20end%20to%20o2'
   );
 
   // m3 sender to o3
-  await moveAnchorPointToActor('m3', 'sender', 'o3');
+  await moveAnchorPointToActor(driver, 'm3', 'sender', 'o3');
   await assertFragment(
     'o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o2,o3,m2%20start%20to%20o2;m3,o3,o2,m3%20start%20to%20o3;m4,o2,o3,m4%20end%20to%20o1;m5,o1,o3,m5%20end%20to%20o2;m6,o2,o3,m6%20end%20to%20o2'
   );
 
   // m4 receiver to o1
-  await moveAnchorPointToActor('m4', 'receiver', 'o1');
+  await moveAnchorPointToActor(driver, 'm4', 'receiver', 'o1');
   await assertFragment(
     'o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o2,o3,m2%20start%20to%20o2;m3,o3,o2,m3%20start%20to%20o3;m4,o2,o1,m4%20end%20to%20o1;m5,o1,o3,m5%20end%20to%20o2;m6,o2,o3,m6%20end%20to%20o2'
   );
 
   // m5 receiver to o2
-  await moveAnchorPointToActor('m5', 'receiver', 'o2');
+  await moveAnchorPointToActor(driver, 'm5', 'receiver', 'o2');
   await assertFragment(
     'o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o2,o3,m2%20start%20to%20o2;m3,o3,o2,m3%20start%20to%20o3;m4,o2,o1,m4%20end%20to%20o1;m5,o1,o2,m5%20end%20to%20o2;m6,o2,o3,m6%20end%20to%20o2'
   );
 
   // m6 receiver to o2
-  await moveAnchorPointToActor('m6', 'receiver', 'o2');
+  await moveAnchorPointToActor(driver, 'm6', 'receiver', 'o2');
   return assertFragment(
     'o1,o1;o2,o2;o3,o3;m1,o1,o3,m1%20start%20to%20o1;m2,o2,o3,m2%20start%20to%20o2;m3,o3,o2,m3%20start%20to%20o3;m4,o2,o1,m4%20end%20to%20o1;m5,o1,o2,m5%20end%20to%20o2;m6,o2,o2,m6%20end%20to%20o2'
   );

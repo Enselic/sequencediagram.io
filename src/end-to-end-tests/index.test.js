@@ -250,7 +250,7 @@ global.clickAddObject = async function(driver) {
   return sleepIfHumanObserver(driver, 0.7);
 };
 
-global.addMessage = async function(sender, receiver) {
+global.addMessage = async function(driver, sender, receiver) {
   const startEl = await findElementByText(driver, sender);
   const endEl = await findElementByText(driver, receiver);
   const startLoc = await startEl.getLocation();
@@ -278,6 +278,7 @@ function calcOffset(startLoc, endLoc) {
 }
 
 global.moveAnchorPointToActor = async function(
+  driver,
   messageKey,
   anchorPointType,
   actorName
@@ -304,7 +305,7 @@ global.moveAnchorPointToActor = async function(
     .perform();
 };
 
-global.flip = async function(id) {
+global.flip = async function(driver, id) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // flip buttons with certain IDs without complicating testing code too much
   await driver
@@ -314,7 +315,7 @@ global.flip = async function(id) {
   return sleepIfHumanObserver(driver, 0.7);
 };
 
-global.toggleArrowStyle = async function(id) {
+global.toggleArrowStyle = async function(driver, id) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
@@ -324,7 +325,7 @@ global.toggleArrowStyle = async function(id) {
   return sleepIfHumanObserver(driver, 0.7);
 };
 
-global.toggleLineStyle = async function(id) {
+global.toggleLineStyle = async function(driver, id) {
   // Low prio todo: Stop depending on the implementation detail that messages have
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
@@ -334,7 +335,7 @@ global.toggleLineStyle = async function(id) {
   return sleepIfHumanObserver(driver, 0.7);
 };
 
-global.removeComponentWithKey = async function(id) {
+global.removeComponentWithKey = async function(driver, id) {
   // Low prio todo: Stop depending on the implementation detail that components have
   // remove buttons with certain IDs without complicating testing code too much
   await driver

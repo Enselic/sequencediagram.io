@@ -1,7 +1,7 @@
 function addingMessage(start, firstClick, secondClick, expected) {
   return async () => {
     await goTo(start);
-    await addMessage(firstClick, secondClick);
+    await addMessage(driver, firstClick, secondClick);
     return assertFragment(expected);
   };
 }
