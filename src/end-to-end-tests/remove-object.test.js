@@ -1,10 +1,13 @@
 import {
   assertFragment,
+  buildDriverAndSetupEnv,
   goTo,
   removeComponentWithKey,
   typeTextAndPressReturn,
   waitForCssTransitions,
 } from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 it('remove single object', async () => {
   await goTo(driver, 'o1,Remove%20me');

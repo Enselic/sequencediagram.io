@@ -1,4 +1,11 @@
-import { assertFragment, clickAndType, goTo } from './lib';
+import {
+  assertFragment,
+  buildDriverAndSetupEnv,
+  clickAndType,
+  goTo,
+} from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 it('change object name', async () => {
   await goTo(driver, 'o1,ChangeMyName');

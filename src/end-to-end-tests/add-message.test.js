@@ -4,15 +4,10 @@ import {
   buildDriverAndSetupEnv,
   findElementByText,
   goTo,
-  setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
-
-afterAll(() => {
-  return driver.quit();
-});
 
 function addingMessage(start, firstClick, secondClick, expected) {
   return async () => {
@@ -171,5 +166,3 @@ it(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()'
   )
 );
-
-setupNoBrowserLogOutputTest(driver);

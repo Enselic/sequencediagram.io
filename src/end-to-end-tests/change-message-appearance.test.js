@@ -1,10 +1,13 @@
 import {
   assertFragment,
+  buildDriverAndSetupEnv,
   goTo,
   toggleArrowStyle,
   toggleLineStyle,
   urlParsing,
 } from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 it(
   'make sure reply messages are not lost during parsing',

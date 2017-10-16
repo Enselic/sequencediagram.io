@@ -1,4 +1,12 @@
-import { assertFragment, clickAddObject, goTo } from './lib';
+import {
+  assertFragment,
+  buildDriverAndSetupEnv,
+  clickAddObject,
+  goTo,
+  setupNoBrowserLogOutputTest,
+} from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 it('add object to empty diagram', async () => {
   await goTo(driver, 'empty');

@@ -21,10 +21,7 @@ export function getSchemeAndHost() {
   return 'http://localhost';
 }
 
-export function buildDriverAndSetupEnv() {
-  // The default timeout is to strict for our UI tests, so increase it
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
-
+function buildDriver() {
   let options = new Options();
   let args = ['window-size=1280,1050'];
   if (HEADLESS) {
@@ -39,6 +36,21 @@ export function buildDriverAndSetupEnv() {
     .forBrowser('chrome')
     .setChromeOptions(options)
     .build();
+}
+
+export function buildDriverAndSetupEnv() {
+  // The default timeout is to strict for our UI tests, so increase it
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
+
+  const driver = buildDriver();
+
+  afterAll(() => {
+    return driver.quit();
+  });
+
+  setupNoBrowserLogOutputTest(driver);
+
+  return driver;
 }
 
 export function applyTimeoutFactor(timeout) {

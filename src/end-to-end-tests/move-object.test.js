@@ -1,5 +1,6 @@
 import {
   assertFragment,
+  buildDriverAndSetupEnv,
   clickText,
   findElementByText,
   getTextCenterPos,
@@ -10,6 +11,8 @@ import {
   typeText,
   typeTextAndPressReturn,
 } from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 function moveObject(startState, grabbedText, xToMove, expectedEndState) {
   return move(

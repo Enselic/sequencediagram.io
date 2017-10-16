@@ -1,4 +1,12 @@
-import { assertFragment, clickText, goTo, typeTextAndPressReturn } from './lib';
+import {
+  assertFragment,
+  buildDriverAndSetupEnv,
+  clickText,
+  goTo,
+  typeTextAndPressReturn,
+} from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 // Parsing edge cases
 

@@ -3,6 +3,7 @@ import {
   addMessage,
   applyTimeoutFactor,
   assertFragment,
+  buildDriverAndSetupEnv,
   clickAddObject,
   clickAndType,
   clickText,
@@ -15,6 +16,8 @@ import {
   toggleLineStyle,
   waitForCssTransitions,
 } from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 async function ctrlZ() {
   await driver

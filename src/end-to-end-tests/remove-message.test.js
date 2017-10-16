@@ -1,10 +1,13 @@
 import {
   assertFragment,
+  buildDriverAndSetupEnv,
   goTo,
   removeComponentWithKey,
   sleepIfHumanObserver,
   typeTextAndPressReturn,
 } from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 it('remove single message', async () => {
   await goTo(driver, 'o1,A1;o2,A2;m1,o1,o2,m1');

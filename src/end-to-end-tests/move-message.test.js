@@ -1,4 +1,12 @@
-import { assertFragment, goTo, move, moveAnchorPointToActor } from './lib';
+import {
+  assertFragment,
+  buildDriverAndSetupEnv,
+  goTo,
+  move,
+  moveAnchorPointToActor,
+} from './lib';
+
+const driver = buildDriverAndSetupEnv();
 
 function moveMessage(startState, grabbedText, yToMove, expectedEndState) {
   return move(

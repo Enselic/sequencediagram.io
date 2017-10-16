@@ -13,16 +13,11 @@ import {
   goTo,
   mouseMoveInSteps,
   reversePromise,
-  setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   waitForElement,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
-
-afterAll(() => {
-  return driver.quit();
-});
 
 it('change to state without messages after state with messages', async () => {
   await goTo(driver, 'o1,Foo;o2,Bar;m1,o1,o2,baz()');
@@ -183,5 +178,3 @@ it('MANUAL: mouseDebug overlay works', async () => {
   await mouseMoveInSteps(driver, { x: 400, y: 0 });
   return sleepIfHumanObserver(driver, 5);
 });
-
-setupNoBrowserLogOutputTest(driver);
