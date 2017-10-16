@@ -39,7 +39,7 @@ it(
 function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
   return async () => {
     await goTo(start);
-    const message = await findElementByText(messageText);
+    const message = await findElementByText(driver, messageText);
     const size = await message.getSize();
     await sleepIfHumanObserver(driver, 1);
     await driver

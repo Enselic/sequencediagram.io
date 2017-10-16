@@ -19,7 +19,7 @@ it('remove message does not trigger name change', async () => {
   await goTo('o1,A1;o2,A2;m1,o1,o2,SameNameUsedTwiceForIdenticalSizes');
 
   // If m1 text is selected (which it should not), typing text and pressing enter will change the text
-  await typeAndConfirmm('This-text-should-not-end-up-anywhere');
+  await typeAndConfirmm(driver, 'This-text-should-not-end-up-anywhere');
 
   return assertFragment(
     'o1,A1;o2,A2;m1,o1,o2,SameNameUsedTwiceForIdenticalSizes'

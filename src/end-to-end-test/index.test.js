@@ -89,8 +89,8 @@ global.sleepIfHumanObserver = async function(driver, seconds) {
   return driver.sleep(seconds * 1000);
 };
 
-global.getTextCenterPos = async function(text) {
-  const el = await findElementByText(text);
+global.getTextCenterPos = async function(driver, text) {
+  const el = await findElementByText(driver, text);
   const pos = await el.getLocation();
   const size = await el.getSize();
   return { x: pos.x + size.width / 2, y: pos.y + size.height / 2 };
@@ -102,22 +102,22 @@ global.reversePromise = function(promise) {
   });
 };
 
-global.byText = function(text) {
+function byText(text) {
   return By.xpath("//*[contains(text(),'" + text + "')]");
-};
+}
 
-global.waitForElement = async function(text) {
+global.waitForElement = async function(driver, text) {
   const locator = byText(text);
   return driver.wait(until.elementLocated(locator), 2000);
 };
 
-global.findElementByText = async function(text) {
+global.findElementByText = async function(driver, text) {
   const locator = byText(text);
-  await waitForElement(text);
+  await waitForElement(driver, text);
   return driver.findElement(locator);
 };
 
-global.mouseMoveInSteps = async function(totalOffset) {
+global.mouseMoveInSteps = async function(driver, totalOffset) {
   const steps = 20;
   let i = steps;
   while (i > 0) {
@@ -136,14 +136,14 @@ global.mouseMoveInSteps = async function(totalOffset) {
   return true;
 };
 
-global.dragAndDrop = async function(elementText, offset) {
+global.dragAndDrop = async function(driver, elementText, offset) {
   await driver
     .actions()
-    .mouseDown(await findElementByText(elementText))
+    .mouseDown(await findElementByText(driver, elementText))
     .perform();
   await sleepIfHumanObserver(driver, 0.7);
 
-  await mouseMoveInSteps(offset);
+  await mouseMoveInSteps(driver, offset);
 
   await driver
     .actions()
@@ -152,8 +152,8 @@ global.dragAndDrop = async function(elementText, offset) {
   return sleepIfHumanObserver(driver, 0.7);
 };
 
-global.click = async function(elementText) {
-  return clickElement(await findElementByText(elementText));
+global.clickText = async function(driver, elementText) {
+  return clickElement(await findElementByText(driver, elementText));
 };
 
 global.clickElement = async function(element) {
@@ -164,7 +164,7 @@ global.clickElement = async function(element) {
   return waitForCssTransitions(driver);
 };
 
-global.typeAndConfirmm = async function(typedText) {
+global.typeAndConfirmm = async function(driver, typedText) {
   await type(typedText);
   return driver
     .actions()
@@ -180,8 +180,8 @@ global.type = async function(typedText) {
 };
 
 global.clickAndType = async function(elementText, typedText) {
-  await click(elementText);
-  await typeAndConfirmm(typedText);
+  await clickText(driver, elementText);
+  await typeAndConfirmm(driver, typedText);
   return waitForCssTransitions(driver);
 };
 
@@ -223,7 +223,7 @@ global.goTo = async function(startState) {
 global.move = function(startState, grabbedText, toMove, expectedEndState) {
   return async () => {
     await goTo(startState);
-    await dragAndDrop(grabbedText, toMove);
+    await dragAndDrop(driver, grabbedText, toMove);
     return assertFragment(expectedEndState);
   };
 };
@@ -231,7 +231,7 @@ global.move = function(startState, grabbedText, toMove, expectedEndState) {
 global.clickLifelineForObjectWithText = async function(objectText) {
   await driver
     .actions()
-    .mouseMove(await findElementByText(objectText), { x: 30, y: 100 })
+    .mouseMove(await findElementByText(driver, objectText), { x: 30, y: 100 })
     .click()
     .perform();
   await waitForCssTransitions(driver);
@@ -241,19 +241,19 @@ global.clickLifelineForObjectWithText = async function(objectText) {
 global.moveToComponentWithText = async function(componentText) {
   return driver
     .actions()
-    .mouseMove(await findElementByText(componentText))
+    .mouseMove(await findElementByText(driver, componentText))
     .perform();
 };
 
 global.clickAddObject = async function() {
-  await click('Add object');
+  await clickText(driver, 'Add object');
   await waitForCssTransitions(driver);
   return sleepIfHumanObserver(driver, 0.7);
 };
 
 global.addMessage = async function(sender, receiver) {
-  const startEl = await findElementByText(sender);
-  const endEl = await findElementByText(receiver);
+  const startEl = await findElementByText(driver, sender);
+  const endEl = await findElementByText(driver, receiver);
   const startLoc = await startEl.getLocation();
   const endLoc = await endEl.getLocation();
   const fromObjectNameToLifelineOffset = { x: 30, y: 70 };
@@ -265,7 +265,7 @@ global.addMessage = async function(sender, receiver) {
     .perform();
   await sleepIfHumanObserver(driver, 0.7);
 
-  await mouseMoveInSteps(calcOffset(startLoc, endLoc));
+  await mouseMoveInSteps(driver, calcOffset(startLoc, endLoc));
 
   await driver
     .actions()
@@ -288,7 +288,7 @@ global.moveAnchorPointToActor = async function(
   const messageAnchorPointEl = await driver.findElement(
     By.id(messageKey + '-' + anchorPointType)
   );
-  const actorNameEl = await findElementByText(actorName);
+  const actorNameEl = await findElementByText(driver, actorName);
   const messageAnchorPointLoc = await messageAnchorPointEl.getLocation();
   const actorNameLoc = await actorNameEl.getLocation();
   let offsetToMove = calcOffset(messageAnchorPointLoc, actorNameLoc);
@@ -298,7 +298,7 @@ global.moveAnchorPointToActor = async function(
     .actions()
     .click(messageAnchorPointEl)
     .perform();
-  await mouseMoveInSteps(offsetToMove);
+  await mouseMoveInSteps(driver, offsetToMove);
   await driver
     .actions()
     .click()

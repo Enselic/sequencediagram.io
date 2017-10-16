@@ -118,29 +118,32 @@ it('move away and back does not trigger click', async () => {
   await goTo(expected);
   await driver
     .actions()
-    .mouseDown(await findElementByText(text))
+    .mouseDown(await findElementByText(driver, text))
     .perform();
-  await mouseMoveInSteps({ x: 100, y: 0 });
-  await mouseMoveInSteps({ x: -100, y: 0 });
+  await mouseMoveInSteps(driver, { x: 100, y: 0 });
+  await mouseMoveInSteps(driver, { x: -100, y: 0 });
   await driver
     .actions()
     .mouseUp()
     .perform();
-  await typeAndConfirmm('This-text-shall-not-end-up-as-name-for-object');
+  await typeAndConfirmm(
+    driver,
+    'This-text-shall-not-end-up-as-name-for-object'
+  );
   return assertFragment(expected);
 });
 
 it('move does not suppress blur event (i.e. text commit) when renaming', async () => {
   await goTo('o1,Foo;o2,Bar');
-  await click('Foo');
+  await clickText(driver, 'Foo');
   await type('CHEEERS');
-  await click('Bar');
+  await clickText(driver, 'Bar');
   return assertFragment('o1,CHEEERS;o2,Bar');
 });
 
 it('can click in renamed component text to place cursor', async () => {
   await goTo('o1,PrefixMe');
-  const el = await findElementByText('PrefixMe');
+  const el = await findElementByText(driver, 'PrefixMe');
   // To hit upper left coner, to place cursor first
   const topLeft = { x: 1, y: 1 };
   await driver
@@ -156,15 +159,15 @@ it('can click in renamed component text to place cursor', async () => {
     .mouseUp()
     .perform();
   await sleepIfHumanObserver(driver, 1);
-  await typeAndConfirmm('prefix');
+  await typeAndConfirmm(driver, 'prefix');
   return assertFragment('o1,prefixPrefixMe');
 });
 
 it('pending object move changes is stable', async () => {
   await goTo('o1,EndsUpRight;o2,EndsUpLeft');
-  const el = await findElementByText('EndsUpRight');
-  const endsUpRightPos = await getTextCenterPos('EndsUpRight');
-  const endsUpLeftPos = await getTextCenterPos('EndsUpLeft');
+  const el = await findElementByText(driver, 'EndsUpRight');
+  const endsUpRightPos = await getTextCenterPos(driver, 'EndsUpRight');
+  const endsUpLeftPos = await getTextCenterPos(driver, 'EndsUpLeft');
   const slightlyRightOfEndsUpLeft = {
     x: endsUpLeftPos.x - endsUpRightPos.x + 30,
     y: 0,
@@ -178,10 +181,10 @@ it('pending object move changes is stable', async () => {
     .perform();
 
   // This should result in the expected state we assert on
-  await mouseMoveInSteps(slightlyRightOfEndsUpLeft);
+  await mouseMoveInSteps(driver, slightlyRightOfEndsUpLeft);
 
   // This should not change the layout back
-  await mouseMoveInSteps(inBetweenReversed);
+  await mouseMoveInSteps(driver, inBetweenReversed);
 
   await driver
     .actions()

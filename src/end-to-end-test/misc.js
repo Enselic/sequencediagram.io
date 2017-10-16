@@ -14,23 +14,23 @@ it('change to state without messages after state with messages', async () => {
 
 it('hints shown when clicking "Share"', async () => {
   await goTo('empty');
-  await click('Add object'); // To make Share button appear
-  await click('Share');
-  await waitForElement('Share by PNG');
-  return waitForElement('Share by URL');
+  await clickText(driver, 'Add object'); // To make Share button appear
+  await clickText(driver, 'Share');
+  await waitForElement(driver, 'Share by PNG');
+  return waitForElement(driver, 'Share by URL');
 });
 
 it(
   'hints hide when clicking "Hide share info"',
   async () => {
     await goTo('empty');
-    await click('Add object'); // To make Share button appear
-    await click('Share');
-    await click('Hide share info');
+    await clickText(driver, 'Add object'); // To make Share button appear
+    await clickText(driver, 'Share');
+    await clickText(driver, 'Hide share info');
     return reversePromise(
       Promise.all([
-        waitForElement('Share by PNG'),
-        waitForElement('Share by URL'),
+        waitForElement(driver, 'Share by PNG'),
+        waitForElement(driver, 'Share by URL'),
       ])
     );
   },
@@ -42,19 +42,19 @@ const tipText = 'Click "Add object" to start';
 it('tip shown for default diagram', async () => {
   await goTo('none');
   await sleepIfHumanObserver(driver, 2);
-  return waitForElement(tipText);
+  return waitForElement(driver, tipText);
 });
 
 it('tip not shown for non-default diagram (one extra object)', async () => {
   await goTo('o1,Foo;o3,NewObject;o4,NewObject;m1,o1,o3,newMessage()');
   await sleepIfHumanObserver(driver, 2);
-  return reversePromise(waitForElement(tipText));
+  return reversePromise(waitForElement(driver, tipText));
 });
 
 it('tip not shown for non-default diagram (one extra message)', async () => {
   await goTo('o1,Foo;o2,Bar;m1,o1,o2,message();m2,o1,o2,newMessage()');
   await sleepIfHumanObserver(driver, 2);
-  return reversePromise(waitForElement(tipText));
+  return reversePromise(waitForElement(driver, tipText));
 });
 
 it('MANUAL: Inspect layout and message appearances', async () => {
@@ -71,15 +71,15 @@ it('Warn that touch input is not supported yet, and dismiss it', async () => {
   await assertFragment('o1,Foo;o2,Bar;m1,o1,o2,message()');
   await driver
     .touchActions()
-    .tap(await findElementByText('Foo'))
+    .tap(await findElementByText(driver, 'Foo'))
     .perform();
   const touchHintText = 'Touch input is not supported yet';
-  await waitForElement(touchHintText);
+  await waitForElement(driver, touchHintText);
   await driver
     .actions()
     .sendKeys(Key.ESCAPE)
     .perform();
-  return reversePromise(waitForElement(touchHintText));
+  return reversePromise(waitForElement(driver, touchHintText));
 });
 
 it('MANUAL: Drag and drop Object remove button shall not select any text', async () => {
@@ -104,7 +104,7 @@ it('MANUAL: Controls are removed when a message is pending', async () => {
 /* why does not this work?
 it.only('Clicking Acknowledgements brings us to Acknowledgements', async () => {
     goTo('');
-    await click('Acknowledgements');
+    await clickText(driver, 'Acknowledgements');
     await driver.sleep(300);
     const title = await driver.getTitle();
     expect(title).toEqual("Acknowledgements for https://sequencediagram.io");
@@ -153,8 +153,8 @@ it('MANUAL: mouseDebug overlay works', async () => {
   );
   await driver
     .actions()
-    .mouseMove(await findElementByText('MouseStartsHere'))
+    .mouseMove(await findElementByText(driver, 'MouseStartsHere'))
     .perform();
-  await mouseMoveInSteps({ x: 400, y: 0 });
+  await mouseMoveInSteps(driver, { x: 400, y: 0 });
   return sleepIfHumanObserver(driver, 5);
 });

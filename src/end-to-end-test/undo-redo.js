@@ -20,14 +20,14 @@ async function ctrlZOrUndo(i) {
   if (i % 2 > 0) {
     return ctrlZ();
   } else {
-    return click('Undo');
+    return clickText(driver, 'Undo');
   }
 }
 async function ctrlShiftZOrRedo(i) {
   if (i % 2 > 0) {
     return ctrlShiftZ();
   } else {
-    return click('Redo');
+    return clickText(driver, 'Redo');
   }
 }
 
@@ -124,12 +124,12 @@ it(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r'
     );
 
-    await dragAndDrop('User', { x: -700, y: 0 });
+    await dragAndDrop(driver, 'User', { x: -700, y: 0 });
     await asserter.assertFragmentAndPush(
       'o3,User;o1,Undoer;o2,Redoer;m2,o3,o2,call(),a;m1,o3,o2,invoke(),r'
     );
 
-    await dragAndDrop('call()', { x: 0, y: 500 });
+    await dragAndDrop(driver, 'call()', { x: 0, y: 500 });
     await asserter.assertFragmentAndPush(
       'o3,User;o1,Undoer;o2,Redoer;m1,o3,o2,invoke(),r;m2,o3,o2,call(),a'
     );
