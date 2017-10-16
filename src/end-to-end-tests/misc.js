@@ -1,3 +1,29 @@
+import { Key, promise } from 'selenium-webdriver';
+import {
+  applyTimeoutFactor,
+  waitForCssTransitions,
+  sleepIfHumanObserver,
+  getTextCenterPos,
+  waitForElement,
+  findElementByText,
+  mouseMoveInSteps,
+  dragAndDrop,
+  clickText,
+  typeTextAndPressReturn,
+  typeText,
+  clickAndType,
+  assertFragment,
+  goTo,
+  clickLifelineForObjectWithText,
+  clickAddObject,
+  addMessage,
+  moveAnchorPointToActor,
+  flip,
+  toggleArrowStyle,
+  toggleLineStyle,
+  removeComponentWithKey,
+} from './lib';
+
 const lib = require('./lib');
 const { getSchemeAndHost, getPort } = lib;
 

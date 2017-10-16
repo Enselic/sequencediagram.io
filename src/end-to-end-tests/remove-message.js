@@ -1,3 +1,27 @@
+import {
+  waitForCssTransitions,
+  sleepIfHumanObserver,
+  getTextCenterPos,
+  waitForElement,
+  findElementByText,
+  mouseMoveInSteps,
+  dragAndDrop,
+  clickText,
+  typeTextAndPressReturn,
+  typeText,
+  clickAndType,
+  assertFragment,
+  goTo,
+  clickLifelineForObjectWithText,
+  clickAddObject,
+  addMessage,
+  moveAnchorPointToActor,
+  flip,
+  toggleArrowStyle,
+  toggleLineStyle,
+  removeComponentWithKey,
+} from './lib';
+
 it('remove single message', async () => {
   await goTo(driver, 'o1,A1;o2,A2;m1,o1,o2,m1');
   await removeComponentWithKey(driver, 'm1');

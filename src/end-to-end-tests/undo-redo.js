@@ -1,3 +1,29 @@
+import { Key } from 'selenium-webdriver';
+import {
+  applyTimeoutFactor,
+  waitForCssTransitions,
+  sleepIfHumanObserver,
+  getTextCenterPos,
+  waitForElement,
+  findElementByText,
+  mouseMoveInSteps,
+  dragAndDrop,
+  clickText,
+  typeTextAndPressReturn,
+  typeText,
+  clickAndType,
+  assertFragment,
+  goTo,
+  clickLifelineForObjectWithText,
+  clickAddObject,
+  addMessage,
+  moveAnchorPointToActor,
+  flip,
+  toggleArrowStyle,
+  toggleLineStyle,
+  removeComponentWithKey,
+} from './lib';
+
 async function ctrlZ() {
   await driver
     .actions()
