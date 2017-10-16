@@ -1,31 +1,27 @@
 import { Key, promise } from 'selenium-webdriver';
 import {
   applyTimeoutFactor,
-  waitForCssTransitions,
-  sleepIfHumanObserver,
-  getTextCenterPos,
-  waitForElement,
-  findElementByText,
-  mouseMoveInSteps,
-  dragAndDrop,
-  clickText,
-  typeTextAndPressReturn,
-  typeText,
-  clickAndType,
   assertFragment,
-  goTo,
-  clickLifelineForObjectWithText,
+  buildDriver,
   clickAddObject,
-  addMessage,
-  moveAnchorPointToActor,
-  flip,
-  toggleArrowStyle,
-  toggleLineStyle,
-  removeComponentWithKey,
+  clickAndType,
+  clickLifelineForObjectWithText,
+  clickText,
+  findElementByText,
+  getPort,
+  getSchemeAndHost,
+  goTo,
+  mouseMoveInSteps,
+  setupNoBrowserLogOutputTest,
+  sleepIfHumanObserver,
+  waitForElement,
 } from './lib';
 
-const lib = require('./lib');
-const { getSchemeAndHost, getPort } = lib;
+const driver = buildDriver();
+
+afterAll(() => {
+  return driver.quit();
+});
 
 it('change to state without messages after state with messages', async () => {
   await goTo(driver, 'o1,Foo;o2,Bar;m1,o1,o2,baz()');
@@ -186,3 +182,5 @@ it('MANUAL: mouseDebug overlay works', async () => {
   await mouseMoveInSteps(driver, { x: 400, y: 0 });
   return sleepIfHumanObserver(driver, 5);
 });
+
+setupNoBrowserLogOutputTest(driver);
