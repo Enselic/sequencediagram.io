@@ -44,16 +44,6 @@ export function hoverLifelineHelper(dispatch, id) {
   };
 }
 
-export function transferStyleToProps(style) {
-  return {
-    transition: style.transition,
-    left: style.left,
-    width: style.width,
-    top: style.top,
-    height: style.height,
-  };
-}
-
 // Thanks Jonathan Marzullo and others from https://stackoverflow.com/a/13348618
 export function isChrome() {
   var isChromium = window.chrome,

@@ -170,14 +170,24 @@ it('MANUAL: remove button does not hang around', async () => {
 
 it('MANUAL: mouseDebug overlay works', async () => {
   await driver.get(
-    `${getSchemeAndHost()}:${getPort()}/?mouseDebug#o1,MouseStartsHere;o2,AndVisiblyMovesHere`
+    `${getSchemeAndHost()}:${getPort()}/?mouseDebug#o1,MouseStartsHere;o2,AndVisiblyMovesPastHere`
   );
   await driver
     .actions()
     .mouseMove(await findElementByText(driver, 'MouseStartsHere'))
     .perform();
-  await mouseMoveInSteps(driver, { x: 400, y: 0 });
-  return sleepIfHumanObserver(driver, 5);
+  await mouseMoveInSteps(driver, { x: 600, y: 0 });
+  await sleepIfHumanObserver(driver, 5);
+  await driver
+    .actions()
+    .mouseDown()
+    .perform();
+  await sleepIfHumanObserver(driver, 1);
+  await driver.sleep(100);
+  await driver
+    .actions()
+    .mouseUp()
+    .perform();
 });
 
 setupNoBrowserLogOutputTest(driver);
