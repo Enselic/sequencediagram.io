@@ -11,7 +11,10 @@ addons:
     packages:
       - oracle-java8-set-default
 before_script:
+  - scripts-ci/prepare-for-code-coverage.sh
   - scripts-ci/start-services-in-background.sh &
   - scripts-ci/wait-for-ports.sh 8000 5000
 script:
   - scripts-ci/run-tests.sh
+after_script:
+  - scripts-ci/collect-code-coverage.sh

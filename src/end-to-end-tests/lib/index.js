@@ -1,5 +1,6 @@
 import { logging, Builder, By, until, Key, promise } from 'selenium-webdriver';
 import { Options } from 'selenium-webdriver/chrome';
+import { writeFileSync } from 'fs';
 
 const SeleniumPromise = promise.Promise;
 
@@ -38,11 +39,31 @@ function buildDriver() {
     .build();
 }
 
+async function writeCodeCoverageDataIfPresent(driver) {
+  // Get coverage data from browser
+  const __coverage__ = await driver.executeScript(
+    'return "__coverage__" in window ? window.__coverage__ : undefined;'
+  );
+
+  if (__coverage__) {
+    // Simply to avoid collision without global state
+    const randomNumber = Math.random() * Number.MAX_SAFE_INTEGER;
+    writeFileSync(
+      `./coverage-data/${randomNumber}.json`,
+      JSON.stringify(__coverage__)
+    );
+  }
+}
+
 export function buildDriverAndSetupEnv() {
   // The default timeout is to strict for our UI tests, so increase it
   jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
 
   const driver = buildDriver();
+
+  afterEach(async () => {
+    return writeCodeCoverageDataIfPresent(driver);
+  });
 
   afterAll(() => {
     return driver.quit();
