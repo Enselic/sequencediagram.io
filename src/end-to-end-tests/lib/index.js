@@ -1,5 +1,10 @@
 import { logging, Builder, By, until, Key, promise } from 'selenium-webdriver';
-import { Options } from 'selenium-webdriver/chrome';
+import { Options as ChromeOptions } from 'selenium-webdriver/chrome';
+import {
+  Binary as FirefoxBinary,
+  Channel as FirefoxChannel,
+  Options as FirefoxOptions,
+} from 'selenium-webdriver/firefox';
 import { writeFileSync } from 'fs';
 
 const SeleniumPromise = promise.Promise;
@@ -22,21 +27,40 @@ export function getSchemeAndHost() {
   return 'http://localhost';
 }
 
-function buildDriver() {
-  let options = new Options();
-  let args = ['window-size=1280,1050'];
-  if (HEADLESS) {
-    args = args.concat(['headless', 'disable-gpu']);
+function buildDriver(browser) {
+  if (browser === undefined) {
+    browser = 'chrome';
   }
-  options.addArguments(...args);
+  let builder = new Builder().forBrowser(browser);
+  const windowSize = '1280,1050';
+
   const prefs = new logging.Preferences();
-  // So we can test the we don't forget debug logs
+  // So we can test that we don't keep console.log in the code
   prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
-  options.setLoggingPrefs(prefs);
-  return new Builder()
-    .forBrowser('chrome')
-    .setChromeOptions(options)
-    .build();
+
+  if (browser === 'chrome') {
+    let chromeOptions = new ChromeOptions();
+    let args = [`window-size=${windowSize}`];
+    if (HEADLESS) {
+      args = args.concat(['headless', 'disable-gpu']);
+    }
+    chromeOptions.addArguments(...args);
+
+    chromeOptions.setLoggingPrefs(prefs);
+    builder.setChromeOptions(chromeOptions);
+  } else if (browser === 'firefox') {
+    let firefoxBinary = new FirefoxBinary(FirefoxChannel.RELEASE);
+    let args = [`--window-size=${windowSize}`];
+    if (HEADLESS) {
+      args = args.concat(['-headless']);
+    }
+    firefoxBinary.addArguments(...args);
+
+    let firefoxOptions = new FirefoxOptions();
+    firefoxOptions.setBinary(firefoxBinary);
+    builder.setFirefoxOptions(firefoxOptions);
+  }
+  return builder.build();
 }
 
 async function writeCodeCoverageDataIfPresent(driver) {
@@ -55,11 +79,11 @@ async function writeCodeCoverageDataIfPresent(driver) {
   }
 }
 
-export function buildDriverAndSetupEnv() {
+export function buildDriverAndSetupEnv(browser) {
   // The default timeout is to strict for our UI tests, so increase it
   jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
 
-  const driver = buildDriver();
+  const driver = buildDriver(browser);
 
   afterEach(async () => {
     return writeCodeCoverageDataIfPresent(driver);
