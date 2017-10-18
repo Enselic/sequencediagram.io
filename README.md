@@ -80,11 +80,15 @@ Technology
 - React (via create-react-app) and Redux for the app
 - selenium-webdriver for automated end-to-end testing.
 
-Debugging tips
---------------
+Running tests like Travis CI
+----------------------------
 
-When running automated tests that control the mouse via scripts, it is
-useful to show the mouse position via an overlay by doing: `REACT_APP_MOUSE_DEBUG=1 npm start`. To run the tests slowly one time, run like this: `CI=t SLOW_DOWN_FOR_HUMAN_OBSERVATION=t npm test`.
+Paste the following into a terminal:
+```
+scripts-ci/start-services-in-background.sh &
+scripts-ci/wait-for-ports.sh 8000 5000
+CI=t scripts-ci/run-tests.sh
+```
 
 
 Misc
@@ -107,6 +111,7 @@ List of minor/uninteresting things to do, roughly sorted by priority.
   - optional login/authentication
   - custom names
 - Make adding a component edit its text directly
+- Add debugging tips to README.md
 - make NewMesssageMarker only be where messages will be added
 - Make tab switch objects
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?

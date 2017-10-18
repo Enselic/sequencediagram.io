@@ -11,8 +11,7 @@ addons:
     packages:
       - oracle-java8-set-default
 before_script:
-  - node backend/dynamodb-local.js &
-  - npm run build && node_modules/serve/bin/serve.js -s build &
-  - sleep 30
+  - scripts-ci/start-services-in-background.sh &
+  - scripts-ci/wait-for-ports.sh 8000 5000
 script:
-  - npm test -- --runInBand
+  - scripts-ci/run-tests.sh
