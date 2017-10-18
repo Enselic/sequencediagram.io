@@ -73,7 +73,7 @@ async function writeCodeCoverageDataIfPresent(driver) {
     // Simply to avoid collision without global state
     const randomNumber = Math.random() * Number.MAX_SAFE_INTEGER;
     writeFileSync(
-      `./coverage-data/${randomNumber}.json`,
+      `./coverage-data/coverage-${randomNumber}.json`,
       JSON.stringify(__coverage__)
     );
   }
