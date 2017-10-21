@@ -3,6 +3,7 @@ import React from 'react';
 import Name from './Name';
 import MessageArrow from './MessageArrow';
 import { hoverHelper } from './utils';
+import { MESSAGE_Y_OFFSET } from './../layouter';
 
 function Message(props) {
   const {
@@ -34,6 +35,7 @@ function Message(props) {
 
   style = {
     ...style,
+    top: msgLayout.top + MESSAGE_Y_OFFSET,
     position: 'absolute',
     textAlign: 'center',
     userSelect: 'none',
@@ -49,12 +51,30 @@ function Message(props) {
       onMouseMove={props.handleHoverMouseMove}
       onMouseLeave={props.handleHoverMouseLeave}
     >
-      <Name
-        showBackground={!isMarker}
-        component={message}
-        pending={pending}
-        dispatch={dispatch}
-      />
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: '100%',
+          }}
+        >
+          <Name
+            showBackground={!isMarker}
+            component={message}
+            pending={pending}
+            dispatch={dispatch}
+          />
+        </div>
+      </div>
 
       <MessageArrow
         {...props}

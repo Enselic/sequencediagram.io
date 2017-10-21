@@ -46,7 +46,10 @@ export default function(props) {
     const value = pending.componentRenamed.newName;
     return (
       <input
-        style={showBackground ? { margin: 10 } : null}
+        style={Object.assign(
+          { pointerEvents: 'auto' },
+          showBackground ? { margin: 10 } : null
+        )}
         ref={onRef}
         size={value ? value.length : 1}
         type="text"
@@ -65,6 +68,7 @@ export default function(props) {
             borderImage: `url(${nameBackground}) 10 fill repeat`,
             borderWidth: 10,
             borderStyle: 'solid',
+            pointerEvents: 'auto',
           }
         }
       >

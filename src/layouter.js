@@ -2,7 +2,8 @@ export const DIAGRAM_PADDING = { LEFT_RIGHT: 140, TOP_BOTTOM: 90 };
 export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
 export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
 export const OBJECT_NAME_FONT_SIZE_PX = 18;
-export const MESSAGE_SPACING = 100;
+export const MESSAGE_Y_OFFSET = -10;
+export const MESSAGE_SPACING = 62;
 export const MESSAGE_MIN_WIDTH = Math.max(
   42 /* Width of self-sent SVG */,
   100 /* enough width for two buttons */
@@ -11,7 +12,8 @@ export const MESSAGE_START_Y =
   DIAGRAM_PADDING.TOP_BOTTOM +
   OBJECT_NAME_PADDING.TOP_BOTTOM * 2 +
   OBJECT_NAME_FONT_SIZE_PX +
-  MESSAGE_SPACING * 0.3;
+  -MESSAGE_Y_OFFSET +
+  MESSAGE_SPACING * 0.48;
 
 export function layoutMessageLeftAndWidth(
   layout,
@@ -30,9 +32,6 @@ export function layoutMessageLeftAndWidth(
     senderX = message.sender;
   } else {
     const sender = layout[message.sender];
-    if (!sender) {
-      return undefined;
-    }
     senderX = sender.lifelineX;
   }
 
@@ -44,9 +43,6 @@ export function layoutMessageLeftAndWidth(
     receiverX = message.receiver;
   } else {
     const receiver = layout[message.receiver];
-    if (!receiver) {
-      return undefined;
-    }
     receiverX = receiver.lifelineX;
   }
 
@@ -81,9 +77,11 @@ export function layoutMessageLeftAndWidth(
 
   const approximateLineHeight = 18;
   const carefulnessFactor = 1.4;
+  const borderHeightContribution = 20;
   const approximateHeight =
-    Math.floor(messageTextWidth * carefulnessFactor / width) *
-    approximateLineHeight;
+    Math.ceil(messageTextWidth * carefulnessFactor / width) *
+      approximateLineHeight +
+    borderHeightContribution;
 
   return {
     left,
@@ -146,14 +144,18 @@ export default function(getTextWidth, objects, messages, extraMessage) {
 
   let currentY = MESSAGE_START_Y;
 
-  function insertExtraMessage(index) {
+  function insertExtraMessage(index, addHeight) {
+    const leftRightValues = layoutMessageLeftAndWidth(
+      layout,
+      extraMessage,
+      undefined /*overrideSenderX*/,
+      extraMessage.receiver /*overrideReceiverX*/
+    );
+
+    currentY += leftRightValues.approximateHeight;
+
     layout[extraMessage.id] = {
-      ...layoutMessageLeftAndWidth(
-        layout,
-        extraMessage,
-        undefined /*overrideSenderX*/,
-        extraMessage.receiver /*overrideReceiverX*/
-      ),
+      ...leftRightValues,
       top: currentY,
       index,
     };
@@ -165,24 +167,23 @@ export default function(getTextWidth, objects, messages, extraMessage) {
   }
 
   messages.forEach((message, index) => {
+    const leftRightValues = layoutMessageLeftAndWidth(layout, message);
+
     // Make room for a temporary/pending/extra message if one exists
     if (extraMessageToBeInserted()) {
-      if (currentY > extraMessage.y) {
+      if (currentY + leftRightValues.approximateHeight > extraMessage.y) {
         insertExtraMessage(index);
       }
     }
 
-    const leftRightValues = layoutMessageLeftAndWidth(layout, message);
-    if (!leftRightValues) {
-      return;
-    }
+    currentY += leftRightValues.approximateHeight;
 
     layout[message.id] = {
       ...leftRightValues,
       top: message.overrideTop ? message.overrideTop : currentY,
     };
 
-    currentY += MESSAGE_SPACING + leftRightValues.approximateHeight;
+    currentY += MESSAGE_SPACING;
   });
 
   if (extraMessageToBeInserted()) {

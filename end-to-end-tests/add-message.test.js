@@ -168,4 +168,29 @@ it(
   )
 );
 
+it('message arrows are insertion reference points, not text', async () => {
+  await goTo(
+    driver,
+    'o1,Foo;o2,Bar;m1,o1,o2,fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20SELECTME%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20'
+  );
+  const messageTextEl = await findElementByText(driver, 'SELECTME');
+  const size = await messageTextEl.getSize();
+  await driver
+    .actions()
+    .mouseMove(messageTextEl)
+    .mouseMove({ x: size.width / 2 + 20, y: 0 })
+    .click()
+    .mouseMove({ x: -size.width - 40, y: 0 })
+    .perform();
+  await driver.sleep(200);
+  await driver
+    .actions()
+    .click()
+    .perform();
+  await assertFragment(
+    driver,
+    'o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20SELECTME%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20'
+  );
+});
+
 setupNoBrowserLogOutputTest(driver);
