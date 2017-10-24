@@ -84,14 +84,15 @@ Running tests like Travis CI
 ----------------------------
 
 Paste the following into a terminal:
-```
+```bash
 alias notify_travis_fail="notify-send -u critical 'Travis CI will fail'"
-fuser -k 8000/tcp 5000/tcp # To simulate a fresh Travis CI env
+fuser -k 8000/tcp 5000/tcp # Make sure its a fresh start
 CI=true scripts-ci/prepare-for-code-coverage.sh || notify_travis_fail
 CI=true scripts-ci/start-services-in-background.sh &
 CI=true scripts-ci/wait-for-ports.sh 8000 5000 || notify_travis_fail
 CI=true scripts-ci/run-tests.sh || notify_travis_fail
 CI=true scripts-ci/collect-code-coverage.sh || notify_travis_fail
+fuser -k 8000/tcp 5000/tcp # Cleanup
 ```
 
 

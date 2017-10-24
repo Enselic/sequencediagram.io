@@ -38,6 +38,7 @@ function DiagramObject(props) {
     transition: layout[object.id].transition,
     position: 'absolute',
     userSelect: 'none',
+    pointerEvents: 'none',
   };
 
   return (
@@ -46,6 +47,7 @@ function DiagramObject(props) {
         {...hoverHelper(pending, dispatch, object.id)}
         style={{
           transform: 'translateX(-50%)',
+          pointerEvents: 'auto',
         }}
       >
         {showControls && (
@@ -77,7 +79,11 @@ function DiagramObject(props) {
       <div
         {...hoverLifelineHelper(dispatch, object.id)}
         onClick={onLifelineClick}
-        style={{ textAlign: 'center', transform: 'translateX(-50%)' }}
+        style={{
+          textAlign: 'center',
+          transform: 'translateX(-50%)',
+          pointerEvents: 'auto',
+        }}
       >
         <div
           style={{

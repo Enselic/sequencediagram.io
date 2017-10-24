@@ -216,4 +216,32 @@ it('pending object move changes is stable', async () => {
   return assertFragment(driver, 'o2,EndsUpLeft;o1,EndsUpRight');
 });
 
+it('overlapping div does not interfer', async () => {
+  // Because of mapWithSameDomOrder(), the "first" div might
+  // not necessarily be below other divs, so it can block events
+  // for other divs
+  await goTo(driver, 'o1,nn;o2,mmmmmmmmmmmmmmmmmmmm');
+  await driver
+    .actions()
+    .mouseMove(await findElementByText(driver, 'nn'))
+    .mouseDown()
+    .perform();
+  await driver
+    .actions()
+    .mouseMove({ x: 500, y: 0 })
+    .mouseUp()
+    .perform();
+  await driver
+    .actions()
+    .mouseMove(await findElementByText(driver, 'nn'))
+    .mouseDown()
+    .perform();
+  await driver
+    .actions()
+    .mouseMove({ x: -500, y: 0 })
+    .mouseUp()
+    .perform();
+  return assertFragment(driver, 'o1,nn;o2,mmmmmmmmmmmmmmmmmmmm');
+});
+
 setupNoBrowserLogOutputTest(driver);
