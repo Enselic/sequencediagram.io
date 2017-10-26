@@ -43,17 +43,6 @@ if (hash.length > 1) {
   setupFromHash(defaultDiagram);
 }
 
-window.addEventListener('keydown', function(e) {
-  const z = 90;
-  const Esc = 27;
-
-  if (e.ctrlKey && e.keyCode === z) {
-    dispatch(e.shiftKey ? ActionCreators.redo() : ActionCreators.undo());
-  } else if (e.keyCode === Esc) {
-    dispatch(ac.escapePendingOperation());
-  }
-});
-
 window.addEventListener('hashchange', e => {
   if (!window.location.hash) {
     return;

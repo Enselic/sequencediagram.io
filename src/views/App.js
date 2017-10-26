@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActionCreators } from 'redux-undo';
 import layouter from './../layouter';
 import Objekt from './Object';
 import Message from './Message';
@@ -28,8 +29,16 @@ export default class App extends React.Component {
     };
 
     this.handleKeyDown = e => {
-      if (e.keyCode === 27) {
+      const z = 90;
+      const Esc = 27;
+
+      if (e.ctrlKey && e.keyCode === z) {
+        props.dispatch(
+          e.shiftKey ? ActionCreators.redo() : ActionCreators.undo()
+        );
+      } else if (e.keyCode === Esc) {
         this.setState({ messageAnchorMoved: undefined });
+        props.dispatch(ac.escapePendingOperation());
       }
     };
 
