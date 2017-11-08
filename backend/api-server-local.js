@@ -16,7 +16,6 @@ curl -v localhost:4000/sequencediagrams/${id}
 
 'use strict';
 
-const crypto = require('crypto');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -32,7 +31,6 @@ AWS.config.update({
   endpoint: 'http://localhost:8000',
 });
 const tableName = 'io.sequencediagram.dynamodb.test';
-const dynamoLocalPort = 8000;
 const port = 4000;
 
 function ApiServerLocal(sequencediagrams) {
@@ -93,12 +91,12 @@ ApiServerLocal.prototype = {
 
         // For quick .close()
         // See https://github.com/nodejs/node-v0.x-archive/issues/9066
-        const timeoutInMs = 1000;
+        const timeoutInMs = 2000;
         this.server.setTimeout(timeoutInMs);
 
         this.server.on('error', e => {
           this.server = null;
-          reject();
+          reject(e);
         });
       } else {
         resolve();

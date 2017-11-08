@@ -15,7 +15,7 @@ else
   # This will make some tests fail (since they need to be able)
   # to start and stop the server manually), but it allows you
   # to develop against local services only
-  [ -z "$1"] || node backend/api-server-local.js &
+  [ -z "$1" ] || node backend/api-server-local.js &
 
   # Wait for Ctrl-C
   cat

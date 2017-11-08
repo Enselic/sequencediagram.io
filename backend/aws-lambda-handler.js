@@ -13,21 +13,24 @@ AWS.config.update({
 });
 
 function generateRandomId() {
-  // Somewhat unamgious numbers and chars. Length should be power of 2.
-  const CHARS = '023456789abcdefghijkmnpqrstuvxyz';
+  // [0-9a-zA-Z] except ambiguous chars in some fonts like l and 1 and I
+  const CHARS = '023456789ABCDEFGHJKLMNPQRSTUVXYZabcdefghijkmnpqrstuvxyz';
 
   let randomString = '';
 
-  let chunks = 4;
-  const buffer = crypto.pseudoRandomBytes(chunks * 2);
-  while (chunks > 0) {
-    chunks--;
-    const int32 = buffer.readInt16BE(chunks * 2);
-    const char1 = (int32 & 0b0000000000011111) >> 0;
-    const char2 = (int32 & 0b0000001111100000) >> 5;
-    const char3 = (int32 & 0b0111110000000000) >> 10;
+  const randomBytesPerChar = 2;
+  let len = 10;
+  const buffer = crypto.randomBytes(len * randomBytesPerChar);
+  while (len > 0) {
+    len--;
 
-    randomString += CHARS[char1] + CHARS[char2] + CHARS[char3];
+    // Ensure uniform random distribution
+    const uint16 = buffer.readUInt16BE(len * randomBytesPerChar);
+    // Obtain a value that's in the range [0,1)
+    const normalized = uint16 / (1 << (randomBytesPerChar * 8));
+    const index = Math.floor(CHARS.length * normalized);
+
+    randomString += CHARS[index];
   }
 
   return randomString;
