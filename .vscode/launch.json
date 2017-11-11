@@ -4,8 +4,8 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "api-server-local.js",
-            "program": "${workspaceFolder}/backend/api-server-local.js"
+            "name": "api-server-localhost.js",
+            "program": "${workspaceFolder}/backend/api-server/api-server-localhost.js"
         },
         {
             "type": "chrome",

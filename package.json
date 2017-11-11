@@ -24,6 +24,7 @@
     "morgan": "^1.8.2",
     "morgan-body": "^0.10.9",
     "node-fetch": "^1.7.3",
+    "nodemon": "^1.12.1",
     "prettier": "1.6.x",
     "react-scripts": "1.0.14",
     "selenium-webdriver": "^3.4.0",
@@ -31,7 +32,7 @@
   },
   "scripts": {
     "start": "./scripts.sh",
-    "start-local": "./scripts.sh local",
+    "start-localhost": "./scripts.sh localhost",
     "build": "./scripts.sh build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const ApiServerLocal = require('./../../backend/api-server-local');
+const ApiServerLocal = require('./../../backend/api-server/api-server-localhost');
 
 async function doFetch(path, method, sequenceDiagram) {
   const response = await fetch('http://localhost:4000' + path, {

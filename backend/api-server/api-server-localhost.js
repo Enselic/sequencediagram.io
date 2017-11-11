@@ -3,7 +3,7 @@
  * Depends on a AWS DynamoDB server. You can run one locally
  * with:
  *
- * node backend/dynamodb-local.js
+ * node backend/dynamodb-localhost.js
  */
 
 /* Useful commands:
@@ -33,6 +33,8 @@ AWS.config.update({
 const tableName = 'io.sequencediagram.dynamodb.test';
 const port = 4000;
 
+const delay = 0;
+
 function ApiServerLocal(sequencediagrams) {
   this.app = express();
   this.app.use(bodyParser.json());
@@ -42,6 +44,11 @@ function ApiServerLocal(sequencediagrams) {
   if (logging) {
     this.app.use(morgan('combined'));
     morganBody(this.app);
+  }
+  if (delay) {
+    this.app.use(function(req, res, next) {
+      setTimeout(next, delay);
+    });
   }
 
   function awsLambdaWrapper(req, res, resource) {
@@ -92,7 +99,7 @@ ApiServerLocal.prototype = {
         // For quick .close()
         // See https://github.com/nodejs/node-v0.x-archive/issues/9066
         const timeoutInMs = 2000;
-        this.server.setTimeout(timeoutInMs);
+        this.server.setTimeout(timeoutInMs + delay);
 
         this.server.on('error', e => {
           this.server = null;
