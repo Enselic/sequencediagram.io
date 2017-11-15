@@ -6,6 +6,7 @@ import {
   Options as FirefoxOptions,
 } from 'selenium-webdriver/firefox';
 import { writeFileSync } from 'fs';
+import { deserialize } from './legacy-deserialize';
 
 const SeleniumPromise = promise.Promise;
 
@@ -211,20 +212,11 @@ export async function clickAndType(driver, elementText, typedText) {
 
 export async function assertFragment(driver, expected) {
   await sleepIfHumanObserver(driver, 0.7);
-  return new SeleniumPromise((resolve, reject) => {
-    driver
-      .getCurrentUrl()
-      .then(url => {
-        const fragment = url.substring(url.indexOf('#') + 1);
-        if (fragment === expected) {
-          resolve();
-        } else {
-          const msg = 'expected: ' + expected + ' got: ' + fragment;
-          reject(msg);
-        }
-      })
-      .catch(e => console.log(e));
-  });
+  const currentDiagram = await driver.executeScript(
+    `return window.sequencediagram_io.stringifyCurrentDiagram();`
+  );
+  const expectedDiagram = deserialize(expected);
+  expect(JSON.parse(currentDiagram)).toEqual(expectedDiagram);
 }
 
 export function urlParsing(driver, url, expected) {
@@ -234,10 +226,18 @@ export function urlParsing(driver, url, expected) {
   };
 }
 
-export async function goTo(driver, startState) {
-  // When no fragment is requsted, make sure to not even include '#'
-  const fragment = startState ? '#' + startState : '';
-  await driver.get(`${getSchemeAndHost()}:${getPort()}/${fragment}`);
+export async function goTo(driver, startState, params) {
+  await driver.get(
+    `${getSchemeAndHost()}:${getPort()}/${params ? params : ''}`
+  );
+  if (startState) {
+    const startDiagram = deserialize(startState);
+    const script = `return window.sequencediagram_io.setCurrentDiagram('${JSON.stringify(
+      startDiagram
+    )}');`;
+    await driver.executeScript(script);
+  }
+
   /* We use 0.3 second CSS transitions, so make sure those have
      * settled before we move on.
      */

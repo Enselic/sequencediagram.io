@@ -6,11 +6,9 @@ import registerServiceWorker from './registerServiceWorker';
 import { initMouseOverlay } from './debug/mouseDebug';
 import { createStore, bindActionCreators } from 'redux';
 import { ActionCreators } from 'redux-undo';
-import { serialize, deserialize } from './serialize';
 
-// Enable with "REACT_APP_MOUSE_DEBUG=1 npm start"
-// Useful when running automated tests
 if (new URLSearchParams(window.location.search).has('mouseDebug')) {
+  // Useful when running automated tests
   initMouseOverlay();
 }
 
@@ -19,6 +17,7 @@ var store = createStore(
   undefined,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
 function dispatch(action) {
   if (!action) {
     return;
@@ -26,51 +25,43 @@ function dispatch(action) {
 
   return store.dispatch(action);
 }
-const boundActionCreators = bindActionCreators(ac, dispatch);
 
-const defaultDiagram = '#o1,Foo;o2,Bar;m1,o1,o2,message()';
+const defaultDiagram = {
+  objects: [{ id: 'o1', name: 'Foo' }, { id: 'o2', name: 'Bar' }],
+  messages: [{ id: 'm1', sender: 'o1', receiver: 'o2', name: 'message()' }],
+};
 
-function setupFromHash(hash) {
-  let { objects, messages } = deserialize(hash.substring(1));
-  dispatch(ac.replaceCore(objects, messages));
-  dispatch(ActionCreators.clearHistory());
-}
+// Temporary before permalink integration is complete
+let { objects, messages } = defaultDiagram;
+dispatch(ac.replaceCore(objects, messages));
+dispatch(ActionCreators.clearHistory());
 
-const hash = window.location.hash;
-if (hash.length > 1) {
-  setupFromHash(hash);
-} else {
-  setupFromHash(defaultDiagram);
-}
-
-window.addEventListener('hashchange', e => {
-  if (!window.location.hash) {
-    return;
-  }
-
-  if (window.location.hash.substring(1) !== serializeState()) {
-    setupFromHash(window.location.hash);
-  }
-});
-
-function serializeState() {
-  const present = store.getState().core.present;
-  let args = [...present.objects, ...present.messages];
-  return serialize(args);
-}
-
+// Perform first render and subscribe to changes in the model (Redux store)
 function renderAndSerialize() {
   ReactDOM.render(
     <App state={store.getState()} dispatch={dispatch} />,
     document.getElementById('root')
   );
-
-  const result = serializeState();
-  window.location.hash = result;
 }
 store.subscribe(renderAndSerialize);
 renderAndSerialize();
 
+// These functions support autoamted end-to-end tests.
+// They also enable export and import of diagrams until there's a
+// better UI for that
+window.sequencediagram_io = {
+  stringifyCurrentDiagram() {
+    return JSON.stringify(store.getState().core.present);
+  },
+  setCurrentDiagram(stringifiedDiagram) {
+    let { objects, messages } = JSON.parse(stringifiedDiagram);
+    dispatch(ac.replaceCore(objects, messages));
+    return true;
+  },
+};
+
+// Make this web app run even when offline
+const boundActionCreators = bindActionCreators(ac, dispatch);
 registerServiceWorker(
   boundActionCreators.showWorksOffline,
   boundActionCreators.showNewContentAvailable

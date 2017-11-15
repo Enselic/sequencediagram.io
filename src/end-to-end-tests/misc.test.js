@@ -59,7 +59,7 @@ it(
 const tipText = 'Click "Add object" to start';
 
 it('tip shown for default diagram', async () => {
-  await goTo(driver, 'none');
+  await goTo(driver, '');
   await sleepIfHumanObserver(driver, 2);
   return waitForElement(driver, tipText);
 });
@@ -104,7 +104,7 @@ it('Warn that touch input is not supported yet, and dismiss it', async () => {
 it('MANUAL: Drag and drop Object remove button shall not select any text', async () => {
   await goTo(
     driver,
-    "o1,MANUAL%3A%20Drag%20and%20drop%20the%20remove%20button%20of%20this%20object%20(but%20don't%20trigger%20a%20click).%20No%20text%20shall%20be%20selected."
+    'o1,MANUAL%3A%20Drag%20and%20drop%20the%20remove%20button%20of%20this%20object%20(but%20do%20not%20trigger%20a%20click).%20No%20text%20shall%20be%20selected.'
   );
   return sleepIfHumanObserver(driver, 7);
 });
@@ -169,8 +169,10 @@ it('MANUAL: remove button does not hang around', async () => {
 });
 
 it('MANUAL: mouseDebug overlay works', async () => {
-  await driver.get(
-    `${getSchemeAndHost()}:${getPort()}/?mouseDebug#o1,MouseStartsHere;o2,AndVisiblyMovesPastHere`
+  await goTo(
+    driver,
+    'o1,MouseStartsHere;o2,AndVisiblyMovesPastHere',
+    '?mouseDebug'
   );
   await driver
     .actions()

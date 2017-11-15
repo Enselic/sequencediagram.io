@@ -1,48 +1,9 @@
-export function serialize(components) {
-  return serializeComponents(components);
-}
-
-function serializeObject(object) {
-  return object.id + ',' + encodeURIComponent(object.name);
-}
-
-function serializeMessage(message) {
-  let res =
-    message.id +
-    ',' +
-    message.sender +
-    ',' +
-    message.receiver +
-    ',' +
-    encodeURIComponent(message.name);
-  if (message.isReply || message.isAsync) {
-    res += ',';
-    if (message.isReply) {
-      res += 'r';
-    }
-    if (message.isAsync) {
-      res += 'a';
-    }
-  }
-  return res;
-}
-
-function serializeComponents(components) {
-  return components.reduce((acc, component) => {
-    let serializedComponent;
-    if (component.id[0] === 'o') {
-      serializedComponent = serializeObject(component);
-    } else if (component.id[0] === 'm') {
-      serializedComponent = serializeMessage(component);
-    }
-    return acc + (acc ? ';' : '') + serializedComponent;
-  }, '');
-}
-
-function parseKey(id) {
-  return id;
-}
-
+/**
+ * This function was written for v1.x.x where the aim was a solution
+ * without a backend and where diagrams were stored in the URL as part
+ * of the URL fragment. We should remove this function and instead replace
+ * its input with proper JavaScript objects.
+ */
 export function deserialize(serialized) {
   let objects = [];
   let messages = [];
@@ -54,7 +15,7 @@ export function deserialize(serialized) {
     let parts = o.split(',');
     if (o[0] === 'o' && parts.length >= 2 && parts[0] && parts[1]) {
       objects.push({
-        id: parseKey(parts[0]),
+        id: parts[0],
         name: decodeURIComponent(parts[1]),
       });
     } else if (
@@ -68,7 +29,7 @@ export function deserialize(serialized) {
       const isReply = parts[4] && parts[4].indexOf('r') >= 0;
       const isAsync = parts[4] && parts[4].indexOf('a') >= 0;
       messages.push({
-        id: parseKey(parts[0]),
+        id: parts[0],
         sender: parts[1],
         receiver: parts[2],
         name: decodeURIComponent(parts[3]),
