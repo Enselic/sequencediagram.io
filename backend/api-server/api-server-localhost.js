@@ -33,21 +33,21 @@ AWS.config.update({
 const tableName = 'io.sequencediagram.dynamodb.test';
 const port = 4000;
 
-const delay = 0;
-
-function ApiServerLocal(sequencediagrams) {
+function ApiServerLocal(delay) {
   this.app = express();
   this.app.use(bodyParser.json());
   this.app.use(cors());
+  this.delay = delay || 0;
 
   const logging = 0;
   if (logging) {
     this.app.use(morgan('combined'));
     morganBody(this.app);
   }
-  if (delay) {
+  if (this.delay) {
+    const theDelay = this.delay;
     this.app.use(function(req, res, next) {
-      setTimeout(next, delay);
+      setTimeout(next, theDelay);
     });
   }
 
@@ -99,7 +99,7 @@ ApiServerLocal.prototype = {
         // For quick .close()
         // See https://github.com/nodejs/node-v0.x-archive/issues/9066
         const timeoutInMs = 2000;
-        this.server.setTimeout(timeoutInMs + delay);
+        this.server.setTimeout(timeoutInMs + this.delay);
 
         this.server.on('error', e => {
           this.server = null;
