@@ -6,12 +6,9 @@ import Message from './Message';
 import Header from './Header';
 import Menu from './Menu';
 import NewMessageMarker from './NewMessageMarker';
-import {
-  eventToDiagramCoords,
-  mapWithSameDomOrder,
-  isJsonDifferent,
-} from './utils';
+import { eventToDiagramCoords, mapWithSameDomOrder } from './utils';
 import * as ac from './../reducers';
+import isEqual from 'lodash.isequal';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -112,7 +109,7 @@ export default class App extends React.Component {
       function mouseup(e) {
         e.preventDefault();
 
-        if (isJsonDifferent(pendingComponents, components)) {
+        if (!isEqual(pendingComponents, components)) {
           const fn = isMovingObject
             ? ac.rearrangeObjects
             : ac.rearrangeMessages;
