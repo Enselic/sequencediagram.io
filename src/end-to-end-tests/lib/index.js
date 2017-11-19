@@ -24,8 +24,12 @@ export function getPort() {
   return process.env.PORT || (process.env.CI ? '5000' : '3000');
 }
 
-export function getSchemeAndHost() {
+function getSchemeAndHost() {
   return 'http://localhost';
+}
+
+export function getHostAndPort() {
+  return `${getSchemeAndHost()}:${getPort()}`;
 }
 
 function buildDriver(browser) {
@@ -227,9 +231,7 @@ export function urlParsing(driver, url, expected) {
 }
 
 export async function goTo(driver, startState, params) {
-  await driver.get(
-    `${getSchemeAndHost()}:${getPort()}/${params ? params : ''}`
-  );
+  await driver.get(`${getHostAndPort()}/${params ? params : ''}`);
   if (startState) {
     const startDiagram = deserialize(startState);
     const script = `return window.sequencediagram_io.setCurrentDiagram('${JSON.stringify(

@@ -8,8 +8,6 @@ import {
   clickLifelineForObjectWithText,
   clickText,
   findElementByText,
-  getPort,
-  getSchemeAndHost,
   goTo,
   mouseMoveInSteps,
   reversePromise,
