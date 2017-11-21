@@ -109,17 +109,15 @@ TODO
 List of minor/uninteresting things to do, roughly sorted by priority.
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - Make 'Undo' cancel pending message (like Pavel expected)
+- make it easy to 'fork' a diagram
+- add support for finding and using revisions
 - Make messages movable when grabbing buttons (like Pavel expected)
-- Default to using permalinks:
-  - https://sequencediagram.io/1234 points to latest version
-  - https://sequencediagram.io/1234/12 points to revision 12
-  - optional login/authentication
-  - custom names
+- optional encrypt on client side (server can't read data)
 - Make adding a component edit its text directly
+- make permalink work offline too, i.e. save last known state locally
 - Add debugging tips to README.md
 - make NewMesssageMarker only be where messages will be added
 - Make tab switch objects
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Make messages movable horizontally
 - Create a more accurate text measurer
-- compare ourselves with websequencediagram dot com, our main competitor

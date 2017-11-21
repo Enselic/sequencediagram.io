@@ -202,7 +202,14 @@ export default class App extends React.Component {
       messagesWithPendingChanges,
       pending.message
     );
-    const usefulProps = { objects, messages, pending, dispatch, layout };
+    const usefulProps = {
+      objects,
+      messages,
+      pending,
+      dispatch,
+      layout,
+      reduxState: state,
+    };
 
     let pendingMessageLayout;
     let handleMouseMove;

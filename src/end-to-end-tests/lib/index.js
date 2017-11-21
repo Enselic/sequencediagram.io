@@ -137,7 +137,7 @@ function byText(text) {
 
 export async function waitForElement(driver, text) {
   const locator = byText(text);
-  return driver.wait(until.elementLocated(locator), 2000);
+  return driver.wait(until.elementLocated(locator), 4000);
 }
 
 export async function findElementByText(driver, text) {
@@ -371,6 +371,15 @@ export async function removeComponentWithKey(driver, id) {
   return waitForCssTransitions(driver);
 }
 
+export async function renameComponentFromTo(driver, fromText, toText) {
+  await driver
+    .actions()
+    .click(driver.findElement(byText(fromText)))
+    .sendKeys(toText)
+    .sendKeys(Key.RETURN)
+    .perform();
+}
+
 /**
  * Run this function after setting up all other tests.
  */
@@ -380,6 +389,8 @@ export function setupNoBrowserLogOutputTest(driver) {
       'Download the React DevTools for a better development experience',
       'Content is cached for offline use.',
       'New content is available; please refresh.',
+      'the server responded with a status of 400',
+      'Failed to load resource: net::ERR_CONNECTION_REFUSED',
     ];
 
     let logEntries = await driver

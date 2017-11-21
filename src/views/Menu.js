@@ -1,10 +1,18 @@
 import React from 'react';
 import { ActionCreators } from 'redux-undo';
+import ServerState from './ServerState';
 import * as ac from './../reducers';
 import { boxShadow, backgroundLight } from './common';
 
 export default function(props) {
-  const { dispatch, pending, showUndo, showRedo, showTipIfSpace } = props;
+  const {
+    reduxState,
+    dispatch,
+    pending,
+    showUndo,
+    showRedo,
+    showTipIfSpace,
+  } = props;
 
   function addObjectAndEditName() {
     const newName = 'NewObject';
@@ -53,6 +61,8 @@ export default function(props) {
       style={{
         backgroundColor: backgroundLight,
         boxShadow,
+        display: 'flex',
+        alignItems: 'baseline',
       }}
     >
       <Button text="Add object" onClick={addObjectAndEditName} />
@@ -93,6 +103,7 @@ export default function(props) {
           </span>
         </span>
       )}
+      <ServerState reduxState={reduxState} />
     </div>
   );
 }
