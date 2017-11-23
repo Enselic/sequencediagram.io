@@ -114,6 +114,7 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 - Make messages movable when grabbing buttons (like Pavel expected)
 - optional encrypt on client side (server can't read data)
 - Make adding a component edit its text directly
+- Make it easy to run GremlinsJs
 - make permalink work offline too, i.e. save last known state locally
 - Add debugging tips to README.md
 - make NewMesssageMarker only be where messages will be added

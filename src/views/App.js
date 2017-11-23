@@ -274,6 +274,10 @@ export default class App extends React.Component {
       !this.state.componentMoved &&
       !this.state.messageAnchorMoved;
 
+    const hoveredLifelineX = layout[pending.lifelineHoveredKey]
+      ? layout[pending.lifelineHoveredKey].lifelineX
+      : 0;
+
     return (
       <div
         onTouchEnd={() => dispatch(ac.touchWarn())}
@@ -346,7 +350,7 @@ export default class App extends React.Component {
             this.state.componentMoved.component.part ||
             this.state.messageAnchorMoved) && (
             <NewMessageMarker
-              left={layout[pending.lifelineHoveredKey].lifelineX}
+              left={hoveredLifelineX}
               top={
                 pendingMessageLayout ? (
                   pendingMessageLayout.top + 39
@@ -362,14 +366,7 @@ export default class App extends React.Component {
                 ) &&
                 !this.state.messageAnchorMoved
               }
-              direction={
-                layout[pending.lifelineHoveredKey].lifelineX >
-                pending.lifelineHoveredX ? (
-                  -1
-                ) : (
-                  1
-                )
-              }
+              direction={hoveredLifelineX > pending.lifelineHoveredX ? -1 : 1}
             />
           )}
         </div>
