@@ -51,74 +51,110 @@ describe('when the API server is fully functional', async () => {
     await server.close();
   });
 
-  it('creating a new diagram works', async () => {
-    await goTo(driver, '');
-    newlyCreatedPermalink = await waitForPermalink();
-    await clickAddObject(driver);
-    await renameComponentFromTo(driver, 'NewObject', randomObjectName1);
-    await driver.sleep(1000);
-    await waitForElement(driver, 'Saved');
-  });
+  it(
+    'creating a new diagram works',
+    async () => {
+      await goTo(driver, '');
+      newlyCreatedPermalink = await waitForPermalink();
+      await clickAddObject(driver);
+      await renameComponentFromTo(driver, 'NewObject', randomObjectName1);
+      await driver.sleep(1000);
+      await waitForElement(driver, 'Saved');
+    },
+    20 * 1000
+  );
 
-  it('loading an existing diagram works', async () => {
-    // Go somewhere else to make sure it's not old state we're seeing
-    await driver.get('http://static.sequencediagram.io/acknowledgements.html');
-    // Then go to the permalink
-    await driver.get(newlyCreatedPermalink);
-    await waitForElement(driver, randomObjectName1);
-    await clickAddObject(driver);
-    await renameComponentFromTo(driver, 'NewObject', randomObjectName2);
-    await driver.sleep(1000);
-    await waitForElement(driver, 'Saved');
-  });
+  it(
+    'loading an existing diagram works',
+    async () => {
+      // Go somewhere else to make sure it's not old state we're seeing
+      await driver.get(
+        'http://static.sequencediagram.io/acknowledgements.html'
+      );
+      // Then go to the permalink
+      await driver.get(newlyCreatedPermalink);
+      await waitForElement(driver, randomObjectName1);
+      await clickAddObject(driver);
+      await renameComponentFromTo(driver, 'NewObject', randomObjectName2);
+      await driver.sleep(1000);
+      await waitForElement(driver, 'Saved');
+    },
+    20 * 1000
+  );
 
-  it('modifications are remembered', async () => {
-    // Go somewhere else to make sure it's not old state we're seeing
-    await driver.get('http://static.sequencediagram.io/acknowledgements.html');
-    // Then go to the permalink
-    await driver.get(newlyCreatedPermalink);
-    await waitForElement(driver, randomObjectName2);
-  });
+  it(
+    'modifications are remembered',
+    async () => {
+      // Go somewhere else to make sure it's not old state we're seeing
+      await driver.get(
+        'http://static.sequencediagram.io/acknowledgements.html'
+      );
+      // Then go to the permalink
+      await driver.get(newlyCreatedPermalink);
+      await waitForElement(driver, randomObjectName2);
+    },
+    20 * 1000
+  );
 
-  it('gracefully handles non-existing diagram', async () => {
-    const initialUrl = `${getHostAndPort()}/2345678abC`;
-    await driver.get(initialUrl);
-    await waitForElement(driver, 'Error: Could not load diagram');
-    expect(await driver.getCurrentUrl()).toEqual(initialUrl);
-    // TODO: prevent creating of diagram components
-  });
+  it(
+    'gracefully handles non-existing diagram',
+    async () => {
+      const initialUrl = `${getHostAndPort()}/2345678abC`;
+      await driver.get(initialUrl);
+      await waitForElement(driver, 'Error: Could not load diagram');
+      expect(await driver.getCurrentUrl()).toEqual(initialUrl);
+      // TODO: prevent creating of diagram components
+    },
+    20 * 1000
+  );
 
-  it('MANUAL: save before id allocated (no "Saved" flicker)', async () => {
-    await goTo(driver, '');
-    // Before an ID has been allocated, make a change ...
-    await clickAddObject(driver);
-    // ... that should not have crashed the app
-    await waitForPermalink();
-    await driver.sleep(1000);
-    await waitForElement(driver, 'Saved');
-  });
+  it(
+    'MANUAL: save before id allocated (no "Saved" flicker)',
+    async () => {
+      await goTo(driver, '');
+      // Before an ID has been allocated, make a change ...
+      await clickAddObject(driver);
+      // ... that should not have crashed the app
+      await waitForPermalink();
+      await driver.sleep(1000);
+      await waitForElement(driver, 'Saved');
+    },
+    20 * 1000
+  );
 });
 
 describe('when the API server is down the web app', async () => {
-  it('informs about the network error when creating a new diagram', async () => {
-    await goTo(driver, '');
-    await waitForElement(driver, 'Could not connect');
-  });
+  it(
+    'informs about the network error when creating a new diagram',
+    async () => {
+      await goTo(driver, '');
+      await waitForElement(driver, 'Could not connect');
+    },
+    20 * 1000
+  );
 
-  it('gracefully handles creating a new diagram', async () => {
-    await goTo(driver, '');
-    await waitForElement(driver, 'Could not connect');
-    // Should still be possible to modify the diagram
-    await clickAddObject(driver);
-    await waitForElement(driver, 'NewObject');
-  });
+  it(
+    'gracefully handles creating a new diagram',
+    async () => {
+      await goTo(driver, '');
+      await waitForElement(driver, 'Could not connect');
+      // Should still be possible to modify the diagram
+      await clickAddObject(driver);
+      await waitForElement(driver, 'NewObject');
+    },
+    20 * 1000
+  );
 
-  it('gracefully handles non-existing diagram', async () => {
-    const initialUrl = `${getHostAndPort()}/2345678abC`;
-    await driver.get(initialUrl);
-    await waitForElement(driver, 'Error: Could not connect');
-    expect(await driver.getCurrentUrl()).toEqual(initialUrl);
-  });
+  it(
+    'gracefully handles non-existing diagram',
+    async () => {
+      const initialUrl = `${getHostAndPort()}/2345678abC`;
+      await driver.get(initialUrl);
+      await waitForElement(driver, 'Error: Could not connect');
+      expect(await driver.getCurrentUrl()).toEqual(initialUrl);
+    },
+    20 * 1000
+  );
 });
 
 describe('when the API server goes down, then comes back up', async () => {
@@ -158,27 +194,35 @@ describe('when the API server goes down, then comes back up', async () => {
 });
 
 describe('when the API server is down but comes up later it', async () => {
-  it('works to get a permalink allocated later', async () => {
-    await goTo(driver, '');
-    await waitForElement(driver, 'Could not connect');
-    await removeComponentWithKey(driver, 'o1');
-    await renameComponentFromTo(driver, 'Bar', 'From before API server');
+  it(
+    'works to get a permalink allocated later',
+    async () => {
+      await goTo(driver, '');
+      await waitForElement(driver, 'Could not connect');
+      await removeComponentWithKey(driver, 'o1');
+      await renameComponentFromTo(driver, 'Bar', 'From before API server');
 
-    const server = new ApiServerLocal();
-    try {
-      await server.listen();
-      await clickAddObject(driver);
-      await renameComponentFromTo(driver, 'NewObject', 'From after API server');
-      await waitForElement(driver, 'Saved');
-      await waitForPermalink();
+      const server = new ApiServerLocal();
+      try {
+        await server.listen();
+        await clickAddObject(driver);
+        await renameComponentFromTo(
+          driver,
+          'NewObject',
+          'From after API server'
+        );
+        await waitForElement(driver, 'Saved');
+        await waitForPermalink();
 
-      // TODO: Starting offline, crating a diagram, allocate new id: expected
-      // that the initial version of the diagram is the diagram the user built up
-      // i.e. post for create should support initial state
-    } finally {
-      await server.close();
-    }
-  });
+        // TODO: Starting offline, crating a diagram, allocate new id: expected
+        // that the initial version of the diagram is the diagram the user built up
+        // i.e. post for create should support initial state
+      } finally {
+        await server.close();
+      }
+    },
+    20 * 1000
+  );
 });
 
 setupNoBrowserLogOutputTest(driver);
