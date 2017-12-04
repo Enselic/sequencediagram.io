@@ -3,13 +3,13 @@
  * Depends on a AWS DynamoDB server. You can run one locally
  * with:
  *
- * node backend/dynamodb-localhost.js
+ * node backend/dynamodb/dynamodb-localhost.js
  */
 
 /* Useful commands:
 
-id=$( curl -v -X POST localhost:4000/sequencediagrams | sed 's/.*"id":"\([^"]\+\)".*}/\1/g')
-curl -v -X POST -H "Content-Type: application/json" -d '{"objects":["TODO"],"messages":["TODO"]}' localhost:4000/sequencediagrams/${id}
+id=$( curl -v -X POST -H "Content-Type: application/json" -d '{"objects":[],"messages":[]}' localhost:4000/sequencediagrams | sed 's/.*"id":"\([^"]\+\)".*}/\1/g')
+curl -v -X POST -H "Content-Type: application/json" -d '{"objects":[],"messages":[]}' localhost:4000/sequencediagrams/${id}
 curl -v localhost:4000/sequencediagrams/${id}
 
 */
@@ -23,6 +23,11 @@ const morgan = require('morgan');
 const morganBody = require('morgan-body');
 const AWS = require('aws-sdk');
 const awsLambda = require('./aws-lambda-handler');
+const swaggerFile = require('./swagger.json');
+// In a pure localhost environment, this performs JSON schema validation
+// against the swagger API. In a production environemnt, it is done by
+// setting up AWS API Gateway appropriately for it
+const swaggerValidator = require('swagger-express-validator');
 
 AWS.config.update({
   accessKeyId: 'AKID',
@@ -37,6 +42,13 @@ function ApiServerLocal(delay) {
   this.app = express();
   this.app.use(bodyParser.json());
   this.app.use(cors());
+  this.app.use(
+    swaggerValidator({
+      schema: swaggerFile,
+      validateRequest: true,
+      validateResponse: false, // Done by e.g. backend.test.js
+    })
+  );
   this.delay = delay || 0;
 
   const logging = 0;

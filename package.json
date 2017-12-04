@@ -12,6 +12,7 @@
     "redux-undo": "^1.0.0-beta9-9-1"
   },
   "devDependencies": {
+    "ajv-pack": "^0.3.1",
     "aws-sdk": "^2.117.0",
     "babel-plugin-istanbul": "^4.1.5",
     "body-parser": "^1.18.0",
@@ -31,7 +32,8 @@
     "prettier": "1.6.x",
     "react-scripts": "1.0.14",
     "selenium-webdriver": "^3.4.0",
-    "serve": "^6.0.4"
+    "serve": "^6.0.4",
+    "swagger-express-validator": "github:Enselic/swagger-express-validator#error-prop"
   },
   "scripts": {
     "start": "./scripts.sh",
@@ -47,5 +49,10 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "jest": {
+    "coverageReporters": [
+      "lcov"
+    ]
   }
 }

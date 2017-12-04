@@ -143,24 +143,7 @@ module.exports.handler = (event, context, callback) => {
       );
     }
 
-    if (
-      event.httpMethod === 'POST' &&
-      (typeof sequenceDiagram !== 'object' ||
-        !Array.isArray(sequenceDiagram.objects) ||
-        !Array.isArray(sequenceDiagram.messages))
-    ) {
-      done(
-        createError(
-          "JSON request body missing 'objects' or 'messages' array properties. " +
-            'Got: ' +
-            JSON.stringify(sequenceDiagram),
-          'MissingProperties'
-        )
-      );
-    } else if (
-      event.resource === '/sequencediagrams' &&
-      event.httpMethod === 'POST'
-    ) {
+    if (event.resource === '/sequencediagrams' && event.httpMethod === 'POST') {
       putHelper(generateRandomId(), 1);
     } else if (
       event.resource === '/sequencediagrams/{sequenceDiagramId}' &&

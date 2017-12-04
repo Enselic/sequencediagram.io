@@ -62,7 +62,7 @@ describe('when the API server is fully functional', async () => {
 
   it('loading an existing diagram works', async () => {
     // Go somewhere else to make sure it's not old state we're seeing
-    await driver.get('https://www.google.com');
+    await driver.get('http://static.sequencediagram.io/acknowledgements.html');
     // Then go to the permalink
     await driver.get(newlyCreatedPermalink);
     await waitForElement(driver, randomObjectName1);
@@ -74,7 +74,7 @@ describe('when the API server is fully functional', async () => {
 
   it('modifications are remembered', async () => {
     // Go somewhere else to make sure it's not old state we're seeing
-    await driver.get('https://www.google.com');
+    await driver.get('http://static.sequencediagram.io/acknowledgements.html');
     // Then go to the permalink
     await driver.get(newlyCreatedPermalink);
     await waitForElement(driver, randomObjectName2);

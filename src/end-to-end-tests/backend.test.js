@@ -43,6 +43,15 @@ function expectError(status, body, expectedMessagePart, expectedCode) {
   expect(body.error.message).toMatch(expectedMessagePart);
 }
 
+function isError(status, body, expectedMessagePart, expectedCode) {
+  return (
+    status >= 400 &&
+    status < 500 &&
+    body.error.code === expectedCode &&
+    body.error.message.match(expectedMessagePart)
+  );
+}
+
 const server = new ApiServerLocal();
 
 beforeAll(async () => {
@@ -100,19 +109,143 @@ it('GET /sequencediagrams/{id}/{revision}', async () => {
 });
 
 it('POST invalid bodies', async () => {
-  const invalidValues = [{}, { objects: [] }, { messages: [] }, []];
+  const twoValidObjects = {
+    objects: [{ id: 'o1', name: 'Foo' }, { id: 'o2', name: 'Bar' }],
+  };
+  const invalidValues = [
+    {},
+    { objects: [] },
+    { messages: [] },
+    [],
+    { objects: [], messages: [], extra: [] },
+    { objects: [{ id: 'x1', name: 'Invalid id' }], messages: [] },
+    { objects: 42, messages: [] },
+    { objects: [{ id: 42, name: 'Invalid id' }], messages: [] },
+    { objects: [{ id: 'o1' }], messages: [] },
+    { objects: [{ name: 'missing id' }], messages: [] },
+    { objects: [{ id: 'o1', name: 42 }], messages: [] },
+    { objects: [{ id: 'o1', name: 'extra prop', extra: 'foo' }], messages: [] },
+    {
+      ...twoValidObjects,
+      messages: [
+        { id: 'y1', sender: 'o1', receiver: 'o2', name: 'invalidId()' },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [{ id: 42, sender: 'o1', receiver: 'o2', name: 'invalidId()' }],
+    },
+    {
+      ...twoValidObjects,
+      messages: [{ id: 'm1', sender: 'o1', receiver: 'o2' }],
+    },
+    {
+      ...twoValidObjects,
+      messages: [{ id: 'm1', receiver: 'o2', name: 'Missing sender' }],
+    },
+    {
+      ...twoValidObjects,
+      messages: [{ id: 'm1', sender: 'o1', name: 'Missing receiver' }],
+    },
+    {
+      ...twoValidObjects,
+      messages: [{ sender: 'o1', receiver: 'o2', name: 'Missing id' }],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        { id: 'm1', sender: 'z1', receiver: 'o2', name: 'invalidSenderId()' },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        { id: 'm1', sender: 42, receiver: 'o2', name: 'invalid sender' },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        { id: 'm1', sender: 'o1', receiver: 42, name: 'invalid receiver' },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        { id: 'm1', sender: 'o1', receiver: 'z2', name: 'invalidReceiverId()' },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        { id: 'm1', sender: 'o1', receiver: 'z2', name: 'invalidReceiverId()' },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [{ id: 'm1', sender: 'o1', receiver: 'z2', name: 42 }],
+    },
+    {
+      ...twoValidObjects,
+      messages: [{ sender: 'o1', receiver: 'o2', name: 'missing id' }],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        {
+          id: 'm1',
+          sender: 'o1',
+          receiver: 'o2',
+          name: 'invalid isAsync',
+          isAsync: 42,
+        },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        {
+          id: 'm1',
+          sender: 'o1',
+          receiver: 'o2',
+          name: 'invalid isReply',
+          isReply: 42,
+        },
+      ],
+    },
+    {
+      ...twoValidObjects,
+      messages: [
+        {
+          id: 'm1',
+          sender: 'o1',
+          receiver: 'z2',
+          name: 'extra prop',
+          asdf: false,
+        },
+      ],
+    },
+  ];
+  let erronouslyValidValues = [];
   // forEach() does not work with async/await :(
   for (let i = 0; i < invalidValues.length; i++) {
     const paths = ['/sequencediagrams', '/sequencediagrams/' + idToTest];
     for (let j = 0; j < paths.length; j++) {
-      const { status, body } = await doFetch(
-        paths[j],
-        'POST',
-        invalidValues[i]
-      );
-      expectError(status, body, 'missing', 'MissingProperties');
+      const invalidValue = invalidValues[i];
+      const { status, body } = await doFetch(paths[j], 'POST', invalidValue);
+      if (
+        !isError(
+          status,
+          body,
+          'schema validation failed',
+          'FailedSchemaValidation'
+        )
+      ) {
+        erronouslyValidValues.push(invalidValue);
+      }
     }
   }
+  expect(erronouslyValidValues).toEqual([]);
 });
 
 it('POST /sequencediagrams/doesnotexist', async () => {
