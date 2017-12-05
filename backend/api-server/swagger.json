@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-09-20T19:40:58Z",
+    "version": "2017-12-04T13:07:48Z",
     "title": "api.sequencediagram.io"
   },
   "host": "api.sequencediagram.io",
@@ -36,6 +36,8 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator":
+          "Validate body, query string parameters, and headers",
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
@@ -165,6 +167,8 @@
             }
           }
         },
+        "x-amazon-apigateway-request-validator":
+          "Validate body, query string parameters, and headers",
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
@@ -414,6 +418,12 @@
           "type": "integer"
         }
       }
+    }
+  },
+  "x-amazon-apigateway-request-validators": {
+    "Validate body, query string parameters, and headers": {
+      "validateRequestParameters": true,
+      "validateRequestBody": true
     }
   }
 }
