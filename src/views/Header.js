@@ -60,9 +60,8 @@ export default function(props) {
 
       {showShareInfo && (
         <Info>
-          <b>Share by URL:</b> The current diagram is tersely encoded in the
-          current URL and can simply be shared as-is by copy-paste from the
-          browser address bar.
+          <b>Share by URL:</b> The current URL is a permalink and can be shared
+          freely.
         </Info>
       )}
 
