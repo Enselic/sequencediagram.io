@@ -103,6 +103,9 @@ window.sequencediagram_io = {
     dispatch(ac.replaceCore(objects, messages));
     return true;
   },
+  getVersion() {
+    return process.env.REACT_APP_VERSION;
+  },
 };
 
 // Make this web app run even when offline
