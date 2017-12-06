@@ -100,7 +100,6 @@ TODO
 
 List of minor/uninteresting things to do, roughly sorted by priority.
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
-- Make 'Undo' cancel pending message (like Pavel expected)
 - make it easy to 'fork' a diagram
 - add support for finding and using revisions
 - Make messages movable when grabbing buttons (like Pavel expected)

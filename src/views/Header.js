@@ -1,23 +1,8 @@
 import React from 'react';
 import { isChrome } from './utils';
+import Kbd from './Kbd';
 
 const gitMasterBuild = document.location.host.indexOf('git-master') !== -1;
-
-function Kbd(props) {
-  return (
-    <kbd
-      style={{
-        display: 'inline-block',
-        padding: '0.2em',
-        color: 'black',
-        backgroundColor: '#ccc',
-        borderRadius: '4px',
-      }}
-    >
-      {props.children}
-    </kbd>
-  );
-}
 
 function Info(props) {
   return (

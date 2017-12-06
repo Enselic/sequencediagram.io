@@ -8,6 +8,7 @@ import {
   clickAndType,
   clickText,
   dragAndDrop,
+  findElementByText,
   flip,
   goTo,
   moveAnchorPointToActor,
@@ -16,6 +17,7 @@ import {
   toggleArrowStyle,
   toggleLineStyle,
   waitForCssTransitions,
+  waitForElement,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
@@ -157,6 +159,40 @@ it(
     );
 
     return asserter.undoRedoAll();
+  },
+  applyTimeoutFactor(80 * 1000)
+);
+
+it(
+  'pending message turns Undo into Cancel',
+  async () => {
+    const initialState = 'o1,Foo;o2,Bar';
+    await goTo(driver, initialState);
+
+    const startEl = await findElementByText(driver, 'Foo');
+    const fromObjectNameToLifelineOffset = { x: 30, y: 70 };
+
+    // Start creating a message
+    await driver
+      .actions()
+      .mouseMove(startEl, fromObjectNameToLifelineOffset)
+      .click()
+      .perform();
+    await sleepIfHumanObserver(driver, 0.7);
+
+    // Cancel it
+    await clickText(driver, 'Cancel');
+
+    // Now click again. If Cancel does not work, a message will be created
+    // What we expect is a pending message state again
+    await driver
+      .actions()
+      .mouseMove(startEl, fromObjectNameToLifelineOffset)
+      .click()
+      .perform();
+    await sleepIfHumanObserver(driver, 0.7);
+
+    return assertFragment(driver, initialState);
   },
   applyTimeoutFactor(80 * 1000)
 );
