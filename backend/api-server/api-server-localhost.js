@@ -8,8 +8,8 @@
 
 /* Useful commands:
 
-id=$( curl -v -X POST -H "Content-Type: application/json" -d '{"objects":[],"messages":[]}' localhost:4000/sequencediagrams | sed 's/.*"id":"\([^"]\+\)".*}/\1/g')
-curl -v -X POST -H "Content-Type: application/json" -d '{"objects":[],"messages":[]}' localhost:4000/sequencediagrams/${id}
+id=$( curl -v -H "Content-Type: application/json" -d '{"objects":[],"messages":[]}' localhost:4000/sequencediagrams | sed 's/.*"id":"\([^"]\+\)".*}/\1/g')
+curl -v -H "Content-Type: application/json" -d '{"objects":[],"messages":[]}' localhost:4000/sequencediagrams/${id}
 curl -v localhost:4000/sequencediagrams/${id}
 
 */
