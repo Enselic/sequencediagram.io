@@ -33,7 +33,8 @@
     "react-scripts": "1.0.14",
     "selenium-webdriver": "^3.4.0",
     "serve": "^6.0.4",
-    "swagger-express-validator": "github:Enselic/swagger-express-validator#error-prop"
+    "swagger-express-validator": "github:Enselic/swagger-express-validator#error-prop",
+    "uglifyjs-webpack-plugin": "^1.1.2"
   },
   "scripts": {
     "start": "./scripts.sh",
