@@ -16,6 +16,7 @@ curl -v localhost:4000/sequencediagrams/${id}
 
 'use strict';
 
+const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -38,10 +39,29 @@ AWS.config.update({
 const tableName = 'io.sequencediagram.dynamodb.test';
 const port = 4000;
 
+function ensureDynamoDbLocalRuns(req, res, next) {
+  const clientReq = http.get('http://localhost:8000');
+  clientReq.on('error', e => {
+    res.status(500);
+    res.setHeader('Content-Type', 'application/json');
+    res.send({
+      error: {
+        code: e.code,
+        message:
+          'dynamodb-local is not running. ' +
+          'request will timeout. failing early',
+        innererror: e,
+      },
+    });
+  });
+  clientReq.on('response', _ => next());
+}
+
 function ApiServerLocal(delay) {
   this.app = express();
-  this.app.use(bodyParser.json());
   this.app.use(cors());
+  this.app.use(ensureDynamoDbLocalRuns);
+  this.app.use(bodyParser.json());
   this.app.use(
     swaggerValidator({
       schema: swaggerFile,
