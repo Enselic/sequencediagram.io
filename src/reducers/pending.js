@@ -22,14 +22,6 @@ export function escapePendingOperation() {
   return { type: 'ESCAPE_PENDING_OPERATION' };
 }
 
-export function hoverOverComponent(id) {
-  return { type: 'HOVER_OVER_COMPONENT', id };
-}
-
-export function endHoverOverComponent() {
-  return { type: 'END_HOVER_OVER_COMPONENT' };
-}
-
 export function showShareInfo() {
   return { type: 'SHOW_SHARE_INFO' };
 }
@@ -102,10 +94,6 @@ export default function(state = {}, action) {
         touchWarn: undefined,
         showWorksOffline: undefined,
       };
-    case 'HOVER_OVER_COMPONENT':
-      return { ...state, hoveredComponentId: action.id };
-    case 'END_HOVER_OVER_COMPONENT':
-      return { ...state, hoveredComponentId: undefined };
     case 'SHOW_SHARE_INFO':
       return { ...state, showShareInfo: true };
     case 'HIDE_SHARE_INFO':

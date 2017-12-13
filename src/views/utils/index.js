@@ -1,18 +1,41 @@
+import React from 'react';
 import * as ac from './../../reducers';
 
-export function hoverHelper(pending, dispatch, id) {
-  return {
-    onMouseEnter() {
-      dispatch(ac.hoverOverComponent(id));
-    },
-    onMouseMove() {
-      if (pending.hoveredComponentId !== id) {
-        dispatch(ac.hoverOverComponent(id));
-      }
-    },
-    onMouseLeave() {
-      dispatch(ac.endHoverOverComponent());
-    },
+export function hoverHelper(WrappedComponent) {
+  // Useful to set to true when inspecting layout
+  const DEFAULT = false;
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        isHovered: DEFAULT,
+      };
+
+      this.onMouseEnter = () => {
+        this.setState({ isHovered: true });
+      };
+      this.onMouseMove = () => {
+        if (!this.state.isHovered) {
+          this.onMouseEnter();
+        }
+      };
+      this.onMouseLeave = () => {
+        this.setState({ isHovered: DEFAULT });
+      };
+    }
+
+    render() {
+      return (
+        <WrappedComponent
+          handleHoverMouseEnter={this.onMouseEnter}
+          handleHoverMouseMove={this.onMouseMove}
+          handleHoverMouseLeave={this.onMouseLeave}
+          {...this.state}
+          {...this.props}
+        />
+      );
+    }
   };
 }
 

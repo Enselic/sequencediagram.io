@@ -45,7 +45,9 @@ function Message(props) {
       style={{ ...msgLayout, ...style }}
       id={message.id}
       key={message.id}
-      {...hoverHelper(pending, dispatch, message.id)}
+      onMouseEnter={props.handleHoverMouseEnter}
+      onMouseMove={props.handleHoverMouseMove}
+      onMouseLeave={props.handleHoverMouseLeave}
     >
       <Name
         showBackground={!isMarker}
@@ -65,4 +67,4 @@ function Message(props) {
   );
 }
 
-export default Message;
+export default hoverHelper(Message);

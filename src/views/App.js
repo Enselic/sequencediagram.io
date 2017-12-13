@@ -309,7 +309,6 @@ export default class App extends React.Component {
               onRemove={() => dispatch(ac.removeComponent(object.id))}
               onComponentMouseDown={this.handleComponentMouseDown}
               showControls={showControls}
-              isHovered={pending.hoveredComponentId === object.id}
               {...usefulProps}
             />
           ))}
@@ -329,7 +328,6 @@ export default class App extends React.Component {
                   this.state.messageAnchorMoved &&
                   this.state.messageAnchorMoved.message.id === message.id
                 }
-                isHovered={pending.hoveredComponentId === message.id}
                 {...usefulProps}
               />
             ) : null;
