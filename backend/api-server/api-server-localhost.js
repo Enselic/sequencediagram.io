@@ -17,6 +17,7 @@ curl -v localhost:4000/sequencediagrams/${id}
 'use strict';
 
 const http = require('http');
+const backendUtils = require('./dynamodb-utils');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -30,17 +31,28 @@ const swaggerFile = require('./swagger.json');
 // setting up AWS API Gateway appropriately for it
 const swaggerValidator = require('swagger-express-validator');
 
+const dynamoDbPort = 8000;
+const dynamoDbLocalUrl = `http://localhost:${dynamoDbPort}`;
+const dynamoDbTableName = 'io.sequencediagram.dynamodb.test';
+
+const apiServerPort = 4000;
+
+// Start this once and for all so we can keep its state across
+// ApiServerLocal instances even with -inMemory
+const dynamoDbStarted = backendUtils.startDynamoDbLocal(
+  dynamoDbPort,
+  dynamoDbTableName
+);
+
 AWS.config.update({
   accessKeyId: 'AKID',
   secretAccessKey: 'SECRET',
   region: 'eu-west-1',
-  endpoint: 'http://localhost:8000',
+  endpoint: dynamoDbLocalUrl,
 });
-const tableName = 'io.sequencediagram.dynamodb.test';
-const port = 4000;
 
 function ensureDynamoDbLocalRuns(req, res, next) {
-  const clientReq = http.get('http://localhost:8000');
+  const clientReq = http.get(dynamoDbLocalUrl);
   clientReq.on('error', e => {
     res.status(500);
     res.setHeader('Content-Type', 'application/json');
@@ -89,7 +101,7 @@ function ApiServerLocal(delay) {
       body: JSON.stringify(req.body),
       httpMethod: req.method,
       pathParameters: req.params,
-      stageVariables: { tableName },
+      stageVariables: { tableName: dynamoDbTableName },
     };
     awsLambda.handler(event, null, (err, data) => {
       if (err) {
@@ -124,9 +136,10 @@ function ApiServerLocal(delay) {
 
 ApiServerLocal.prototype = {
   listen() {
-    return new Promise((resolve, reject) => {
-      if (!this.server) {
-        this.server = this.app.listen(port, resolve);
+    return Promise.all([
+      dynamoDbStarted,
+      new Promise((resolve, reject) => {
+        this.server = this.app.listen(apiServerPort, resolve);
 
         // For quick .close()
         // See https://github.com/nodejs/node-v0.x-archive/issues/9066
@@ -137,17 +150,19 @@ ApiServerLocal.prototype = {
           this.server = null;
           reject(e);
         });
-      } else {
-        resolve();
-      }
-    });
+      }),
+    ]);
   },
 
   close() {
     return new Promise((resolve, reject) => {
+      // Deliberately don't take down dynamoddb-local, because it does not matter
+      // if it runs or not from a web app perspective, and if we kill it we lost
+      // state we want to keep during tests since we use -inMemory
       if (this.server) {
         this.server.on('error', reject);
-        this.server.close(resolve);
+        this.server.on('close', resolve);
+        this.server.close();
       } else {
         resolve();
       }
@@ -161,8 +176,8 @@ if (require.main === module) {
   server
     .listen()
     .then(
-      _ => console.log('API server listening on port ' + port),
-      console.log
+      _ => console.log('API server listening on port ' + apiServerPort),
+      console.error
     );
 } else {
   module.exports = ApiServerLocal;

@@ -13,7 +13,7 @@ addons:
 before_script:
   - scripts-ci/prepare-for-code-coverage.sh
   - scripts-ci/start-services-in-background.sh &
-  - scripts-ci/wait-for-ports.sh 8000 5000
+  - scripts-ci/wait-for-ports.sh 5000
 script:
   - scripts-ci/run-tests.sh
 after_script:

@@ -8,7 +8,6 @@ else
   trap 'kill -TERM 0' EXIT
 
   # By default, start what is needed for npm test to pass all tests
-  nodemon --watch backend/dynamodb backend/dynamodb/dynamodb-localhost.js &
   react-scripts start &
 
   # If an argument is given, also start the local API server
