@@ -1,6 +1,8 @@
 #!/bin/bash
 
-alias notify_travis_fail="notify-send -u critical 'Travis CI will fail'"
+notify_travis_fail() {
+  notify-send -u critical 'Travis CI will fail'
+}
 export CI=true
 
 fuser -k 5000/tcp 4000/tcp # Make sure it's a fresh start

@@ -285,9 +285,9 @@ function isError(status, body, expectedMessagePart, expectedCode) {
   );
 }
 
-const server = new ApiServerLocal();
-
 describe('backend unit tests', async () => {
+  const server = new ApiServerLocal();
+
   beforeAll(async () => {
     await server.listen();
   });

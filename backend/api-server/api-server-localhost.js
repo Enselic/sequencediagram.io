@@ -17,7 +17,7 @@ curl -v localhost:4000/sequencediagrams/${id}
 'use strict';
 
 const http = require('http');
-const backendUtils = require('./dynamodb-utils');
+const dynamodbUtils = require('./dynamodb-utils');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -36,13 +36,6 @@ const dynamoDbLocalUrl = `http://localhost:${dynamoDbPort}`;
 const dynamoDbTableName = 'io.sequencediagram.dynamodb.test';
 
 const apiServerPort = 4000;
-
-// Start this once and for all so we can keep its state across
-// ApiServerLocal instances even with -inMemory
-const dynamoDbStarted = backendUtils.startDynamoDbLocal(
-  dynamoDbPort,
-  dynamoDbTableName
-);
 
 AWS.config.update({
   accessKeyId: 'AKID',
@@ -137,7 +130,7 @@ function ApiServerLocal(delay) {
 ApiServerLocal.prototype = {
   listen() {
     return Promise.all([
-      dynamoDbStarted,
+      dynamodbUtils.startDynamoDbLocal(dynamoDbPort, dynamoDbTableName),
       new Promise((resolve, reject) => {
         this.server = this.app.listen(apiServerPort, resolve);
 
@@ -155,19 +148,22 @@ ApiServerLocal.prototype = {
   },
 
   close() {
-    return new Promise((resolve, reject) => {
-      // Deliberately don't take down dynamoddb-local, because it does not matter
-      // if it runs or not from a web app perspective, and if we kill it we lost
-      // state we want to keep during tests since we use -inMemory
-      if (this.server) {
-        this.server.on('error', reject);
-        this.server.on('close', resolve);
-        this.server.close();
-      } else {
-        resolve();
-      }
-      this.server = null;
-    });
+    return Promise.all([
+      new Promise((resolve, reject) => {
+        // Deliberately don't take down dynamoddb-local, because it does not matter
+        // if it runs or not from a web app perspective, and if we kill it we lost
+        // state we want to keep during tests since we use -inMemory
+        if (this.server) {
+          this.server.on('error', reject);
+          this.server.on('close', resolve);
+          this.server.close();
+        } else {
+          resolve();
+        }
+        this.server = null;
+      }),
+      dynamodbUtils.stopDynamoDbLocal(dynamoDbPort),
+    ]);
   },
 };
 

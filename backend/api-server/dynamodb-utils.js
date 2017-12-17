@@ -9,7 +9,7 @@ DynamoDbLocal.configureInstaller({
 module.exports = {
   startDynamoDbLocal: (port, tableName) => {
     return new Promise((resolve, reject) => {
-      DynamoDbLocal.launch(port, null, ['-inMemory'])
+      DynamoDbLocal.launch(port, '/tmp')
         .then(_ => {
           const dynamodb = new AWS.DynamoDB();
 
@@ -30,7 +30,12 @@ module.exports = {
               },
             },
             (err, data) => {
-              if (err) {
+              // If the table already exists; fine. Otherwise reject()
+              if (
+                err &&
+                err.code !== 'ResourceInUseException' &&
+                err.message !== 'Cannot create preexisting table'
+              ) {
                 reject(err);
               } else {
                 resolve(port);
