@@ -14,7 +14,12 @@
   "devDependencies": {
     "ajv-pack": "^0.3.1",
     "aws-sdk": "^2.117.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.0.0",
     "babel-plugin-istanbul": "^4.1.5",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-app": "^3.1.0",
     "body-parser": "^1.18.0",
     "chromedriver": "^2.31.0",
     "cors": "^2.8.4",
@@ -25,12 +30,14 @@
     "geckodriver": "^1.9.0",
     "glob": "^7.1.2",
     "istanbul": "^0.4.5",
+    "jest": "^22.0.0",
     "morgan": "^1.8.2",
     "morgan-body": "^0.10.9",
     "node-fetch": "^1.7.3",
     "nodemon": "^1.12.1",
     "prettier": "1.6.x",
     "react-scripts": "1.0.14",
+    "regenerator-runtime": "^0.11.1",
     "selenium-webdriver": "^3.4.0",
     "serve": "^6.0.4",
     "swagger-express-validator": "github:Enselic/swagger-express-validator#error-prop",
@@ -40,9 +47,9 @@
     "start": "./scripts.sh",
     "start-localhost": "./scripts.sh localhost",
     "build": "./scripts.sh build",
-    "test": "react-scripts test --runInBand",
+    "test": "jest --runInBand",
     "eject": "react-scripts eject",
-    "prettier-write": "node_modules/.bin/prettier --write 'src/**/*.js' 'backend/**/*.js'"
+    "prettier-write": "node_modules/.bin/prettier --write '{backend,end-to-end-tests,src}/**/*.js'"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -51,9 +58,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "jest": {
-    "coverageReporters": [
-      "lcov"
+  "babel": {
+    "presets": [
+      "react-app"
     ]
   }
 }

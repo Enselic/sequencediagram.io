@@ -1,7 +1,7 @@
 import fs from 'fs';
 import glob from 'glob';
 import prettier from 'prettier';
-import packageJson from '../../package.json';
+import packageJson from '../package.json';
 
 // It is useful to remove .travis.yml for work-in-progress
 // branches, but make sure we don't forget to restore it
@@ -24,8 +24,8 @@ it('scripts/ is not present', async () => {
 });
 
 it('is formated with prettier', () => {
-  const files = glob.sync('{backend,src}/**/*.js');
-  expect(files.length).toBeGreaterThan(35); // Sanity check
+  const files = glob.sync('{backend,end-to-end-tests,src}/**/*.js');
+  expect(files.length).toBeGreaterThan(39); // Sanity check
 
   const notProperlyFormated = [];
   files.forEach(file => {

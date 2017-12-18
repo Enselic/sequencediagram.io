@@ -16,7 +16,7 @@ import {
   waitForElement,
   removeComponentWithKey,
 } from './lib';
-import ApiServerLocal from './../../backend/api-server/api-server-localhost';
+import ApiServerLocal from './../backend/api-server/api-server-localhost';
 import url from 'url';
 
 const driver = buildDriverAndSetupEnv();

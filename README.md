@@ -32,10 +32,6 @@ Important design points
 * It is important that when the user is idle, the digram shown is without controls.
 This is so that when the digram is shared by sending its URL, it looks clean and pretty when just viewed. And we don't want to complicate the UI with a "enter view mode" mode.
 
-* It is important that in 'Offline mode', the diagram state is kept in the fragment part
-of the URL. This enables users to construct diagrams with sensitive data since the fragment
-will not end up in any HTTP server logs.
-
 
 Roadmap
 =======
@@ -74,11 +70,19 @@ Then open up the project in vscode with `code sequencediagram.io/`. Now you
 should be able to set breakpoints, launch, debug, etc (after `npm start` as per
 above), after installing the `Debugger for Chrome` vscode extension.
 
-Technology
-----------
+Folder structure and technology
+----------------------------
 
-- React (via create-react-app) and Redux for the app
-- selenium-webdriver for automated end-to-end testing.
+```
+src/
+Web app using React (via create-react-app) and Redux
+
+backend/
+NodeJS backend using AWS Lambda, AWS API Gateway, AWS DynamoDB, with localhost wrappers
+
+end-to-end-tests/
+Automated and high level tests of both the web app and backend using selenium-webdriver
+```
 
 Running tests like Travis CI
 ----------------------------
