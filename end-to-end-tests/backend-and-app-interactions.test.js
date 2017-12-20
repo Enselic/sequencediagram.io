@@ -16,7 +16,6 @@ import {
   waitForElement,
   removeComponentWithKey,
 } from './lib';
-import ApiServerLocal from './../backend/api-server/api-server-localhost';
 import url from 'url';
 
 const driver = buildDriverAndSetupEnv();
@@ -35,20 +34,18 @@ async function waitForPermalink() {
 }
 
 describe('when the API server is fully functional', async () => {
-  // Use a short artificial delay get more extreme latency
-  const timeout = 2000;
-  const server = new ApiServerLocal(timeout);
   let newlyCreatedPermalink = null;
   // Use random names to reduce risk of us seeing old data
   const randomObjectName1 = 'object1-' + Math.ceil(Math.random() * 1000000000);
   const randomObjectName2 = 'object2-' + Math.ceil(Math.random() * 1000000000);
 
   beforeAll(async () => {
-    await server.listen();
+    // Use a short artificial delay get more extreme latency
+    await makeApiServer('listen?extraDelayMs=2000');
   });
 
   afterAll(async () => {
-    await server.close();
+    await makeApiServer('close');
   });
 
   it(
@@ -161,10 +158,8 @@ describe('when the API server goes down, then comes back up', async () => {
   it(
     'new -> permalink -> Could not connect -> Saved',
     async () => {
-      const server = new ApiServerLocal();
-
       // API server is operating as normal
-      await server.listen();
+      await makeApiServer('listen');
       try {
         await goTo(driver, '');
 
@@ -172,21 +167,21 @@ describe('when the API server goes down, then comes back up', async () => {
         const permalink = await waitForPermalink();
 
         // Now the server goes down
-        await server.close();
+        await makeApiServer('close');
 
         // After modifying the diagram, the web app should discover the problem
         await clickAddObject(driver);
         await waitForElement(driver, 'Could not connect');
 
         // Now the server comes back up
-        await server.listen();
+        await makeApiServer('listen');
         await driver.sleep(1000);
         await clickAddObject(driver);
         await waitForElement(driver, 'Saved');
         expect(await driver.getCurrentUrl()).toEqual(permalink);
       } finally {
         // Cleanup
-        await server.close();
+        await makeApiServer('close');
       }
     },
     20 * 1000
@@ -202,9 +197,8 @@ describe('when the API server is down but comes up later it', async () => {
       await removeComponentWithKey(driver, 'o1');
       await renameComponentFromTo(driver, 'Bar', 'From before API server');
 
-      const server = new ApiServerLocal();
       try {
-        await server.listen();
+        await makeApiServer('listen');
         await clickAddObject(driver);
         await renameComponentFromTo(
           driver,
@@ -218,7 +212,7 @@ describe('when the API server is down but comes up later it', async () => {
         // that the initial version of the diagram is the diagram the user built up
         // i.e. post for create should support initial state
       } finally {
-        await server.close();
+        await makeApiServer('close');
       }
     },
     20 * 1000
@@ -235,7 +229,7 @@ setupNoBrowserLogOutputTest(driver);
 const fetch = require('node-fetch');
 
 async function doFetch(path, method, sequenceDiagram) {
-  const response = await fetch('http://localhost:4000' + path, {
+  const response = await fetch('http://localhost:7000' + path, {
     method,
     body: JSON.stringify(sequenceDiagram),
     headers: {
@@ -285,15 +279,23 @@ function isError(status, body, expectedMessagePart, expectedCode) {
   );
 }
 
-describe('backend unit tests', async () => {
-  const server = new ApiServerLocal();
+async function makeApiServer(action) {
+  const response = await fetch('http://localhost:7100/' + action, {
+    method: 'POST',
+  });
+  if (!response.ok) {
+    throw new Error('response.status=', response.status);
+  }
+  return response;
+}
 
+describe('backend unit tests', async () => {
   beforeAll(async () => {
-    await server.listen();
+    await makeApiServer('listen');
   });
 
   afterAll(async () => {
-    await server.close();
+    await makeApiServer('close');
   });
 
   it('POST /sequencediagrams', async () => {

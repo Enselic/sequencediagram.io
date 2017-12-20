@@ -1,6 +1,6 @@
 import { replaceCore } from './core';
 
-const server = process.env.REACT_APP_API_SERVER || 'http://localhost:4000';
+const server = process.env.REACT_APP_API_SERVER;
 
 export const PENDING = '<<PENDING>>';
 export const TOO_OLD = '<<TOO_OLD>>';

@@ -1,7 +1,9 @@
 #!/bin/bash
-# Wait for HTTP ports passed as args to work
-# Helpful to use when waiting for start_services_in_background.sh
+# Wait for HTTP ports that tests depend on
 set -e
+
+source localhost-ports.sh
+set -- $API_SERVER_PORT $API_SERVER_CONTROL_PORT $WEB_APP_PORT
 
 readonly TIMEOUT_IN_SECONDS=$((60 * 2))
 

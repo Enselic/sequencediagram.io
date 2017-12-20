@@ -44,9 +44,8 @@
     "uglifyjs-webpack-plugin": "^1.1.2"
   },
   "scripts": {
-    "start": "./scripts.sh",
-    "start-localhost": "./scripts.sh localhost",
-    "build": "./scripts.sh build",
+    "start": "REACT_APP_VERSION=$(git describe) ./start.sh",
+    "build": "REACT_APP_VERSION=$(git describe) react-scripts build",
     "test": "jest --runInBand",
     "eject": "react-scripts eject",
     "prettier-write": "node_modules/.bin/prettier --write '{backend,end-to-end-tests,src}/**/*.js'"
