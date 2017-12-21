@@ -2,7 +2,7 @@
 # Wait for HTTP ports that tests depend on
 set -e
 
-source localhost-ports.sh
+source local.env.sh
 set -- $API_SERVER_PORT $API_SERVER_CONTROL_PORT $WEB_APP_PORT
 
 readonly TIMEOUT_IN_SECONDS=$((60 * 2))

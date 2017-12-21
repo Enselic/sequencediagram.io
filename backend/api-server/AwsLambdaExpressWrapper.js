@@ -6,12 +6,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const morganBody = require('morgan-body');
 const awsLambda = require('./aws-lambda-handler');
-const swaggerFile = require('./swagger.json');
 const dynamodbUtils = require('./dynamodb-utils');
-// In a pure localhost environment, this performs JSON schema validation
-// against the swagger API. In a production environemnt, it is done by
-// setting up AWS API Gateway appropriately for it
-const swaggerValidator = require('swagger-express-validator');
 
 const dynamoDbLocalUrl = `http://localhost:${process.env.DYNAMODB_LOCAL_PORT}`;
 const dynamoDbTableName = 'io.sequencediagram.dynamodb.test';
@@ -53,13 +48,6 @@ function AwsLambdaExpressWrapper() {
   this.app.use(cors());
   this.app.use(ensureDynamoDbLocalRuns);
   this.app.use(bodyParser.json());
-  this.app.use(
-    swaggerValidator({
-      schema: swaggerFile,
-      validateRequest: true,
-      validateResponse: false, // Done by e.g. backend.test.js
-    })
-  );
 
   const logging = 0;
   if (logging) {
@@ -121,7 +109,7 @@ AwsLambdaExpressWrapper.prototype = {
           }
           this.server = this.app.listen(apiServerPort);
           this.server.on('error', reject);
-          this.server.on('listening', resolve);
+          this.server.on('listening', _ => resolve(this.server));
 
           // For quick .close()
           // See https://github.com/nodejs/node-v0.x-archive/issues/9066
@@ -136,7 +124,7 @@ AwsLambdaExpressWrapper.prototype = {
           this.server.setTimeout(timeoutInMs);
         });
       })
-      .then(_ => apiServerPort);
+      .then(server => server.address().port);
   },
 
   close() {

@@ -1,5 +1,5 @@
 # source this file, don't run it
-# Specifies what ports to use when running the web app and backend services
+# Specifies what settings to use when running the web app and backend services
 # on localhost
 
 # What port to use when running the web app dev server
@@ -21,3 +21,9 @@ export API_SERVER_CONTROL_PORT=7100
 # This is an implementation detail of the API server but we have
 # to care about that when running things locally
 export DYNAMODB_LOCAL_PORT=9000
+
+# Where to put the backend webpack output
+export BACKEND_BUILD_DIR=build-backend
+
+# What to call the backend webpack output
+export BACKEND_BUILD_FILENAME=api-server-localhost.build.js

@@ -7,6 +7,7 @@
 
 const AWS = require('aws-sdk');
 const crypto = require('crypto');
+const sequenceDiagramSchemaValidator = require('./schema-from-swagger-webpack-loader?name=SequenceDiagram!./swagger.json');
 
 AWS.config.update({
   region: 'eu-west-1',
@@ -36,12 +37,16 @@ function generateRandomId() {
   return randomString;
 }
 
-function createError(message, code) {
-  return { error: { message, code } };
+function createError(message, code, innererror) {
+  return { error: { message, code, innererror } };
 }
 
-module.exports.handler = (event, context, callback) => {
+const handler = (event, context, callback) => {
+  let errorInHandler = false;
   const done = (error, res) => {
+    if (error) {
+      errorInHandler = true;
+    }
     callback(null, {
       statusCode: error ? '400' : '200',
       body: JSON.stringify(error ? error : res),
@@ -54,19 +59,31 @@ module.exports.handler = (event, context, callback) => {
     });
   };
 
-  if (event.httpMethod === 'POST' && (!event.body || event.body.length <= 0)) {
-    done(createError('Need body of length > 0 when POST:ing', 'MissingBody'));
-  } else if (event.httpMethod === 'POST' && event.body.length > 50000) {
-    done(
-      createError(
-        'Max diagram size 50 kB (let us know if you need more)',
-        'TooLarge'
-      )
-    );
-  } else {
+  let sequenceDiagram = event.body ? JSON.parse(event.body) : undefined;
+  if (event.httpMethod === 'POST') {
+    if (!event.body || event.body.length <= 0) {
+      done(createError('Need body of length > 0 when POST:ing', 'MissingBody'));
+    } else if (event.body.length > 50000) {
+      done(
+        createError(
+          'Max diagram size 50 kB (let us know if you need more)',
+          'TooLarge'
+        )
+      );
+    } else if (!sequenceDiagramSchemaValidator(sequenceDiagram)) {
+      done(
+        createError(
+          'Request schema validation failed',
+          'FailedSchemaValidation',
+          sequenceDiagramSchemaValidator.errors
+        )
+      );
+    }
+  }
+
+  if (!errorInHandler) {
     const id = event.pathParameters && event.pathParameters.sequenceDiagramId;
     const revision = event.pathParameters && event.pathParameters.revision;
-    const sequenceDiagram = event.body ? JSON.parse(event.body) : undefined;
     const docClient = new AWS.DynamoDB.DocumentClient();
     const tableName = event.stageVariables.tableName;
 
@@ -177,3 +194,5 @@ module.exports.handler = (event, context, callback) => {
     }
   }
 };
+
+module.exports = { handler };

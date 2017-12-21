@@ -2,10 +2,11 @@
 # Starts services required for testing by CI tools
 set -e
 
-source localhost-ports.sh
+source local.env.sh
 
-# Serve backend
-node backend/api-server/api-server-localhost.js &
+# Build and serve backend
+node_modules/.bin/webpack --config backend/api-server/webpack.config.js
+node $BACKEND_BUILD_DIR/$BACKEND_BUILD_FILENAME &
 
 # Build and serve web app
 rm -rf build

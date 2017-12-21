@@ -49,8 +49,8 @@ ApiServerController.prototype = {
     return new Promise((resolve, reject) => {
       const server = this.app.listen(controllingServerPort);
       server.on('error', reject);
-      server.on('listening', resolve);
-    }).then(_ => controllingServerPort);
+      server.on('listening', _ => resolve(server));
+    }).then(server => server.address().port);
   },
 };
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export CI=true
-source localhost-ports.sh
+source local.env.sh
 
 notify_travis_fail() {
   notify-send -u critical 'Travis CI will fail'
