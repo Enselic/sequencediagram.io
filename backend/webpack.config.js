@@ -1,4 +1,4 @@
-// webpack --config backend/api-server/webpack.config.js
+// webpack --config backend/webpack.config.js
 
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');

@@ -5,7 +5,7 @@
             "type": "node",
             "request": "launch",
             "name": "api-server-localhost.js",
-            "program": "${workspaceFolder}/backend/api-server/api-server-localhost.js"
+            "program": "${workspaceFolder}/build-backend/api-server-localhost.build.js"
         },
         {
             "type": "chrome",

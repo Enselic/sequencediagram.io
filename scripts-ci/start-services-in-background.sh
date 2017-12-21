@@ -5,7 +5,7 @@ set -e
 source local.env.sh
 
 # Build and serve backend
-node_modules/.bin/webpack --config backend/api-server/webpack.config.js
+node_modules/.bin/webpack --config backend/webpack.config.js
 node $BACKEND_BUILD_DIR/$BACKEND_BUILD_FILENAME &
 
 # Build and serve web app

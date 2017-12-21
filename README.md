@@ -74,6 +74,7 @@ Folder structure and technology
 ----------------------------
 
 ```
+public/
 src/
 Web app using React (via create-react-app) and Redux
 
@@ -82,13 +83,17 @@ NodeJS backend using AWS Lambda, AWS API Gateway, AWS DynamoDB, with localhost w
 
 end-to-end-tests/
 Automated and high level tests of both the web app and backend using selenium-webdriver
+
+config/
+scripts/build.js
+Configuration and script for building production version of the web app.
 ```
 
 Running tests like Travis CI
 ----------------------------
 
 ```bash
-tools/run-tests-like-travis-ci.sh
+scripts-ci/run-tests-like-travis-ci.sh
 ```
 
 
@@ -103,6 +108,8 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- Make diagrams harder to modify by accident
+- Enable password protection for changing diagrams
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - make it easy to 'fork' a diagram
 - add support for finding and using revisions
