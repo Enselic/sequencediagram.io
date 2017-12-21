@@ -45,10 +45,10 @@
   },
   "scripts": {
     "start": "REACT_APP_VERSION=$(git describe) ./start.sh",
-    "build": "REACT_APP_VERSION=$(git describe) react-scripts build",
+    "build": "REACT_APP_VERSION=$(git describe) node scripts/build.js",
     "test": "jest --runInBand",
     "eject": "react-scripts eject",
-    "prettier-write": "node_modules/.bin/prettier --write '{backend,end-to-end-tests,src}/**/*.js'"
+    "prettier-write": "node_modules/.bin/prettier --write '{backend,config,end-to-end-tests,scripts,src}/**/*.js'"
   },
   "prettier": {
     "trailingComma": "es5",
