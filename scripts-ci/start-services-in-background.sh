@@ -10,5 +10,5 @@ node $BACKEND_BUILD_DIR/$BACKEND_BUILD_FILENAME &
 
 # Build and serve web app
 rm -rf build
-REACT_APP_API_SERVER=http://localhost:$API_SERVER_PORT npm run build
+CODE_COVERAGE=true REACT_APP_API_SERVER=http://localhost:$API_SERVER_PORT npm run build
 node_modules/.bin/serve -p $WEB_APP_PORT -s build &
