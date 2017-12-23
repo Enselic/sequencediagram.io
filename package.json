@@ -59,7 +59,7 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "./config/babel-preset-sequencediagram-io"
     ]
   }
 }

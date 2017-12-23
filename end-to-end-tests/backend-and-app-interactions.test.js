@@ -11,6 +11,7 @@ import {
   buildDriverAndSetupEnv,
   getHostAndPort,
   goTo,
+  makeApiServer,
   renameComponentFromTo,
   setupNoBrowserLogOutputTest,
   waitForElement,
@@ -277,16 +278,6 @@ function isError(status, body, expectedMessagePart, expectedCode) {
     body.error.code === expectedCode &&
     body.error.message.match(expectedMessagePart)
   );
-}
-
-async function makeApiServer(action) {
-  const response = await fetch('http://localhost:7100/' + action, {
-    method: 'POST',
-  });
-  if (!response.ok) {
-    throw new Error('response.status=', response.status);
-  }
-  return response;
 }
 
 describe('backend unit tests', async () => {

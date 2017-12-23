@@ -6,7 +6,7 @@ source local.env.sh
 
 # Start backend dev server
 mkdir -p $BACKEND_BUILD_DIR && touch $BACKEND_BUILD_DIR/$BACKEND_BUILD_FILENAME
-webpack --watch --config backend/webpack.config.js &
+NODE_ENV=development webpack --watch --config backend/webpack.config.js &
 nodemon --watch $BACKEND_BUILD_FILENAME $BACKEND_BUILD_DIR/$BACKEND_BUILD_FILENAME &
 
 # Start front end dev server

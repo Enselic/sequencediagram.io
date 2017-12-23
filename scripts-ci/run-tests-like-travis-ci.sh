@@ -18,7 +18,7 @@ kill_running_services() {
 }
 
 # Make sure it's a fresh start
-rm -rf build*
+rm -rf build* coverage*
 kill_running_services
 
 scripts-ci/prepare-for-code-coverage.sh || notify_travis_fail

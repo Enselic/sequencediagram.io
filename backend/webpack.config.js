@@ -12,4 +12,15 @@ module.exports = {
     path: path.join(process.cwd(), process.env.BACKEND_BUILD_DIR),
     filename: process.env.BACKEND_BUILD_FILENAME,
   },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: require.resolve('babel-loader'),
+        options: {
+          compact: true,
+        },
+      },
+    ],
+  },
 };

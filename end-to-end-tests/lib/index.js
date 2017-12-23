@@ -7,6 +7,7 @@ import {
 } from 'selenium-webdriver/firefox';
 import { writeFileSync } from 'fs';
 import { deserialize } from './legacy-deserialize';
+import fetch from 'node-fetch';
 
 const SeleniumPromise = promise.Promise;
 
@@ -84,18 +85,34 @@ async function writeCodeCoverageDataIfPresent(driver) {
   }
 }
 
+export async function makeApiServer(action) {
+  const response = await fetch('http://localhost:7100/' + action, {
+    method: 'POST',
+  });
+  if (!response.ok) {
+    throw new Error('response.status=', response.status);
+  }
+  return response;
+}
+
 export function buildDriverAndSetupEnv(browser) {
   // The default timeout is to strict for our UI tests, so increase it
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
+  global.jasmine.DEFAULT_TIMEOUT_INTERVAL = applyTimeoutFactor(10 * 1000);
 
   const driver = buildDriver(browser);
+
+  beforeAll(async () => {
+    return makeApiServer('listen');
+  });
 
   afterEach(async () => {
     return writeCodeCoverageDataIfPresent(driver);
   });
 
-  afterAll(() => {
-    return driver.quit();
+  afterAll(async () => {
+    await driver.quit();
+    // Will write code coverage data for backend
+    return makeApiServer('close');
   });
 
   return driver;

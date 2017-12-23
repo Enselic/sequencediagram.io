@@ -1,10 +1,14 @@
 const express = require('express');
 
+const verbose = false;
+
 const controllingServerPort = process.env.API_SERVER_CONTROL_PORT;
 
 function controllerMessage(res, message) {
   res.send(message);
-  console.log(message);
+  if (verbose) {
+    console.log(message);
+  }
 }
 
 function ApiServerController(apiServer) {

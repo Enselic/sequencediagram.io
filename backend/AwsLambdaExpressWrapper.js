@@ -1,3 +1,4 @@
+const fs = require('fs');
 const AWS = require('aws-sdk');
 const http = require('http');
 const express = require('express');
@@ -133,6 +134,15 @@ AwsLambdaExpressWrapper.prototype = {
       // if it runs or not from a web app perspective, and if we kill it we lose
       // state we want to keep during tests since we use -inMemory
       if (this.server) {
+        if (global.__coverage__) {
+          // Simply to avoid collision without global state
+          const randomNumber = Math.random() * Number.MAX_SAFE_INTEGER;
+          fs.writeFileSync(
+            `./coverage-data/coverage-${randomNumber}.json`,
+            JSON.stringify(global.__coverage__)
+          );
+        }
+
         this.server.on('error', reject);
         this.server.on('close', resolve);
         this.server.close();
