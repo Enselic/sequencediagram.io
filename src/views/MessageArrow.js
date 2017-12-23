@@ -4,6 +4,7 @@ import {
   MESSAGE_BUTTON_WIDTH,
 } from './MessageButton';
 import RemoveButton from './RemoveButton';
+import { SvgMessageLine, SvgMessageArrow } from './../exporters/export-svg';
 import { eatMouseDownCallback } from './utils';
 
 function createAnchorButton(type, message) {
@@ -163,31 +164,11 @@ export default class MessageArrow extends React.Component {
             }}
           >
             <svg width="100%" height="35" preserveAspectRatio="none">
-              {selfSentMessage ? (
-                <path
-                  style={{
-                    fill: 'none',
-                    stroke: '#000000',
-                    strokeWidth: 2,
-                    strokeDasharray: '8,' + (isReply ? '8' : '0'),
-                  }}
-                  d="m 0,13 c 0,0 39,-1 40,8 1,11 -36,9 -36,9"
-                />
-              ) : (
-                <line
-                  x1="3"
-                  y1="10"
-                  x2="100%"
-                  y2="10"
-                  transform={'translate(' + (pointsLeft ? '-3' : '0') + ' 0)'}
-                  style={{
-                    fill: 'none',
-                    stroke: '#000000',
-                    strokeWidth: '2',
-                    strokeDasharray: '8,' + (isReply ? '8' : '0'),
-                  }}
-                />
-              )}
+              <SvgMessageLine
+                selfSentMessage={selfSentMessage}
+                isReply={isReply}
+                pointsLeft={pointsLeft}
+              />
             </svg>
           </div>
           <div
@@ -203,17 +184,7 @@ export default class MessageArrow extends React.Component {
               viewBox="0 0 20 20"
               transform={pointsLeft ? undefined : 'rotate(180)'}
             >
-              <path
-                style={{
-                  fill: isAsync ? 'none' : '#000000',
-                  stroke: '#000000',
-                  strokeWidth: 2,
-                }}
-                d={
-                  'M 2,2 C 18,10 18,10 18,10 L 2,18' +
-                  (isAsync ? '' : 'z') /* close path */
-                }
-              />
+              <SvgMessageArrow isAsync={isAsync} />
             </svg>
           </div>
         </div>
