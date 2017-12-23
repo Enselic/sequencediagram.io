@@ -22,14 +22,6 @@ export function escapePendingOperation() {
   return { type: 'ESCAPE_PENDING_OPERATION' };
 }
 
-export function showShareInfo() {
-  return { type: 'SHOW_SHARE_INFO' };
-}
-
-export function hideShareInfo() {
-  return { type: 'HIDE_SHARE_INFO' };
-}
-
 export function mouseEnterLifeline(id, x, y) {
   return { type: 'MOUSE_ENTER_LIFELINE', id, x, y };
 }
@@ -89,15 +81,10 @@ export default function(state = {}, action) {
       return {
         ...state,
         componentRenamed: undefined,
-        showShareInfo: undefined,
         message: undefined,
         touchWarn: undefined,
         showWorksOffline: undefined,
       };
-    case 'SHOW_SHARE_INFO':
-      return { ...state, showShareInfo: true };
-    case 'HIDE_SHARE_INFO':
-      return { ...state, showShareInfo: undefined };
     case 'MOUSE_ENTER_LIFELINE':
       return {
         ...state,

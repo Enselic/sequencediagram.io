@@ -21,17 +21,21 @@ export default function(props) {
     // TODO: dispatch(ac.editComponentName(, newName, true /*preselect*/));
   }
 
+  const menuItemProps = {
+    style: {
+      backgroundColor: 'transparent',
+      border: 'none',
+      fontSize: 25,
+      padding: '5px 20px',
+      color: '#002456',
+    },
+    className: 'menu-button',
+  };
+
   function Button(props) {
     return (
       <button
-        className="menu-button"
-        style={{
-          backgroundColor: 'transparent',
-          border: 'none',
-          fontSize: 25,
-          padding: '5px 20px',
-          color: '#002456',
-        }}
+        {...menuItemProps}
         disabled={props.disabled}
         onClick={props.onClick}
       >
@@ -40,7 +44,9 @@ export default function(props) {
     );
   }
 
-  const { showShareInfo, message } = pending;
+  const { message } = pending;
+  const { idOnServer } = reduxState.backend;
+  const svgName = `sequencediagram.io-${idOnServer}`;
 
   // Show both Undo and Redo if one of them shows, but enable only the
   // one that can be clicked. We do this so that if the user frantically
@@ -95,13 +101,14 @@ export default function(props) {
         </Button>
       )}
       {showShare && (
-        <Button
-          disabled={!showUndo && !showRedo}
-          onClick={() =>
-            dispatch(showShareInfo ? ac.hideShareInfo() : ac.showShareInfo())}
+        <a
+          id="download-as-svg"
+          {...menuItemProps}
+          download={svgName}
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='300px' height='300px'> <title>dummy</title> <circle cx='110' cy='100' r='50' style='fill: #000;'/> </svg>"
         >
-          {showShareInfo ? 'Hide share info' : 'Share'}
-        </Button>
+          Download as SVG
+        </a>
       )}
       {showTip && (
         <span className="tip">

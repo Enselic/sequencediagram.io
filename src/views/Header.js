@@ -1,6 +1,5 @@
 import React from 'react';
 import { isChrome } from './utils';
-import Kbd from './Kbd';
 
 const gitMasterBuild = document.location.host.indexOf('git-master') !== -1;
 
@@ -13,7 +12,7 @@ function Info(props) {
 }
 
 export default function(props) {
-  const { showShareInfo, touchWarn, showNewContentAvailable } = props.pending;
+  const { touchWarn, showNewContentAvailable } = props.pending;
 
   return (
     <div
@@ -40,21 +39,6 @@ export default function(props) {
         <Info>
           <b>Unsupported browser:</b> Your browser is not supported yet, please
           use Google Chrome or contribute more browser support via GitHub
-        </Info>
-      )}
-
-      {showShareInfo && (
-        <Info>
-          <b>Share by URL:</b> The current URL is a permalink and can be shared
-          freely.
-        </Info>
-      )}
-
-      {showShareInfo && (
-        <Info>
-          <b>Share by PNG:</b> <Kbd>F12</Kbd> (for <i>Developer Tools</i>) then{' '}
-          <Kbd>Ctrl/Cmd + Shift + P</Kbd> (for <i>Command Menu</i>) then{' '}
-          <Kbd>Capture full size screenshot</Kbd>.
         </Info>
       )}
 

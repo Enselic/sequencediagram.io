@@ -29,31 +29,6 @@ it('change to state without messages after state with messages', async () => {
   return assertFragment(driver, 'o100,Hello');
 });
 
-it('hints shown when clicking "Share"', async () => {
-  await goTo(driver, 'empty');
-  await clickText(driver, 'Add object'); // To make Share button appear
-  await clickText(driver, 'Share');
-  await waitForElement(driver, 'Share by PNG');
-  return waitForElement(driver, 'Share by URL');
-});
-
-it(
-  'hints hide when clicking "Hide share info"',
-  async () => {
-    await goTo(driver, 'empty');
-    await clickText(driver, 'Add object'); // To make Share button appear
-    await clickText(driver, 'Share');
-    await clickText(driver, 'Hide share info');
-    return reversePromise(
-      Promise.all([
-        waitForElement(driver, 'Share by PNG'),
-        waitForElement(driver, 'Share by URL'),
-      ])
-    );
-  },
-  applyTimeoutFactor(20 * 1000)
-);
-
 const tipText = 'Click "Add object" to start';
 
 it('tip shown for default diagram', async () => {
