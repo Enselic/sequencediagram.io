@@ -17,7 +17,7 @@ export function SvgMessageLine(props) {
       y1="10"
       x2="100%"
       y2="10"
-      transform={'translate(' + (props.pointsLeft ? '-3' : '0') + ' 0)'}
+      transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
       style={{
         fill: 'none',
         stroke: '#000000',

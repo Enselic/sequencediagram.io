@@ -46,20 +46,20 @@ export default class MessageArrow extends React.Component {
     const { id, isReply, isAsync } = message;
 
     const selfSentMessage = direction === 0;
-    const pointsLeft = direction > 0;
+    const pointsLeft = direction <= 0;
     const showControlsButNotPending = showControls && !isPending;
     const lifelineWidth = 1;
 
     const flipExtraStyle = {
       position: 'absolute',
-      left: !pointsLeft ? undefined : 0,
-      right: !pointsLeft ? 0 : undefined,
+      left: pointsLeft ? undefined : 0,
+      right: pointsLeft ? 0 : undefined,
     };
 
     const arrowExtraStyle = {
       position: 'absolute',
-      left: pointsLeft ? undefined : 0,
-      right: pointsLeft ? 0 : undefined,
+      left: !pointsLeft ? undefined : 0,
+      right: !pointsLeft ? 0 : undefined,
     };
 
     const lineExtraStyle = {
@@ -94,7 +94,7 @@ export default class MessageArrow extends React.Component {
         )}
 
         {showControlsButNotPending &&
-          (pointsLeft || selfSentMessage ? (
+          (!pointsLeft || selfSentMessage ? (
             <this.MessageSenderButton {...this.props} />
           ) : (
             <this.MessageReceiverButton {...this.props} />
@@ -182,7 +182,7 @@ export default class MessageArrow extends React.Component {
               width="20"
               height="20"
               viewBox="0 0 20 20"
-              transform={pointsLeft ? undefined : 'rotate(180)'}
+              transform={pointsLeft ? 'rotate(180)' : undefined}
             >
               <SvgMessageArrow isAsync={isAsync} />
             </svg>
@@ -192,9 +192,9 @@ export default class MessageArrow extends React.Component {
         {showControlsButNotPending &&
           !selfSentMessage &&
           (pointsLeft ? (
-            <this.MessageReceiverButton {...this.props} />
-          ) : (
             <this.MessageSenderButton {...this.props} />
+          ) : (
+            <this.MessageReceiverButton {...this.props} />
           ))}
       </div>
     );
