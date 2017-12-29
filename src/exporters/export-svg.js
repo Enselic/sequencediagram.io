@@ -31,6 +31,7 @@ export function SvgMessageLine(props) {
 export function SvgMessageArrow(props) {
   return (
     <path
+      transform={props.pointsLeft ? 'translate(20 20) rotate(180)' : undefined}
       style={{
         fill: props.isAsync ? 'none' : '#000000',
         stroke: '#000000',

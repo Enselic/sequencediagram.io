@@ -178,13 +178,8 @@ export default class MessageArrow extends React.Component {
               top: selfSentMessage ? 20 : 5,
             }}
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              transform={pointsLeft ? 'rotate(180)' : undefined}
-            >
-              <SvgMessageArrow isAsync={isAsync} />
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <SvgMessageArrow isAsync={isAsync} pointsLeft={pointsLeft} />
             </svg>
           </div>
         </div>
