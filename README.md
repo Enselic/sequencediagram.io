@@ -47,6 +47,7 @@ Contributions of any kind are very welcomed however!
 - Support more browsers i.e. make the test suite work on more browsers
 - Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
 - Support SVG export to allow embedding in in e.g. PDFs. For now, users can take PNG screenshots of the app
+- Integrate with user accounts from other services to allow user accounts to take ownership of diagrams
 - Let the user add so called activation boxes to lifelines to represent processing
 - Support adding a title to the diagram (work in progress: https://github.com/Enselic/sequencediagram.io/tree/add-title)
 - Allow nesting of activation boxes
@@ -87,6 +88,12 @@ Automated and high level tests of both the web app and backend using selenium-we
 config/
 scripts/build.js
 Configuration and script for building production version of the web app.
+
+scripts-ci/
+Scripts used by CI. To run it all locally, see below.
+
+static/
+Things at http://static.sequencediagram.io/
 ```
 
 Running tests like Travis CI
@@ -97,19 +104,10 @@ scripts-ci/run-tests-like-travis-ci.sh
 ```
 
 
-Misc
-====
-
-Diagram using all current features, i.e. the "most advanced" diagram you can create:
-https://SequenceDiagram.io/#o5,Friend;o4,User;o1,Web%20browser;o2,Server;m8,o5,o4,say(%22visit%20URL%22),a;m3,o4,o1,enter%20URL;m4,o4,o1,Press%20return;m1,o1,o2,GET%20%2F;m5,o2,o1,response,r;m6,o1,o1,parse%20and%20render;m7,o1,o4,display
-
-
 TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- Make diagrams harder to modify by accident
-- Enable password protection for changing diagrams
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - make it easy to 'fork' a diagram
 - add support for finding and using revisions
