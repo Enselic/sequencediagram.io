@@ -49,6 +49,11 @@ export default class App extends React.Component {
         return;
       }
 
+      if (this.props.state.backend.fixedRevision) {
+        // No changes allowed; bail
+        return;
+      }
+
       const thiz = this;
       const isMovingObject = movedComponent.id[0] === 'o';
 
@@ -239,6 +244,10 @@ export default class App extends React.Component {
 
     function handleLifelineClick(object) {
       return e => {
+        if (usefulProps.reduxState.backend.fixedRevision) {
+          // Don't allow changes
+          return;
+        }
         let action;
         if (thiz.state.messageAnchorMoved) {
           const newMessage = {
@@ -272,7 +281,8 @@ export default class App extends React.Component {
     const showControls =
       !pending.message &&
       !this.state.componentMoved &&
-      !this.state.messageAnchorMoved;
+      !this.state.messageAnchorMoved &&
+      !state.backend.fixedRevision;
 
     const hoveredLifelineX = layout[pending.lifelineHoveredKey]
       ? layout[pending.lifelineHoveredKey].lifelineX
@@ -343,7 +353,8 @@ export default class App extends React.Component {
             />
           )}
 
-          {pending.lifelineHoveredKey &&
+          {!state.backend.fixedRevision &&
+          pending.lifelineHoveredKey &&
           (!this.state.componentMoved ||
             this.state.componentMoved.component.part ||
             this.state.messageAnchorMoved) && (

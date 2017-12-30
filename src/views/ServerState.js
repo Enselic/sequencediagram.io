@@ -5,6 +5,7 @@ export default function ServerState(props) {
   const {
     idOnServer,
     revisionOnServer,
+    fixedRevision,
     nbrOfPendingOperations,
     error,
   } = props.reduxState.backend;
@@ -18,7 +19,8 @@ export default function ServerState(props) {
     idOnServer &&
     revisionOnServer &&
     revisionOnServer !== ac.TOO_OLD &&
-    nbrOfPendingOperations === 0
+    nbrOfPendingOperations === 0 &&
+    !fixedRevision
   ) {
     message = 'Saved';
   } else {

@@ -16,12 +16,12 @@ export function newDiagram(initialDiagram) {
   };
 }
 
-export function loadDiagram(id) {
+export function loadDiagram(id, revision) {
   return (dispatch, getState) => {
-    setDiagramAsPending(dispatch, getState);
+    setDiagramAsPending(dispatch, getState, !!revision);
 
-    fetch(server + '/sequencediagrams/' + id)
-      .then(updateIdAndRevision(dispatch, getState))
+    fetch(server + '/sequencediagrams/' + id + (revision ? '/' + revision : ''))
+      .then(updateIdAndRevision(dispatch, getState, revision))
       .then(body => {
         dispatch(
           replaceCore(
@@ -50,7 +50,7 @@ export function saveDiagram(diagram) {
   };
 }
 
-function setDiagramAsPending(dispatch, getState) {
+function setDiagramAsPending(dispatch, getState, fixedRevision) {
   // Make sure we're not already doing this
   const { backend } = getState();
   if (backend.idOnServer === PENDING) {
@@ -58,7 +58,7 @@ function setDiagramAsPending(dispatch, getState) {
   }
 
   // Let the UI know we've started a query
-  dispatch(setDiagramPending());
+  dispatch(setDiagramPending(fixedRevision));
 }
 
 function doPost(path, state) {
@@ -72,7 +72,7 @@ function doPost(path, state) {
   });
 }
 
-function updateIdAndRevision(dispatch, getState) {
+function updateIdAndRevision(dispatch, getState, fixedRevision) {
   return response =>
     response.json().then(body => {
       const currentRevision = getState().backend.revisionOnServer;
@@ -87,10 +87,11 @@ function updateIdAndRevision(dispatch, getState) {
           typeof currentRevision !== 'number' ||
           currentRevision < body.revision
         ) {
-          dispatch(setIdAndRevision(body.id, body.revision));
+          dispatch(setIdAndRevision(body.id, body.revision, !!fixedRevision));
 
           // Update URL
-          const wantedPath = '/' + body.id;
+          const wantedPath =
+            '/' + body.id + (fixedRevision ? '/' + fixedRevision : '');
           if (window.location.pathname !== wantedPath) {
             window.history.replaceState(null, null, wantedPath);
           }
@@ -127,8 +128,8 @@ function fetchCatchHandler(dispatch, actionIfFailed) {
   };
 }
 
-function setDiagramPending() {
-  return { type: 'SET_DIAGRAM_PENDING' };
+function setDiagramPending(fixedRevision) {
+  return { type: 'SET_DIAGRAM_PENDING', fixedRevision };
 }
 
 function setDiagramMissing() {
@@ -139,8 +140,8 @@ function setRevisionPending() {
   return { type: 'SET_REVISION_PENDING' };
 }
 
-function setIdAndRevision(id, revision) {
-  return { type: 'SET_ID_AND_REVISION', id, revision };
+function setIdAndRevision(id, revision, fixedRevision) {
+  return { type: 'SET_ID_AND_REVISION', id, revision, fixedRevision };
 }
 
 /**
@@ -164,6 +165,7 @@ export default function(
   state = {
     idOnServer: undefined,
     revisionOnServer: undefined,
+    fixedRevision: undefined,
     error: undefined,
     nbrOfPendingOperations: 0,
   },
@@ -175,6 +177,7 @@ export default function(
         ...state,
         idOnServer: PENDING,
         revisionOnServer: PENDING,
+        fixedRevision: action.fixedRevision,
         nbrOfPendingOperations: state.nbrOfPendingOperations + 1,
         error: undefined,
       };
@@ -213,6 +216,7 @@ export default function(
         ...state,
         idOnServer: action.id,
         revisionOnServer: action.revision,
+        fixedRevision: action.fixedRevision,
         error: undefined,
       };
 

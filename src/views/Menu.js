@@ -46,16 +46,16 @@ export default function(props) {
   }
 
   const { message } = pending;
-  const { idOnServer } = reduxState.backend;
+  const { idOnServer, fixedRevision } = reduxState.backend;
   const svgName = `sequencediagram.io-${idOnServer}.svg`;
 
   // Show both Undo and Redo if one of them shows, but enable only the
   // one that can be clicked. We do this so that if the user frantically
   // clicks Undo, he does not accidentally start clicking the Redo button
   // when the Undo button is removed
-  const undoOrRedoShown = (showUndo || showRedo) && !message;
+  const undoOrRedoShown = (showUndo || showRedo) && !message && !fixedRevision;
 
-  const cancelIsShown = !undoOrRedoShown && message;
+  const cancelIsShown = !undoOrRedoShown && !!message;
 
   // To keep UI clean, especially on first visit when we want users to
   // discover the 'Add object' menu item, only show Share button if Undo
@@ -65,7 +65,11 @@ export default function(props) {
   // We only want to show the hint if 'Add object' is the only
   // item (otherwise it will point at the wrong item)
   const showTip =
-    showTipIfSpace && !showShare && !undoOrRedoShown && !cancelIsShown;
+    showTipIfSpace &&
+    !showShare &&
+    !undoOrRedoShown &&
+    !cancelIsShown &&
+    !fixedRevision;
 
   return (
     <div
@@ -76,7 +80,9 @@ export default function(props) {
         alignItems: 'baseline',
       }}
     >
-      <Button onClick={addObjectAndEditName}>Add object</Button>
+      {!fixedRevision && (
+        <Button onClick={addObjectAndEditName}>Add object</Button>
+      )}
       {undoOrRedoShown && (
         <Button
           disabled={!showUndo}
@@ -101,7 +107,7 @@ export default function(props) {
           Cancel <Kbd>Esc</Kbd>
         </Button>
       )}
-      {showShare && (
+      {(showShare || fixedRevision) && (
         <a
           id="download-as-svg"
           {...menuItemProps}

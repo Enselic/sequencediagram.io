@@ -35,8 +35,11 @@ function dispatch(action) {
 
 // Either create a new diagram or load an existing one
 const { pathname } = window.location;
-const idMatch = pathname.match(/([0-9a-zA-Z]{4,20}$)/);
-if (idMatch) {
+const idAndRevisionMatch = pathname.match(/^\/([0-9a-zA-Z]{4,20})\/([0-9]+)$/);
+const idMatch = pathname.match(/^\/([0-9a-zA-Z]{4,20})$/);
+if (idAndRevisionMatch) {
+  dispatch(ac.loadDiagram(idAndRevisionMatch[1], idAndRevisionMatch[2]));
+} else if (idMatch) {
   dispatch(ac.loadDiagram(idMatch[1]));
 } else {
   createNewDiagram();
@@ -86,7 +89,11 @@ function saveChanges() {
     lastSavedDiagram = currentDiagram;
   }
 }
-store.subscribe(saveChanges);
+if (!idAndRevisionMatch) {
+  // We only want to subscribe to changes if we're not showing a specific
+  // (and fixed) revision
+  store.subscribe(saveChanges);
+}
 
 // Initial render
 doRender();
