@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { OBJECT_NAME_PADDING, default as layouter } from '../layouter';
 
 export function SvgMessageLine(props) {
   return props.selfSentMessage ? (
@@ -15,7 +17,7 @@ export function SvgMessageLine(props) {
     <line
       x1="3"
       y1="10"
-      x2="100%"
+      x2={props.overrideWidth || '100%'}
       y2="10"
       transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
       style={{
@@ -30,18 +32,30 @@ export function SvgMessageLine(props) {
 
 export function SvgMessageArrow(props) {
   return (
-    <path
-      transform={props.pointsLeft ? 'translate(20 20) rotate(180)' : undefined}
-      style={{
-        fill: props.isAsync ? 'none' : '#000000',
-        stroke: '#000000',
-        strokeWidth: 2,
-      }}
-      d={
-        'M 2,2 C 18,10 18,10 18,10 L 2,18' +
-        (props.isAsync ? '' : 'z') /* close path */
+    <g
+      transform={
+        !props.localArrowTranslate || props.pointsLeft ? (
+          undefined
+        ) : (
+          `translate(${props.width - 20} 0)`
+        )
       }
-    />
+    >
+      <path
+        transform={
+          props.pointsLeft ? 'translate(20 20) rotate(180)' : undefined
+        }
+        style={{
+          fill: props.isAsync ? 'none' : '#000000',
+          stroke: '#000000',
+          strokeWidth: 2,
+        }}
+        d={
+          'M 2,2 C 18,10 18,10 18,10 L 2,18' +
+          (props.isAsync ? '' : 'z') /* close path */
+        }
+      />
+    </g>
   );
 }
 
@@ -51,5 +65,90 @@ export function SvgMessageArrow(props) {
  * from swagger.json
  */
 export function exportSvg(sequenceDiagram) {
-  /* TODO */
+  const averageCharWidth = 7;
+  const layout = layouter(
+    name => name.length * averageCharWidth /* TODO: hack */,
+    sequenceDiagram.objects,
+    sequenceDiagram.messages
+  );
+
+  const svgTree = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={`${layout.width}px`}
+      height={`${layout.height}px`}
+    >
+      {sequenceDiagram.objects.map(object => {
+        const objectLayout = layout[object.id];
+        const fontRenderHeight = 21;
+        const nameWidth =
+          OBJECT_NAME_PADDING.LEFT_RIGHT * 2 +
+          object.name.length * averageCharWidth;
+        const nameHeight =
+          OBJECT_NAME_PADDING.TOP_BOTTOM * 2 + fontRenderHeight;
+        return (
+          <g key={object.id}>
+            <line
+              x1={objectLayout.lifelineX}
+              y1={objectLayout.top}
+              x2={objectLayout.lifelineX}
+              y2={objectLayout.top + layout.height}
+              stroke="black"
+              strokeDasharray="2"
+            />
+            <rect
+              width={nameWidth}
+              height={nameHeight}
+              x={objectLayout.lifelineX - nameWidth / 2}
+              y={objectLayout.top - OBJECT_NAME_PADDING.TOP_BOTTOM}
+              fill="#ffe761"
+            />
+            <text
+              textAnchor="middle"
+              fontFamily="sans-serif"
+              fontSize={16}
+              x={objectLayout.lifelineX}
+              y={objectLayout.top + fontRenderHeight - 6}
+            >
+              {object.name}
+            </text>
+          </g>
+        );
+      })}
+      {sequenceDiagram.messages.map(message => {
+        const messageLayout = layout[message.id];
+        const pointsLeft = messageLayout.direction <= 0;
+        const messageWidth = messageLayout.width;
+        return (
+          <g
+            key={message.id}
+            transform={`translate(${messageLayout.left},${messageLayout.top})`}
+          >
+            <text
+              textAnchor="middle"
+              x={messageWidth / 2}
+              y={-8}
+              fontFamily="sans-serif"
+              fontSize={16}
+            >
+              {message.name}
+            </text>
+            <SvgMessageLine
+              {...message}
+              pointsLeft={pointsLeft}
+              overrideWidth={messageWidth}
+            />
+            <SvgMessageArrow
+              {...message}
+              pointsLeft={pointsLeft}
+              localArrowTranslate={true}
+              width={messageWidth}
+            />
+          </g>
+        );
+      })}
+    </svg>
+  );
+  const svgOutput = ReactDOMServer.renderToStaticMarkup(svgTree);
+  return svgOutput;
 }
