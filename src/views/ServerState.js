@@ -22,7 +22,7 @@ export default function ServerState(props) {
     nbrOfPendingOperations === 0 &&
     !fixedRevision
   ) {
-    message = 'Saved';
+    message = `Saved revision ${revisionOnServer}`;
   } else {
     message = '';
   }
