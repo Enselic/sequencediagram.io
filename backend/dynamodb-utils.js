@@ -30,12 +30,7 @@ module.exports = {
               },
             },
             (err, data) => {
-              // If the table already exists; fine. Otherwise reject()
-              if (
-                err &&
-                err.code !== 'ResourceInUseException' &&
-                err.message !== 'Cannot create preexisting table'
-              ) {
+              if (err) {
                 reject(err);
               } else {
                 resolve(port);
@@ -44,13 +39,6 @@ module.exports = {
           );
         })
         .catch(reject);
-    });
-  },
-  stopDynamoDbLocal(port) {
-    return new Promise((resolve, reject) => {
-      DynamoDbLocal.stop(port);
-      // We could poll for port to go down, but we're lazy
-      setTimeout(resolve, 2000);
     });
   },
 };

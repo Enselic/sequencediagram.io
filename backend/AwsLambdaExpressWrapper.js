@@ -4,8 +4,6 @@ const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const morganBody = require('morgan-body');
 const awsLambda = require('./aws-lambda-handler');
 const dynamodbUtils = require('./dynamodb-utils');
 
@@ -50,11 +48,6 @@ function AwsLambdaExpressWrapper() {
   this.app.use(ensureDynamoDbLocalRuns);
   this.app.use(bodyParser.json());
 
-  const logging = 0;
-  if (logging) {
-    this.app.use(morgan('combined'));
-    morganBody(this.app);
-  }
   const that = this;
   this.app.use(function(req, res, next) {
     setTimeout(next, that.extraDelayMs || 0);
@@ -73,9 +66,9 @@ function AwsLambdaExpressWrapper() {
         throw err;
       }
       res.status(parseInt(data.statusCode, 10));
-      for (var header in res.headers) {
-        if (res.headers.hasOwnProperty(header)) {
-          res.setHeader(header, res.headers[header]);
+      for (var header in data.headers) {
+        if (data.headers.hasOwnProperty(header)) {
+          res.setHeader(header, data.headers[header]);
         }
       }
       res.send(data.body);
