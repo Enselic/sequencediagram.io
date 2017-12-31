@@ -69,7 +69,7 @@ function buildDriver(browser) {
   return builder.build();
 }
 
-async function writeCodeCoverageDataIfPresent(driver) {
+export async function writeCodeCoverageDataIfPresent(driver) {
   // Get coverage data from browser
   const __coverage__ = await driver.executeScript(
     'return "__coverage__" in window ? window.__coverage__ : undefined;'
@@ -180,6 +180,22 @@ export async function mouseMoveInSteps(driver, totalOffset) {
     await sleepIfHumanObserver(driver, 1.5 / steps);
   }
   return true;
+}
+
+export async function waitForPort(driver, port) {
+  let triesLeft = 120;
+  while (triesLeft--) {
+    try {
+      await fetch(`http://localhost:${port}`);
+      break;
+    } catch (e) {
+      // Try again after waiting a bit
+      await driver.sleep(500);
+    }
+  }
+  if (triesLeft <= 0) {
+    throw new Error('timeout waiting for ' + port);
+  }
 }
 
 export async function dragAndDrop(driver, elementText, offset) {

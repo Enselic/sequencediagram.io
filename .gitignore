@@ -4,12 +4,10 @@
 /node_modules
 
 # testing
-/coverage
-/coverage-data
+/coverage*
 
 # production
-/build
-/build-backend
+/build*
 
 # misc
 .DS_Store

@@ -45,7 +45,7 @@
   },
   "scripts": {
     "start": "REACT_APP_VERSION=$(git describe) scripts/start.sh",
-    "build": "REACT_APP_VERSION=$(git describe) node scripts/build.js",
+    "build": "env | grep ^REACT_APP_VERSION= && node scripts/build.js",
     "test": "jest --runInBand",
     "eject": "react-scripts eject",
     "prettier-write": "node_modules/.bin/prettier --write '{backend,config,end-to-end-tests,scripts,src}/**/*.js'"
