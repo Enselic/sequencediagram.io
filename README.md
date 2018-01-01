@@ -108,11 +108,11 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- end-to-end-test for fixed revision
 - code coverage for JSON schema validator
 - Add link to release notes in message about new version
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - make it easy to 'fork' a diagram
+- Make /f4Fdfh76d/123 an invalid URL that should not create a new diagram
 - add support for finding and using revisions
 - Make messages movable when grabbing buttons (like Pavel expected)
 - optional encrypt on client side (server can't read data)

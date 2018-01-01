@@ -38,7 +38,7 @@ it(
 it(
   `gremlins.min.js on fixed revision for ${runningTimeSeconds} seconds`,
   async () => {
-    await driver.get(newlyCreatedPermalink + '/1');
+    await driver.get(newlyCreatedPermalink + '?revision=1');
     await unleashGremlins(driver);
   },
   (runningTimeSeconds + 20) * 1000

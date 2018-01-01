@@ -91,7 +91,7 @@ function updateIdAndRevision(dispatch, getState, fixedRevision) {
 
           // Update URL
           const wantedPath =
-            '/' + body.id + (fixedRevision ? '/' + fixedRevision : '');
+            '/' + body.id + (fixedRevision ? '?revision=' + fixedRevision : '');
           if (window.location.pathname !== wantedPath) {
             window.history.replaceState(null, null, wantedPath);
           }
