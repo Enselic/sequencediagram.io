@@ -61,9 +61,7 @@ const handler = (event, context, callback) => {
 
   let sequenceDiagram = event.body ? JSON.parse(event.body) : undefined;
   if (event.httpMethod === 'POST') {
-    if (!event.body || event.body.length <= 0) {
-      done(createError('Need body of length > 0 when POST:ing', 'MissingBody'));
-    } else if (event.body.length > 50000) {
+    if (event.body && event.body.length > 50000) {
       done(
         createError(
           'Max diagram size 50 kB (let us know if you need more)',

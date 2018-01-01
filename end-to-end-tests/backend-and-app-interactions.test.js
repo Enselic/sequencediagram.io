@@ -286,7 +286,7 @@ const fetch = require('node-fetch');
 async function doFetch(path, method, sequenceDiagram) {
   const response = await fetch('http://localhost:7000' + path, {
     method,
-    body: JSON.stringify(sequenceDiagram),
+    body: sequenceDiagram ? JSON.stringify(sequenceDiagram) : undefined,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -358,7 +358,7 @@ describe('backend unit tests', async () => {
   // We don't support getting a list of all diagrams everyone
   // has ever created...
   it('GET /sequencediagrams', async () => {
-    const { status, body } = await doFetch('/sequencediagrams', 'GET');
+    const { status } = await doFetch('/sequencediagrams', 'GET');
     expect(status).toBeGreaterThanOrEqual(400);
     expect(status).toBeLessThan(500);
   });
@@ -394,6 +394,10 @@ describe('backend unit tests', async () => {
       objects: [{ id: 'o1', name: 'Foo' }, { id: 'o2', name: 'Bar' }],
     };
     const invalidValues = [
+      '',
+      undefined,
+      42,
+      true,
       {},
       { objects: [] },
       { messages: [] },

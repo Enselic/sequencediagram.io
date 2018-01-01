@@ -18,6 +18,14 @@ import {
 
 const driver = buildDriverAndSetupEnv();
 
+it('getVersion()', async () => {
+  await goTo(driver, 'o1,getVersion()');
+  const version = await driver.executeScript(
+    `return window.sequencediagram_io.getVersion();`
+  );
+  expect(version).toMatch(/^v2/);
+});
+
 it('change to state without messages after state with messages', async () => {
   await goTo(driver, 'o1,Foo;o2,Bar;m1,o1,o2,baz()');
   await goTo(driver, 'o100,Hello');

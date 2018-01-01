@@ -1,6 +1,7 @@
 #!/bin/bash
 # Starts services required for testing by CI tools
 set -e
+set -x
 
 source local.env.sh
 export CODE_COVERAGE=true

@@ -46,7 +46,7 @@ function AwsLambdaExpressWrapper() {
   this.app = express();
   this.app.use(cors());
   this.app.use(ensureDynamoDbLocalRuns);
-  this.app.use(bodyParser.json());
+  this.app.post('*', bodyParser.text({ type: 'application/json' }));
 
   const that = this;
   this.app.use(function(req, res, next) {
@@ -56,7 +56,7 @@ function AwsLambdaExpressWrapper() {
   function awsLambdaWrapper(req, res, resource) {
     const event = {
       resource: resource,
-      body: JSON.stringify(req.body),
+      body: req.body,
       httpMethod: req.method,
       pathParameters: req.params,
       stageVariables: { tableName: dynamoDbTableName },

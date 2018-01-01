@@ -108,10 +108,8 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- add getVersion test
 - add gremilnsjs test
 - end-to-end-test for fixed revision
-- Add test for done(createError('Need body of length > 0 when POST:ing', 'MissingBody'));
 - Add link to release notes in message about new version
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - make it easy to 'fork' a diagram
