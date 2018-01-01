@@ -8,6 +8,7 @@ import {
 import { writeFileSync } from 'fs';
 import { deserialize } from './legacy-deserialize';
 import fetch from 'node-fetch';
+import url from 'url';
 
 const SeleniumPromise = promise.Promise;
 
@@ -83,6 +84,16 @@ export async function writeCodeCoverageDataIfPresent(driver) {
       JSON.stringify(__coverage__)
     );
   }
+}
+
+/**
+ * Useful in stability tests where you don't want e.g. gremlins.js to
+ * create new tabs.
+ */
+export async function disableAnchors(driver) {
+  await driver.executeScript(
+    'document.querySelectorAll("[target=\'_blank\']").forEach(anchor => anchor.removeAttribute("href"));'
+  );
 }
 
 export async function makeApiServer(action) {
@@ -239,6 +250,40 @@ export async function typeText(driver, typedText) {
     .actions()
     .sendKeys(typedText)
     .perform();
+}
+
+export async function waitForPermalink(driver) {
+  let tries = 25;
+  let currentUrl;
+  while (tries-- > 0) {
+    currentUrl = await driver.getCurrentUrl();
+    if (url.parse(currentUrl).path.length > 1) {
+      return currentUrl;
+    }
+    await driver.sleep(200);
+  }
+  throw new Error('timed out in waitForPermalink()');
+}
+
+export async function loadScript(driver, src, waitForProperty) {
+  const loadScriptScript = `
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "${src}";
+    document.head.appendChild(script);
+  `;
+  await driver.executeScript(loadScriptScript);
+
+  let triesLeft = 50;
+  while (triesLeft--) {
+    const propertyAvailable = await driver.executeScript(
+      `return "${waitForProperty}" in window;`
+    );
+    if (propertyAvailable) {
+      break;
+    }
+    await driver.sleep(500);
+  }
 }
 
 export async function clickAndType(driver, elementText, typedText) {

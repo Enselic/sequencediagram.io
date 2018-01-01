@@ -17,25 +17,12 @@ import {
   setupNoBrowserLogOutputTest,
   waitForElement,
   writeCodeCoverageDataIfPresent,
+  waitForPermalink,
   removeComponentWithKey,
 } from './lib';
-import url from 'url';
 import serve from 'serve';
 
 const driver = buildDriverAndSetupEnv();
-
-async function waitForPermalink() {
-  let tries = 25;
-  let currentUrl;
-  while (tries-- > 0) {
-    currentUrl = await driver.getCurrentUrl();
-    if (url.parse(currentUrl).path.length > 1) {
-      return currentUrl;
-    }
-    await driver.sleep(200);
-  }
-  throw new Error('timed out in waitForPermalink()');
-}
 
 describe('when the API server is fully functional', async () => {
   let newlyCreatedPermalink = null;
@@ -56,7 +43,7 @@ describe('when the API server is fully functional', async () => {
     'creating a new diagram works',
     async () => {
       await goTo(driver, '');
-      newlyCreatedPermalink = await waitForPermalink();
+      newlyCreatedPermalink = await waitForPermalink(driver);
       await clickAddObject(driver);
       await renameComponentFromTo(driver, 'NewObject', randomObjectName1);
       await driver.sleep(1000);
@@ -116,7 +103,7 @@ describe('when the API server is fully functional', async () => {
       // Before an ID has been allocated, make a change ...
       await clickAddObject(driver);
       // ... that should not have crashed the app
-      await waitForPermalink();
+      await waitForPermalink(driver);
       await driver.sleep(1000);
       await waitForElement(driver, 'Saved');
     },
@@ -168,7 +155,7 @@ describe('when the API server goes down, then comes back up', async () => {
         await goTo(driver, '');
 
         // We got a permalink id
-        const permalink = await waitForPermalink();
+        const permalink = await waitForPermalink(driver);
 
         // Now the server goes down
         await makeApiServer('close');
@@ -210,7 +197,7 @@ describe('when the API server is down but comes up later it', async () => {
           'From after API server'
         );
         await waitForElement(driver, 'Saved');
-        await waitForPermalink();
+        await waitForPermalink(driver);
 
         // TODO: Starting offline, crating a diagram, allocate new id: expected
         // that the initial version of the diagram is the diagram the user built up

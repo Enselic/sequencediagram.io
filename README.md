@@ -108,8 +108,8 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- add gremilnsjs test
 - end-to-end-test for fixed revision
+- code coverage for JSON schema validator
 - Add link to release notes in message about new version
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - make it easy to 'fork' a diagram
