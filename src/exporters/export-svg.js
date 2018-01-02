@@ -117,6 +117,7 @@ export function exportSvg(sequenceDiagram) {
       })}
       {sequenceDiagram.messages.map(message => {
         const messageLayout = layout[message.id];
+        const selfSentMessage = messageLayout.direction === 0;
         const pointsLeft = messageLayout.direction <= 0;
         const messageWidth = messageLayout.width;
         return (
@@ -135,6 +136,7 @@ export function exportSvg(sequenceDiagram) {
             </text>
             <SvgMessageLine
               {...message}
+              selfSentMessage={selfSentMessage}
               pointsLeft={pointsLeft}
               overrideWidth={messageWidth}
             />

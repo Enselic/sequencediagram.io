@@ -109,6 +109,7 @@ TODO
 
 List of minor/uninteresting things to do, roughly sorted by priority.
 - code coverage for JSON schema validator
+- Make 'saved revision X' link clickable
 - Add link to release notes in message about new version
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - make it easy to 'fork' a diagram
