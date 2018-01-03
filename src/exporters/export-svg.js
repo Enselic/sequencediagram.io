@@ -71,11 +71,7 @@ export function SvgMessageArrow(props) {
  */
 export function exportSvg(sequenceDiagram) {
   const averageCharWidth = 7;
-  const layout = layouter(
-    name => name.length * averageCharWidth /* TODO: hack */,
-    sequenceDiagram.objects,
-    sequenceDiagram.messages
-  );
+  const layout = layouter(sequenceDiagram.objects, sequenceDiagram.messages);
 
   const svgTree = (
     <svg

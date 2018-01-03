@@ -130,16 +130,15 @@ function layoutObjects(layout, objects) {
 
 /**
  * Lays out ordered sets of objects and messages.
- * @param getTextWidth Used to measure rendered width of texts
  * @param objects Array of objects to layout.
  * @param messages Array of messages to layout.
  * @param extraMessage Optional pre-layouted message to take into account. For example a pending message.
  **/
-export function layouter(getTextWidth, objects, messages, extraMessage) {
+export function layouter(objects, messages, extraMessage) {
   let layout = {};
 
   // We want subsequent measurements to use the same text measurer
-  layout.getTextWidth = getTextWidth;
+  layout.getTextWidth = name => name.length * 7 /* TODO: hack */;
 
   const currentX = layoutObjects(layout, objects);
 

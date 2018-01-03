@@ -202,7 +202,6 @@ export default class App extends React.Component {
     const objectsWithPendingChanges = objectsToUse.map(withPendingChanges);
     const messagesWithPendingChanges = messagesToUse.map(withPendingChanges);
     const layout = layouter(
-      name => name.length * 7 /* TODO: hack */,
       objectsWithPendingChanges,
       messagesWithPendingChanges,
       pending.message
