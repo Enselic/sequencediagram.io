@@ -158,7 +158,6 @@ export default class MessageArrow extends React.Component {
               position: 'absolute',
               left: 0,
               right: 0,
-              top: selfSentMessage ? 0 : 5,
               height: 30,
               pointerEvents: 'none',
             }}
@@ -175,11 +174,14 @@ export default class MessageArrow extends React.Component {
             style={{
               ...arrowExtraStyle,
               pointerEvents: 'none',
-              top: selfSentMessage ? 20 : 5,
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20">
-              <SvgMessageArrow isAsync={isAsync} pointsLeft={pointsLeft} />
+            <svg width="20" height="40" viewBox="0 0 20 40">
+              <SvgMessageArrow
+                selfSentMessage={selfSentMessage}
+                isAsync={isAsync}
+                pointsLeft={pointsLeft}
+              />
             </svg>
           </div>
         </div>

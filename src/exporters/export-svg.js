@@ -8,44 +8,44 @@ import {
 } from '../layouter';
 
 export function SvgMessageLine(props) {
-  return props.selfSentMessage ? (
-    <path
-      style={{
-        fill: 'none',
-        stroke: '#000000',
-        strokeWidth: 2,
-        strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
-      }}
-      d="m 0,13 c 0,0 39,-1 40,8 1,11 -36,9 -36,9"
-    />
-  ) : (
-    <line
-      x1="3"
-      y1="10"
-      x2={props.overrideWidth || '100%'}
-      y2="10"
-      transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
-      style={{
-        fill: 'none',
-        stroke: '#000000',
-        strokeWidth: '2',
-        strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
-      }}
-    />
+  const yOffset = props.selfSentMessage ? 0 : 5;
+  return (
+    <g transform={`translate(0 ${yOffset})`}>
+      {props.selfSentMessage ? (
+        <path
+          style={{
+            fill: 'none',
+            stroke: '#000000',
+            strokeWidth: 2,
+            strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
+          }}
+          d="m 0,13 c 0,0 39,-1 40,8 1,11 -36,9 -36,9"
+        />
+      ) : (
+        <line
+          x1="3"
+          y1="10"
+          x2={props.overrideWidth || '100%'}
+          y2="10"
+          transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
+          style={{
+            fill: 'none',
+            stroke: '#000000',
+            strokeWidth: '2',
+            strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
+          }}
+        />
+      )}
+    </g>
   );
 }
 
 export function SvgMessageArrow(props) {
+  const xOffset =
+    !props.localArrowTranslate || props.pointsLeft ? 0 : props.width - 20;
+  const yOffset = props.selfSentMessage ? 20 : 5;
   return (
-    <g
-      transform={
-        !props.localArrowTranslate || props.pointsLeft ? (
-          undefined
-        ) : (
-          `translate(${props.width - 20} 0)`
-        )
-      }
-    >
+    <g transform={`translate(${xOffset} ${yOffset})`}>
       <path
         transform={
           props.pointsLeft ? 'translate(20 20) rotate(180)' : undefined
@@ -141,6 +141,7 @@ export function exportSvg(sequenceDiagram) {
             />
             <SvgMessageArrow
               {...message}
+              selfSentMessage={selfSentMessage}
               pointsLeft={pointsLeft}
               localArrowTranslate={true}
               width={messageWidth}
