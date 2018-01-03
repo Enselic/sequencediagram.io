@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { OBJECT_NAME_PADDING, default as layouter } from '../layouter';
+import {
+  OBJECT_NAME_PADDING,
+  default as layouter,
+  OBJECT_NAME_FONT_SIZE_PX,
+  MESSAGE_NAME_FONT_SIZE_PX,
+} from '../layouter';
 
 export function SvgMessageLine(props) {
   return props.selfSentMessage ? (
@@ -106,7 +111,7 @@ export function exportSvg(sequenceDiagram) {
             <text
               textAnchor="middle"
               fontFamily="sans-serif"
-              fontSize={16}
+              fontSize={`${OBJECT_NAME_FONT_SIZE_PX}px`}
               x={objectLayout.lifelineX}
               y={objectLayout.top + fontRenderHeight - 6}
             >
@@ -130,7 +135,7 @@ export function exportSvg(sequenceDiagram) {
               x={messageWidth / 2}
               y={-8}
               fontFamily="sans-serif"
-              fontSize={16}
+              fontSize={`${MESSAGE_NAME_FONT_SIZE_PX}px`}
             >
               {message.name}
             </text>

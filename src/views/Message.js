@@ -3,7 +3,7 @@ import React from 'react';
 import Name from './Name';
 import MessageArrow from './MessageArrow';
 import { hoverHelper } from './utils';
-import { MESSAGE_Y_OFFSET } from './../layouter';
+import { MESSAGE_Y_OFFSET, MESSAGE_NAME_FONT_SIZE_PX } from './../layouter';
 
 function Message(props) {
   const {
@@ -62,6 +62,7 @@ function Message(props) {
         <div
           style={{
             position: 'absolute',
+            fontSize: `${MESSAGE_NAME_FONT_SIZE_PX}px`,
             left: 0,
             right: 0,
             bottom: '100%',
