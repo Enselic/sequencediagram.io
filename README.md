@@ -125,3 +125,4 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 - Make tab switch objects
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Make messages movable horizontally
+- Add .svg URL to service worker and serve SVG normally

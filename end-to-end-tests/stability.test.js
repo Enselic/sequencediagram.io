@@ -8,7 +8,7 @@ import {
 
 const driver = buildDriverAndSetupEnv();
 
-const runningTimeSeconds = 60;
+const runningTimeSeconds = process.env.STABILITY_DURATION_IN_SECONDS || 10;
 
 let newlyCreatedPermalink = null;
 
