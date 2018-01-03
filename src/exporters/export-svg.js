@@ -6,6 +6,7 @@ import {
   OBJECT_NAME_FONT_SIZE_PX,
   MESSAGE_NAME_FONT_SIZE_PX,
 } from '../layouter';
+import wrap from 'word-wrap';
 
 export function SvgMessageLine(props) {
   const yOffset = props.selfSentMessage ? 0 : 5;
@@ -30,7 +31,7 @@ export function SvgMessageLine(props) {
           transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
           style={{
             fill: 'none',
-            stroke: '#000000',
+            stroke: '#999999',
             strokeWidth: '2',
             strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
           }}
@@ -119,20 +120,36 @@ export function exportSvg(sequenceDiagram) {
         const selfSentMessage = messageLayout.direction === 0;
         const pointsLeft = messageLayout.direction <= 0;
         const messageWidth = messageLayout.width;
+        const messageTextOffset = 0;
+        const nameBorderWidthTimesTwo = 20; // Name.js borderWidth * 2
+        const averageCharWidth = 7;
+        let messageNameLines = wrap(message.name, {
+          indent: '',
+          width: Math.round(
+            (messageWidth - nameBorderWidthTimesTwo) / averageCharWidth
+          ),
+          newline: '\n',
+        });
+        messageNameLines = messageNameLines.split('\n');
         return (
           <g
             key={message.id}
             transform={`translate(${messageLayout.left},${messageLayout.top})`}
           >
-            <text
-              textAnchor="middle"
-              x={messageWidth / 2}
-              y={-8}
-              fontFamily="sans-serif"
-              fontSize={`${MESSAGE_NAME_FONT_SIZE_PX}px`}
-            >
-              {message.name}
-            </text>
+            {messageNameLines.map((messsageNameLine, index) => {
+              return (
+                <text
+                  key={'line-' + index}
+                  textAnchor="middle"
+                  x={messageWidth / 2}
+                  y={messageTextOffset - (messageNameLines.length - index) * 20}
+                  fontSize={`${MESSAGE_NAME_FONT_SIZE_PX}px`}
+                  fontFamily="sans-serif"
+                >
+                  {messsageNameLine}
+                </text>
+              );
+            })}
             <SvgMessageLine
               {...message}
               selfSentMessage={selfSentMessage}
