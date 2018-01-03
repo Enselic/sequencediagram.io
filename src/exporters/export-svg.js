@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {
+  layouter,
   OBJECT_NAME_PADDING,
-  default as layouter,
   OBJECT_NAME_FONT_SIZE_PX,
   MESSAGE_NAME_FONT_SIZE_PX,
 } from '../layouter';

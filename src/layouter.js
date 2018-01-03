@@ -135,7 +135,7 @@ function layoutObjects(layout, objects) {
  * @param messages Array of messages to layout.
  * @param extraMessage Optional pre-layouted message to take into account. For example a pending message.
  **/
-export default function(getTextWidth, objects, messages, extraMessage) {
+export function layouter(getTextWidth, objects, messages, extraMessage) {
   let layout = {};
 
   // We want subsequent measurements to use the same text measurer

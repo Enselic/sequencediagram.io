@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActionCreators } from 'redux-undo';
-import layouter from './../layouter';
+import { layouter } from './../layouter';
 import Objekt from './Object';
 import Message from './Message';
 import Header from './Header';
