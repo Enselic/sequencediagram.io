@@ -70,7 +70,6 @@ export function SvgMessageArrow(props) {
  * from swagger.json
  */
 export function exportSvg(sequenceDiagram) {
-  const averageCharWidth = 7;
   const layout = layouter(sequenceDiagram.objects, sequenceDiagram.messages);
 
   const svgTree = (
@@ -83,8 +82,7 @@ export function exportSvg(sequenceDiagram) {
         const objectLayout = layout[object.id];
         const fontRenderHeight = 21;
         const nameWidth =
-          OBJECT_NAME_PADDING.LEFT_RIGHT * 2 +
-          object.name.length * averageCharWidth;
+          OBJECT_NAME_PADDING.LEFT_RIGHT * 2 + objectLayout.objectNameWidth;
         const nameHeight =
           OBJECT_NAME_PADDING.TOP_BOTTOM * 2 + fontRenderHeight;
         return (

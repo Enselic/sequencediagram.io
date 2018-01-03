@@ -66,7 +66,7 @@ it(
   moveObject(
     'o11,Emma;o22,Alvin;o33,Saga',
     'Emma',
-    260,
+    300,
     'o22,Alvin;o11,Emma;o33,Saga'
   )
 );
@@ -120,7 +120,7 @@ it(
   moveObject(
     'o9,CCC;o8,BBB;o7,Martin',
     'Martin',
-    -260,
+    -300,
     'o9,CCC;o7,Martin;o8,BBB'
   )
 );

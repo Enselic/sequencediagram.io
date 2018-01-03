@@ -178,7 +178,7 @@ it('message arrows are insertion reference points, not text', async () => {
   await driver
     .actions()
     .mouseMove(messageTextEl)
-    .mouseMove({ x: size.width / 2 + 20, y: 0 })
+    .mouseMove({ x: (size.width >> 1) + 20, y: 0 })
     .click()
     .mouseMove({ x: -size.width - 40, y: 0 })
     .perform();

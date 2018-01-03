@@ -16,6 +16,13 @@ export const MESSAGE_START_Y =
   -MESSAGE_Y_OFFSET +
   MESSAGE_SPACING * 0.48;
 
+// Only allocate this once for smaller GC pressure
+const canvasContext = document.createElement('canvas').getContext('2d');
+function getTextWidth(fontSize, text) {
+  canvasContext.font = `${fontSize}px sans-serif`;
+  return canvasContext.measureText(text).width;
+}
+
 export function layoutMessageLeftAndWidth(
   layout,
   message,
@@ -57,7 +64,7 @@ export function layoutMessageLeftAndWidth(
   let width;
   const messageTextWidth =
     layout && layout.getTextWidth
-      ? layout.getTextWidth(message.name)
+      ? layout.getTextWidth(MESSAGE_NAME_FONT_SIZE_PX, message.name)
       : 100 /* arbitrary */;
   if (Math.abs(direction) < 0.5) {
     direction = 0;
@@ -96,7 +103,8 @@ export function layoutMessageLeftAndWidth(
 function layoutObject(getTextWidth, currentX, object) {
   let transition = 'left 0.3s';
   const objectNameWidth =
-    getTextWidth(object.name) + OBJECT_NAME_PADDING.LEFT_RIGHT;
+    getTextWidth(OBJECT_NAME_FONT_SIZE_PX, object.name) +
+    OBJECT_NAME_PADDING.LEFT_RIGHT;
   let lifelineX = currentX + objectNameWidth / 2;
 
   if (object.overrideLifelineX) {
@@ -105,6 +113,7 @@ function layoutObject(getTextWidth, currentX, object) {
   }
   const objectLayout = {
     lifelineX,
+    objectNameWidth,
     top: DIAGRAM_PADDING.TOP_BOTTOM,
     transition,
   };
@@ -138,7 +147,7 @@ export function layouter(objects, messages, extraMessage) {
   let layout = {};
 
   // We want subsequent measurements to use the same text measurer
-  layout.getTextWidth = name => name.length * 7 /* TODO: hack */;
+  layout.getTextWidth = getTextWidth;
 
   const currentX = layoutObjects(layout, objects);
 

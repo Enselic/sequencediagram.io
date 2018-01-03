@@ -125,4 +125,3 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 - Make tab switch objects
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Make messages movable horizontally
-- Create a more accurate text measurer
