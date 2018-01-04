@@ -386,6 +386,7 @@ describe('backend unit tests', async () => {
       42,
       true,
       {},
+      { objects: 42, messages: 42 },
       { objects: [] },
       { messages: [] },
       [],

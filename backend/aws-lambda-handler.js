@@ -7,7 +7,7 @@
 
 const AWS = require('aws-sdk');
 const crypto = require('crypto');
-const sequenceDiagramSchemaValidator = require('./schema-from-swagger-webpack-loader?name=SequenceDiagram!./swagger.json');
+const sequenceDiagramSchemaValidator = require('./verify-SequenceDiagram');
 
 AWS.config.update({
   region: 'eu-west-1',
