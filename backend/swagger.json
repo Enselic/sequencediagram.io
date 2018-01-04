@@ -36,8 +36,6 @@
             }
           }
         },
-        "x-amazon-apigateway-request-validator":
-          "Validate body, query string parameters, and headers",
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
@@ -45,7 +43,7 @@
             }
           },
           "uri":
-            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:test/invocations",
+            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:${stageVariables.lambdaFunction}/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
@@ -127,7 +125,7 @@
             }
           },
           "uri":
-            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:test/invocations",
+            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:${stageVariables.lambdaFunction}/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
@@ -167,8 +165,6 @@
             }
           }
         },
-        "x-amazon-apigateway-request-validator":
-          "Validate body, query string parameters, and headers",
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
@@ -176,7 +172,7 @@
             }
           },
           "uri":
-            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:test/invocations",
+            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:${stageVariables.lambdaFunction}/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
@@ -266,7 +262,7 @@
             }
           },
           "uri":
-            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:test/invocations",
+            "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:996553720565:function:${stageVariables.lambdaFunction}/invocations",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
@@ -418,12 +414,6 @@
           "type": "integer"
         }
       }
-    }
-  },
-  "x-amazon-apigateway-request-validators": {
-    "Validate body, query string parameters, and headers": {
-      "validateRequestParameters": true,
-      "validateRequestBody": true
     }
   }
 }

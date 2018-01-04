@@ -27,3 +27,7 @@ export BACKEND_BUILD_DIR=build-backend
 
 # What to call the backend webpack output
 export BACKEND_BUILD_FILENAME=api-server-localhost.build.js
+
+# What to call the AWS Lambda handler webpack output which can
+# be deployed to AWS Lambda
+export AWS_LAMBDA_HANDLER_BUILD_FILENAME=aws-lambda-handler.build.js

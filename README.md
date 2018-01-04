@@ -104,11 +104,41 @@ scripts-ci/run-tests-like-travis-ci.sh
 ```
 
 
+AWS Deploy info
+===============
+
+1. Deploy `build-backend/aws-lambda-handler-build.js` to an `AWS Lamda` function
+   with `runtime: "nodejs6.10"` and `handler_name: "handler"` and a role with
+   permissions as per below
+2. Create an `AWS DynamoDB` table. See `backend/dynamodb-utils.js` for details
+3. Import `backend/swagger.json` to `AWS API Gateway` and deploy to a stage with
+   the stage variables `lambdaFunction=<name of function in step 1>` and
+   `tableName=<name of table in step 2>`
+4. Deploy `build-deploy` to `AWS S3` and enable static site serving
+
+AWS Lambda function role permissions:
+```
+SequenceDiagramIoApiDynamoDbPutAndQuery
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:Query"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:dynamodb:eu-west-1:nnnnnnnnnnnn:table/io.sequencediagram.dynamodb.*"
+        }
+    ]
+}
+```
+
+
 TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-- code coverage for JSON schema validator
 - Make 'saved revision X' link clickable
 - Add link to release notes in message about new version
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
@@ -116,9 +146,9 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 - Make /f4Fdfh76d/123 an invalid URL that should not create a new diagram
 - add support for finding and using revisions
 - Make messages movable when grabbing buttons (like Pavel expected)
+- Add move right/left buttons in the UI so users don't have to figure out drag and drop
 - optional encrypt on client side (server can't read data)
 - Make adding a component edit its text directly
-- Make it easy to run GremlinsJs
 - make permalink work offline too, i.e. save last known state locally
 - Add debugging tips to README.md
 - make NewMesssageMarker only be where messages will be added
