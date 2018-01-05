@@ -221,26 +221,31 @@ it('overlapping div does not interfer', async () => {
   // not necessarily be below other divs, so it can block events
   // for other divs
   await goTo(driver, 'o1,nn;o2,mmmmmmmmmmmmmmmmmmmm');
+  await driver.sleep(100);
   await driver
     .actions()
     .mouseMove(await findElementByText(driver, 'nn'))
     .mouseDown()
     .perform();
+  await driver.sleep(100);
   await driver
     .actions()
     .mouseMove({ x: 500, y: 0 })
     .mouseUp()
     .perform();
+  await driver.sleep(100);
   await driver
     .actions()
     .mouseMove(await findElementByText(driver, 'nn'))
     .mouseDown()
     .perform();
+  await driver.sleep(100);
   await driver
     .actions()
     .mouseMove({ x: -500, y: 0 })
     .mouseUp()
     .perform();
+  await driver.sleep(100);
   return assertFragment(driver, 'o1,nn;o2,mmmmmmmmmmmmmmmmmmmm');
 });
 
