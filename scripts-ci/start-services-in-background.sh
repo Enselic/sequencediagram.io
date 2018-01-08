@@ -32,4 +32,9 @@ mv -v build build-deploy
 REACT_APP_API_SERVER=http://localhost:$API_SERVER_PORT \
   REACT_APP_VERSION=$(git describe) \
   npm run build
+
+# But remove .map files first since we don't use them and they are
+# big and annoying to accidentally deploy...
+rm build*/static/js/*.map
+
 node_modules/.bin/serve -p $WEB_APP_PORT -s build &

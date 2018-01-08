@@ -1,6 +1,6 @@
-export const DIAGRAM_PADDING = { LEFT_RIGHT: 140, TOP_BOTTOM: 90 };
+export const DIAGRAM_PADDING = { LEFT_RIGHT: 110, TOP_BOTTOM: 90 };
 export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
-export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 3.5;
+export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 2.5;
 export const OBJECT_NAME_FONT_SIZE_PX = 18;
 export const MESSAGE_NAME_FONT_SIZE_PX = 16;
 export const MESSAGE_Y_OFFSET = -10;
@@ -104,7 +104,7 @@ function layoutObject(getTextWidth, currentX, object) {
   let transition = 'left 0.3s';
   const objectNameWidth =
     getTextWidth(OBJECT_NAME_FONT_SIZE_PX, object.name) +
-    OBJECT_NAME_PADDING.LEFT_RIGHT;
+    OBJECT_NAME_PADDING.LEFT_RIGHT * 2;
   let lifelineX = currentX + objectNameWidth / 2;
 
   if (object.overrideLifelineX) {

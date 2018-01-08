@@ -31,7 +31,7 @@ export function SvgMessageLine(props) {
           transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
           style={{
             fill: 'none',
-            stroke: '#999999',
+            stroke: '#000000',
             strokeWidth: '2',
             strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
           }}
@@ -82,8 +82,7 @@ export function exportSvg(sequenceDiagram) {
       {sequenceDiagram.objects.map(object => {
         const objectLayout = layout[object.id];
         const fontRenderHeight = 21;
-        const nameWidth =
-          OBJECT_NAME_PADDING.LEFT_RIGHT * 2 + objectLayout.objectNameWidth;
+        const nameWidth = objectLayout.objectNameWidth;
         const nameHeight =
           OBJECT_NAME_PADDING.TOP_BOTTOM * 2 + fontRenderHeight;
         return (
@@ -93,7 +92,7 @@ export function exportSvg(sequenceDiagram) {
               y1={objectLayout.top}
               x2={objectLayout.lifelineX}
               y2={objectLayout.top + layout.height}
-              stroke="black"
+              stroke="#999999"
               strokeDasharray="2"
             />
             <rect
