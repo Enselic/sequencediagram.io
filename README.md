@@ -30,7 +30,7 @@ Important design points
 -----------------------
 
 * It is important that when the user is idle, the digram shown is without controls.
-This is so that when the digram is shared by sending its URL, it looks clean and pretty when just viewed. And we don't want to complicate the UI with a "enter view mode" mode.
+This is so that when the digram is edited, it looks clean and pretty when just viewed. And we don't want to complicate the UI with an "enter view mode" concept.
 
 
 Roadmap
@@ -40,20 +40,22 @@ The current feature set is minimal but useful.
 Here is a list of features that I plan on adding later, roughly sorted by descending priority.
 Contributions of any kind are very welcomed however!
 
-- Make Object movable vertically to represent creation
-- Support visualization of so called found/lost messages, i.e. messages originating form/ending in a circle
-- Allow X-es to be added to lifelines, representing object destruction
-- Support adding arbitrary comments to the diagram
-- Support more browsers i.e. make the test suite work on more browsers
-- Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
+High prio
+---------
 - Support SVG export to allow embedding in in e.g. PDFs. For now, users can take PNG screenshots of the app
-- Integrate with user accounts from other services to allow user accounts to take ownership of diagrams
+- Support visualization of so called found/lost messages, i.e. messages originating form/ending in a circle
+- Support more browsers i.e. make the test suite work on more browsers
+
+Low prio
+--------
+- Support adding a title to the diagram (sketch: https://github.com/Enselic/sequencediagram.io/tree/add-title)
+- Support adding arbitrary comments to the diagram
+- Support changing appearance of an object from a filled rect to e.g. a stick figure
 - Let the user add so called activation boxes to lifelines to represent processing
-- Support adding a title to the diagram (work in progress: https://github.com/Enselic/sequencediagram.io/tree/add-title)
-- Allow nesting of activation boxes
-- Support conditions on lifelines somehow
-- Support pictograms. Maybe through unicode pictograms in a larger font-size.
-- Support exporting a powerpoint where each slide adds a message
+- Make Object movable vertically to represent creation
+- Allow X-es to be added to lifelines, representing object destruction
+- Support touch-based editing of diagrams in a good way (must not interfer with primary audience using mouse input however)
+- Integrate with user accounts from other services to allow user accounts to take ownership of diagrams
 
 
 Setting up for development
@@ -96,16 +98,10 @@ static/
 Things at http://static.sequencediagram.io/
 ```
 
-Running tests like Travis CI
-----------------------------
-
-```bash
-scripts-ci/run-tests-like-travis-ci.sh
-```
-
-
 AWS Deploy info
-===============
+---------------
+
+If you want to deploy to AWS yourself, here are some key steps:
 
 1. Deploy `build-backend/aws-lambda-handler-build.js` to an `AWS Lamda` function
    with `runtime: "nodejs6.10"` and `handler_name: "handler"` and a role with
@@ -139,19 +135,24 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+
+High prio
+---------
+- Make 'can click in renamed component text to place cursor' pass with SLOW_DOWN_FOR_HUMAN_OBSERVATION
+- align message text to receiver end
 - Make 'saved revision X' link clickable
+- redo UI for messages; make it less boxy and more accurate
+- redo UI for objects; make it possible to insert Objects at any position, not just end
+- Make adding a component edit its text directly
+- Make /f4Fdfh76d/123 an invalid URL that should not create a new diagram
+- Make messages movable when grabbing buttons (like Pavel expected)
+- Add move right/left buttons in the UI so users don't have to figure out drag and drop
+
+Low prio
+--------
 - Add link to release notes in message about new version
 - Fade in controls slowly to reduce flicker (as requested by Pavel)
 - make it easy to 'fork' a diagram
-- Make /f4Fdfh76d/123 an invalid URL that should not create a new diagram
-- add support for finding and using revisions
-- Make messages movable when grabbing buttons (like Pavel expected)
-- Add move right/left buttons in the UI so users don't have to figure out drag and drop
-- optional encrypt on client side (server can't read data)
-- Make adding a component edit its text directly
-- make permalink work offline too, i.e. save last known state locally
-- Add debugging tips to README.md
-- make NewMesssageMarker only be where messages will be added
 - Make tab switch objects
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
 - Make messages movable horizontally
