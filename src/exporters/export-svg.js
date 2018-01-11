@@ -5,6 +5,7 @@ import {
   OBJECT_NAME_PADDING,
   OBJECT_NAME_FONT_SIZE_PX,
   MESSAGE_NAME_FONT_SIZE_PX,
+  MESSAGE_Y_OFFSET,
 } from '../layouter';
 import wrap from 'word-wrap';
 
@@ -99,7 +100,7 @@ export function exportSvg(sequenceDiagram) {
               width={nameWidth}
               height={nameHeight}
               x={objectLayout.lifelineX - nameWidth / 2}
-              y={objectLayout.top - OBJECT_NAME_PADDING.TOP_BOTTOM}
+              y={objectLayout.top}
               fill="#ffe761"
             />
             <text
@@ -107,7 +108,12 @@ export function exportSvg(sequenceDiagram) {
               fontFamily="sans-serif"
               fontSize={`${OBJECT_NAME_FONT_SIZE_PX}px`}
               x={objectLayout.lifelineX}
-              y={objectLayout.top + fontRenderHeight - 6}
+              y={
+                objectLayout.top +
+                OBJECT_NAME_PADDING.TOP_BOTTOM +
+                fontRenderHeight -
+                6
+              }
             >
               {object.name}
             </text>
@@ -119,7 +125,7 @@ export function exportSvg(sequenceDiagram) {
         const selfSentMessage = messageLayout.direction === 0;
         const pointsLeft = messageLayout.direction <= 0;
         const messageWidth = messageLayout.width;
-        const messageTextOffset = 0;
+        const messageTextOffset = 10;
         const nameBorderWidthTimesTwo = 20; // Name.js borderWidth * 2
         const averageCharWidth = 7;
         let messageNameLines = wrap(message.name, {
@@ -133,7 +139,9 @@ export function exportSvg(sequenceDiagram) {
         return (
           <g
             key={message.id}
-            transform={`translate(${messageLayout.left},${messageLayout.top})`}
+            transform={`translate(${messageLayout.left},${messageLayout.top +
+              MESSAGE_Y_OFFSET -
+              5 /* from calc(100% - 5px) */})`}
           >
             {messageNameLines.map((messsageNameLine, index) => {
               return (

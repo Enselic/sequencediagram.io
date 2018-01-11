@@ -3,6 +3,9 @@ export const OBJECT_NAME_PADDING = { TOP_BOTTOM: 30, LEFT_RIGHT: 50 };
 export const OBJECT_SPACING = OBJECT_NAME_PADDING.LEFT_RIGHT * 2.5;
 export const OBJECT_NAME_FONT_SIZE_PX = 18;
 export const MESSAGE_NAME_FONT_SIZE_PX = 16;
+/**
+ * Offset required to make the arrow center be y=0.
+ */
 export const MESSAGE_Y_OFFSET = -10;
 export const MESSAGE_SPACING = 62;
 export const MESSAGE_MIN_WIDTH = Math.max(

@@ -42,7 +42,6 @@ Contributions of any kind are very welcomed however!
 
 High prio
 ---------
-- Support SVG export to allow embedding in in e.g. PDFs. For now, users can take PNG screenshots of the app
 - Support visualization of so called found/lost messages, i.e. messages originating form/ending in a circle
 - Support more browsers i.e. make the test suite work on more browsers
 
