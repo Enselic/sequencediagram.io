@@ -14,11 +14,10 @@ const SeleniumPromise = promise.Promise;
 
 // Set to true if you want to have time to observe what the tests
 // are doing
-const SLOW_DOWN_FOR_HUMAN_OBSERVATION = !!process.env
-  .SLOW_DOWN_FOR_HUMAN_OBSERVATION;
+const SLOW = !!process.env.SLOW;
 
 // Default to headless testing when running in Continous Integration environments
-const HEADLESS = !!process.env.CI && !SLOW_DOWN_FOR_HUMAN_OBSERVATION;
+const HEADLESS = !!process.env.CI && !SLOW;
 
 export function getPort() {
   // CI scripts run from npm run build with serve (port 5000)
@@ -130,7 +129,7 @@ export function buildDriverAndSetupEnv(browser) {
 }
 
 export function applyTimeoutFactor(timeout) {
-  const factor = SLOW_DOWN_FOR_HUMAN_OBSERVATION ? 4 : 1;
+  const factor = SLOW ? 4 : 1;
   return timeout * factor;
 }
 
@@ -139,7 +138,7 @@ export async function waitForCssTransitions(driver) {
 }
 
 export async function sleepIfHumanObserver(driver, seconds) {
-  if (!SLOW_DOWN_FOR_HUMAN_OBSERVATION) {
+  if (!SLOW) {
     return true;
   }
 

@@ -137,7 +137,7 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 
 High prio
 ---------
-- Make 'can click in renamed component text to place cursor' pass with SLOW_DOWN_FOR_HUMAN_OBSERVATION
+- Make 'can click in renamed component text to place cursor' pass with SLOW
 - align message text to receiver end
 - Make 'saved revision X' link clickable
 - redo UI for messages; make it less boxy and more accurate
