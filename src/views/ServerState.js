@@ -10,6 +10,7 @@ export default function ServerState(props) {
     error,
   } = props.reduxState.backend;
   let message;
+  let addLink = false;
   if (error) {
     message = 'Error: ' + (error.message || error);
   } else if (revisionOnServer === ac.PENDING) {
@@ -23,6 +24,7 @@ export default function ServerState(props) {
     !fixedRevision
   ) {
     message = `Saved revision ${revisionOnServer}`;
+    addLink = true;
   } else {
     message = '';
   }
@@ -36,7 +38,21 @@ export default function ServerState(props) {
         fontSize: 20,
       }}
     >
-      {message}
+      {addLink ? (
+        <a
+          style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            padding: '5px 20px',
+            color: '#002456',
+          }}
+          href={'/' + idOnServer + '?revision=' + revisionOnServer}
+        >
+          {message}
+        </a>
+      ) : (
+        message
+      )}
     </div>
   );
 }

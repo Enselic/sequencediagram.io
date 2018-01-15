@@ -138,7 +138,6 @@ List of minor/uninteresting things to do, roughly sorted by priority.
 High prio
 ---------
 - Make 'can click in renamed component text to place cursor' pass with SLOW
-- Make 'saved revision X' link clickable
 - redo UI for messages; make it less boxy and more accurate
 - redo UI for objects; make it possible to insert Objects at any position, not just end
 - Make adding a component edit its text directly
