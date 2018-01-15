@@ -6,6 +6,7 @@ import {
   goTo,
   setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
+  waitForCssTransitions,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
@@ -63,6 +64,7 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
       .actions()
       .click()
       .perform();
+    await waitForCssTransitions(driver);
     await sleepIfHumanObserver(driver, 1);
     await driver
       .actions()

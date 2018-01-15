@@ -33,11 +33,17 @@ function Message(props) {
     };
   }
 
+  let textAlign = 'center';
+  if (msgLayout.direction < 0) {
+    textAlign = 'left';
+  } else if (msgLayout.direction > 0) {
+    textAlign = 'right';
+  }
   style = {
     ...style,
     top: msgLayout.top + MESSAGE_Y_OFFSET,
     position: 'absolute',
-    textAlign: 'center',
+    textAlign: textAlign,
     userSelect: 'none',
   };
 

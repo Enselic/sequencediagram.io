@@ -136,6 +136,18 @@ export function exportSvg(sequenceDiagram) {
           newline: '\n',
         });
         messageNameLines = messageNameLines.split('\n');
+
+        const textMargin = 10;
+        let textAnchor = 'middle';
+        let textX = messageWidth / 2;
+        if (messageLayout.direction < 0) {
+          textAnchor = 'start';
+          textX = textMargin;
+        } else if (messageLayout.direction > 0) {
+          textAnchor = 'end';
+          textX = messageWidth - textMargin;
+        }
+
         return (
           <g
             key={message.id}
@@ -147,8 +159,8 @@ export function exportSvg(sequenceDiagram) {
               return (
                 <text
                   key={'line-' + index}
-                  textAnchor="middle"
-                  x={messageWidth / 2}
+                  textAnchor={textAnchor}
+                  x={textX}
                   y={messageTextOffset - (messageNameLines.length - index) * 20}
                   fontSize={`${MESSAGE_NAME_FONT_SIZE_PX}px`}
                   fontFamily="sans-serif"
