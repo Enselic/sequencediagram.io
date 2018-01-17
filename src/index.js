@@ -36,7 +36,7 @@ function dispatch(action) {
 
 // Either create a new diagram or load an existing one
 const { pathname } = window.location;
-const idMatch = pathname.match(/^\/([0-9a-zA-Z]{4,20})$/);
+const idMatch = pathname.match(/^\/([0-9a-zA-Z]{1,})$/);
 let revision = parseInt(searchParams.get('revision'), 10);
 revision = revision > 0 ? revision : undefined;
 if (idMatch) {

@@ -87,10 +87,19 @@ describe('when the API server is fully functional', async () => {
   it(
     'gracefully handles non-existing diagram',
     async () => {
-      const initialUrl = `${getHostAndPort()}/2345678abC`;
-      await driver.get(initialUrl);
-      await waitForElement(driver, 'Error: Could not load diagram');
-      expect(await driver.getCurrentUrl()).toEqual(initialUrl);
+      const initialUrls = [
+        `${getHostAndPort()}/2`,
+        `${getHostAndPort()}/234`,
+        `${getHostAndPort()}/2345678abC`,
+        `${getHostAndPort()}/2345678abC2345678abC2345678abC2345678abC`,
+      ];
+      for (let i = 0; i < initialUrls.length; i++) {
+        let initialUrl = initialUrls[i];
+        await driver.get(initialUrl);
+        await waitForElement(driver, 'Error: Could not load diagram');
+        expect(await driver.getCurrentUrl()).toEqual(initialUrl);
+      }
+
       // TODO: prevent creating of diagram components
     },
     20 * 1000

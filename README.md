@@ -141,7 +141,6 @@ High prio
 - redo UI for messages; make it less boxy and more accurate
 - redo UI for objects; make it possible to insert Objects at any position, not just end
 - Make adding a component edit its text directly
-- Make /f4Fdfh76d/123 an invalid URL that should not create a new diagram
 - Make messages movable when grabbing buttons (like Pavel expected)
 - Add move right/left buttons in the UI so users don't have to figure out drag and drop
 
