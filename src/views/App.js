@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActionCreators } from 'redux-undo';
-import { layouter } from './../layouter';
+import { layouter, DIAGRAM_PADDING, OBJECT_NAME_PADDING } from './../layouter';
 import Objekt from './Object';
 import Message from './Message';
 import Header from './Header';
@@ -10,12 +10,14 @@ import { eventToDiagramCoords, mapWithSameDomOrder } from './utils';
 import * as ac from './../reducers';
 import isEqual from 'lodash.isequal';
 import { getNextId } from './../reducers';
+import AddObjectButton from './AddObjectButton';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.objectsMemory = [];
     this.messagesMemory = [];
+    this.addObjectButtonMemory = [];
 
     this.state = {
       messageAnchorMoved: undefined,
@@ -298,6 +300,22 @@ export default class App extends React.Component {
       ? layout[pending.lifelineHoveredKey].lifelineX
       : 0;
 
+    let addObjectButtonData = [];
+    for (let i = 0; i <= objects.length; i++) {
+      addObjectButtonData.push({
+        id: 'add-object-button-' + i,
+        insertIndex: i,
+      });
+    }
+
+    function addObjectAndEditName(insertIndex) {
+      const newName = 'NewObject';
+      const newId = 'o' + getNextId(objects);
+
+      dispatch(ac.addObject(newId, newName, insertIndex));
+      dispatch(ac.editComponentName(newId, newName, true /*preselect*/));
+    }
+
     return (
       <div
         onTouchEnd={() => dispatch(ac.touchWarn())}
@@ -313,7 +331,6 @@ export default class App extends React.Component {
           {...usefulProps}
           showUndo={core.past.length > 0}
           showRedo={core.future.length > 0}
-          showTipIfSpace={objects.length < 3 && messages.length < 2}
         />
 
         <div
@@ -321,6 +338,35 @@ export default class App extends React.Component {
           style={{ position: 'relative', height: layout.height + 50 }}
           id="diagram-root"
         >
+          <div
+            onMouseEnter={() => this.setState({ showAdd: true })}
+            onMouseLeave={() => this.setState({ showAdd: false })}
+            style={{
+              height:
+                DIAGRAM_PADDING.TOP_BOTTOM +
+                OBJECT_NAME_PADDING.TOP_BOTTOM * 2 +
+                21,
+            }}
+          >
+            {mapWithSameDomOrder(
+              addObjectButtonData,
+              this.addObjectButtonMemory,
+              addObjectButtonItem => {
+                return (
+                  <AddObjectButton
+                    onClick={() =>
+                      addObjectAndEditName(addObjectButtonItem.insertIndex)}
+                    key={addObjectButtonItem.id}
+                    forceShow={this.state.showAdd}
+                    insertIndex={addObjectButtonItem.insertIndex}
+                    objects={objects}
+                    layout={layout}
+                  />
+                );
+              }
+            )}
+          </div>
+
           {mapWithSameDomOrder(objects, this.objectsMemory, object => (
             <Objekt
               key={object.id}

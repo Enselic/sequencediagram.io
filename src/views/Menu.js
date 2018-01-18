@@ -7,24 +7,8 @@ import Kbd from './Kbd';
 import { exportSvg } from '../exporters/export-svg';
 import { getNextId } from './../reducers';
 
-export default function Menu(props) {
-  const {
-    reduxState,
-    dispatch,
-    pending,
-    showUndo,
-    showRedo,
-    showTipIfSpace,
-    objects,
-  } = props;
-
-  function addObjectAndEditName() {
-    const newName = 'NewObject';
-    const newId = 'o' + getNextId(objects);
-
-    dispatch(ac.addObject(newId, newName));
-    dispatch(ac.editComponentName(newId, newName, true /*preselect*/));
-  }
+export default function(props) {
+  const { reduxState, dispatch, pending, showUndo, showRedo } = props;
 
   const menuItemProps = {
     style: {
@@ -57,7 +41,7 @@ export default function Menu(props) {
   // one that can be clicked. We do this so that if the user frantically
   // clicks Undo, he does not accidentally start clicking the Redo button
   // when the Undo button is removed
-  const undoOrRedoShown = (showUndo || showRedo) && !message && !fixedRevision;
+  const undoOrRedoShown = !message && !fixedRevision;
 
   const cancelIsShown = !undoOrRedoShown && !!message;
 
@@ -65,15 +49,6 @@ export default function Menu(props) {
   // discover the 'Add object' menu item, only show Share button if Undo
   // or Redo is shown
   const showShare = undoOrRedoShown || cancelIsShown;
-
-  // We only want to show the hint if 'Add object' is the only
-  // item (otherwise it will point at the wrong item)
-  const showTip =
-    showTipIfSpace &&
-    !showShare &&
-    !undoOrRedoShown &&
-    !cancelIsShown &&
-    !fixedRevision;
 
   return (
     <div
@@ -84,9 +59,6 @@ export default function Menu(props) {
         alignItems: 'baseline',
       }}
     >
-      {!fixedRevision && (
-        <Button onClick={addObjectAndEditName}>Add object</Button>
-      )}
       {undoOrRedoShown && (
         <Button
           disabled={!showUndo}
@@ -120,21 +92,6 @@ export default function Menu(props) {
         >
           Download as SVG
         </a>
-      )}
-      {showTip && (
-        <span className="tip">
-          ⇐{' '}
-          <span
-            style={{
-              backgroundColor: '#000',
-              padding: '2px 5px',
-              color: '#fff',
-              borderRadius: 2,
-            }}
-          >
-            Click "Add object" to start
-          </span>
-        </span>
       )}
       <ServerState reduxState={reduxState} />
     </div>

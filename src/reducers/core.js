@@ -37,8 +37,8 @@ function doAddComponent(components, newComponent, insertIndex) {
   return newComponents;
 }
 
-export function addObject(id, name) {
-  return { type: 'ADD_OBJECT', newComponent: { id, name } };
+export function addObject(id, name, index) {
+  return { type: 'ADD_OBJECT', newComponent: { id, name }, index };
 }
 
 export function removeComponent(id) {
@@ -88,7 +88,7 @@ export function rearrangeMessages(messages) {
 function objects(state = [], action) {
   switch (action.type) {
     case 'ADD_OBJECT':
-      return doAddComponent(state, action.newComponent);
+      return doAddComponent(state, action.newComponent, action.index);
     case 'REMOVE_COMPONENT':
       return state.filter(object => object.id !== action.id);
     case 'RENAME_COMPONENT':

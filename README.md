@@ -134,20 +134,8 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
-
-High prio
----------
-- redo UI for objects; make it possible to insert Objects at any position, not just end
-
-Low prio
---------
 - redo UI for messages; make it less boxy and more accurate
 - Make messages movable when grabbing buttons (like Pavel expected)
 - Add move right/left buttons in the UI so users don't have to figure out drag and drop
-- Add link to release notes in message about new version
-- Fade in controls slowly to reduce flicker (as requested by Pavel)
-- make it easy to 'fork' a diagram
 - Make tab switch objects
 - Make <input /> show as multiline when the layout will wrap lines. Use <textarea /> ?
-- Make messages movable horizontally
-- Add .svg URL to service worker and serve SVG normally
