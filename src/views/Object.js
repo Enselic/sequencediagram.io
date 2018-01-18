@@ -42,7 +42,7 @@ function DiagramObject(props) {
   };
 
   return (
-    <div style={style} id={object.id} key={object.id}>
+    <div style={style} id={object.id}>
       <div
         onMouseEnter={props.handleHoverMouseEnter}
         onMouseMove={props.handleHoverMouseMove}
