@@ -5,6 +5,7 @@ source local.env.sh
 
 notify_travis_fail() {
   notify-send -u critical 'Travis CI will fail'
+  kill_running_services
   exit 1
 }
 
