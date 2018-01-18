@@ -20,8 +20,10 @@ export default function Name(props) {
       props.pending.componentRenamed &&
       props.pending.componentRenamed.preselect
     ) {
-      el.focus();
-      el.select();
+      if (document.activeElement !== el) {
+        el.focus();
+        el.select();
+      }
     }
   }
 

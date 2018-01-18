@@ -181,6 +181,9 @@ it('can click in renamed component text to place cursor', async () => {
     .mouseDown()
     .mouseUp()
     .perform();
+  // To make sure subsequence state changes from backend interactions
+  // do not mess up cursor posision, wait a while here
+  await driver.sleep(3000);
   await sleepIfHumanObserver(driver, 1);
   await typeTextAndPressReturn(driver, 'prefix');
   return assertFragment(driver, 'o1,prefixPrefixMe');
