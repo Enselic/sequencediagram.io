@@ -6,7 +6,7 @@ import { boxShadow, backgroundLight } from './common';
 import Kbd from './Kbd';
 import { exportSvg } from '../exporters/export-svg';
 
-export default function(props) {
+export default function Menu(props) {
   const {
     reduxState,
     dispatch,

@@ -2,7 +2,7 @@ import React from 'react';
 import * as ac from './../reducers';
 import nameBackground from './pngs/name-background.png';
 
-export default function(props) {
+export default function Name(props) {
   const { pending, dispatch, component, showBackground } = props;
 
   // pending.componentRenamed && pending.componentRenamed.id === message.id

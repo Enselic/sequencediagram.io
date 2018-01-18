@@ -11,7 +11,7 @@ function Info(props) {
   );
 }
 
-export default function(props) {
+export default function Header(props) {
   const { touchWarn, showNewContentAvailable } = props.pending;
 
   return (
