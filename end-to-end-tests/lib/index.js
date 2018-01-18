@@ -48,7 +48,7 @@ function buildDriver(browser) {
     let chromeOptions = new ChromeOptions();
     let args = [`window-size=${windowSize}`];
     if (HEADLESS) {
-      args = args.concat(['headless', 'disable-gpu']);
+      args = args.concat(['headless', 'disable-gpu', 'no-sandbox']);
     }
     chromeOptions.addArguments(...args);
 
