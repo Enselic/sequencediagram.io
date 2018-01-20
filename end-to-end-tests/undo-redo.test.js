@@ -18,6 +18,8 @@ import {
   toggleLineStyle,
   waitForCssTransitions,
   waitForElement,
+  typeTextAndPressReturn,
+  pressReturn,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
@@ -89,13 +91,13 @@ it(
     await clickAddObject(driver);
     await asserter.assertFragmentAndPush('o1,NewObject');
 
-    await clickAndType(driver, 'NewObject', 'Undoer');
+    await typeTextAndPressReturn(driver, 'Undoer');
     await asserter.assertFragmentAndPush('o1,Undoer');
 
     await clickAddObject(driver);
     await asserter.assertFragmentAndPush('o1,Undoer;o2,NewObject');
 
-    await clickAndType(driver, 'NewObject', 'Redoer');
+    await typeTextAndPressReturn(driver, 'Redoer');
     await asserter.assertFragmentAndPush('o1,Undoer;o2,Redoer');
 
     await addMessage(driver, 'Undoer', 'Redoer');
@@ -103,7 +105,7 @@ it(
       'o1,Undoer;o2,Redoer;m1,o1,o2,newMessage()'
     );
 
-    await clickAndType(driver, 'newMessage()', 'invoke()');
+    await typeTextAndPressReturn(driver, 'invoke()');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;m1,o1,o2,invoke()'
     );
@@ -113,7 +115,7 @@ it(
       'o1,Undoer;o2,Redoer;o3,NewObject;m1,o1,o2,invoke()'
     );
 
-    await clickAndType(driver, 'NewObject', 'User');
+    await typeTextAndPressReturn(driver, 'User');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m1,o1,o2,invoke()'
     );
@@ -123,17 +125,22 @@ it(
       'o1,Undoer;o2,Redoer;o3,User;m1,o3,o2,invoke()'
     );
 
-    await addMessage(driver, 'Redoer', 'User', 'invoke()');
+    await addMessage(driver, 'Redoer', 'User');
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m2,o2,o3,newMessage();m1,o3,o2,invoke()'
     );
 
-    await flip(driver, 'm2');
+    await typeTextAndPressReturn(driver, 'newMessage2()');
     await asserter.assertFragmentAndPush(
-      'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,newMessage();m1,o3,o2,invoke()'
+      'o1,Undoer;o2,Redoer;o3,User;m2,o2,o3,newMessage2();m1,o3,o2,invoke()'
     );
 
-    await clickAndType(driver, 'newMessage()', 'call()'); // Use a different term so we can search by text uniquely
+    await flip(driver, 'm2');
+    await asserter.assertFragmentAndPush(
+      'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,newMessage2();m1,o3,o2,invoke()'
+    );
+
+    await clickAndType(driver, 'newMessage2()', 'call()'); // Use a different term so we can search by text uniquely
     await asserter.assertFragmentAndPush(
       'o1,Undoer;o2,Redoer;o3,User;m2,o3,o2,call();m1,o3,o2,invoke()'
     );

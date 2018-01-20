@@ -14,6 +14,7 @@ import {
   setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   waitForElement,
+  typeTextAndPressReturn,
 } from './lib';
 
 const driver = buildDriverAndSetupEnv();
@@ -134,7 +135,7 @@ it('MANUAL: remove button does not hang around', async () => {
   await clickAddObject(driver);
   await assertFragment(driver, 'o1,NewObject');
 
-  await clickAndType(driver, 'NewObject', 'Remove button should disappear');
+  await typeTextAndPressReturn(driver, 'Remove button should disappear');
   await assertFragment(driver, 'o1,Remove%20button%20should%20disappear');
 
   await clickAddObject(driver);
@@ -143,7 +144,7 @@ it('MANUAL: remove button does not hang around', async () => {
     'o1,Remove%20button%20should%20disappear;o2,NewObject'
   );
 
-  await clickAndType(driver, 'NewObject', '... when it is shown above');
+  await typeTextAndPressReturn(driver, '... when it is shown above');
   await assertFragment(
     driver,
     'o1,Remove%20button%20should%20disappear;o2,...%20when%20it%20is%20shown%20above'

@@ -5,6 +5,7 @@ import * as ac from './../reducers';
 import { boxShadow, backgroundLight } from './common';
 import Kbd from './Kbd';
 import { exportSvg } from '../exporters/export-svg';
+import { getNextId } from './../reducers';
 
 export default function Menu(props) {
   const {
@@ -14,12 +15,15 @@ export default function Menu(props) {
     showUndo,
     showRedo,
     showTipIfSpace,
+    objects,
   } = props;
 
   function addObjectAndEditName() {
     const newName = 'NewObject';
-    dispatch(ac.addObject(newName));
-    // TODO: dispatch(ac.editComponentName(, newName, true /*preselect*/));
+    const newId = 'o' + getNextId(objects);
+
+    dispatch(ac.addObject(newId, newName));
+    dispatch(ac.editComponentName(newId, newName, true /*preselect*/));
   }
 
   const menuItemProps = {
@@ -38,7 +42,7 @@ export default function Menu(props) {
       <button
         {...menuItemProps}
         disabled={props.disabled}
-        onClick={props.onClick}
+        onMouseUp={props.onClick}
       >
         {props.children}
       </button>

@@ -9,6 +9,7 @@ import NewMessageMarker from './NewMessageMarker';
 import { eventToDiagramCoords, mapWithSameDomOrder } from './utils';
 import * as ac from './../reducers';
 import isEqual from 'lodash.isequal';
+import { getNextId } from './../reducers';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -248,6 +249,8 @@ export default class App extends React.Component {
           return;
         }
         let action;
+        let addedId;
+        let addedName;
         if (thiz.state.messageAnchorMoved) {
           const newMessage = {
             ...messages.find(
@@ -266,14 +269,22 @@ export default class App extends React.Component {
             'newMessage()'
           );
         } else {
+          addedId = 'm' + getNextId(messages);
+          addedName = pending.message.name;
           action = ac.addMessage(
+            addedId,
             pending.message.sender,
             object.id,
-            pending.message.name,
+            addedName,
             layout[pending.message.id].index
           );
         }
         dispatch(action);
+        if (addedId && addedName) {
+          dispatch(
+            ac.editComponentName(addedId, addedName, true /*preselect*/)
+          );
+        }
       };
     }
 

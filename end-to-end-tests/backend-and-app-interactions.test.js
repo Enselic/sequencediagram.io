@@ -19,6 +19,8 @@ import {
   writeCodeCoverageDataIfPresent,
   waitForPermalink,
   removeComponentWithKey,
+  typeTextAndPressReturn,
+  pressReturn,
 } from './lib';
 import serve from 'serve';
 
@@ -45,7 +47,7 @@ describe('when the API server is fully functional', async () => {
       await goTo(driver, '');
       newlyCreatedPermalink = await waitForPermalink(driver);
       await clickAddObject(driver);
-      await renameComponentFromTo(driver, 'NewObject', randomObjectName1);
+      await typeTextAndPressReturn(driver, randomObjectName1);
       await driver.sleep(1000);
       await waitForElement(driver, 'Saved');
     },
@@ -63,7 +65,7 @@ describe('when the API server is fully functional', async () => {
       await driver.get(newlyCreatedPermalink);
       await waitForElement(driver, randomObjectName1);
       await clickAddObject(driver);
-      await renameComponentFromTo(driver, 'NewObject', randomObjectName2);
+      await typeTextAndPressReturn(driver, randomObjectName2);
       await driver.sleep(1000);
       await waitForElement(driver, 'Saved');
     },
@@ -137,6 +139,7 @@ describe('when the API server is down the web app', async () => {
       await waitForElement(driver, 'Could not connect');
       // Should still be possible to modify the diagram
       await clickAddObject(driver);
+      await pressReturn(driver);
       await waitForElement(driver, 'NewObject');
     },
     20 * 1000
@@ -200,11 +203,7 @@ describe('when the API server is down but comes up later it', async () => {
       try {
         await makeApiServer('listen');
         await clickAddObject(driver);
-        await renameComponentFromTo(
-          driver,
-          'NewObject',
-          'From after API server'
-        );
+        await typeTextAndPressReturn(driver, 'From after API server');
         await waitForElement(driver, 'Saved');
         await waitForPermalink(driver);
 

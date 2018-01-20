@@ -238,6 +238,10 @@ async function clickElement(driver, element) {
 
 export async function typeTextAndPressReturn(driver, typedText) {
   await typeText(driver, typedText);
+  return pressReturn(driver);
+}
+
+export async function pressReturn(driver) {
   return driver
     .actions()
     .sendKeys(Key.RETURN)

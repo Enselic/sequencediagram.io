@@ -3,7 +3,7 @@ import undoable from 'redux-undo';
 
 // Helper functions
 
-function getNextId(components) {
+export function getNextId(components) {
   // Doesn't need to be "highest" unused, but it's easy to implement
   let highestUsedId = 0; // Lowest allowed id is 1
   components.forEach(component => {
@@ -25,29 +25,20 @@ function doRenameComponent(components, id, newName) {
   });
 }
 
-function doAddComponentAndAssignKey(
-  components,
-  idPrefix,
-  newComponent,
-  insertIndex
-) {
+function doAddComponent(components, newComponent, insertIndex) {
   let newComponents = [...components];
-  let newComponentWithKey = {
-    ...newComponent,
-    id: idPrefix + getNextId(components),
-  };
 
   if (insertIndex !== undefined) {
-    newComponents.splice(insertIndex, 0, newComponentWithKey);
+    newComponents.splice(insertIndex, 0, newComponent);
   } else {
-    newComponents.push(newComponentWithKey);
+    newComponents.push(newComponent);
   }
 
   return newComponents;
 }
 
-export function addObject(name) {
-  return { type: 'ADD_OBJECT', newComponent: { name } };
+export function addObject(id, name) {
+  return { type: 'ADD_OBJECT', newComponent: { id, name } };
 }
 
 export function removeComponent(id) {
@@ -66,10 +57,10 @@ export function renameComponent(id, newName) {
   return { type: 'RENAME_COMPONENT', id, newName };
 }
 
-export function addMessage(sender, receiver, name, insertIndex) {
+export function addMessage(id, sender, receiver, name, insertIndex) {
   return {
     type: 'ADD_MESSAGE',
-    newComponent: { sender, receiver, name },
+    newComponent: { id, sender, receiver, name },
     insertIndex,
   };
 }
@@ -97,7 +88,7 @@ export function rearrangeMessages(messages) {
 function objects(state = [], action) {
   switch (action.type) {
     case 'ADD_OBJECT':
-      return doAddComponentAndAssignKey(state, 'o', action.newComponent);
+      return doAddComponent(state, action.newComponent);
     case 'REMOVE_COMPONENT':
       return state.filter(object => object.id !== action.id);
     case 'RENAME_COMPONENT':
@@ -114,12 +105,7 @@ function objects(state = [], action) {
 function messages(state = [], action) {
   switch (action.type) {
     case 'ADD_MESSAGE':
-      return doAddComponentAndAssignKey(
-        state,
-        'm',
-        action.newComponent,
-        action.insertIndex
-      );
+      return doAddComponent(state, action.newComponent, action.insertIndex);
     case 'REMOVE_COMPONENT':
       const id = action.id;
       return state.filter(
