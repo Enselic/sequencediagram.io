@@ -5,7 +5,7 @@ import * as ac from './../reducers';
 import { boxShadow, backgroundLight } from './common';
 import Kbd from './Kbd';
 import { exportSvg } from '../exporters/export-svg';
-import { getNextId } from './../reducers';
+import { getMaxUsedIdPlusOne } from './../reducers';
 
 export default function(props) {
   const { reduxState, dispatch, pending, showUndo, showRedo } = props;

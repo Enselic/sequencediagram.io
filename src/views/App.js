@@ -9,7 +9,7 @@ import NewMessageMarker from './NewMessageMarker';
 import { eventToDiagramCoords, mapWithSameDomOrder } from './utils';
 import * as ac from './../reducers';
 import isEqual from 'lodash.isequal';
-import { getNextId } from './../reducers';
+import { getMaxUsedIdPlusOne } from './../reducers';
 import AddObjectButton from './AddObjectButton';
 
 export default class App extends React.Component {
@@ -271,7 +271,7 @@ export default class App extends React.Component {
             'newMessage()'
           );
         } else {
-          addedId = 'm' + getNextId(messages);
+          addedId = 'm' + getMaxUsedIdPlusOne(messages);
           addedName = pending.message.name;
           action = ac.addMessage(
             addedId,
@@ -301,17 +301,17 @@ export default class App extends React.Component {
       : 0;
 
     let addObjectButtonData = [];
+    let baseId = getMaxUsedIdPlusOne(objects);
     for (let i = 0; i <= objects.length; i++) {
+      const newId = baseId + i;
       addObjectButtonData.push({
-        id: 'add-object-button-' + i,
+        id: 'o' + newId,
+        name: 'Object ' + newId,
         insertIndex: i,
       });
     }
 
-    function addObjectAndEditName(insertIndex) {
-      const newName = 'NewObject';
-      const newId = 'o' + getNextId(objects);
-
+    function addObjectAndEditName(newId, newName, insertIndex) {
       dispatch(ac.addObject(newId, newName, insertIndex));
       dispatch(ac.editComponentName(newId, newName, true /*preselect*/));
     }
@@ -351,14 +351,18 @@ export default class App extends React.Component {
             {mapWithSameDomOrder(
               addObjectButtonData,
               this.addObjectButtonMemory,
-              addObjectButtonItem => {
+              item => {
                 return (
                   <AddObjectButton
                     onClick={() =>
-                      addObjectAndEditName(addObjectButtonItem.insertIndex)}
-                    key={addObjectButtonItem.id}
+                      addObjectAndEditName(
+                        item.id,
+                        item.name,
+                        item.insertIndex
+                      )}
+                    key={item.id}
                     forceShow={this.state.showAdd}
-                    insertIndex={addObjectButtonItem.insertIndex}
+                    insertIndex={item.insertIndex}
                     objects={objects}
                     layout={layout}
                   />

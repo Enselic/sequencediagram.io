@@ -3,8 +3,7 @@ import undoable from 'redux-undo';
 
 // Helper functions
 
-export function getNextId(components) {
-  // Doesn't need to be "highest" unused, but it's easy to implement
+export function getMaxUsedIdPlusOne(components) {
   let highestUsedId = 0; // Lowest allowed id is 1
   components.forEach(component => {
     const id = parseInt(component.id.substring(1), 10);

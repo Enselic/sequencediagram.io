@@ -134,6 +134,7 @@ TODO
 ====
 
 List of minor/uninteresting things to do, roughly sorted by priority.
+- don't return rearly if renamed, just supress move
 - redo UI for messages; make it less boxy and more accurate
 - Make messages movable when grabbing buttons (like Pavel expected)
 - Add move right/left buttons in the UI so users don't have to figure out drag and drop
