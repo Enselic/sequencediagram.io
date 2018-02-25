@@ -41,6 +41,9 @@ export function layoutMessageLeftAndWidth(
   } else if (typeof message.sender === 'number') {
     transition = null;
     senderX = message.sender;
+  } else if (message.sender === 'found') {
+    transition = null;
+    senderX = 40;
   } else {
     const sender = layout[message.sender];
     senderX = sender.lifelineX;

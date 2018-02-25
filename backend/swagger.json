@@ -364,7 +364,8 @@
           "type": "string"
         },
         "sender": {
-          "$ref": "#/definitions/ObjectId"
+          "type": "string",
+          "pattern": "^o[0-9]+$|^found$"
         },
         "receiver": {
           "$ref": "#/definitions/ObjectId"

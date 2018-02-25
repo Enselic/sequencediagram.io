@@ -48,7 +48,9 @@ if (idMatch) {
 function createNewDiagram() {
   const defaultDiagram = {
     objects: [{ id: 'o1', name: 'Foo' }, { id: 'o2', name: 'Bar' }],
-    messages: [{ id: 'm1', sender: 'o1', receiver: 'o2', name: 'message()' }],
+    messages: [
+      { id: 'm2', sender: 'found', receiver: 'o2', name: 'message()' },
+    ],
   };
   dispatch(ac.replaceCore(defaultDiagram.objects, defaultDiagram.messages));
   dispatch(ActionCreators.clearHistory());

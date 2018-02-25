@@ -10,9 +10,10 @@ import {
 import wrap from 'word-wrap';
 
 export function SvgMessageLine(props) {
+  const xOffset = props.selfSentMessage || props.pointsLeft ? '0' : '-3';
   const yOffset = props.selfSentMessage ? 0 : 5;
   return (
-    <g transform={`translate(0 ${yOffset})`}>
+    <g transform={`translate(${xOffset} ${yOffset})`}>
       {props.selfSentMessage ? (
         <path
           style={{
@@ -24,19 +25,21 @@ export function SvgMessageLine(props) {
           d="m 0,13 c 0,0 39,-1 40,8 1,11 -36,9 -36,9"
         />
       ) : (
-        <line
-          x1="3"
-          y1="10"
-          x2={props.overrideWidth || '100%'}
-          y2="10"
-          transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
-          style={{
-            fill: 'none',
-            stroke: '#000000',
-            strokeWidth: '2',
-            strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
-          }}
-        />
+        <g>
+          <line
+            x1="3"
+            y1="10"
+            x2={props.overrideWidth || '100%'}
+            y2="10"
+            style={{
+              fill: 'none',
+              stroke: '#000000',
+              strokeWidth: '2',
+              strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
+            }}
+          />
+          <circle cx="13" cy="10" r="10" fill="black" />
+        </g>
       )}
     </g>
   );

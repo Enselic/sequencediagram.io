@@ -3,10 +3,12 @@
 var validate = (function() {
   var pattern0 = new RegExp('^o[0-9]+$');
   var pattern1 = new RegExp('^m[0-9]+$');
+  var pattern2 = new RegExp('^o[0-9]+$|^found$');
   var refVal = [];
   var refVal1 = (function() {
     var pattern0 = new RegExp('^o[0-9]+$');
     var pattern1 = new RegExp('^m[0-9]+$');
+    var pattern2 = new RegExp('^o[0-9]+$|^found$');
     return function validate(
       data,
       dataPath,
@@ -168,6 +170,7 @@ var validate = (function() {
   var refVal3 = (function() {
     var pattern0 = new RegExp('^o[0-9]+$');
     var pattern1 = new RegExp('^m[0-9]+$');
+    var pattern2 = new RegExp('^o[0-9]+$|^found$');
     return function validate(
       data,
       dataPath,
@@ -303,18 +306,17 @@ var validate = (function() {
                   return false;
                 } else {
                   var errs_1 = errors;
-                  var errs_2 = errors;
                   if (typeof data1 === 'string') {
-                    if (!pattern0.test(data1)) {
+                    if (!pattern2.test(data1)) {
                       validate.errors = [
                         {
                           keyword: 'pattern',
                           dataPath: (dataPath || '') + '.sender',
-                          schemaPath: '#/definitions/ObjectId/pattern',
+                          schemaPath: '#/properties/sender/pattern',
                           params: {
-                            pattern: '^o[0-9]+$',
+                            pattern: '^o[0-9]+$|^found$',
                           },
-                          message: 'should match pattern "^o[0-9]+$"',
+                          message: 'should match pattern "^o[0-9]+$|^found$"',
                         },
                       ];
                       return false;
@@ -324,7 +326,7 @@ var validate = (function() {
                       {
                         keyword: 'type',
                         dataPath: (dataPath || '') + '.sender',
-                        schemaPath: '#/definitions/ObjectId/type',
+                        schemaPath: '#/properties/sender/type',
                         params: {
                           type: 'string',
                         },
@@ -333,7 +335,6 @@ var validate = (function() {
                     ];
                     return false;
                   }
-                  var valid2 = errors === errs_2;
                   var valid1 = errors === errs_1;
                 }
                 if (valid1) {
@@ -466,7 +467,8 @@ var validate = (function() {
         type: 'string',
       },
       sender: {
-        $ref: '#/definitions/ObjectId',
+        type: 'string',
+        pattern: '^o[0-9]+$|^found$',
       },
       receiver: {
         $ref: '#/definitions/ObjectId',
@@ -710,7 +712,8 @@ validate.schema = {
           type: 'string',
         },
         sender: {
-          $ref: '#/definitions/ObjectId',
+          type: 'string',
+          pattern: '^o[0-9]+$|^found$',
         },
         receiver: {
           $ref: '#/definitions/ObjectId',
