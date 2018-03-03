@@ -72,7 +72,11 @@ export function SvgMessageArrow(props) {
  * from swagger.json
  */
 export function exportSvg(sequenceDiagram) {
-  const layout = layouter(sequenceDiagram.objects, sequenceDiagram.messages);
+  const layout = layouter(
+    sequenceDiagram.objects,
+    sequenceDiagram.messages,
+    undefined
+  );
 
   const svgTree = (
     <svg
@@ -128,14 +132,14 @@ export function exportSvg(sequenceDiagram) {
         const messageTextOffset = 10;
         const nameBorderWidthTimesTwo = 20; // Name.js borderWidth * 2
         const averageCharWidth = 7;
-        let messageNameLines = wrap(message.name, {
+        const messageNameWrapped = wrap(message.name, {
           indent: '',
           width: Math.round(
             (messageWidth - nameBorderWidthTimesTwo) / averageCharWidth
           ),
           newline: '\n',
         });
-        messageNameLines = messageNameLines.split('\n');
+        const messageNameLines = messageNameWrapped.split('\n');
 
         const textMargin = 10;
         let textAnchor = 'middle';

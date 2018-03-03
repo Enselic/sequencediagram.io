@@ -4,12 +4,7 @@ import * as ac from './reducers';
 import App from './views/App';
 import registerServiceWorker from './registerServiceWorker';
 import { initMouseOverlay } from './debug/mouseDebug';
-import {
-  createStore,
-  applyMiddleware,
-  bindActionCreators,
-  compose,
-} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { ActionCreators } from 'redux-undo';
 import thunk from 'redux-thunk';
 import debounce from 'lodash.debounce';
@@ -21,7 +16,8 @@ if (searchParams.has('mouseDebug')) {
   initMouseOverlay();
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose;
 var store = createStore(ac.default, composeEnhancers(applyMiddleware(thunk)));
 
 let lastSavedDiagram = {};
@@ -37,10 +33,9 @@ function dispatch(action) {
 // Either create a new diagram or load an existing one
 const { pathname } = window.location;
 const idMatch = pathname.match(/^\/([0-9a-zA-Z]{1,})$/);
-let revision = parseInt(searchParams.get('revision'), 10);
-revision = revision > 0 ? revision : undefined;
+let revision = parseInt(searchParams.get('revision') || '', 10);
 if (idMatch) {
-  dispatch(ac.loadDiagram(idMatch[1], revision));
+  dispatch(ac.loadDiagram(idMatch[1], revision > 0 ? revision : undefined));
 } else {
   createNewDiagram();
 }
@@ -101,7 +96,7 @@ doRender();
 // These functions support autoamted end-to-end tests.
 // They also enable export and import of diagrams until there's a
 // better UI for that
-window.sequencediagram_io = {
+window['sequencediagram_io'] = {
   stringifyCurrentDiagram() {
     return JSON.stringify(store.getState().core.present);
   },
@@ -116,8 +111,7 @@ window.sequencediagram_io = {
 };
 
 // Make this web app run even when offline
-const boundActionCreators = bindActionCreators(ac, dispatch);
 registerServiceWorker(
-  boundActionCreators.showWorksOffline,
-  boundActionCreators.showNewContentAvailable
+  () => dispatch(ac.showWorksOffline()),
+  () => dispatch(ac.showNewContentAvailable())
 );

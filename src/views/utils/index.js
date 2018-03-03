@@ -65,7 +65,7 @@ export function hoverLifelineHelper(dispatch, id) {
 
 // Thanks Jonathan Marzullo and others from https://stackoverflow.com/a/13348618
 export function isChrome() {
-  var isChromium = window.chrome,
+  var isChromium = window['chrome'],
     winNav = window.navigator,
     vendorName = winNav.vendor,
     isOpera = winNav.userAgent.indexOf('OPR') > -1,
