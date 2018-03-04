@@ -35,7 +35,7 @@ export function getHostAndPort() {
 
 function buildDriver(browser) {
   if (browser === undefined) {
-    browser = 'chrome';
+    browser = 'firefox';
   }
   let builder = new Builder().forBrowser(browser);
   const windowSize = '1280,1050';
