@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
 from selenium.webdriver.support import expected_conditions as EC # available since 2.26.0
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+import json
 
 # Create a new instance of the Firefox driver
 driver = webdriver.Firefox()
@@ -20,14 +21,12 @@ def send_keys_and_return(driver, keys):
 
 def rename_from_to(driver, old_name, new_name):
     click_text(driver, old_name)
-    send_keys_and_return(driver, )
+    send_keys_and_return(driver, new_name)
 
-def start_width(driver, sequence_diagram):
-
-
+def start_with(driver, sequence_diagram):
     driver.get("http://localhost:3000/")
-    script = "return window.sequencediagram_io.setCurrentDiagram('" + initial_state"');"
-    driver.execute_script()
+    script = "return window.sequencediagram_io.setCurrentDiagram('" + json.dumps(sequence_diagram) + "');"
+    driver.execute_script(script)
 
 
 
