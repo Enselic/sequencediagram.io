@@ -15,8 +15,6 @@ def click_text(driver, text):
     element = find_element_by_partial_text(driver, text)
     ActionChains(driver).click(element).perform()
 
-def type_text(driver, text):
-
 # go to the google home page
 driver.get("http://localhost:3000/")
 driver.execute_script("return window.sequencediagram_io.setCurrentDiagram('{\"objects\":[{\"id\":\"o1\",\"name\":\"ChangeMyName\"}],\"messages\":[]}');")
