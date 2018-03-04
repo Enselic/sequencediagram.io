@@ -18,12 +18,23 @@ def click_text(driver, text):
 def send_keys_and_return(driver, keys):
     ActionChains(driver).send_keys(keys).send_keys(Keys.RETURN).perform()
 
+def rename_from_to(driver, old_name, new_name):
+    click_text(driver, old_name)
+    send_keys_and_return(driver, )
+
+def start_width(driver, sequence_diagram):
+
+
+    driver.get("http://localhost:3000/")
+    script = "return window.sequencediagram_io.setCurrentDiagram('" + initial_state"');"
+    driver.execute_script()
+
+
 
 # go to the google home page
-driver.get("http://localhost:3000/")
-driver.execute_script("return window.sequencediagram_io.setCurrentDiagram('{\"objects\":[{\"id\":\"o1\",\"name\":\"ChangeMyName\"}],\"messages\":[]}');")
-click_text(driver, "ChangeMyName")
-send_keys_and_return(driver, "NewText")
+start_with(driver, {"objects":[{"id":"o1","name":"ChangeMyName"}],"messages":[]})
+rename_from_to(driver, "ChangeMyName", "NewText")
+click_text(driver, )
 
 
 
