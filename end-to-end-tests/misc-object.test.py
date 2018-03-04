@@ -15,12 +15,15 @@ def click_text(driver, text):
     element = find_element_by_partial_text(driver, text)
     ActionChains(driver).click(element).perform()
 
+def send_keys_and_return(driver, keys):
+    ActionChains(driver).send_keys(keys).send_keys(Keys.RETURN).perform()
+
+
 # go to the google home page
 driver.get("http://localhost:3000/")
 driver.execute_script("return window.sequencediagram_io.setCurrentDiagram('{\"objects\":[{\"id\":\"o1\",\"name\":\"ChangeMyName\"}],\"messages\":[]}');")
 click_text(driver, "ChangeMyName")
-ActionChains(driver).send_keys("NewText").send_keys(Keys.RETURN).perform()
-
+send_keys_and_return(driver, "NewText")
 
 
 
