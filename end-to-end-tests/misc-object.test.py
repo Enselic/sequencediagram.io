@@ -21,7 +21,13 @@ class MiscObjectTestCase(unittest.TestCase):
             "messages": []
         })
         rename_from_to(self.driver, "ChangeMyName", "NewText")
-        assert_diagram(self.driver, None)
+        assert_diagram(self.driver, {
+            "objects": [{
+                "id": "o1",
+                "name": "NewText"
+            }],
+            "messages": []
+        })
 
     def tearDown(self):
         self.driver.quit()
