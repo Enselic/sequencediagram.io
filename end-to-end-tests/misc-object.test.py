@@ -14,7 +14,7 @@ class MiscObjectTestCase(unittest.TestCase):
     def test_change_object_name(self):
         start_with(self.driver, {"objects":[{"id":"o1","name":"ChangeMyName"}],"messages":[]})
         rename_from_to(self.driver, "ChangeMyName", "NewText")
-        assert 1 == 1, 'incorrect default size'
+        assert_diagram(self.driver, None)
 
     def tearDown(self):
         self.driver.quit()
@@ -22,6 +22,7 @@ class MiscObjectTestCase(unittest.TestCase):
 def assert_diagram(driver, expected_diagram):
     script = "return window.sequencediagram_io.stringifyCurrentDiagram();"
     current_diagram = driver.execute_script(script)
+    assert current_diagram == expected_diagram
 
 def find_element_by_partial_text(driver, text):
     return driver.find_element_by_xpath("//*[contains(text(),'" + text + "')]")
