@@ -22,6 +22,7 @@ async function unleashGremlins(driver) {
   await driver.executeScript(
     'window.gremlins.createHorde().gremlin(gremlins.species.clicker()).unleash({nb: 10000});'
   );
+  m
   await driver.sleep(runningTimeSeconds * 1000);
 }
 

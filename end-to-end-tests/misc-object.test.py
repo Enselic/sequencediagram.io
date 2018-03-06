@@ -20,8 +20,10 @@ class MiscObjectTestCase(unittest.TestCase):
             }],
             "messages": []
         })
+
         rename_from_to(self.driver, "ChangeMyName", "NewText")
-        assert_diagram(self.driver, {
+
+        assert_diagram(self, self.driver, {
             "objects": [{
                 "id": "o1",
                 "name": "NewText"
@@ -33,10 +35,11 @@ class MiscObjectTestCase(unittest.TestCase):
         self.driver.quit()
 
 
-def assert_diagram(driver, expected_diagram):
+def assert_diagram(testcase, driver, expected_diagram):
     script = "return window.sequencediagram_io.stringifyCurrentDiagram();"
-    current_diagram = driver.execute_script(script)
-    assert current_diagram == expected_diagram
+    current_diagram_string = driver.execute_script(script)
+    current_diagram = json.loads(current_diagram_string)
+    testcase.assertEqual(current_diagram, expected_diagram)
 
 
 def find_element_by_partial_text(driver, text):
