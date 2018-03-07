@@ -9,25 +9,6 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
 
-    def test_change_object_name(self):
-        start_with(self.driver, {
-            "objects": [{
-                "id": "o1",
-                "name": "ChangeMyName"
-            }],
-            "messages": []
-        })
-
-        rename_from_to(self.driver, "ChangeMyName", "NewText")
-
-        assert_diagram(self, self.driver, {
-            "objects": [{
-                "id": "o1",
-                "name": "NewText"
-            }],
-            "messages": []
-        })
-
     def tearDown(self):
         self.driver.quit()
 
