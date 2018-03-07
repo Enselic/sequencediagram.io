@@ -6,14 +6,17 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
+WINDOW_SIZE = '1280,1050'
 
 class BaseTestCase(unittest.TestCase):
-    def setUp(self):
-        self.driver = webdriver.Firefox()
 
-    def create_firefox_driver():
-        options = webdriver.FirefoxOptions()
-        options.add_argument('sdfasf')
+    def setUp(self):
+        self.driver = self.create_firefox_driver()
+
+    def create_firefox_driver(self):
+        options = webdriver.firefox.options.Options()
+        options.add_argument('-window-size={}'.format(WINDOW_SIZE))
+        return webdriver.Firefox(options=options)
 
     def get_port(self):
         # CI scripts run from npm run build with serve (port 5000)
