@@ -34,7 +34,8 @@ class BaseTestCase(unittest.TestCase):
         return webdriver.Chrome(options=options)
 
     def setup_common_options(self, options):
-        pass #options.set_headless()
+        if 'HEADLESS' in environ:
+            options.set_headless()
 
     def get_port(self):
         # CI scripts run from npm run build with serve (port 5000)
