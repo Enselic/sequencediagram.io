@@ -4,7 +4,7 @@ from end_to_end_tests.utils import *
 
 class MiscObjectTestCase(BaseTestCase):
     def test_change_object_name(self):
-        start_with(self.driver, {
+        self.start_with({
             "objects": [{
                 "id": "o1",
                 "name": "ChangeMyName"
@@ -12,7 +12,7 @@ class MiscObjectTestCase(BaseTestCase):
             "messages": []
         })
 
-        rename_from_to(self.driver, "ChangeMyName", "NewText")
+        self.rename_from_to("ChangeMyName", "NewText")
 
         self.assert_diagram({
             "objects": [{

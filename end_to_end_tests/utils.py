@@ -9,6 +9,28 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
 
+    def start_with(self, sequence_diagram):
+        self.driver.get("http://localhost:3000/")
+        script = "return window.sequencediagram_io.setCurrentDiagram('{}');".format(
+            json.dumps(sequence_diagram))
+        self.driver.execute_script(script)
+
+    def rename_from_to(self, old_name, new_name):
+        self.click_text(old_name)
+        self.send_keys_and_return(new_name)
+
+    def click_text(self, text):
+        element = self.find_element_by_partial_text(text)
+        ActionChains(self.driver).click(element).perform()
+
+    def send_keys_and_return(self, keys):
+        ActionChains(self.driver).send_keys(keys).send_keys(
+            Keys.RETURN).perform()
+
+    def find_element_by_partial_text(self, text):
+        return self.driver.find_element_by_xpath(
+            "//*[contains(text(),'" + text + "')]")
+
     def assert_diagram(self, expected_diagram):
         script = "return window.sequencediagram_io.stringifyCurrentDiagram();"
         current_diagram_string = self.driver.execute_script(script)
@@ -17,28 +39,3 @@ class BaseTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
-
-
-def start_with(driver, sequence_diagram):
-    driver.get("http://localhost:3000/")
-    script = "return window.sequencediagram_io.setCurrentDiagram('{}');".format(
-        json.dumps(sequence_diagram))
-    driver.execute_script(script)
-
-
-def rename_from_to(driver, old_name, new_name):
-    click_text(driver, old_name)
-    send_keys_and_return(driver, new_name)
-
-
-def click_text(driver, text):
-    element = find_element_by_partial_text(driver, text)
-    ActionChains(driver).click(element).perform()
-
-
-def send_keys_and_return(driver, keys):
-    ActionChains(driver).send_keys(keys).send_keys(Keys.RETURN).perform()
-
-
-def find_element_by_partial_text(driver, text):
-    return driver.find_element_by_xpath("//*[contains(text(),'" + text + "')]")
