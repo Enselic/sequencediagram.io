@@ -11,12 +11,23 @@ WINDOW_SIZE = '1280,1050'
 class BaseTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.driver = self.create_firefox_driver()
+        if environ.get('SELENIUM_BROWSER') == 'firefox':
+            self.driver = self.create_firefox_driver()
+        else:
+            self.driver = self.create_chrome_driver()
 
     def create_firefox_driver(self):
         options = webdriver.firefox.options.Options()
-        options.add_argument('-window-size={}'.format(WINDOW_SIZE))
+        self.setup_common_options(options)
         return webdriver.Firefox(options=options)
+
+    def create_chrome_driver(self):
+        options = webdriver.chrome.options.Options()
+        self.setup_common_options(options)
+        return webdriver.Chrome(options=options)
+
+    def setup_common_options(self, options):
+        options.set_headless()
 
     def get_port(self):
         # CI scripts run from npm run build with serve (port 5000)
