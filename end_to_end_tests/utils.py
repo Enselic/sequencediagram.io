@@ -1,6 +1,8 @@
 import json
 import unittest
 from os import environ
+from random import randint
+import sys
 
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -12,8 +14,8 @@ from selenium.webdriver.common.keys import Keys
 WINDOW_SIZE_WIDTH = 1280
 WINDOW_SIZE_HEIGHT = 1050
 
-class BaseTestCase(unittest.TestCase):
 
+class BaseTestCase(unittest.TestCase):
     def setUp(self):
         if environ.get('SELENIUM_BROWSER') == 'firefox':
             self.driver = self.create_firefox_driver()
@@ -29,7 +31,8 @@ class BaseTestCase(unittest.TestCase):
 
     def create_chrome_driver(self):
         options = webdriver.chrome.options.Options()
-        options.add_argument("window-size={},{}".format(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT))
+        options.add_argument("window-size={},{}".format(
+            WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT))
         self.setup_common_options(options)
         return webdriver.Chrome(options=options)
 
@@ -73,5 +76,19 @@ class BaseTestCase(unittest.TestCase):
         current_diagram = json.loads(current_diagram_string)
         self.assertEqual(current_diagram, expected_diagram)
 
+    def write_code_coverage_data_if_present(self):
+        # Get coverage data from browser
+        __coverage__ = self.driver.execute_script(
+            'return "__coverage__" in window ? window.__coverage__ : undefined;'
+        )
+
+        if __coverage__:
+            # To avoid file name collision without global state
+            file_name = "./coverage-data/coverage-{}.json".format(
+                randint(1, sys.maxsize))
+            with open(file_name, "w") as cov_file:
+                cov_file.write(json.dumps(__coverage__))
+
     def tearDown(self):
+        self.write_code_coverage_data_if_present()
         self.driver.quit()

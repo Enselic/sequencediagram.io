@@ -50,6 +50,7 @@
     "start": "REACT_APP_VERSION=$(git describe) scripts/start.sh",
     "build": "node scripts/build.js",
     "test": "jest --runInBand",
+    "testpy": "python3 -m unittest discover",
     "eject": "react-scripts eject",
     "prettier-write": "node_modules/.bin/prettier --write '{backend,config,end-to-end-tests,scripts,src}/**/*.js'"
   },
