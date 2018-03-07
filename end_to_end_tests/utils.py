@@ -11,6 +11,10 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
 
+    def create_firefox_driver():
+        options = webdriver.FirefoxOptions()
+        options.add_argument('sdfasf')
+
     def get_port(self):
         # CI scripts run from npm run build with serve (port 5000)
         # while you (typically) you run from npm start (port 3000)
