@@ -22,8 +22,8 @@ class BaseTestCase(unittest.TestCase):
 
     def create_firefox_driver(self):
         options = webdriver.firefox.options.Options()
-        options.add_argument("width={}".format(WINDOW_SIZE_WIDTH))
-        options.add_argument("height={}".format(WINDOW_SIZE_HEIGHT))
+        options.add_argument("-width={}".format(WINDOW_SIZE_WIDTH))
+        options.add_argument("-height={}".format(WINDOW_SIZE_HEIGHT))
         self.setup_common_options(options)
         return webdriver.Firefox(options=options)
 
