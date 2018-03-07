@@ -6,7 +6,11 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-WINDOW_SIZE = '1280,1050'
+# Make sure to always use the same size since different windw sizes
+# affect how tests are run, and we want tests to run as predictable
+# as possible
+WINDOW_SIZE_WIDTH = 1280
+WINDOW_SIZE_HEIGHT = 1050
 
 class BaseTestCase(unittest.TestCase):
 
@@ -24,10 +28,11 @@ class BaseTestCase(unittest.TestCase):
     def create_chrome_driver(self):
         options = webdriver.chrome.options.Options()
         self.setup_common_options(options)
+        options.add_argument("window-size={},{}".format(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT))
         return webdriver.Chrome(options=options)
 
     def setup_common_options(self, options):
-        options.set_headless()
+        pass #options.set_headless()
 
     def get_port(self):
         # CI scripts run from npm run build with serve (port 5000)
