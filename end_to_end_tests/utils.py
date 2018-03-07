@@ -7,7 +7,7 @@ import unittest
 
 class BaseTestCase(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
 
     def start_with(self, sequence_diagram):
         self.driver.get("http://localhost:3000/")
