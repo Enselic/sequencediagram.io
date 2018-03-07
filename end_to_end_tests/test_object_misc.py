@@ -14,7 +14,7 @@ class MiscObjectTestCase(BaseTestCase):
 
         rename_from_to(self.driver, "ChangeMyName", "NewText")
 
-        assert_diagram(self, self.driver, {
+        self.assert_diagram({
             "objects": [{
                 "id": "o1",
                 "name": "NewText"
