@@ -49,7 +49,8 @@
   "scripts": {
     "start": "REACT_APP_VERSION=$(git describe) scripts/start.sh",
     "build": "node scripts/build.js",
-    "test": "jest --runInBand",
+    "test": "yapf --diff end_to_end_tests/*.py && npm run testpy && jest --runInBand",
+    "testpy": "python3 -m unittest discover --verbose",
     "eject": "react-scripts eject",
     "prettier-write": "node_modules/.bin/prettier --write '{backend,config,end-to-end-tests,scripts,src}/**/*.js'"
   },
