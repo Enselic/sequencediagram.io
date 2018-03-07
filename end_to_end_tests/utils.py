@@ -1,16 +1,26 @@
+import json
+import unittest
+from os import environ
+
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-import json
-import unittest
 
 
 class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
 
+    def get_port(self):
+        # CI scripts run from npm run build with serve (port 5000)
+        # while you (typically) you run from npm start (port 3000)
+        return environ.get('PORT', '5000' if 'CI' in environ else '3000')
+
+    def get_host_and_port(self):
+        return "http://localhost:{}/".format(self.get_port())
+
     def start_with(self, sequence_diagram):
-        self.driver.get("http://localhost:3000/")
+        self.driver.get(self.get_host_and_port())
         script = "return window.sequencediagram_io.setCurrentDiagram('{}');".format(
             json.dumps(sequence_diagram))
         self.driver.execute_script(script)
