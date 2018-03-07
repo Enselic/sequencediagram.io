@@ -22,13 +22,15 @@ class BaseTestCase(unittest.TestCase):
 
     def create_firefox_driver(self):
         options = webdriver.firefox.options.Options()
+        options.add_argument("width={}".format(WINDOW_SIZE_WIDTH))
+        options.add_argument("height={}".format(WINDOW_SIZE_HEIGHT))
         self.setup_common_options(options)
         return webdriver.Firefox(options=options)
 
     def create_chrome_driver(self):
         options = webdriver.chrome.options.Options()
-        self.setup_common_options(options)
         options.add_argument("window-size={},{}".format(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT))
+        self.setup_common_options(options)
         return webdriver.Chrome(options=options)
 
     def setup_common_options(self, options):
