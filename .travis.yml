@@ -1,15 +1,12 @@
-dist: trusty
+dist: bionic
 language: node_js
 node_js:
-  - "6"
+  - "12"
 cache:
   directories:
     - "node_modules"
 addons:
-  chrome: beta
-  apt:
-    packages:
-      - oracle-java8-set-default
+  chrome: stable
 before_script:
   - scripts-ci/prepare-for-code-coverage.sh
   - scripts-ci/start-services-in-background.sh &
