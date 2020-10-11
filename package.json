@@ -41,7 +41,7 @@
     "react-scripts": "1.0.14",
     "regenerator-runtime": "^0.11.1",
     "selenium-webdriver": "^3.4.0",
-    "serve": "^6.0.4",
+    "serve": "^10.1.2",
     "typescript": "^2.7.2",
     "uglifyjs-webpack-plugin": "^1.1.2",
     "webpack-node-externals": "^1.6.0"
