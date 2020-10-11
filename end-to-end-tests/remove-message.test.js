@@ -45,10 +45,7 @@ it('MANUAL: hover is triggered when component moves in under cursor', async () =
     'o1,Foo;o3,Baz;m2,o1,o3,after this is removed;m3,o1,o3,mouse move should show controls, if not => failed test'
   );
   await removeComponentWithKey(driver, 'm2');
-  await driver
-    .actions()
-    .mouseMove({ x: -2, y: -2 })
-    .perform();
+  await driver.actions().mouseMove({ x: -2, y: -2 }).perform();
   await sleepIfHumanObserver(driver, 1);
   await removeComponentWithKey(driver, 'm3');
   return assertFragment(driver, 'o1,Foo;o3,Baz');

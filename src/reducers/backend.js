@@ -22,7 +22,7 @@ export function loadDiagram(id, revision) {
 
     fetch(server + '/sequencediagrams/' + id + (revision ? '/' + revision : ''))
       .then(updateIdAndRevision(dispatch, getState, revision))
-      .then(body => {
+      .then((body) => {
         dispatch(
           replaceCore(
             body.sequenceDiagram.objects,
@@ -73,8 +73,8 @@ function doPost(path, state) {
 }
 
 function updateIdAndRevision(dispatch, getState, fixedRevision) {
-  return response =>
-    response.json().then(body => {
+  return (response) =>
+    response.json().then((body) => {
       const currentRevision = getState().backend.revisionOnServer;
       if (
         typeof body.id === 'string' &&
@@ -112,7 +112,7 @@ function updateIdAndRevision(dispatch, getState, fixedRevision) {
 }
 
 function fetchCatchHandler(dispatch, actionIfFailed) {
-  return e => {
+  return (e) => {
     if (actionIfFailed) {
       dispatch(actionIfFailed);
     }
@@ -161,7 +161,7 @@ function setError(message, code) {
   return { type: 'SET_ERROR', error: { message, code } };
 }
 
-export default function(
+export default function (
   state = {
     idOnServer: undefined,
     revisionOnServer: undefined,

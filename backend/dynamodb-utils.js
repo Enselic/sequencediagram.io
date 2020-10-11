@@ -10,7 +10,7 @@ module.exports = {
   startDynamoDbLocal: (port, tableName) => {
     return new Promise((resolve, reject) => {
       DynamoDbLocal.launch(port)
-        .then(_ => {
+        .then((_) => {
           const dynamodb = new AWS.DynamoDB();
 
           dynamodb.createTable(

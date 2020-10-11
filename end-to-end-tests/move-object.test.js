@@ -145,10 +145,7 @@ it('move away and back does not trigger click', async () => {
     .perform();
   await mouseMoveInSteps(driver, { x: 100, y: 0 });
   await mouseMoveInSteps(driver, { x: -100, y: 0 });
-  await driver
-    .actions()
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseUp().perform();
   await typeTextAndPressReturn(
     driver,
     'This-text-shall-not-end-up-as-name-for-object'
@@ -169,18 +166,9 @@ it('can click in renamed component text to place cursor', async () => {
   const el = await findElementByText(driver, 'PrefixMe');
   // To hit upper left coner, to place cursor first
   const topLeft = { x: 1, y: 1 };
-  await driver
-    .actions()
-    .mouseMove(el, topLeft)
-    .mouseDown()
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseMove(el, topLeft).mouseDown().mouseUp().perform();
   await sleepIfHumanObserver(driver, 1);
-  await driver
-    .actions()
-    .mouseDown()
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseDown().mouseUp().perform();
   // To make sure subsequence state changes from backend interactions
   // do not mess up cursor posision, wait a while here
   await driver.sleep(3000);
@@ -200,11 +188,7 @@ it('pending object move changes is stable', async () => {
   };
   const inBetweenReversed = { x: -slightlyRightOfEndsUpLeft.x / 2, y: 0 };
 
-  await driver
-    .actions()
-    .mouseMove(el)
-    .mouseDown()
-    .perform();
+  await driver.actions().mouseMove(el).mouseDown().perform();
 
   // This should result in the expected state we assert on
   await mouseMoveInSteps(driver, slightlyRightOfEndsUpLeft);
@@ -212,10 +196,7 @@ it('pending object move changes is stable', async () => {
   // This should not change the layout back
   await mouseMoveInSteps(driver, inBetweenReversed);
 
-  await driver
-    .actions()
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseUp().perform();
   return assertFragment(driver, 'o2,EndsUpLeft;o1,EndsUpRight');
 });
 
@@ -231,11 +212,7 @@ it('overlapping div does not interfer', async () => {
     .mouseDown()
     .perform();
   await driver.sleep(100);
-  await driver
-    .actions()
-    .mouseMove({ x: 500, y: 0 })
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseMove({ x: 500, y: 0 }).mouseUp().perform();
   await driver.sleep(100);
   await driver
     .actions()
@@ -243,11 +220,7 @@ it('overlapping div does not interfer', async () => {
     .mouseDown()
     .perform();
   await driver.sleep(100);
-  await driver
-    .actions()
-    .mouseMove({ x: -500, y: 0 })
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseMove({ x: -500, y: 0 }).mouseUp().perform();
   await driver.sleep(100);
   return assertFragment(driver, 'o1,nn;o2,mmmmmmmmmmmmmmmmmmmm');
 });

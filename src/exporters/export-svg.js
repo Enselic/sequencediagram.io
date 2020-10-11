@@ -84,7 +84,7 @@ export function exportSvg(sequenceDiagram) {
       width={`${layout.width}px`}
       height={`${layout.height}px`}
     >
-      {sequenceDiagram.objects.map(object => {
+      {sequenceDiagram.objects.map((object) => {
         const objectLayout = layout[object.id];
         const fontRenderHeight = 21;
         const nameWidth = objectLayout.objectNameWidth;
@@ -124,7 +124,7 @@ export function exportSvg(sequenceDiagram) {
           </g>
         );
       })}
-      {sequenceDiagram.messages.map(message => {
+      {sequenceDiagram.messages.map((message) => {
         const messageLayout = layout[message.id];
         const selfSentMessage = messageLayout.direction === 0;
         const pointsLeft = messageLayout.direction <= 0;
@@ -155,9 +155,11 @@ export function exportSvg(sequenceDiagram) {
         return (
           <g
             key={message.id}
-            transform={`translate(${messageLayout.left},${messageLayout.top +
+            transform={`translate(${messageLayout.left},${
+              messageLayout.top +
               MESSAGE_Y_OFFSET -
-              5 /* from calc(100% - 5px) */})`}
+              5 /* from calc(100% - 5px) */
+            })`}
           >
             {messageNameLines.map((messsageNameLine, index) => {
               return (

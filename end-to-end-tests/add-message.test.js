@@ -55,26 +55,14 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
     const message = await findElementByText(driver, messageText);
     const size = await message.getSize();
     await sleepIfHumanObserver(driver, 1);
-    await driver
-      .actions()
-      .mouseMove(message, offsetFunc1(size))
-      .perform();
+    await driver.actions().mouseMove(message, offsetFunc1(size)).perform();
     await sleepIfHumanObserver(driver, 1);
-    await driver
-      .actions()
-      .click()
-      .perform();
+    await driver.actions().click().perform();
     await waitForCssTransitions(driver);
     await sleepIfHumanObserver(driver, 1);
-    await driver
-      .actions()
-      .mouseMove(message, offsetFunc2(size))
-      .perform();
+    await driver.actions().mouseMove(message, offsetFunc2(size)).perform();
     await sleepIfHumanObserver(driver, 1);
-    await driver
-      .actions()
-      .click()
-      .perform();
+    await driver.actions().click().perform();
     return assertFragment(driver, expected);
   };
 }
@@ -85,10 +73,10 @@ it(
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
     'this-is-a-message-reference()',
-    size => {
+    (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    size => {
+    (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o1,o2,newMessage()'
@@ -100,10 +88,10 @@ it(
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
     'this-is-a-message-reference()',
-    size => {
+    (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    size => {
+    (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,newMessage()'
@@ -115,10 +103,10 @@ it(
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
     'this-is-a-message-reference()',
-    size => {
+    (size) => {
       return { x: 0, y: -20 };
     },
-    size => {
+    (size) => {
       return { x: size.width, y: -20 };
     },
     'o1,Foo;o2,Bar;m2,o1,o2,newMessage();m1,o1,o2,this-is-a-message-reference()'
@@ -130,10 +118,10 @@ it(
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
     'this-is-a-message-reference()',
-    size => {
+    (size) => {
       return { x: size.width, y: -20 };
     },
-    size => {
+    (size) => {
       return { x: 0, y: -20 };
     },
     'o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,this-is-a-message-reference()'
@@ -145,10 +133,10 @@ it(
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()',
     'this-is-a-message-reference()',
-    size => {
+    (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    size => {
+    (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o1,o2,newMessage();m2,o2,o1,M2()'
@@ -160,10 +148,10 @@ it(
   insertMessage(
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()',
     'this-is-a-message-reference()',
-    size => {
+    (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    size => {
+    (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()'
@@ -185,10 +173,7 @@ it('message arrows are insertion reference points, not text', async () => {
     .mouseMove({ x: -size.width - 40, y: 0 })
     .perform();
   await driver.sleep(200);
-  await driver
-    .actions()
-    .click()
-    .perform();
+  await driver.actions().click().perform();
   await assertFragment(
     driver,
     'o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20SELECTME%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20'

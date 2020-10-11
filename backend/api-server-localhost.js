@@ -24,12 +24,12 @@ const apiServerController = new ApiServerController(apiServer);
 
 apiServer
   .listen()
-  .then(port => {
+  .then((port) => {
     console.log('API server listening on port ' + port);
 
     return apiServerController.listen();
   })
-  .then(port => {
+  .then((port) => {
     console.log('API server controller listening on port ' + port);
   })
   .catch(console.error);

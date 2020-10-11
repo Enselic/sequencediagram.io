@@ -386,7 +386,10 @@ describe('backend unit tests', async () => {
 
   it('POST invalid bodies', async () => {
     const twoValidObjects = {
-      objects: [{ id: 'o1', name: 'Foo' }, { id: 'o2', name: 'Bar' }],
+      objects: [
+        { id: 'o1', name: 'Foo' },
+        { id: 'o2', name: 'Bar' },
+      ],
     };
     const invalidValues = [
       '',

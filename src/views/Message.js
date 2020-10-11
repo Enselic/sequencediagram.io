@@ -16,7 +16,7 @@ function Message(props) {
     onComponentMouseDown,
   } = props;
 
-  const handleMouseDown = e => {
+  const handleMouseDown = (e) => {
     if (onComponentMouseDown) {
       onComponentMouseDown(e, message);
     }

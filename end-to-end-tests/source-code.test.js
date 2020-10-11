@@ -16,7 +16,7 @@ it('is formated with prettier', () => {
   expect(files.length).toBeGreaterThan(48); // Sanity check
 
   const notProperlyFormated = [];
-  files.forEach(file => {
+  files.forEach((file) => {
     if (!prettier.check(fs.readFileSync(file, 'utf-8'), packageJson.prettier)) {
       notProperlyFormated.push(file);
     }

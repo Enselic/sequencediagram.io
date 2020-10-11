@@ -26,7 +26,7 @@ const dynamoDbStarted = dynamodbUtils.startDynamoDbLocal(
 
 function ensureDynamoDbLocalRuns(req, res, next) {
   const clientReq = http.get(dynamoDbLocalUrl);
-  clientReq.on('error', e => {
+  clientReq.on('error', (e) => {
     res.status(500);
     res.setHeader('Content-Type', 'application/json');
     res.send({
@@ -39,7 +39,7 @@ function ensureDynamoDbLocalRuns(req, res, next) {
       },
     });
   });
-  clientReq.on('response', _ => next());
+  clientReq.on('response', (_) => next());
 }
 
 function AwsLambdaExpressWrapper() {
@@ -49,7 +49,7 @@ function AwsLambdaExpressWrapper() {
   this.app.post('*', bodyParser.text({ type: 'application/json' }));
 
   const that = this;
-  this.app.use(function(req, res, next) {
+  this.app.use(function (req, res, next) {
     setTimeout(next, that.extraDelayMs || 0);
   });
 
@@ -95,15 +95,15 @@ function AwsLambdaExpressWrapper() {
 AwsLambdaExpressWrapper.prototype = {
   listen(extraDelayMs) {
     return dynamoDbStarted
-      .then(_ => this.close())
-      .then(_ => {
+      .then((_) => this.close())
+      .then((_) => {
         return new Promise((resolve, reject) => {
           if (this.server) {
             throw Error('close() failed');
           }
           this.server = this.app.listen(apiServerPort);
           this.server.on('error', reject);
-          this.server.on('listening', _ => resolve(this.server));
+          this.server.on('listening', (_) => resolve(this.server));
 
           // For quick .close()
           // See https://github.com/nodejs/node-v0.x-archive/issues/9066
@@ -118,7 +118,7 @@ AwsLambdaExpressWrapper.prototype = {
           this.server.setTimeout(timeoutInMs);
         });
       })
-      .then(server => server.address().port);
+      .then((server) => server.address().port);
   },
 
   close() {

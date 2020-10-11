@@ -25,10 +25,7 @@ import {
 const driver = buildDriverAndSetupEnv();
 
 async function ctrlZ() {
-  await driver
-    .actions()
-    .sendKeys([Key.CONTROL, 'z', Key.NULL])
-    .perform();
+  await driver.actions().sendKeys([Key.CONTROL, 'z', Key.NULL]).perform();
   await waitForCssTransitions(driver);
   return sleepIfHumanObserver(driver, 0.7);
 }

@@ -77,10 +77,7 @@ it('Warn that touch input is not supported yet, and dismiss it', async () => {
     .perform();
   const touchHintText = 'Touch input is not supported yet';
   await waitForElement(driver, touchHintText);
-  await driver
-    .actions()
-    .sendKeys(Key.ESCAPE)
-    .perform();
+  await driver.actions().sendKeys(Key.ESCAPE).perform();
   return reversePromise(waitForElement(driver, touchHintText));
 });
 
@@ -115,10 +112,7 @@ it('MANUAL: Diagram text not visibly selectable', async () => {
     driver,
     'o1,Make%20sure%20this%20text%20is%20not%20selected%20after%20Ctrl%2BA;o2,.;m1,o1,o2,Nor%20this%20text%2C%20or%20any%20controls'
   );
-  await driver
-    .actions()
-    .sendKeys([Key.CONTROL, 'a', Key.NULL])
-    .perform();
+  await driver.actions().sendKeys([Key.CONTROL, 'a', Key.NULL]).perform();
   return sleepIfHumanObserver(driver, 7);
 });
 
@@ -163,16 +157,10 @@ it('MANUAL: mouseDebug overlay works', async () => {
     .perform();
   await mouseMoveInSteps(driver, { x: 600, y: 0 });
   await sleepIfHumanObserver(driver, 5);
-  await driver
-    .actions()
-    .mouseDown()
-    .perform();
+  await driver.actions().mouseDown().perform();
   await sleepIfHumanObserver(driver, 1);
   await driver.sleep(100);
-  await driver
-    .actions()
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseUp().perform();
 });
 
 setupNoBrowserLogOutputTest(driver);

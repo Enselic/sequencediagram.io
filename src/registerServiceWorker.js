@@ -14,7 +14,7 @@ export default function register(onWorksOffline, onNewContentAvailable) {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
       navigator.serviceWorker
         .register(swUrl)
-        .then(registration => {
+        .then((registration) => {
           registration.onupdatefound = () => {
             const installingWorker = registration.installing;
             installingWorker.onstatechange = () => {
@@ -37,7 +37,7 @@ export default function register(onWorksOffline, onNewContentAvailable) {
             };
           };
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error during service worker registration:', error);
         });
     });

@@ -37,7 +37,7 @@
     "morgan-body": "^0.10.9",
     "node-fetch": "^1.7.3",
     "nodemon": "^1.12.1",
-    "prettier": "1.6.x",
+    "prettier": "^2.1.2",
     "react-scripts": "1.0.14",
     "regenerator-runtime": "^0.11.1",
     "selenium-webdriver": "^3.4.0",
@@ -54,7 +54,6 @@
     "prettier-write": "node_modules/.bin/prettier --write '{backend,config,end-to-end-tests,scripts,src}/**/*.js'"
   },
   "prettier": {
-    "trailingComma": "es5",
     "singleQuote": true
   },
   "eslintConfig": {

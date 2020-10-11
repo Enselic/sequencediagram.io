@@ -26,7 +26,7 @@ function DiagramObject(props) {
     onRemove,
   } = props;
 
-  const handleMouseDown = e => {
+  const handleMouseDown = (e) => {
     if (onComponentMouseDown) {
       onComponentMouseDown(e, object);
     }

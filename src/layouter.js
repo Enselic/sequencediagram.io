@@ -68,7 +68,7 @@ export function layoutMessageLeftAndWidth(
   const messageTextWidth =
     layout && layout.getTextWidth
       ? layout.getTextWidth(MESSAGE_NAME_FONT_SIZE_PX, message.name)
-      : 100 /* arbitrary */;
+      : 100; /* arbitrary */
   if (Math.abs(direction) < 0.5) {
     direction = 0;
     left = senderX;
@@ -90,7 +90,7 @@ export function layoutMessageLeftAndWidth(
   const carefulnessFactor = 1.4;
   const borderHeightContribution = 20;
   const approximateHeight =
-    Math.ceil(messageTextWidth * carefulnessFactor / width) *
+    Math.ceil((messageTextWidth * carefulnessFactor) / width) *
       approximateLineHeight +
     borderHeightContribution;
 
@@ -127,7 +127,7 @@ function layoutObject(getTextWidth, currentX, object) {
 function layoutObjects(layout, objects) {
   let currentX = DIAGRAM_PADDING.LEFT_RIGHT;
 
-  objects.forEach(object => {
+  objects.forEach((object) => {
     const { newX, objectLayout } = layoutObject(
       layout.getTextWidth,
       currentX,

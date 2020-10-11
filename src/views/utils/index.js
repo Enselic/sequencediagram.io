@@ -87,7 +87,7 @@ export function isChrome() {
   }
 }
 
-export const eatMouseDownCallback = e => {
+export const eatMouseDownCallback = (e) => {
   // We don't want the parent div to receive any mouse down event if
   // this item is clicked
   e.stopPropagation();
@@ -152,7 +152,7 @@ export function mapWithSameDomOrder(arrayToMap, memoryArray, callback) {
 
   // Rearrange them according to previous order
   let elements = [];
-  memoryArray.forEach(prevElement => {
+  memoryArray.forEach((prevElement) => {
     if (prevElement.key in idToElement) {
       elements.push(idToElement[prevElement.key]);
       delete idToElement[prevElement.key];

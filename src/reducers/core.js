@@ -6,7 +6,7 @@ import undoable from 'redux-undo';
 export function getNextId(components) {
   // Doesn't need to be "highest" unused, but it's easy to implement
   let highestUsedId = 0; // Lowest allowed id is 1
-  components.forEach(component => {
+  components.forEach((component) => {
     const id = parseInt(component.id.substring(1), 10);
     if (id > highestUsedId) {
       highestUsedId = id;
@@ -16,7 +16,7 @@ export function getNextId(components) {
 }
 
 function doRenameComponent(components, id, newName) {
-  return components.map(component => {
+  return components.map((component) => {
     if (component.id === id) {
       return { ...component, name: newName };
     } else {
@@ -90,7 +90,7 @@ function objects(state = [], action) {
     case 'ADD_OBJECT':
       return doAddComponent(state, action.newComponent);
     case 'REMOVE_COMPONENT':
-      return state.filter(object => object.id !== action.id);
+      return state.filter((object) => object.id !== action.id);
     case 'RENAME_COMPONENT':
       return doRenameComponent(state, action.id, action.newName);
     case 'REPLACE_CORE':
@@ -109,13 +109,13 @@ function messages(state = [], action) {
     case 'REMOVE_COMPONENT':
       const id = action.id;
       return state.filter(
-        message =>
+        (message) =>
           message.id !== id && message.sender !== id && message.receiver !== id
       );
     case 'RENAME_COMPONENT':
       return doRenameComponent(state, action.id, action.newName);
     case 'REPLACE_MESSAGE':
-      return state.map(message => {
+      return state.map((message) => {
         if (message.id === action.message.id) {
           return { ...action.message };
         } else {
@@ -125,7 +125,7 @@ function messages(state = [], action) {
     case 'REPLACE_CORE':
       return [...action.messages];
     case 'TOGGLE_MESSAGE_LINE_STYLE':
-      return state.map(message => {
+      return state.map((message) => {
         if (message.id === action.id) {
           return { ...message, isReply: message.isReply ? undefined : true };
         } else {
@@ -133,7 +133,7 @@ function messages(state = [], action) {
         }
       });
     case 'TOGGLE_MESSAGE_ARROW_STYLE':
-      return state.map(message => {
+      return state.map((message) => {
         if (message.id === action.id) {
           return { ...message, isAsync: message.isAsync ? undefined : true };
         } else {
@@ -143,7 +143,7 @@ function messages(state = [], action) {
     case 'REARRANGE_MESSAGES':
       return [...action.messages];
     case 'FLIP_MESSAGE_DIRECTION':
-      return state.map(message => {
+      return state.map((message) => {
         if (message.id === action.id) {
           return {
             ...message,

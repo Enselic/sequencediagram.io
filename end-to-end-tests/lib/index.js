@@ -183,10 +183,7 @@ export async function mouseMoveInSteps(driver, totalOffset) {
       x: Math.ceil(totalOffset.x / steps),
       y: Math.ceil(totalOffset.y / steps),
     };
-    await driver
-      .actions()
-      .mouseMove(offsetStep)
-      .perform();
+    await driver.actions().mouseMove(offsetStep).perform();
     await sleepIfHumanObserver(driver, 1.5 / steps);
   }
   return true;
@@ -217,10 +214,7 @@ export async function dragAndDrop(driver, elementText, offset) {
 
   await mouseMoveInSteps(driver, offset);
 
-  await driver
-    .actions()
-    .mouseUp()
-    .perform();
+  await driver.actions().mouseUp().perform();
   return sleepIfHumanObserver(driver, 0.7);
 }
 
@@ -229,10 +223,7 @@ export async function clickText(driver, elementText) {
 }
 
 async function clickElement(driver, element) {
-  await driver
-    .actions()
-    .click(element)
-    .perform();
+  await driver.actions().click(element).perform();
   return waitForCssTransitions(driver);
 }
 
@@ -242,17 +233,11 @@ export async function typeTextAndPressReturn(driver, typedText) {
 }
 
 export async function pressReturn(driver) {
-  return driver
-    .actions()
-    .sendKeys(Key.RETURN)
-    .perform();
+  return driver.actions().sendKeys(Key.RETURN).perform();
 }
 
 export async function typeText(driver, typedText) {
-  await driver
-    .actions()
-    .sendKeys(typedText)
-    .perform();
+  await driver.actions().sendKeys(typedText).perform();
 }
 
 export async function waitForPermalink(driver) {
@@ -322,8 +307,8 @@ export async function goTo(driver, startState, params) {
   }
 
   /* We use 0.3 second CSS transitions, so make sure those have
-     * settled before we move on.
-     */
+   * settled before we move on.
+   */
   return waitForCssTransitions(driver);
 }
 
@@ -373,10 +358,7 @@ export async function addMessage(driver, sender, receiver) {
 
   await mouseMoveInSteps(driver, calcOffset(startLoc, endLoc));
 
-  await driver
-    .actions()
-    .click()
-    .perform();
+  await driver.actions().click().perform();
   return sleepIfHumanObserver(driver, 0.7);
 }
 
@@ -401,15 +383,9 @@ export async function moveAnchorPointToActor(
   let offsetToMove = calcOffset(messageAnchorPointLoc, actorNameLoc);
   offsetToMove.y = 0;
 
-  await driver
-    .actions()
-    .click(messageAnchorPointEl)
-    .perform();
+  await driver.actions().click(messageAnchorPointEl).perform();
   await mouseMoveInSteps(driver, offsetToMove);
-  await driver
-    .actions()
-    .click()
-    .perform();
+  await driver.actions().click().perform();
 }
 
 export async function flip(driver, id) {
@@ -474,14 +450,11 @@ export function setupNoBrowserLogOutputTest(driver) {
       'Failed to load resource: net::ERR_CONNECTION_REFUSED',
     ];
 
-    let logEntries = await driver
-      .manage()
-      .logs()
-      .get(logging.Type.BROWSER);
+    let logEntries = await driver.manage().logs().get(logging.Type.BROWSER);
 
-    logEntries = logEntries.filter(entry => {
+    logEntries = logEntries.filter((entry) => {
       let wasOk = false;
-      okEntries.forEach(okEntry => {
+      okEntries.forEach((okEntry) => {
         wasOk |= entry.message.indexOf(okEntry) >= 0;
       });
       return !wasOk;

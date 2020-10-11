@@ -106,7 +106,7 @@ const handler = (event, context, callback) => {
           ConditionExpression:
             'attribute_not_exists(id) and attribute_not_exists(revision)',
         },
-        function(err, data) {
+        function (err, data) {
           done(err, Item);
         }
       );
@@ -145,7 +145,7 @@ const handler = (event, context, callback) => {
           Limit: 1,
           ScanIndexForward: false,
         },
-        function(err, data) {
+        function (err, data) {
           const Item = data && data.Items && data.Items[0];
           if (Item) {
             callback(null, Item);
@@ -174,7 +174,7 @@ const handler = (event, context, callback) => {
       event.resource === '/sequencediagrams/{sequenceDiagramId}' &&
       event.httpMethod === 'POST'
     ) {
-      getRevisionHelper(id, undefined, function(err, Item) {
+      getRevisionHelper(id, undefined, function (err, Item) {
         if (err) {
           done(err);
         } else {

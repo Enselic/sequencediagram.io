@@ -6,7 +6,7 @@ export function initMouseOverlay() {
 
   let scale = 1;
   function update(action) {
-    return e => {
+    return (e) => {
       if (action) {
         action();
       }
@@ -24,8 +24,16 @@ export function initMouseOverlay() {
 
   const opts = { capture: true };
   document.addEventListener('mousemove', update(), opts);
-  document.addEventListener('mousedown', update(() => (scale = 0.5)), opts);
-  document.addEventListener('mouseup', update(() => (scale = 1)), opts);
+  document.addEventListener(
+    'mousedown',
+    update(() => (scale = 0.5)),
+    opts
+  );
+  document.addEventListener(
+    'mouseup',
+    update(() => (scale = 1)),
+    opts
+  );
 
   document.body.appendChild(div);
 }

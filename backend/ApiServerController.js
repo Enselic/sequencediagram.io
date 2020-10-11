@@ -19,7 +19,7 @@ function ApiServerController(apiServer) {
       req.query.extraDelayMs && parseInt(req.query.extraDelayMs, 10);
     this.apiServer
       .listen(extraDelayMs)
-      .then(port => {
+      .then((port) => {
         res.send(
           'Controller: API server listening on port ' +
             port +
@@ -43,7 +43,7 @@ ApiServerController.prototype = {
       const server = this.app.listen(controllingServerPort);
       server.on('error', reject);
       server.on('listening', () => resolve(server));
-    }).then(server => server.address().port);
+    }).then((server) => server.address().port);
   },
 };
 

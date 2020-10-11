@@ -8,11 +8,11 @@ import { SvgMessageLine, SvgMessageArrow } from './../exporters/export-svg';
 import { eatMouseDownCallback } from './utils';
 
 function createAnchorButton(type, message) {
-  return props => {
+  return (props) => {
     return (
       <MessageButton
         id={message.id + '-' + type}
-        onClick={e => {
+        onClick={(e) => {
           props.onAnchorClick(message, type, e.pageX);
         }}
         {...props}
@@ -123,8 +123,7 @@ export default class MessageArrow extends React.Component {
             </MessageButton>
           )}
 
-          {showControlsButNotPending &&
-          !selfSentMessage && (
+          {showControlsButNotPending && !selfSentMessage && (
             <MessageButton
               id={'flip-' + id}
               onClick={showControls ? onFlipClicked : null}

@@ -8,7 +8,7 @@ export function deserialize(serialized) {
   let objects = [];
   let messages = [];
 
-  serialized.split(';').forEach(o => {
+  serialized.split(';').forEach((o) => {
     if (!o) {
       return;
     }
@@ -41,10 +41,10 @@ export function deserialize(serialized) {
 
   // Make sure all messages only references objects that were
   // successfully deserialized
-  messages = messages.filter(message => {
-    const senderExists = objects.find(object => object.id === message.sender);
+  messages = messages.filter((message) => {
+    const senderExists = objects.find((object) => object.id === message.sender);
     const receiverExists = objects.find(
-      object => object.id === message.receiver
+      (object) => object.id === message.receiver
     );
     return senderExists && receiverExists;
   });

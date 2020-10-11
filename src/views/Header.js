@@ -23,8 +23,9 @@ export default function Header(props) {
       {gitMasterBuild && (
         <Info>
           <b>Risk of dataloss:</b>
-          <br />This is a build deployed by continous integration directly from
-          the git master branch
+          <br />
+          This is a build deployed by continous integration directly from the
+          git master branch
         </Info>
       )}
 
