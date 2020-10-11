@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 import {
   default as MessageButton,
   MESSAGE_BUTTON_WIDTH,
-} from './MessageButton';
-import RemoveButton from './RemoveButton';
-import { SvgMessageLine, SvgMessageArrow } from './../exporters/export-svg';
-import { eatMouseDownCallback } from './utils';
+} from "./MessageButton";
+import RemoveButton from "./RemoveButton";
+import { SvgMessageLine, SvgMessageArrow } from "./../exporters/export-svg";
+import { eatMouseDownCallback } from "./utils";
 
 function createAnchorButton(type, message) {
   return (props) => {
     return (
       <MessageButton
-        id={message.id + '-' + type}
+        id={message.id + "-" + type}
         onClick={(e) => {
           props.onAnchorClick(message, type, e.pageX);
         }}
@@ -28,8 +28,8 @@ export default class MessageArrow extends React.Component {
     super(props);
 
     const { message } = props;
-    this.MessageSenderButton = createAnchorButton('sender', message);
-    this.MessageReceiverButton = createAnchorButton('receiver', message);
+    this.MessageSenderButton = createAnchorButton("sender", message);
+    this.MessageReceiverButton = createAnchorButton("receiver", message);
   }
   render() {
     const {
@@ -51,19 +51,19 @@ export default class MessageArrow extends React.Component {
     const lifelineWidth = 1;
 
     const flipExtraStyle = {
-      position: 'absolute',
+      position: "absolute",
       left: pointsLeft ? undefined : 0,
       right: pointsLeft ? 0 : undefined,
     };
 
     const arrowExtraStyle = {
-      position: 'absolute',
+      position: "absolute",
       left: !pointsLeft ? undefined : 0,
       right: !pointsLeft ? 0 : undefined,
     };
 
     const lineExtraStyle = {
-      position: 'absolute',
+      position: "absolute",
       left: MESSAGE_BUTTON_WIDTH,
       right: MESSAGE_BUTTON_WIDTH,
     };
@@ -72,9 +72,9 @@ export default class MessageArrow extends React.Component {
       <div
         onMouseDown={showControls ? eatMouseDownCallback : null}
         style={{
-          top: 'calc(100% - 5px)',
-          display: 'flex',
-          position: 'absolute',
+          top: "calc(100% - 5px)",
+          display: "flex",
+          position: "absolute",
           left: showControlsButNotPending
             ? -MESSAGE_BUTTON_WIDTH * 2 - lifelineWidth
             : 0,
@@ -102,30 +102,30 @@ export default class MessageArrow extends React.Component {
 
         <div
           style={{
-            position: 'relative',
+            position: "relative",
             flexGrow: 1,
           }}
         >
           {showControlsButNotPending && (
             <MessageButton
-              id={'toggle-line-style-' + id}
+              id={"toggle-line-style-" + id}
               onClick={showControls ? onLineClicked : null}
               isHovered={isHovered}
               bottomText={!selfSentMessage && 10}
               extraStyle={{
                 width: selfSentMessage
-                  ? '50%'
+                  ? "50%"
                   : `calc(100% - ${MESSAGE_BUTTON_WIDTH * 2}px)`,
                 ...(selfSentMessage ? flipExtraStyle : lineExtraStyle),
               }}
             >
-              {isReply ? 'reply' : 'regular'}
+              {isReply ? "reply" : "regular"}
             </MessageButton>
           )}
 
           {showControlsButNotPending && !selfSentMessage && (
             <MessageButton
-              id={'flip-' + id}
+              id={"flip-" + id}
               onClick={showControls ? onFlipClicked : null}
               isHovered={isHovered}
               bottomText={10}
@@ -139,26 +139,26 @@ export default class MessageArrow extends React.Component {
 
           {showControlsButNotPending && (
             <MessageButton
-              id={'toggle-arrow-style-' + id}
+              id={"toggle-arrow-style-" + id}
               onClick={showControls ? onArrowClicked : null}
               isHovered={isHovered}
               bottomText={selfSentMessage ? 3 : 8}
               extraStyle={{
-                ...Object.assign({}, selfSentMessage && { width: '50%' }),
+                ...Object.assign({}, selfSentMessage && { width: "50%" }),
                 ...arrowExtraStyle,
               }}
             >
-              {isAsync ? 'async' : 'sync'}
+              {isAsync ? "async" : "sync"}
             </MessageButton>
           )}
 
           <div
             style={{
-              position: 'absolute',
+              position: "absolute",
               left: 0,
               right: 0,
               height: 30,
-              pointerEvents: 'none',
+              pointerEvents: "none",
             }}
           >
             <svg width="100%" height="35" preserveAspectRatio="none">
@@ -172,7 +172,7 @@ export default class MessageArrow extends React.Component {
           <div
             style={{
               ...arrowExtraStyle,
-              pointerEvents: 'none',
+              pointerEvents: "none",
             }}
           >
             <svg width="20" height="40" viewBox="0 0 20 40">

@@ -4,7 +4,7 @@ import {
   goTo,
   waitForPermalink,
   disableAnchors,
-} from './lib';
+} from "./lib";
 
 const driver = buildDriverAndSetupEnv();
 
@@ -16,11 +16,11 @@ async function unleashGremlins(driver) {
   await disableAnchors(driver);
   await loadScript(
     driver,
-    'https://cdnjs.cloudflare.com/ajax/libs/gremlins.js/0.1.0/gremlins.min.js',
-    'gremlins'
+    "https://cdnjs.cloudflare.com/ajax/libs/gremlins.js/0.1.0/gremlins.min.js",
+    "gremlins"
   );
   await driver.executeScript(
-    'window.gremlins.createHorde().gremlin(gremlins.species.clicker()).unleash({nb: 10000});'
+    "window.gremlins.createHorde().gremlin(gremlins.species.clicker()).unleash({nb: 10000});"
   );
   await driver.sleep(runningTimeSeconds * 1000);
 }
@@ -28,7 +28,7 @@ async function unleashGremlins(driver) {
 it(
   `gremlins.min.js on default diagram for ${runningTimeSeconds} seconds`,
   async () => {
-    await goTo(driver, '');
+    await goTo(driver, "");
     newlyCreatedPermalink = await waitForPermalink(driver);
     await unleashGremlins(driver);
   },
@@ -38,7 +38,7 @@ it(
 it(
   `gremlins.min.js on fixed revision for ${runningTimeSeconds} seconds`,
   async () => {
-    await driver.get(newlyCreatedPermalink + '?revision=1');
+    await driver.get(newlyCreatedPermalink + "?revision=1");
     await unleashGremlins(driver);
   },
   (runningTimeSeconds + 20) * 1000

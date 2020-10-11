@@ -3,21 +3,21 @@
  * Is also run by end-to-end test cases without involvement of AWS.
  */
 
-'use strict';
+"use strict";
 
-const AWS = require('aws-sdk');
-const crypto = require('crypto');
-const sequenceDiagramSchemaValidator = require('./verify-SequenceDiagram');
+const AWS = require("aws-sdk");
+const crypto = require("crypto");
+const sequenceDiagramSchemaValidator = require("./verify-SequenceDiagram");
 
 AWS.config.update({
-  region: 'eu-west-1',
+  region: "eu-west-1",
 });
 
 function generateRandomId() {
   // [0-9a-zA-Z] except ambiguous chars in some fonts like l and 1 and I
-  const CHARS = '023456789ABCDEFGHJKLMNPQRSTUVXYZabcdefghijkmnpqrstuvxyz';
+  const CHARS = "023456789ABCDEFGHJKLMNPQRSTUVXYZabcdefghijkmnpqrstuvxyz";
 
-  let randomString = '';
+  let randomString = "";
 
   const randomBytesPerChar = 2;
   let len = 10;
@@ -48,31 +48,31 @@ const handler = (event, context, callback) => {
       errorInHandler = true;
     }
     callback(null, {
-      statusCode: error ? '400' : '200',
+      statusCode: error ? "400" : "200",
       body: JSON.stringify(error ? error : res),
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': event.stageVariables.allowedOrigin
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": event.stageVariables.allowedOrigin
           ? event.stageVariables.allowedOrigin
-          : '*',
+          : "*",
       },
     });
   };
 
   let sequenceDiagram = event.body ? JSON.parse(event.body) : undefined;
-  if (event.httpMethod === 'POST') {
+  if (event.httpMethod === "POST") {
     if (event.body && event.body.length > 50000) {
       done(
         createError(
-          'Max diagram size 50 kB (let us know if you need more)',
-          'TooLarge'
+          "Max diagram size 50 kB (let us know if you need more)",
+          "TooLarge"
         )
       );
     } else if (!sequenceDiagramSchemaValidator(sequenceDiagram)) {
       done(
         createError(
-          'Request schema validation failed',
-          'FailedSchemaValidation',
+          "Request schema validation failed",
+          "FailedSchemaValidation",
           sequenceDiagramSchemaValidator.errors
         )
       );
@@ -104,7 +104,7 @@ const handler = (event, context, callback) => {
           // by different users to overwrite one another (instead they will)
           // get an error message/warning in the UI
           ConditionExpression:
-            'attribute_not_exists(id) and attribute_not_exists(revision)',
+            "attribute_not_exists(id) and attribute_not_exists(revision)",
         },
         function (err, data) {
           done(err, Item);
@@ -117,22 +117,22 @@ const handler = (event, context, callback) => {
       let ExpressionAttributeNames;
       let ExpressionAttributeValues;
       if (revision) {
-        KeyConditionExpression = '#id = :id AND #revision = :revision';
+        KeyConditionExpression = "#id = :id AND #revision = :revision";
         ExpressionAttributeNames = {
-          '#id': 'id',
-          '#revision': 'revision',
+          "#id": "id",
+          "#revision": "revision",
         };
         ExpressionAttributeValues = {
-          ':id': id,
-          ':revision': parseInt(revision, 10),
+          ":id": id,
+          ":revision": parseInt(revision, 10),
         };
       } else {
-        KeyConditionExpression = '#id = :id';
+        KeyConditionExpression = "#id = :id";
         ExpressionAttributeNames = {
-          '#id': 'id',
+          "#id": "id",
         };
         ExpressionAttributeValues = {
-          ':id': id,
+          ":id": id,
         };
       }
 
@@ -151,28 +151,28 @@ const handler = (event, context, callback) => {
             callback(null, Item);
           } else {
             callback(
-              err ? err : createError('Query result was empty', 'EmptyQuery')
+              err ? err : createError("Query result was empty", "EmptyQuery")
             );
           }
         }
       );
     }
 
-    if (event.resource === '/sequencediagrams' && event.httpMethod === 'POST') {
+    if (event.resource === "/sequencediagrams" && event.httpMethod === "POST") {
       putHelper(generateRandomId(), 1);
     } else if (
-      event.resource === '/sequencediagrams/{sequenceDiagramId}' &&
-      event.httpMethod === 'GET'
+      event.resource === "/sequencediagrams/{sequenceDiagramId}" &&
+      event.httpMethod === "GET"
     ) {
       getRevisionHelper(id, undefined, done);
     } else if (
-      event.resource === '/sequencediagrams/{sequenceDiagramId}/{revision}' &&
-      event.httpMethod === 'GET'
+      event.resource === "/sequencediagrams/{sequenceDiagramId}/{revision}" &&
+      event.httpMethod === "GET"
     ) {
       getRevisionHelper(id, revision, done);
     } else if (
-      event.resource === '/sequencediagrams/{sequenceDiagramId}' &&
-      event.httpMethod === 'POST'
+      event.resource === "/sequencediagrams/{sequenceDiagramId}" &&
+      event.httpMethod === "POST"
     ) {
       getRevisionHelper(id, undefined, function (err, Item) {
         if (err) {
@@ -186,7 +186,7 @@ const handler = (event, context, callback) => {
       done(
         createError(
           "I don't know what to do with: " + JSON.stringify(event),
-          'UnknownRequest'
+          "UnknownRequest"
         )
       );
     }

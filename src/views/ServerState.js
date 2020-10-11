@@ -1,5 +1,5 @@
-import React from 'react';
-import * as ac from './../reducers';
+import React from "react";
+import * as ac from "./../reducers";
 
 export default function ServerState(props) {
   const {
@@ -12,10 +12,10 @@ export default function ServerState(props) {
   let message;
   let addLink = false;
   if (error) {
-    message = 'Error: ' + (error.message || error);
+    message = "Error: " + (error.message || error);
   } else if (revisionOnServer === ac.PENDING) {
     // Wait for (imminent) new state before saying anything
-    message = '';
+    message = "";
   } else if (
     idOnServer &&
     revisionOnServer &&
@@ -26,13 +26,13 @@ export default function ServerState(props) {
     message = `Saved revision ${revisionOnServer}`;
     addLink = true;
   } else {
-    message = '';
+    message = "";
   }
   return (
     <div
       style={{
-        color: '#002456',
-        textAlign: 'right',
+        color: "#002456",
+        textAlign: "right",
         flexGrow: 1,
         marginRight: 20,
         fontSize: 20,
@@ -41,12 +41,12 @@ export default function ServerState(props) {
       {addLink ? (
         <a
           style={{
-            backgroundColor: 'transparent',
-            border: 'none',
-            padding: '5px 20px',
-            color: '#002456',
+            backgroundColor: "transparent",
+            border: "none",
+            padding: "5px 20px",
+            color: "#002456",
           }}
-          href={'/' + idOnServer + '?revision=' + revisionOnServer}
+          href={"/" + idOnServer + "?revision=" + revisionOnServer}
         >
           {message}
         </a>

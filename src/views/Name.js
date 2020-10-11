@@ -1,6 +1,6 @@
-import React from 'react';
-import * as ac from './../reducers';
-import nameBackground from './pngs/name-background.png';
+import React from "react";
+import * as ac from "./../reducers";
+import nameBackground from "./pngs/name-background.png";
 
 export default function Name(props) {
   const { pending, dispatch, component, showBackground } = props;
@@ -49,7 +49,7 @@ export default function Name(props) {
     return (
       <input
         style={Object.assign(
-          { pointerEvents: 'auto' },
+          { pointerEvents: "auto" },
           showBackground ? { margin: 10 } : null
         )}
         ref={onRef}
@@ -66,11 +66,11 @@ export default function Name(props) {
       <div
         style={
           showBackground && {
-            display: 'inline-block',
+            display: "inline-block",
             borderImage: `url(${nameBackground}) 10 fill repeat`,
             borderWidth: 10,
-            borderStyle: 'solid',
-            pointerEvents: 'auto',
+            borderStyle: "solid",
+            pointerEvents: "auto",
           }
         }
       >

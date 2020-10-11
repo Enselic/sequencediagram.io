@@ -53,9 +53,6 @@
     "eject": "react-scripts eject",
     "prettier-write": "node_modules/.bin/prettier --write '{backend,config,end-to-end-tests,scripts,src}/**/*.js'"
   },
-  "prettier": {
-    "singleQuote": true
-  },
   "eslintConfig": {
     "extends": "react-app"
   },

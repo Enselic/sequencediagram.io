@@ -8,26 +8,26 @@ export function deserialize(serialized) {
   let objects = [];
   let messages = [];
 
-  serialized.split(';').forEach((o) => {
+  serialized.split(";").forEach((o) => {
     if (!o) {
       return;
     }
-    let parts = o.split(',');
-    if (o[0] === 'o' && parts.length >= 2 && parts[0] && parts[1]) {
+    let parts = o.split(",");
+    if (o[0] === "o" && parts.length >= 2 && parts[0] && parts[1]) {
       objects.push({
         id: parts[0],
         name: decodeURIComponent(parts[1]),
       });
     } else if (
-      o[0] === 'm' &&
+      o[0] === "m" &&
       parts.length >= 4 &&
       parts[0] &&
       parts[1] &&
       parts[2] &&
       parts[3]
     ) {
-      const isReply = parts[4] && parts[4].indexOf('r') >= 0;
-      const isAsync = parts[4] && parts[4].indexOf('a') >= 0;
+      const isReply = parts[4] && parts[4].indexOf("r") >= 0;
+      const isAsync = parts[4] && parts[4].indexOf("a") >= 0;
       messages.push({
         id: parts[0],
         sender: parts[1],

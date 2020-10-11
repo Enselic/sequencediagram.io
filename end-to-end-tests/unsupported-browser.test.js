@@ -2,15 +2,15 @@ import {
   buildDriverAndSetupEnv,
   findElementByText,
   getHostAndPort,
-} from './lib';
+} from "./lib";
 
-const driver = buildDriverAndSetupEnv('firefox');
+const driver = buildDriverAndSetupEnv("firefox");
 
 it(
-  'unsupported browser warning',
+  "unsupported browser warning",
   async () => {
     await driver.get(`${getHostAndPort()}`);
-    await findElementByText(driver, 'Your browser is not supported yet');
+    await findElementByText(driver, "Your browser is not supported yet");
   },
   20 * 1000
 );

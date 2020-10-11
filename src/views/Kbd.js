@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
 export default function Kbd(props) {
   return (
     <kbd
       style={{
-        display: 'inline-block',
-        color: 'black',
-        backgroundColor: '#ccc',
-        borderRadius: '4px',
+        display: "inline-block",
+        color: "black",
+        backgroundColor: "#ccc",
+        borderRadius: "4px",
       }}
     >
       {props.children}

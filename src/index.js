@@ -1,23 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as ac from './reducers';
-import App from './views/App';
-import registerServiceWorker from './registerServiceWorker';
-import { initMouseOverlay } from './debug/mouseDebug';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { ActionCreators } from 'redux-undo';
-import thunk from 'redux-thunk';
-import debounce from 'lodash.debounce';
-import isEqual from 'lodash.isequal';
+import React from "react";
+import ReactDOM from "react-dom";
+import * as ac from "./reducers";
+import App from "./views/App";
+import registerServiceWorker from "./registerServiceWorker";
+import { initMouseOverlay } from "./debug/mouseDebug";
+import { createStore, applyMiddleware, compose } from "redux";
+import { ActionCreators } from "redux-undo";
+import thunk from "redux-thunk";
+import debounce from "lodash.debounce";
+import isEqual from "lodash.isequal";
 
 const searchParams = new URLSearchParams(window.location.search);
-if (searchParams.has('mouseDebug')) {
+if (searchParams.has("mouseDebug")) {
   // Useful when running automated tests
   initMouseOverlay();
 }
 
 const composeEnhancers =
-  window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose;
+  window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] || compose;
 var store = createStore(ac.default, composeEnhancers(applyMiddleware(thunk)));
 
 let lastSavedDiagram = {};
@@ -33,7 +33,7 @@ function dispatch(action) {
 // Either create a new diagram or load an existing one
 const { pathname } = window.location;
 const idMatch = pathname.match(/^\/([0-9a-zA-Z]{1,})$/);
-let revision = parseInt(searchParams.get('revision') || '', 10);
+let revision = parseInt(searchParams.get("revision") || "", 10);
 if (idMatch) {
   dispatch(ac.loadDiagram(idMatch[1], revision > 0 ? revision : undefined));
 } else {
@@ -43,10 +43,10 @@ if (idMatch) {
 function createNewDiagram() {
   const defaultDiagram = {
     objects: [
-      { id: 'o1', name: 'Foo' },
-      { id: 'o2', name: 'Bar' },
+      { id: "o1", name: "Foo" },
+      { id: "o2", name: "Bar" },
     ],
-    messages: [{ id: 'm1', sender: 'o1', receiver: 'o2', name: 'message()' }],
+    messages: [{ id: "m1", sender: "o1", receiver: "o2", name: "message()" }],
   };
   dispatch(ac.replaceCore(defaultDiagram.objects, defaultDiagram.messages));
   dispatch(ActionCreators.clearHistory());
@@ -59,7 +59,7 @@ function createNewDiagram() {
 function doRender() {
   ReactDOM.render(
     <App state={store.getState()} dispatch={dispatch} />,
-    document.getElementById('root')
+    document.getElementById("root")
   );
 }
 store.subscribe(doRender);
@@ -99,7 +99,7 @@ doRender();
 // These functions support autoamted end-to-end tests.
 // They also enable export and import of diagrams until there's a
 // better UI for that
-window['sequencediagram_io'] = {
+window["sequencediagram_io"] = {
   stringifyCurrentDiagram() {
     return JSON.stringify(store.getState().core.present);
   },

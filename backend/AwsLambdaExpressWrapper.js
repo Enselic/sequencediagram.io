@@ -1,21 +1,21 @@
-const fs = require('fs');
-const AWS = require('aws-sdk');
-const http = require('http');
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const awsLambda = require('./aws-lambda-handler');
-const dynamodbUtils = require('./dynamodb-utils');
+const fs = require("fs");
+const AWS = require("aws-sdk");
+const http = require("http");
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const awsLambda = require("./aws-lambda-handler");
+const dynamodbUtils = require("./dynamodb-utils");
 
 const dynamoDbLocalUrl = `http://localhost:${process.env.DYNAMODB_LOCAL_PORT}`;
-const dynamoDbTableName = 'io.sequencediagram.dynamodb.test';
+const dynamoDbTableName = "io.sequencediagram.dynamodb.test";
 
 const apiServerPort = process.env.API_SERVER_PORT;
 
 AWS.config.update({
-  accessKeyId: 'AKID',
-  secretAccessKey: 'SECRET',
-  region: 'eu-west-1',
+  accessKeyId: "AKID",
+  secretAccessKey: "SECRET",
+  region: "eu-west-1",
   endpoint: dynamoDbLocalUrl,
 });
 
@@ -26,27 +26,27 @@ const dynamoDbStarted = dynamodbUtils.startDynamoDbLocal(
 
 function ensureDynamoDbLocalRuns(req, res, next) {
   const clientReq = http.get(dynamoDbLocalUrl);
-  clientReq.on('error', (e) => {
+  clientReq.on("error", (e) => {
     res.status(500);
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
     res.send({
       error: {
         code: e.code,
         message:
-          'dynamodb-local is not running. ' +
-          'request will timeout. failing early',
+          "dynamodb-local is not running. " +
+          "request will timeout. failing early",
         innererror: e,
       },
     });
   });
-  clientReq.on('response', (_) => next());
+  clientReq.on("response", (_) => next());
 }
 
 function AwsLambdaExpressWrapper() {
   this.app = express();
   this.app.use(cors());
   this.app.use(ensureDynamoDbLocalRuns);
-  this.app.post('*', bodyParser.text({ type: 'application/json' }));
+  this.app.post("*", bodyParser.text({ type: "application/json" }));
 
   const that = this;
   this.app.use(function (req, res, next) {
@@ -75,19 +75,19 @@ function AwsLambdaExpressWrapper() {
     });
   }
 
-  this.app.all('/sequencediagrams', (req, res) => {
+  this.app.all("/sequencediagrams", (req, res) => {
     awsLambdaWrapper(req, res, req.url);
   });
 
-  this.app.all('/sequencediagrams/:sequenceDiagramId', (req, res) => {
-    awsLambdaWrapper(req, res, '/sequencediagrams/{sequenceDiagramId}');
+  this.app.all("/sequencediagrams/:sequenceDiagramId", (req, res) => {
+    awsLambdaWrapper(req, res, "/sequencediagrams/{sequenceDiagramId}");
   });
 
-  this.app.all('/sequencediagrams/:sequenceDiagramId/:revision', (req, res) => {
+  this.app.all("/sequencediagrams/:sequenceDiagramId/:revision", (req, res) => {
     awsLambdaWrapper(
       req,
       res,
-      '/sequencediagrams/{sequenceDiagramId}/{revision}'
+      "/sequencediagrams/{sequenceDiagramId}/{revision}"
     );
   });
 }
@@ -99,11 +99,11 @@ AwsLambdaExpressWrapper.prototype = {
       .then((_) => {
         return new Promise((resolve, reject) => {
           if (this.server) {
-            throw Error('close() failed');
+            throw Error("close() failed");
           }
           this.server = this.app.listen(apiServerPort);
-          this.server.on('error', reject);
-          this.server.on('listening', (_) => resolve(this.server));
+          this.server.on("error", reject);
+          this.server.on("listening", (_) => resolve(this.server));
 
           // For quick .close()
           // See https://github.com/nodejs/node-v0.x-archive/issues/9066
@@ -112,7 +112,7 @@ AwsLambdaExpressWrapper.prototype = {
           this.extraDelayMs = extraDelayMs;
           if (extraDelayMs) {
             timeoutInMs += extraDelayMs;
-            console.log('Will use extraDelayMs=' + extraDelayMs);
+            console.log("Will use extraDelayMs=" + extraDelayMs);
           }
 
           this.server.setTimeout(timeoutInMs);
@@ -136,8 +136,8 @@ AwsLambdaExpressWrapper.prototype = {
           );
         }
 
-        this.server.on('error', reject);
-        this.server.on('close', resolve);
+        this.server.on("error", reject);
+        this.server.on("close", resolve);
         this.server.close();
         this.server = null;
       } else {

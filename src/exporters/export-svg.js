@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import React from "react";
+import ReactDOMServer from "react-dom/server";
 import {
   layouter,
   OBJECT_NAME_PADDING,
   OBJECT_NAME_FONT_SIZE_PX,
   MESSAGE_NAME_FONT_SIZE_PX,
   MESSAGE_Y_OFFSET,
-} from '../layouter';
-import wrap from 'word-wrap';
+} from "../layouter";
+import wrap from "word-wrap";
 
 export function SvgMessageLine(props) {
   const yOffset = props.selfSentMessage ? 0 : 5;
@@ -16,10 +16,10 @@ export function SvgMessageLine(props) {
       {props.selfSentMessage ? (
         <path
           style={{
-            fill: 'none',
-            stroke: '#000000',
+            fill: "none",
+            stroke: "#000000",
             strokeWidth: 2,
-            strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
+            strokeDasharray: "8," + (props.isReply ? "8" : "0"),
           }}
           d="m 0,13 c 0,0 39,-1 40,8 1,11 -36,9 -36,9"
         />
@@ -27,14 +27,14 @@ export function SvgMessageLine(props) {
         <line
           x1="3"
           y1="10"
-          x2={props.overrideWidth || '100%'}
+          x2={props.overrideWidth || "100%"}
           y2="10"
-          transform={'translate(' + (props.pointsLeft ? '0' : '-3') + ' 0)'}
+          transform={"translate(" + (props.pointsLeft ? "0" : "-3") + " 0)"}
           style={{
-            fill: 'none',
-            stroke: '#000000',
-            strokeWidth: '2',
-            strokeDasharray: '8,' + (props.isReply ? '8' : '0'),
+            fill: "none",
+            stroke: "#000000",
+            strokeWidth: "2",
+            strokeDasharray: "8," + (props.isReply ? "8" : "0"),
           }}
         />
       )}
@@ -50,16 +50,16 @@ export function SvgMessageArrow(props) {
     <g transform={`translate(${xOffset} ${yOffset})`}>
       <path
         transform={
-          props.pointsLeft ? 'translate(20 20) rotate(180)' : undefined
+          props.pointsLeft ? "translate(20 20) rotate(180)" : undefined
         }
         style={{
-          fill: props.isAsync ? 'none' : '#000000',
-          stroke: '#000000',
+          fill: props.isAsync ? "none" : "#000000",
+          stroke: "#000000",
           strokeWidth: 2,
         }}
         d={
-          'M 2,2 C 18,10 18,10 18,10 L 2,18' +
-          (props.isAsync ? '' : 'z') /* close path */
+          "M 2,2 C 18,10 18,10 18,10 L 2,18" +
+          (props.isAsync ? "" : "z") /* close path */
         }
       />
     </g>
@@ -133,22 +133,22 @@ export function exportSvg(sequenceDiagram) {
         const nameBorderWidthTimesTwo = 20; // Name.js borderWidth * 2
         const averageCharWidth = 7;
         const messageNameWrapped = wrap(message.name, {
-          indent: '',
+          indent: "",
           width: Math.round(
             (messageWidth - nameBorderWidthTimesTwo) / averageCharWidth
           ),
-          newline: '\n',
+          newline: "\n",
         });
-        const messageNameLines = messageNameWrapped.split('\n');
+        const messageNameLines = messageNameWrapped.split("\n");
 
         const textMargin = 10;
-        let textAnchor = 'middle';
+        let textAnchor = "middle";
         let textX = messageWidth / 2;
         if (messageLayout.direction < 0) {
-          textAnchor = 'start';
+          textAnchor = "start";
           textX = textMargin;
         } else if (messageLayout.direction > 0) {
-          textAnchor = 'end';
+          textAnchor = "end";
           textX = messageWidth - textMargin;
         }
 
@@ -164,7 +164,7 @@ export function exportSvg(sequenceDiagram) {
             {messageNameLines.map((messsageNameLine, index) => {
               return (
                 <text
-                  key={'line-' + index}
+                  key={"line-" + index}
                   textAnchor={textAnchor}
                   x={textX}
                   y={messageTextOffset - (messageNameLines.length - index) * 20}

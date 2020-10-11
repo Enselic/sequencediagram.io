@@ -1,5 +1,5 @@
-import React from 'react';
-import * as ac from './../../reducers';
+import React from "react";
+import * as ac from "./../../reducers";
 
 export function hoverHelper(WrappedComponent) {
   // Useful to set to true when inspecting layout
@@ -41,7 +41,7 @@ export function hoverHelper(WrappedComponent) {
 
 export function eventToDiagramCoords(event) {
   const boundingClientRect = document
-    .getElementById('diagram-root')
+    .getElementById("diagram-root")
     .getBoundingClientRect();
   return [
     event.clientX - boundingClientRect.left,
@@ -65,19 +65,19 @@ export function hoverLifelineHelper(dispatch, id) {
 
 // Thanks Jonathan Marzullo and others from https://stackoverflow.com/a/13348618
 export function isChrome() {
-  var isChromium = window['chrome'],
+  var isChromium = window["chrome"],
     winNav = window.navigator,
     vendorName = winNav.vendor,
-    isOpera = winNav.userAgent.indexOf('OPR') > -1,
-    isIEedge = winNav.userAgent.indexOf('Edge') > -1,
-    isIOSChrome = winNav.userAgent.match('CriOS');
+    isOpera = winNav.userAgent.indexOf("OPR") > -1,
+    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+    isIOSChrome = winNav.userAgent.match("CriOS");
 
   if (isIOSChrome) {
     return true;
   } else if (
     isChromium !== null &&
     isChromium !== undefined &&
-    vendorName === 'Google Inc.' &&
+    vendorName === "Google Inc." &&
     !isOpera &&
     !isIEedge
   ) {

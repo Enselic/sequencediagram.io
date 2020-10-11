@@ -21,45 +21,45 @@ import {
   removeComponentWithKey,
   typeTextAndPressReturn,
   pressReturn,
-} from './lib';
-import serve from 'serve';
+} from "./lib";
+import serve from "serve";
 
 const driver = buildDriverAndSetupEnv();
 
-describe('when the API server is fully functional', async () => {
+describe("when the API server is fully functional", async () => {
   let newlyCreatedPermalink = null;
   // Use random names to reduce risk of us seeing old data
-  const randomObjectName1 = 'object1-' + Math.ceil(Math.random() * 1000000000);
-  const randomObjectName2 = 'object2-' + Math.ceil(Math.random() * 1000000000);
+  const randomObjectName1 = "object1-" + Math.ceil(Math.random() * 1000000000);
+  const randomObjectName2 = "object2-" + Math.ceil(Math.random() * 1000000000);
 
   beforeAll(async () => {
     // Use a short artificial delay get more extreme latency
-    await makeApiServer('listen?extraDelayMs=2000');
+    await makeApiServer("listen?extraDelayMs=2000");
   });
 
   afterAll(async () => {
-    await makeApiServer('close');
+    await makeApiServer("close");
   });
 
   it(
-    'creating a new diagram works',
+    "creating a new diagram works",
     async () => {
-      await goTo(driver, '');
+      await goTo(driver, "");
       newlyCreatedPermalink = await waitForPermalink(driver);
       await clickAddObject(driver);
       await typeTextAndPressReturn(driver, randomObjectName1);
       await driver.sleep(1000);
-      await waitForElement(driver, 'Saved');
+      await waitForElement(driver, "Saved");
     },
     20 * 1000
   );
 
   it(
-    'loading an existing diagram works',
+    "loading an existing diagram works",
     async () => {
       // Go somewhere else to make sure it's not old state we're seeing
       await driver.get(
-        'http://static.sequencediagram.io/acknowledgements.html'
+        "http://static.sequencediagram.io/acknowledgements.html"
       );
       // Then go to the permalink
       await driver.get(newlyCreatedPermalink);
@@ -67,17 +67,17 @@ describe('when the API server is fully functional', async () => {
       await clickAddObject(driver);
       await typeTextAndPressReturn(driver, randomObjectName2);
       await driver.sleep(1000);
-      await waitForElement(driver, 'Saved');
+      await waitForElement(driver, "Saved");
     },
     20 * 1000
   );
 
   it(
-    'modifications are remembered',
+    "modifications are remembered",
     async () => {
       // Go somewhere else to make sure it's not old state we're seeing
       await driver.get(
-        'http://static.sequencediagram.io/acknowledgements.html'
+        "http://static.sequencediagram.io/acknowledgements.html"
       );
       // Then go to the permalink
       await driver.get(newlyCreatedPermalink);
@@ -87,7 +87,7 @@ describe('when the API server is fully functional', async () => {
   );
 
   it(
-    'gracefully handles non-existing diagram',
+    "gracefully handles non-existing diagram",
     async () => {
       const initialUrls = [
         `${getHostAndPort()}/2`,
@@ -98,7 +98,7 @@ describe('when the API server is fully functional', async () => {
       for (let i = 0; i < initialUrls.length; i++) {
         let initialUrl = initialUrls[i];
         await driver.get(initialUrl);
-        await waitForElement(driver, 'Error: Could not load diagram');
+        await waitForElement(driver, "Error: Could not load diagram");
         expect(await driver.getCurrentUrl()).toEqual(initialUrl);
       }
 
@@ -110,122 +110,122 @@ describe('when the API server is fully functional', async () => {
   it(
     'MANUAL: save before id allocated (no "Saved" flicker)',
     async () => {
-      await goTo(driver, '');
+      await goTo(driver, "");
       // Before an ID has been allocated, make a change ...
       await clickAddObject(driver);
       // ... that should not have crashed the app
       await waitForPermalink(driver);
       await driver.sleep(1000);
-      await waitForElement(driver, 'Saved');
+      await waitForElement(driver, "Saved");
     },
     20 * 1000
   );
 });
 
-describe('when the API server is down the web app', async () => {
+describe("when the API server is down the web app", async () => {
   it(
-    'informs about the network error when creating a new diagram',
+    "informs about the network error when creating a new diagram",
     async () => {
-      await goTo(driver, '');
-      await waitForElement(driver, 'Could not connect');
+      await goTo(driver, "");
+      await waitForElement(driver, "Could not connect");
     },
     20 * 1000
   );
 
   it(
-    'gracefully handles creating a new diagram',
+    "gracefully handles creating a new diagram",
     async () => {
-      await goTo(driver, '');
-      await waitForElement(driver, 'Could not connect');
+      await goTo(driver, "");
+      await waitForElement(driver, "Could not connect");
       // Should still be possible to modify the diagram
       await clickAddObject(driver);
       await pressReturn(driver);
-      await waitForElement(driver, 'NewObject');
+      await waitForElement(driver, "NewObject");
     },
     20 * 1000
   );
 
   it(
-    'gracefully handles non-existing diagram',
+    "gracefully handles non-existing diagram",
     async () => {
       const initialUrl = `${getHostAndPort()}/2345678abC`;
       await driver.get(initialUrl);
-      await waitForElement(driver, 'Error: Could not connect');
+      await waitForElement(driver, "Error: Could not connect");
       expect(await driver.getCurrentUrl()).toEqual(initialUrl);
     },
     20 * 1000
   );
 });
 
-describe('when the API server goes down, then comes back up', async () => {
+describe("when the API server goes down, then comes back up", async () => {
   it(
-    'new -> permalink -> Could not connect -> Saved',
+    "new -> permalink -> Could not connect -> Saved",
     async () => {
       // API server is operating as normal
-      await makeApiServer('listen');
+      await makeApiServer("listen");
       try {
-        await goTo(driver, '');
+        await goTo(driver, "");
 
         // We got a permalink id
         const permalink = await waitForPermalink(driver);
 
         // Now the server goes down
-        await makeApiServer('close');
+        await makeApiServer("close");
 
         // After modifying the diagram, the web app should discover the problem
         await clickAddObject(driver);
-        await waitForElement(driver, 'Could not connect');
+        await waitForElement(driver, "Could not connect");
 
         // Now the server comes back up
-        await makeApiServer('listen');
+        await makeApiServer("listen");
         await driver.sleep(1000);
         await clickAddObject(driver);
-        await waitForElement(driver, 'Saved');
+        await waitForElement(driver, "Saved");
         expect(await driver.getCurrentUrl()).toEqual(permalink);
       } finally {
         // Cleanup
-        await makeApiServer('close');
+        await makeApiServer("close");
       }
     },
     20 * 1000
   );
 });
 
-describe('when the API server is down but comes up later it', async () => {
+describe("when the API server is down but comes up later it", async () => {
   it(
-    'works to get a permalink allocated later',
+    "works to get a permalink allocated later",
     async () => {
-      await goTo(driver, '');
-      await waitForElement(driver, 'Could not connect');
-      await removeComponentWithKey(driver, 'o1');
-      await renameComponentFromTo(driver, 'Bar', 'From before API server');
+      await goTo(driver, "");
+      await waitForElement(driver, "Could not connect");
+      await removeComponentWithKey(driver, "o1");
+      await renameComponentFromTo(driver, "Bar", "From before API server");
 
       try {
-        await makeApiServer('listen');
+        await makeApiServer("listen");
         await clickAddObject(driver);
-        await typeTextAndPressReturn(driver, 'From after API server');
-        await waitForElement(driver, 'Saved');
+        await typeTextAndPressReturn(driver, "From after API server");
+        await waitForElement(driver, "Saved");
         await waitForPermalink(driver);
 
         // TODO: Starting offline, crating a diagram, allocate new id: expected
         // that the initial version of the diagram is the diagram the user built up
         // i.e. post for create should support initial state
       } finally {
-        await makeApiServer('close');
+        await makeApiServer("close");
       }
     },
     20 * 1000
   );
 });
 
-describe('service worker', async () => {
+describe("service worker", async () => {
   it(
     'fetches new versions properly (requires "build" and "build-prime" dirs)',
     async () => {
       const tempPort = 12345;
 
       // First serve the regular version of the app
-      const regularServer = serve('build', { port: tempPort });
+      const regularServer = serve("build", { port: tempPort });
       try {
         await waitForPort(driver, tempPort);
 
@@ -242,7 +242,7 @@ describe('service worker', async () => {
       // Now serve the prime version which is the same but with -prime appended
       // to the version string, just to trigger the service worker to go through
       // its version upgrade code
-      const primeServer = serve('build-prime', { port: tempPort });
+      const primeServer = serve("build-prime", { port: tempPort });
       try {
         await waitForPort(driver, tempPort);
 
@@ -250,7 +250,7 @@ describe('service worker', async () => {
         await driver.navigate().refresh();
 
         // We now except information about there being a new version
-        await waitForElement(driver, 'New version available');
+        await waitForElement(driver, "New version available");
         // We lose coverage data when after driver.get(), and we this
         // particular coverage data
         await writeCodeCoverageDataIfPresent(driver);
@@ -260,7 +260,7 @@ describe('service worker', async () => {
         await driver.navigate().refresh();
 
         // We should now have a version string with a -prime suffix
-        await waitForElement(driver, '-prime');
+        await waitForElement(driver, "-prime");
       } finally {
         primeServer.stop();
       }
@@ -276,15 +276,15 @@ setupNoBrowserLogOutputTest(driver);
  * and DynamoDb) we keep them in the same file.
  */
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 async function doFetch(path, method, sequenceDiagram) {
-  const response = await fetch('http://localhost:7000' + path, {
+  const response = await fetch("http://localhost:7000" + path, {
     method,
     body: sequenceDiagram ? JSON.stringify(sequenceDiagram) : undefined,
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
   });
   const body = await response.json();
@@ -301,7 +301,7 @@ const sequenceDiagramInitialRevision = {
 };
 
 const sequenceDiagramRevision2 = {
-  objects: [{ id: 'o1', name: 'This works' }],
+  objects: [{ id: "o1", name: "This works" }],
   messages: [],
 };
 
@@ -329,19 +329,19 @@ function isError(status, body, expectedMessagePart, expectedCode) {
   );
 }
 
-describe('backend unit tests', async () => {
+describe("backend unit tests", async () => {
   beforeAll(async () => {
-    await makeApiServer('listen');
+    await makeApiServer("listen");
   });
 
   afterAll(async () => {
-    await makeApiServer('close');
+    await makeApiServer("close");
   });
 
-  it('POST /sequencediagrams', async () => {
+  it("POST /sequencediagrams", async () => {
     const { status, body } = await doFetch(
-      '/sequencediagrams',
-      'POST',
+      "/sequencediagrams",
+      "POST",
       sequenceDiagramInitialRevision
     );
     expectSuccessfulPostOrGet(status, body, sequenceDiagramInitialRevision);
@@ -352,47 +352,47 @@ describe('backend unit tests', async () => {
 
   // We don't support getting a list of all diagrams everyone
   // has ever created...
-  it('GET /sequencediagrams', async () => {
-    const { status } = await doFetch('/sequencediagrams', 'GET');
+  it("GET /sequencediagrams", async () => {
+    const { status } = await doFetch("/sequencediagrams", "GET");
     expect(status).toBeGreaterThanOrEqual(400);
     expect(status).toBeLessThan(500);
   });
 
-  it('POST /sequencediagrams/{id}', async () => {
+  it("POST /sequencediagrams/{id}", async () => {
     const { status, body } = await doFetch(
-      '/sequencediagrams/' + idToTest,
-      'POST',
+      "/sequencediagrams/" + idToTest,
+      "POST",
       sequenceDiagramRevision2
     );
     expectSuccessfulPostOrGet(status, body, sequenceDiagramRevision2);
     expect(body.revision).toEqual(2);
   });
 
-  it('GET /sequencediagrams/{id} latest revision', async () => {
+  it("GET /sequencediagrams/{id} latest revision", async () => {
     const { status, body } = await doFetch(
-      '/sequencediagrams/' + idToTest,
-      'GET'
+      "/sequencediagrams/" + idToTest,
+      "GET"
     );
     expectSuccessfulPostOrGet(status, body, sequenceDiagramRevision2);
   });
 
-  it('GET /sequencediagrams/{id}/{revision}', async () => {
+  it("GET /sequencediagrams/{id}/{revision}", async () => {
     const { status, body } = await doFetch(
-      '/sequencediagrams/' + idToTest + '/1',
-      'GET'
+      "/sequencediagrams/" + idToTest + "/1",
+      "GET"
     );
     expectSuccessfulPostOrGet(status, body, sequenceDiagramInitialRevision);
   });
 
-  it('POST invalid bodies', async () => {
+  it("POST invalid bodies", async () => {
     const twoValidObjects = {
       objects: [
-        { id: 'o1', name: 'Foo' },
-        { id: 'o2', name: 'Bar' },
+        { id: "o1", name: "Foo" },
+        { id: "o2", name: "Bar" },
       ],
     };
     const invalidValues = [
-      '',
+      "",
       undefined,
       42,
       true,
@@ -402,70 +402,70 @@ describe('backend unit tests', async () => {
       { messages: [] },
       [],
       { objects: [], messages: [], extra: [] },
-      { objects: [{ id: 'x1', name: 'Invalid id' }], messages: [] },
+      { objects: [{ id: "x1", name: "Invalid id" }], messages: [] },
       { objects: 42, messages: [] },
-      { objects: [{ id: 42, name: 'Invalid id' }], messages: [] },
-      { objects: [{ id: 'o1' }], messages: [] },
-      { objects: [{ name: 'missing id' }], messages: [] },
-      { objects: [{ id: 'o1', name: 42 }], messages: [] },
+      { objects: [{ id: 42, name: "Invalid id" }], messages: [] },
+      { objects: [{ id: "o1" }], messages: [] },
+      { objects: [{ name: "missing id" }], messages: [] },
+      { objects: [{ id: "o1", name: 42 }], messages: [] },
       {
-        objects: [{ id: 'o1', name: 'extra prop', extra: 'foo' }],
+        objects: [{ id: "o1", name: "extra prop", extra: "foo" }],
         messages: [],
       },
       {
         ...twoValidObjects,
         messages: [
-          { id: 'y1', sender: 'o1', receiver: 'o2', name: 'invalidId()' },
+          { id: "y1", sender: "o1", receiver: "o2", name: "invalidId()" },
         ],
       },
       {
         ...twoValidObjects,
         messages: [
-          { id: 42, sender: 'o1', receiver: 'o2', name: 'invalidId()' },
+          { id: 42, sender: "o1", receiver: "o2", name: "invalidId()" },
         ],
       },
       {
         ...twoValidObjects,
-        messages: [{ id: 'm1', sender: 'o1', receiver: 'o2' }],
+        messages: [{ id: "m1", sender: "o1", receiver: "o2" }],
       },
       {
         ...twoValidObjects,
-        messages: [{ id: 'm1', receiver: 'o2', name: 'Missing sender' }],
+        messages: [{ id: "m1", receiver: "o2", name: "Missing sender" }],
       },
       {
         ...twoValidObjects,
-        messages: [{ id: 'm1', sender: 'o1', name: 'Missing receiver' }],
+        messages: [{ id: "m1", sender: "o1", name: "Missing receiver" }],
       },
       {
         ...twoValidObjects,
-        messages: [{ sender: 'o1', receiver: 'o2', name: 'Missing id' }],
-      },
-      {
-        ...twoValidObjects,
-        messages: [
-          { id: 'm1', sender: 'z1', receiver: 'o2', name: 'invalidSenderId()' },
-        ],
+        messages: [{ sender: "o1", receiver: "o2", name: "Missing id" }],
       },
       {
         ...twoValidObjects,
         messages: [
-          { id: 'm1', sender: 42, receiver: 'o2', name: 'invalid sender' },
+          { id: "m1", sender: "z1", receiver: "o2", name: "invalidSenderId()" },
         ],
       },
       {
         ...twoValidObjects,
         messages: [
-          { id: 'm1', sender: 'o1', receiver: 42, name: 'invalid receiver' },
+          { id: "m1", sender: 42, receiver: "o2", name: "invalid sender" },
+        ],
+      },
+      {
+        ...twoValidObjects,
+        messages: [
+          { id: "m1", sender: "o1", receiver: 42, name: "invalid receiver" },
         ],
       },
       {
         ...twoValidObjects,
         messages: [
           {
-            id: 'm1',
-            sender: 'o1',
-            receiver: 'z2',
-            name: 'invalidReceiverId()',
+            id: "m1",
+            sender: "o1",
+            receiver: "z2",
+            name: "invalidReceiverId()",
           },
         ],
       },
@@ -473,29 +473,29 @@ describe('backend unit tests', async () => {
         ...twoValidObjects,
         messages: [
           {
-            id: 'm1',
-            sender: 'o1',
-            receiver: 'z2',
-            name: 'invalidReceiverId()',
+            id: "m1",
+            sender: "o1",
+            receiver: "z2",
+            name: "invalidReceiverId()",
           },
         ],
       },
       {
         ...twoValidObjects,
-        messages: [{ id: 'm1', sender: 'o1', receiver: 'z2', name: 42 }],
+        messages: [{ id: "m1", sender: "o1", receiver: "z2", name: 42 }],
       },
       {
         ...twoValidObjects,
-        messages: [{ sender: 'o1', receiver: 'o2', name: 'missing id' }],
+        messages: [{ sender: "o1", receiver: "o2", name: "missing id" }],
       },
       {
         ...twoValidObjects,
         messages: [
           {
-            id: 'm1',
-            sender: 'o1',
-            receiver: 'o2',
-            name: 'invalid isAsync',
+            id: "m1",
+            sender: "o1",
+            receiver: "o2",
+            name: "invalid isAsync",
             isAsync: 42,
           },
         ],
@@ -504,10 +504,10 @@ describe('backend unit tests', async () => {
         ...twoValidObjects,
         messages: [
           {
-            id: 'm1',
-            sender: 'o1',
-            receiver: 'o2',
-            name: 'invalid isReply',
+            id: "m1",
+            sender: "o1",
+            receiver: "o2",
+            name: "invalid isReply",
             isReply: 42,
           },
         ],
@@ -516,10 +516,10 @@ describe('backend unit tests', async () => {
         ...twoValidObjects,
         messages: [
           {
-            id: 'm1',
-            sender: 'o1',
-            receiver: 'z2',
-            name: 'extra prop',
+            id: "m1",
+            sender: "o1",
+            receiver: "z2",
+            name: "extra prop",
             asdf: false,
           },
         ],
@@ -528,16 +528,16 @@ describe('backend unit tests', async () => {
     let erronouslyValidValues = [];
     // forEach() does not work with async/await :(
     for (let i = 0; i < invalidValues.length; i++) {
-      const paths = ['/sequencediagrams', '/sequencediagrams/' + idToTest];
+      const paths = ["/sequencediagrams", "/sequencediagrams/" + idToTest];
       for (let j = 0; j < paths.length; j++) {
         const invalidValue = invalidValues[i];
-        const { status, body } = await doFetch(paths[j], 'POST', invalidValue);
+        const { status, body } = await doFetch(paths[j], "POST", invalidValue);
         if (
           !isError(
             status,
             body,
-            'schema validation failed',
-            'FailedSchemaValidation'
+            "schema validation failed",
+            "FailedSchemaValidation"
           )
         ) {
           erronouslyValidValues.push(invalidValue);
@@ -547,20 +547,20 @@ describe('backend unit tests', async () => {
     expect(erronouslyValidValues).toEqual([]);
   });
 
-  it('POST /sequencediagrams/doesnotexist', async () => {
+  it("POST /sequencediagrams/doesnotexist", async () => {
     const sequenceDiagram = {
       objects: [],
       messages: [],
     };
     const { status, body } = await doFetch(
-      '/sequencediagrams/doesnotexist',
-      'POST',
+      "/sequencediagrams/doesnotexist",
+      "POST",
       sequenceDiagram
     );
-    expectError(status, body, 'empty', 'EmptyQuery');
+    expectError(status, body, "empty", "EmptyQuery");
   });
 
-  it('POST > 50 kB payload', async () => {
+  it("POST > 50 kB payload", async () => {
     const hugeSequenceDiagram = {
       objects: [],
       messages: [],
@@ -568,19 +568,19 @@ describe('backend unit tests', async () => {
     let kBsLeft = 50;
     while (kBsLeft-- > 0) {
       hugeSequenceDiagram.objects.push({
-        id: 'o' + kBsLeft,
-        name: 'x'.repeat(1000),
+        id: "o" + kBsLeft,
+        name: "x".repeat(1000),
       });
     }
 
-    const paths = ['/sequencediagrams', '/sequencediagrams/' + idToTest];
+    const paths = ["/sequencediagrams", "/sequencediagrams/" + idToTest];
     for (let i = 0; i < paths.length; i++) {
       const { status, body } = await doFetch(
         paths[i],
-        'POST',
+        "POST",
         hugeSequenceDiagram
       );
-      expectError(status, body, '50 kB', 'TooLarge');
+      expectError(status, body, "50 kB", "TooLarge");
     }
   });
 });

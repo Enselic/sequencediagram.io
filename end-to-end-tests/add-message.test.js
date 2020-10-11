@@ -7,7 +7,7 @@ import {
   setupNoBrowserLogOutputTest,
   sleepIfHumanObserver,
   waitForCssTransitions,
-} from './lib';
+} from "./lib";
 
 const driver = buildDriverAndSetupEnv();
 
@@ -20,32 +20,32 @@ function addingMessage(start, firstClick, secondClick, expected) {
 }
 
 it(
-  'add message between two objects',
-  addingMessage('o1,O1;o2,O2', 'O1', 'O2', 'o1,O1;o2,O2;m1,o1,o2,newMessage()')
+  "add message between two objects",
+  addingMessage("o1,O1;o2,O2", "O1", "O2", "o1,O1;o2,O2;m1,o1,o2,newMessage()")
 );
 
 it(
-  'add message between two objects reversed',
-  addingMessage('o1,O1;o2,O2', 'O2', 'O1', 'o1,O1;o2,O2;m1,o2,o1,newMessage()')
+  "add message between two objects reversed",
+  addingMessage("o1,O1;o2,O2", "O2", "O1", "o1,O1;o2,O2;m1,o2,o1,newMessage()")
 );
 
 it(
-  'add message between next first and next last object',
+  "add message between next first and next last object",
   addingMessage(
-    'o1,O1;o2,O2;o3,O3;o4,O4',
-    'O2',
-    'O3',
-    'o1,O1;o2,O2;o3,O3;o4,O4;m1,o2,o3,newMessage()'
+    "o1,O1;o2,O2;o3,O3;o4,O4",
+    "O2",
+    "O3",
+    "o1,O1;o2,O2;o3,O3;o4,O4;m1,o2,o3,newMessage()"
   )
 );
 
 it(
-  'add message between next last and next first object',
+  "add message between next last and next first object",
   addingMessage(
-    'o1,O1;o2,O2;o3,O3;o4,O4',
-    'O3',
-    'O2',
-    'o1,O1;o2,O2;o3,O3;o4,O4;m1,o3,o2,newMessage()'
+    "o1,O1;o2,O2;o3,O3;o4,O4",
+    "O3",
+    "O2",
+    "o1,O1;o2,O2;o3,O3;o4,O4;m1,o3,o2,newMessage()"
   )
 );
 
@@ -69,101 +69,101 @@ function insertMessage(start, messageText, offsetFunc1, offsetFunc2, expected) {
 const OFFSET_FROM_MESSAGE_TO_BELOW = 60;
 
 it(
-  'add message just below existing single message',
+  "add message just below existing single message",
   insertMessage(
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
-    'this-is-a-message-reference()',
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o1,o2,newMessage()'
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o1,o2,newMessage()"
   )
 );
 
 it(
-  'add message just below existing single message reversed',
+  "add message just below existing single message reversed",
   insertMessage(
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
-    'this-is-a-message-reference()',
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,newMessage()'
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,newMessage()"
   )
 );
 
 it(
-  'add message just above existing single message',
+  "add message just above existing single message",
   insertMessage(
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
-    'this-is-a-message-reference()',
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     (size) => {
       return { x: 0, y: -20 };
     },
     (size) => {
       return { x: size.width, y: -20 };
     },
-    'o1,Foo;o2,Bar;m2,o1,o2,newMessage();m1,o1,o2,this-is-a-message-reference()'
+    "o1,Foo;o2,Bar;m2,o1,o2,newMessage();m1,o1,o2,this-is-a-message-reference()"
   )
 );
 
 it(
-  'add message just above existing single message reversed',
+  "add message just above existing single message reversed",
   insertMessage(
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()',
-    'this-is-a-message-reference()',
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference()",
+    "this-is-a-message-reference()",
     (size) => {
       return { x: size.width, y: -20 };
     },
     (size) => {
       return { x: 0, y: -20 };
     },
-    'o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,this-is-a-message-reference()'
+    "o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,this-is-a-message-reference()"
   )
 );
 
 it(
-  'add message between two messages',
+  "add message between two messages",
   insertMessage(
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()',
-    'this-is-a-message-reference()',
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()",
+    "this-is-a-message-reference()",
     (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o1,o2,newMessage();m2,o2,o1,M2()'
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o1,o2,newMessage();m2,o2,o1,M2()"
   )
 );
 
 it(
-  'add message between two messages reversed',
+  "add message between two messages reversed",
   insertMessage(
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()',
-    'this-is-a-message-reference()',
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m2,o2,o1,M2()",
+    "this-is-a-message-reference()",
     (size) => {
       return { x: size.width, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
     (size) => {
       return { x: 0, y: size.height + OFFSET_FROM_MESSAGE_TO_BELOW };
     },
-    'o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()'
+    "o1,Foo;o2,Bar;m1,o1,o2,this-is-a-message-reference();m3,o2,o1,newMessage();m2,o2,o1,M2()"
   )
 );
 
-it('message arrows are insertion reference points, not text', async () => {
+it("message arrows are insertion reference points, not text", async () => {
   await goTo(
     driver,
-    'o1,Foo;o2,Bar;m1,o1,o2,fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20SELECTME%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20'
+    "o1,Foo;o2,Bar;m1,o1,o2,fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20SELECTME%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20"
   );
-  const messageTextEl = await findElementByText(driver, 'SELECTME');
+  const messageTextEl = await findElementByText(driver, "SELECTME");
   const size = await messageTextEl.getSize();
   await driver
     .actions()
@@ -176,7 +176,7 @@ it('message arrows are insertion reference points, not text', async () => {
   await driver.actions().click().perform();
   await assertFragment(
     driver,
-    'o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20SELECTME%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20'
+    "o1,Foo;o2,Bar;m2,o2,o1,newMessage();m1,o1,o2,fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20SELECTME%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20fill%20"
   );
 });
 

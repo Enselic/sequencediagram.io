@@ -1,11 +1,11 @@
-import React from 'react';
-import { ActionCreators } from 'redux-undo';
-import ServerState from './ServerState';
-import * as ac from './../reducers';
-import { boxShadow, backgroundLight } from './common';
-import Kbd from './Kbd';
-import { exportSvg } from '../exporters/export-svg';
-import { getNextId } from './../reducers';
+import React from "react";
+import { ActionCreators } from "redux-undo";
+import ServerState from "./ServerState";
+import * as ac from "./../reducers";
+import { boxShadow, backgroundLight } from "./common";
+import Kbd from "./Kbd";
+import { exportSvg } from "../exporters/export-svg";
+import { getNextId } from "./../reducers";
 
 export default function Menu(props) {
   const {
@@ -19,8 +19,8 @@ export default function Menu(props) {
   } = props;
 
   function addObjectAndEditName() {
-    const newName = 'NewObject';
-    const newId = 'o' + getNextId(objects);
+    const newName = "NewObject";
+    const newId = "o" + getNextId(objects);
 
     dispatch(ac.addObject(newId, newName));
     dispatch(ac.editComponentName(newId, newName, true /*preselect*/));
@@ -28,13 +28,13 @@ export default function Menu(props) {
 
   const menuItemProps = {
     style: {
-      backgroundColor: 'transparent',
-      border: 'none',
+      backgroundColor: "transparent",
+      border: "none",
       fontSize: 25,
-      padding: '5px 20px',
-      color: '#002456',
+      padding: "5px 20px",
+      color: "#002456",
     },
-    className: 'menu-button',
+    className: "menu-button",
   };
 
   function Button(props) {
@@ -80,8 +80,8 @@ export default function Menu(props) {
       style={{
         backgroundColor: backgroundLight,
         boxShadow,
-        display: 'flex',
-        alignItems: 'baseline',
+        display: "flex",
+        alignItems: "baseline",
       }}
     >
       {!fixedRevision && (
@@ -123,12 +123,12 @@ export default function Menu(props) {
       )}
       {showTip && (
         <span className="tip">
-          ⇐{' '}
+          ⇐{" "}
           <span
             style={{
-              backgroundColor: '#000',
-              padding: '2px 5px',
-              color: '#fff',
+              backgroundColor: "#000",
+              padding: "2px 5px",
+              color: "#fff",
               borderRadius: 2,
             }}
           >

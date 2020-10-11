@@ -1,9 +1,9 @@
-import * as ac from './../reducers';
-import React from 'react';
-import Name from './Name';
-import MessageArrow from './MessageArrow';
-import { hoverHelper } from './utils';
-import { MESSAGE_Y_OFFSET, MESSAGE_NAME_FONT_SIZE_PX } from './../layouter';
+import * as ac from "./../reducers";
+import React from "react";
+import Name from "./Name";
+import MessageArrow from "./MessageArrow";
+import { hoverHelper } from "./utils";
+import { MESSAGE_Y_OFFSET, MESSAGE_NAME_FONT_SIZE_PX } from "./../layouter";
 
 function Message(props) {
   const {
@@ -25,26 +25,26 @@ function Message(props) {
   let style;
   if (!isPending) {
     style = {
-      pointerEvents: pending.componentMoved ? 'none' : 'auto',
+      pointerEvents: pending.componentMoved ? "none" : "auto",
     };
   } else {
     style = {
-      pointerEvents: 'none',
+      pointerEvents: "none",
     };
   }
 
-  let textAlign = 'center';
+  let textAlign = "center";
   if (msgLayout.direction < 0) {
-    textAlign = 'left';
+    textAlign = "left";
   } else if (msgLayout.direction > 0) {
-    textAlign = 'right';
+    textAlign = "right";
   }
   style = {
     ...style,
     top: msgLayout.top + MESSAGE_Y_OFFSET,
-    position: 'absolute',
+    position: "absolute",
     textAlign: textAlign,
-    userSelect: 'none',
+    userSelect: "none",
   };
 
   return (
@@ -59,19 +59,19 @@ function Message(props) {
     >
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           left: 0,
           right: 0,
-          pointerEvents: 'none',
+          pointerEvents: "none",
         }}
       >
         <div
           style={{
-            position: 'absolute',
+            position: "absolute",
             fontSize: `${MESSAGE_NAME_FONT_SIZE_PX}px`,
             left: 0,
             right: 0,
-            bottom: '100%',
+            bottom: "100%",
           }}
         >
           <Name

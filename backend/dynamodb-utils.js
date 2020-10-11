@@ -1,9 +1,9 @@
-const AWS = require('aws-sdk');
-const path = require('path');
-const DynamoDbLocal = require('dynamodb-local');
+const AWS = require("aws-sdk");
+const path = require("path");
+const DynamoDbLocal = require("dynamodb-local");
 
 DynamoDbLocal.configureInstaller({
-  installPath: path.join(process.env.HOME || '/tmp', 'dynamodb-local'),
+  installPath: path.join(process.env.HOME || "/tmp", "dynamodb-local"),
 });
 
 module.exports = {
@@ -17,12 +17,12 @@ module.exports = {
             {
               TableName: tableName,
               KeySchema: [
-                { AttributeName: 'id', KeyType: 'HASH' },
-                { AttributeName: 'revision', KeyType: 'RANGE' },
+                { AttributeName: "id", KeyType: "HASH" },
+                { AttributeName: "revision", KeyType: "RANGE" },
               ],
               AttributeDefinitions: [
-                { AttributeName: 'id', AttributeType: 'S' },
-                { AttributeName: 'revision', AttributeType: 'N' },
+                { AttributeName: "id", AttributeType: "S" },
+                { AttributeName: "revision", AttributeType: "N" },
               ],
               ProvisionedThroughput: {
                 ReadCapacityUnits: 5,

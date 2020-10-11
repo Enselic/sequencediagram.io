@@ -20,7 +20,7 @@ export const MESSAGE_START_Y =
   MESSAGE_SPACING * 0.48;
 
 // Only allocate this once for smaller GC pressure
-const canvasContext = document.createElement('canvas').getContext('2d');
+const canvasContext = document.createElement("canvas").getContext("2d");
 function getTextWidth(fontSize, text) {
   canvasContext.font = `${fontSize}px sans-serif`;
   return canvasContext.measureText(text).width;
@@ -34,11 +34,11 @@ export function layoutMessageLeftAndWidth(
 ) {
   let senderX;
   let receiverX;
-  let transition = 'left 0.3s, width 0.3s, top 0.3s, height 0.3s';
+  let transition = "left 0.3s, width 0.3s, top 0.3s, height 0.3s";
   if (overrideSenderX !== undefined) {
     transition = null;
     senderX = overrideSenderX;
-  } else if (typeof message.sender === 'number') {
+  } else if (typeof message.sender === "number") {
     transition = null;
     senderX = message.sender;
   } else {
@@ -49,7 +49,7 @@ export function layoutMessageLeftAndWidth(
   if (overrideReceiverX !== undefined) {
     transition = null;
     receiverX = overrideReceiverX;
-  } else if (typeof message.receiver === 'number') {
+  } else if (typeof message.receiver === "number") {
     transition = null;
     receiverX = message.receiver;
   } else {
@@ -104,14 +104,14 @@ export function layoutMessageLeftAndWidth(
 }
 
 function layoutObject(getTextWidth, currentX, object) {
-  let transition = 'left 0.3s';
+  let transition = "left 0.3s";
   const objectNameWidth =
     getTextWidth(OBJECT_NAME_FONT_SIZE_PX, object.name) +
     OBJECT_NAME_PADDING.LEFT_RIGHT * 2;
   let lifelineX = currentX + objectNameWidth / 2;
 
   if (object.overrideLifelineX) {
-    transition = 'none';
+    transition = "none";
     lifelineX = object.overrideLifelineX;
   }
   const objectLayout = {

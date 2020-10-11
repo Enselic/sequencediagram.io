@@ -1,14 +1,14 @@
-import { logging, Builder, By, until, Key, promise } from 'selenium-webdriver';
-import { Options as ChromeOptions } from 'selenium-webdriver/chrome';
+import { logging, Builder, By, until, Key, promise } from "selenium-webdriver";
+import { Options as ChromeOptions } from "selenium-webdriver/chrome";
 import {
   Binary as FirefoxBinary,
   Channel as FirefoxChannel,
   Options as FirefoxOptions,
-} from 'selenium-webdriver/firefox';
-import { writeFileSync } from 'fs';
-import { deserialize } from './legacy-deserialize';
-import fetch from 'node-fetch';
-import url from 'url';
+} from "selenium-webdriver/firefox";
+import { writeFileSync } from "fs";
+import { deserialize } from "./legacy-deserialize";
+import fetch from "node-fetch";
+import url from "url";
 
 const SeleniumPromise = promise.Promise;
 
@@ -22,11 +22,11 @@ const HEADLESS = !!process.env.CI && !SLOW;
 export function getPort() {
   // CI scripts run from npm run build with serve (port 5000)
   // while you (typically) you run from npm start (port 3000)
-  return process.env.PORT || (process.env.CI ? '5000' : '3000');
+  return process.env.PORT || (process.env.CI ? "5000" : "3000");
 }
 
 function getSchemeAndHost() {
-  return 'http://localhost';
+  return "http://localhost";
 }
 
 export function getHostAndPort() {
@@ -35,30 +35,30 @@ export function getHostAndPort() {
 
 function buildDriver(browser) {
   if (browser === undefined) {
-    browser = 'chrome';
+    browser = "chrome";
   }
   let builder = new Builder().forBrowser(browser);
-  const windowSize = '1280,1050';
+  const windowSize = "1280,1050";
 
   const prefs = new logging.Preferences();
   // So we can test that we don't keep console.log in the code
   prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
 
-  if (browser === 'chrome') {
+  if (browser === "chrome") {
     let chromeOptions = new ChromeOptions();
     let args = [`window-size=${windowSize}`];
     if (HEADLESS) {
-      args = args.concat(['headless', 'disable-gpu', 'no-sandbox']);
+      args = args.concat(["headless", "disable-gpu", "no-sandbox"]);
     }
     chromeOptions.addArguments(...args);
 
     chromeOptions.setLoggingPrefs(prefs);
     builder.setChromeOptions(chromeOptions);
-  } else if (browser === 'firefox') {
+  } else if (browser === "firefox") {
     let firefoxBinary = new FirefoxBinary(FirefoxChannel.RELEASE);
     let args = [`--window-size=${windowSize}`];
     if (HEADLESS) {
-      args = args.concat(['-headless']);
+      args = args.concat(["-headless"]);
     }
     firefoxBinary.addArguments(...args);
 
@@ -96,11 +96,11 @@ export async function disableAnchors(driver) {
 }
 
 export async function makeApiServer(action) {
-  const response = await fetch('http://localhost:7100/' + action, {
-    method: 'POST',
+  const response = await fetch("http://localhost:7100/" + action, {
+    method: "POST",
   });
   if (!response.ok) {
-    throw new Error('response.status=', response.status);
+    throw new Error("response.status=", response.status);
   }
   return response;
 }
@@ -112,7 +112,7 @@ export function buildDriverAndSetupEnv(browser) {
   const driver = buildDriver(browser);
 
   beforeAll(async () => {
-    return makeApiServer('listen');
+    return makeApiServer("listen");
   });
 
   afterEach(async () => {
@@ -122,7 +122,7 @@ export function buildDriverAndSetupEnv(browser) {
   afterAll(async () => {
     await driver.quit();
     // Will write code coverage data for backend
-    return makeApiServer('close');
+    return makeApiServer("close");
   });
 
   return driver;
@@ -201,7 +201,7 @@ export async function waitForPort(driver, port) {
     }
   }
   if (triesLeft <= 0) {
-    throw new Error('timeout waiting for ' + port);
+    throw new Error("timeout waiting for " + port);
   }
 }
 
@@ -250,7 +250,7 @@ export async function waitForPermalink(driver) {
     }
     await driver.sleep(200);
   }
-  throw new Error('timed out in waitForPermalink()');
+  throw new Error("timed out in waitForPermalink()");
 }
 
 export async function loadScript(driver, src, waitForProperty) {
@@ -297,7 +297,7 @@ export function urlParsing(driver, url, expected) {
 }
 
 export async function goTo(driver, startState, params) {
-  await driver.get(`${getHostAndPort()}/${params ? params : ''}`);
+  await driver.get(`${getHostAndPort()}/${params ? params : ""}`);
   if (startState) {
     const startDiagram = deserialize(startState);
     const script = `return window.sequencediagram_io.setCurrentDiagram('${JSON.stringify(
@@ -337,7 +337,7 @@ export async function clickLifelineForObjectWithText(driver, objectText) {
 }
 
 export async function clickAddObject(driver) {
-  await clickText(driver, 'Add object');
+  await clickText(driver, "Add object");
   await waitForCssTransitions(driver);
   return sleepIfHumanObserver(driver, 0.7);
 }
@@ -375,7 +375,7 @@ export async function moveAnchorPointToActor(
   // Low prio todo: Stop depending on the implementation detail that messages have
   // anchor point buttons with certain IDs without complicating testing code too much
   const messageAnchorPointEl = await driver.findElement(
-    By.id(messageKey + '-' + anchorPointType)
+    By.id(messageKey + "-" + anchorPointType)
   );
   const actorNameEl = await findElementByText(driver, actorName);
   const messageAnchorPointLoc = await messageAnchorPointEl.getLocation();
@@ -393,7 +393,7 @@ export async function flip(driver, id) {
   // flip buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id('flip-' + id)))
+    .click(await driver.findElement(By.id("flip-" + id)))
     .perform();
   return sleepIfHumanObserver(driver, 0.7);
 }
@@ -403,7 +403,7 @@ export async function toggleArrowStyle(driver, id) {
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id('toggle-arrow-style-' + id)))
+    .click(await driver.findElement(By.id("toggle-arrow-style-" + id)))
     .perform();
   return sleepIfHumanObserver(driver, 0.7);
 }
@@ -413,7 +413,7 @@ export async function toggleLineStyle(driver, id) {
   // toggle buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id('toggle-line-style-' + id)))
+    .click(await driver.findElement(By.id("toggle-line-style-" + id)))
     .perform();
   return sleepIfHumanObserver(driver, 0.7);
 }
@@ -423,7 +423,7 @@ export async function removeComponentWithKey(driver, id) {
   // remove buttons with certain IDs without complicating testing code too much
   await driver
     .actions()
-    .click(await driver.findElement(By.id('remove-' + id)))
+    .click(await driver.findElement(By.id("remove-" + id)))
     .perform();
   return waitForCssTransitions(driver);
 }
@@ -441,13 +441,13 @@ export async function renameComponentFromTo(driver, fromText, toText) {
  * Run this function after setting up all other tests.
  */
 export function setupNoBrowserLogOutputTest(driver) {
-  it('no browser log output', async () => {
+  it("no browser log output", async () => {
     const okEntries = [
-      'Download the React DevTools for a better development experience',
-      'Content is cached for offline use.',
-      'New content is available; please refresh.',
-      'the server responded with a status of 400',
-      'Failed to load resource: net::ERR_CONNECTION_REFUSED',
+      "Download the React DevTools for a better development experience",
+      "Content is cached for offline use.",
+      "New content is available; please refresh.",
+      "the server responded with a status of 400",
+      "Failed to load resource: net::ERR_CONNECTION_REFUSED",
     ];
 
     let logEntries = await driver.manage().logs().get(logging.Type.BROWSER);

@@ -1,11 +1,11 @@
-import React from 'react';
-import { isChrome } from './utils';
+import React from "react";
+import { isChrome } from "./utils";
 
-const gitMasterBuild = document.location.host.indexOf('git-master') !== -1;
+const gitMasterBuild = document.location.host.indexOf("git-master") !== -1;
 
 function Info(props) {
   return (
-    <div style={{ color: '#002456', padding: '10px 20px', paddingTop: 0 }}>
+    <div style={{ color: "#002456", padding: "10px 20px", paddingTop: 0 }}>
       {props.children}
     </div>
   );
@@ -17,7 +17,7 @@ export default function Header(props) {
   return (
     <div
       style={{
-        backgroundColor: '#64b9ef',
+        backgroundColor: "#64b9ef",
       }}
     >
       {gitMasterBuild && (

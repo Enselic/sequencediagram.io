@@ -14,10 +14,10 @@ curl -X POST --noproxy localhost http://localhost:7100/close
 
 */
 
-'use strict';
+"use strict";
 
-const ApiServerController = require('./ApiServerController');
-const AwsLambdaExpressWrapper = require('./AwsLambdaExpressWrapper');
+const ApiServerController = require("./ApiServerController");
+const AwsLambdaExpressWrapper = require("./AwsLambdaExpressWrapper");
 
 const apiServer = new AwsLambdaExpressWrapper();
 const apiServerController = new ApiServerController(apiServer);
@@ -25,11 +25,11 @@ const apiServerController = new ApiServerController(apiServer);
 apiServer
   .listen()
   .then((port) => {
-    console.log('API server listening on port ' + port);
+    console.log("API server listening on port " + port);
 
     return apiServerController.listen();
   })
   .then((port) => {
-    console.log('API server controller listening on port ' + port);
+    console.log("API server controller listening on port " + port);
   })
   .catch(console.error);
