@@ -19,6 +19,11 @@ AWS.config.update({
   endpoint: dynamoDbLocalUrl,
 });
 
+if (process.env.DYNAMODB_LOCAL_PORT === undefined) {
+  console.log(
+    "DYNAMODB_LOCAL_PORT env var is not set, did you forget `source local.env.sh`?"
+  );
+}
 const dynamoDbStarted = dynamodbUtils.startDynamoDbLocal(
   process.env.DYNAMODB_LOCAL_PORT,
   dynamoDbTableName

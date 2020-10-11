@@ -1,4 +1,4 @@
-// webpack --config backend/webpack.config.js
+// source local.env.sh ; npx webpack --config backend/webpack.config.js
 
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");

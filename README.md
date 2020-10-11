@@ -62,7 +62,7 @@ Setting up for development
 
 It should work to git clone this repo and then run `npm start` after `npm install`.
 To run the automated tests it should work to run `npm test` while `npm start` is
-running.
+running, assuming you have regular Google Chrome and Firefox installs.
 
 Visual Studio Code
 ------------------
