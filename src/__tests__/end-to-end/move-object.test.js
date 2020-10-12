@@ -164,10 +164,13 @@ it("move does not suppress blur event (i.e. text commit) when renaming", async (
 it("can click in renamed component text to place cursor", async () => {
   await goTo(driver, "o1,PrefixMe");
   const el = await findElementByText(driver, "PrefixMe");
-  // To hit upper left coner, to place cursor first
-  const topLeft = { x: 1, y: 1 };
+  // Place cursor before 'P' in the name and click once to enter
+  // "rename" mode
+  const topLeft = { x: 2, y: 5 };
   await driver.actions().mouseMove(el, topLeft).mouseDown().mouseUp().perform();
   await sleepIfHumanObserver(driver, 1);
+  // Click again (with same cursor position) to place the cursor
+  // at the beginning
   await driver.actions().mouseDown().mouseUp().perform();
   // To make sure subsequence state changes from backend interactions
   // do not mess up cursor posision, wait a while here

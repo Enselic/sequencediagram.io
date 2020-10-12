@@ -1,21 +1,23 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o xtrace
 
 export CI=true
 source local.env.sh
 
 notify_travis_fail() {
-  notify-send -u critical 'Travis CI will fail'
+  notify-send -u critical 'Travis CI will fail' || true
   kill_running_services
   exit 1
 }
 
 kill_running_services() {
-  fuser -k \
-    $WEB_APP_DEV_SERVER_PORT/tcp \
-    $WEB_APP_PORT/tcp \
-    $API_SERVER_PORT/tcp \
-    $API_SERVER_CONTROL_PORT/tcp \
-    $DYNAMODB_LOCAL_PORT/tcp
+  for port in $WEB_APP_DEV_SERVER_PORT $WEB_APP_PORT $API_SERVER_PORT $API_SERVER_CONTROL_PORT $DYNAMODB_LOCAL_PORT; do
+    lsof -i tcp:$port | grep LISTEN | awk '{print $2}' | xargs kill || true
+  done
 }
 
 # Make sure it's a fresh start

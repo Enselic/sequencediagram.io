@@ -8,7 +8,7 @@ export NODE_ENV=production
 export BABEL_ENV=production
 
 # Build and serve backend
-node_modules/.bin/webpack --config backend/webpack.config.js
+npx webpack --mode production --config backend/webpack.config.js
 node $BACKEND_BUILD_DIR/$BACKEND_BUILD_FILENAME &
 
 
