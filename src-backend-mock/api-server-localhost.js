@@ -1,5 +1,5 @@
 /**
- * A backend server test cases can start and stop.
+ * A backend server that test cases can start and stop and that runs everything on localhost.
  */
 
 /* Useful commands:
@@ -16,8 +16,8 @@ curl -X POST --noproxy localhost http://localhost:7100/close
 
 "use strict";
 
-const ApiServerController = require("./ApiServerController");
-const AwsLambdaExpressWrapper = require("./AwsLambdaExpressWrapper");
+const ApiServerController = require("./http-forwarder-controller");
+const AwsLambdaExpressWrapper = require("./http-forwarder-for-backend-api-aws-lambda-function");
 
 const apiServer = new AwsLambdaExpressWrapper();
 const apiServerController = new ApiServerController(apiServer);

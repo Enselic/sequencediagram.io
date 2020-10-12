@@ -80,15 +80,12 @@ public/
 src/
 Web app using React (via create-react-app) and Redux
 
-backend/
+src-backend/
+src-backend-mock/
 NodeJS backend using AWS Lambda, AWS API Gateway, AWS DynamoDB, with localhost wrappers
 
-end-to-end-tests/
+src/__tests__/end-to-end/
 Automated and high level tests of both the web app and backend using selenium-webdriver
-
-config/
-scripts/build.js
-Configuration and script for building production version of the web app.
 
 scripts-ci/
 Scripts used by CI.
@@ -101,6 +98,8 @@ AWS Deploy info
 ---------------
 
 If you want to deploy to AWS yourself, here are some key steps:
+
+1. aws lambda create-function --function-name SequenceDiagramIo-BackendApiHandler-GitMaster --runtime nodejs12.x --role arn:aws:iam::123456789012:role/SequenceDiagramIo-BackendApiHandlerLambda --handler backend-api-aws-lambda-function.build.handler --description "Handles api.sequencediagram.io/git-master requests" --memory-size 128 --publish --zip-file fileb:///path/to//foo2.zip
 
 1. Deploy `build-backend/aws-lambda-handler-build.js` to an `AWS Lamda` function
    with `runtime: "nodejs6.10"` and `handler_name: "handler"` and a role with

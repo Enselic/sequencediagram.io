@@ -1,3 +1,7 @@
+/**
+ * Allows to shut down/start the http-forwarder-for-backend-api-aws-lambda-function dynamically.
+ * This enables automated test to test the app behavior when the backend goes up/down.
+ */
 const express = require("express");
 
 const controllingServerPort = process.env.API_SERVER_CONTROL_PORT;

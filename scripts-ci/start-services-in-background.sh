@@ -1,15 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # Starts services required for testing by CI tools
-set -e
-set -x
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 source local.env.sh
 export NODE_ENV=production
 export BABEL_ENV=production
 
-# Build and serve backend
-npx webpack --mode production --config backend/webpack.config.js
-node $BACKEND_BUILD_DIR/$BACKEND_BUILD_FILENAME &
+# Serve backend
+node src-backend-mock/api-server-localhost.js &
 
 
 # Build three variants of the web app
@@ -45,4 +47,4 @@ REACT_APP_API_SERVER=http://localhost:$API_SERVER_PORT \
 # big and annoying to accidentally deploy...
 rm build*/static/js/*.map
 
-node_modules/.bin/serve -p $WEB_APP_PORT -s build &
+npx serve -p $WEB_APP_PORT -s build &

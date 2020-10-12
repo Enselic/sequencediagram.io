@@ -1,10 +1,15 @@
+/**
+ * This implements a HTTP API server with the same API as the real backend, and
+ * forwards the requests to the real AWS Lambda handler we use in a real AWS lambda.
+ */
+
 const fs = require("fs");
 const AWS = require("aws-sdk");
 const http = require("http");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const awsLambda = require("./aws-lambda-handler");
+const awsLambda = require("../src-backend/backend-api-aws-lambda-function");
 const dynamodbUtils = require("./dynamodb-utils");
 
 const dynamoDbLocalUrl = `http://localhost:${process.env.DYNAMODB_LOCAL_PORT}`;

@@ -9,7 +9,7 @@ it(".travis.yml is present", async () => {
 });
 
 it("is formated with prettier", () => {
-  const files = glob.sync("{backend,src}/**/*.js");
+  const files = glob.sync("src*/**/*.js");
   expect(files.length).toBeGreaterThan(45); // Sanity check
 
   const notProperlyFormated = [];

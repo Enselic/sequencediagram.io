@@ -12,6 +12,7 @@
     "redux-undo": "^1.0.1"
   },
   "devDependencies": {
+    "ajv-pack": "^0.3.1",
     "aws-sdk": "^2.766.0",
     "browserslist": "^4.14.5",
     "chromedriver": "^86.0.0",
@@ -29,14 +30,15 @@
     "serve": "^11.3.2",
     "typescript": "^4.0.3",
     "webpack-cli": "^3.3.12",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.6.0",
+    "zip-webpack-plugin": "^3.0.0"
   },
   "scripts": {
     "start": "REACT_APP_VERSION=$(git describe) scripts/start.sh",
     "build": "react-scripts build",
     "test": "react-scripts test --runInBand --testPathIgnorePatterns '/__tests__/end-to-end/lib/'",
     "eject": "react-scripts eject",
-    "prettier-write": "node_modules/.bin/prettier --write '{backend,src}/**/*.js'"
+    "prettier-write": "node_modules/.bin/prettier --write 'src*/**/*.js'"
   },
   "eslintConfig": {
     "extends": "react-app"

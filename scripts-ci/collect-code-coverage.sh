@@ -1,5 +1,8 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 if [ "$(ls coverage-data)" ]; then
   node_modules/.bin/istanbul report --root coverage-data lcov
