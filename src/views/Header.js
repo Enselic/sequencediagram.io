@@ -12,7 +12,7 @@ function Info(props) {
 }
 
 export default function Header(props) {
-  const { touchWarn, showNewContentAvailable } = props.pending;
+  const { touchWarn } = props.pending;
 
   return (
     <div
@@ -40,13 +40,6 @@ export default function Header(props) {
         <Info>
           <b>Unsupported browser:</b> Your browser is not supported yet, please
           use Google Chrome or contribute more browser support via GitHub
-        </Info>
-      )}
-
-      {showNewContentAvailable && (
-        <Info>
-          <b>New version available:</b> A new version of the this web app has
-          been published. Press F5 to load it.
         </Info>
       )}
     </div>

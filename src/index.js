@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import * as ac from "./reducers";
 import App from "./views/App";
-import registerServiceWorker from "./registerServiceWorker";
 import { initMouseOverlay } from "./debug/mouseDebug";
 import { createStore, applyMiddleware, compose } from "redux";
 import { ActionCreators } from "redux-undo";
@@ -112,9 +111,3 @@ window["sequencediagram_io"] = {
     return process.env.REACT_APP_VERSION;
   },
 };
-
-// Make this web app run even when offline
-registerServiceWorker(
-  () => dispatch(ac.showWorksOffline()),
-  () => dispatch(ac.showNewContentAvailable())
-);

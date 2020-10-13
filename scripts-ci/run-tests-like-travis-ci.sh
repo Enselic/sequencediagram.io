@@ -21,7 +21,7 @@ rm -rf build* coverage*
 kill_running_services
 
 scripts-ci/prepare-for-code-coverage.sh
-scripts-ci/start-services-in-background.sh &
+scripts-ci/build-and-start-services-in-background.sh &
 scripts-ci/wait-for-ports.sh
 scripts-ci/run-tests.sh
 scripts-ci/collect-code-coverage.sh

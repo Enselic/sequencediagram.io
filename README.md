@@ -7,7 +7,7 @@
 https://sequencediagram.io
 ==========================
 
-Pleasurably create simple and sharable sequence diagrams directly in the browser. Also works offline.
+Pleasurably create simple and sharable sequence diagrams directly in the browser.
 
 
 Why this project exists
@@ -23,8 +23,9 @@ to require several interactions.
 Target audience
 ===============
 
-Software developers sitting at their desktop using modern browsers, and they
-already know what a sequence diagram is.
+Software developers sitting at their desktop using modern browsers with an internet connection, and they
+already know what a sequence diagram is. If they want to use the site while offline, they can clone
+the code from GitHub beforehand and then run on localhost as per instructions in this README.
 
 Important design points
 -----------------------
