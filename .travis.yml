@@ -22,7 +22,7 @@ deploy:
     local_dir: build-git-master
     region: eu-west-1
     bucket: "git-master.sequencediagram.io"
-    cache_control: "max-age=1800"
+    cache_control: "max-age=300"
     acl: public_read
     on:
       branch: master
@@ -32,10 +32,29 @@ deploy:
     region: eu-west-1
     bucket: "git-master.sequencediagram.io"
     upload-dir: static
-    cache_control: "max-age=604800"
+    cache_control: "max-age=3600"
     acl: public_read
     on:
       branch: master
+  - provider: s3
+    skip_cleanup: true
+    local_dir: build-prod
+    region: eu-west-1
+    bucket: "sequencediagram.io"
+    cache_control: "max-age=1800"
+    acl: public_read
+    on:
+      tags: true
+  - provider: s3
+    skip_cleanup: true
+    local_dir: build-prod/static
+    region: eu-west-1
+    bucket: "sequencediagram.io"
+    upload-dir: static
+    cache_control: "max-age=604800"
+    acl: public_read
+    on:
+      tags: true
 
 #deploy:
 #  provider: script

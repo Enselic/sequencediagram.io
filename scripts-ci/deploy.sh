@@ -4,7 +4,6 @@ set -o nounset
 set -o pipefail
 
 builddir=build-git-master
-
 if [ ! -d "$builddir" ]; then
   echo "Missing $builddir"
   exit 1
