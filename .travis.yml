@@ -18,3 +18,4 @@ after_script:
 deploy:
   provider: script
   script: scripts-ci/deploy.sh
+  skip_cleanup: true
