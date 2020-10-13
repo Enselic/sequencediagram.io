@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "REACT_APP_VERSION=$(git describe) scripts/start.sh",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test --runInBand --testPathIgnorePatterns '/__tests__/end-to-end/lib/'",
     "eject": "react-scripts eject",
     "prettier-write": "node_modules/.bin/prettier --write 'src*/**/*.js'"

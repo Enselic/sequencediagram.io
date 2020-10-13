@@ -15,3 +15,6 @@ script:
   - scripts-ci/run-tests.sh
 after_script:
   - scripts-ci/collect-code-coverage.sh
+deploy:
+  provider: script
+  script: scripts-ci/deploy.sh

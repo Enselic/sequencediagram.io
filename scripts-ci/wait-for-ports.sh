@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
 # Wait for HTTP ports that tests depend on
-set -e
 
 source local.env.sh
 set -- $API_SERVER_PORT $API_SERVER_CONTROL_PORT $WEB_APP_PORT

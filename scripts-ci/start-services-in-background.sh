@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-
-# Starts services required for testing by CI tools
-
 set -o errexit
 set -o nounset
 set -o pipefail
+
+# Starts services required for testing by CI tools
 
 source local.env.sh
 export NODE_ENV=production
@@ -29,22 +28,18 @@ REACT_APP_API_SERVER=https://api.sequencediagram.io/git-master \
   CODE_COVERAGE=false \
   REACT_APP_VERSION=$(git describe) \
   npm run build
-mv -v build build-deploy
+mv -v build build-git-master
 
 REACT_APP_API_SERVER=https://api.sequencediagram.io/v1 \
   CODE_COVERAGE=false \
   REACT_APP_VERSION=$(git describe) \
   npm run build
-mv -v build build-deploy-prod
+mv -v build build-prod
 
 # Then the version that we serve for tests
 REACT_APP_API_SERVER=http://localhost:$API_SERVER_PORT \
   CODE_COVERAGE=true \
   REACT_APP_VERSION=$(git describe) \
   npm run build
-
-# But remove .map files first since we don't use them and they are
-# big and annoying to accidentally deploy...
-rm build*/static/js/*.map
 
 npx serve -p $WEB_APP_PORT -s build &
