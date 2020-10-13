@@ -83,7 +83,7 @@ function DiagramObject(props) {
         onClick={onLifelineClick}
         style={{
           textAlign: "center",
-          transform: "translateX(-50%)",
+          transform: "translateX(-50.1%)",
           pointerEvents: "auto",
         }}
       >
