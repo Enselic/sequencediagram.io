@@ -2,6 +2,8 @@
 # Specifies what settings to use when running the web app and backend services
 # on localhost
 
+export REACT_APP_VERSION=$(git describe)
+
 # What port to use when running the web app dev server
 export WEB_APP_DEV_SERVER_PORT=3000
 

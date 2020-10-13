@@ -1,5 +1,9 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
 
+# Kill all child processes when this script exists
 trap 'kill -TERM 0' EXIT
 
 source local.env.sh

@@ -12,25 +12,16 @@ import {
   getHostAndPort,
   goTo,
   makeApiServer,
-  waitForPort,
   renameComponentFromTo,
   setupNoBrowserLogOutputTest,
   waitForElement,
-  writeCodeCoverageDataIfPresent,
   waitForPermalink,
   removeComponentWithKey,
   typeTextAndPressReturn,
   pressReturn,
 } from "./lib";
-import express from "express";
 
 const driver = buildDriverAndSetupEnv();
-
-function serve(dir, port) {
-  const app = express();
-  app.use(express.static(dir));
-  return app.listen(port);
-}
 
 describe("when the API server is fully functional", () => {
   let newlyCreatedPermalink = null;
@@ -221,57 +212,6 @@ describe("when the API server is down but comes up later it", () => {
       }
     },
     20 * 1000
-  );
-});
-
-describe("service worker", () => {
-  xit(
-    'fetches new versions properly (requires "build" and "build-prime" dirs)',
-    async () => {
-      const tempPort = 12345;
-
-      // First serve the regular version of the app
-      const regularServer = serve("build", tempPort);
-      try {
-        await waitForPort(driver, tempPort);
-
-        // Visit the page to install the service worker and wait for it to install
-        await driver.get(`http://localhost:${tempPort}`);
-        // TODO: Wait for install event
-        await driver.sleep(5000);
-      } finally {
-        regularServer.close();
-        // TODO: Wait for port to go down
-        await driver.sleep(1000);
-      }
-
-      // Now serve the prime version which is the same but with -prime appended
-      // to the version string, just to trigger the service worker to go through
-      // its version upgrade code
-      const primeServer = serve("build-prime", tempPort);
-      try {
-        await waitForPort(driver, tempPort);
-
-        // Refresh the page to upgrade the service worker
-        await driver.navigate().refresh();
-
-        // We now except information about there being a new version
-        await waitForElement(driver, "New version available");
-        // We lose coverage data when after driver.get(), and we this
-        // particular coverage data
-        await writeCodeCoverageDataIfPresent(driver);
-
-        // Visit the page again to get the new version (as the info
-        // message to the user says)
-        await driver.navigate().refresh();
-
-        // We should now have a version string with a -prime suffix
-        await waitForElement(driver, "-prime");
-      } finally {
-        primeServer.close();
-      }
-    },
-    60 * 1000
   );
 });
 

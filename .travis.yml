@@ -9,7 +9,7 @@ addons:
   chrome: stable
 before_script:
   - scripts-ci/prepare-for-code-coverage.sh
-  - scripts-ci/start-services-in-background.sh &
+  - scripts-ci/build-and-start-services-in-background.sh &
   - scripts-ci/wait-for-ports.sh
 script:
   - scripts-ci/run-tests.sh

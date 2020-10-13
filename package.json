@@ -34,8 +34,8 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "scripts": {
-    "start": "REACT_APP_VERSION=$(git describe) scripts/start.sh",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "start": "scripts/start.sh",
+    "build": "scripts/build.sh",
     "test": "react-scripts test --runInBand --testPathIgnorePatterns '/__tests__/end-to-end/lib/'",
     "eject": "react-scripts eject",
     "prettier-write": "node_modules/.bin/prettier --write 'src*/**/*.js'"
