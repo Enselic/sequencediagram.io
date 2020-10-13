@@ -15,9 +15,31 @@ script:
   - scripts-ci/run-tests.sh
 after_script:
   - scripts-ci/collect-code-coverage.sh
+
 deploy:
-  provider: script
-  script: scripts-ci/deploy.sh
-  skip_cleanup: true
-  on:
-    branch: master
+  - provider: s3
+    skip_cleanup: true
+    local_dir: build-git-master
+    region: eu-west-1
+    bucket: "git-master.sequencediagram.io"
+    cache_control: "max-age=1800"
+    acl: public_read
+    on:
+      branch: master
+  - provider: s3
+    skip_cleanup: true
+    local_dir: build-git-master/static
+    region: eu-west-1
+    bucket: "git-master.sequencediagram.io"
+    upload-dir: static
+    cache_control: "max-age=604800"
+    acl: public_read
+    on:
+      branch: master
+
+#deploy:
+#  provider: script
+#  skip_cleanup: true
+#  script: scripts-ci/deploy.sh
+#  on:
+#    branch: master
