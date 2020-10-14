@@ -90,9 +90,6 @@ Automated and high level tests of both the web app and backend using selenium-we
 
 scripts-ci/
 Scripts used by CI.
-
-static/
-Things at http://static.sequencediagram.io/
 ```
 
 AWS Deploy info
