@@ -109,7 +109,9 @@ If you want to deploy to AWS yourself, here are some key steps:
 3. Import `backend/swagger.json` to `AWS API Gateway` and deploy to a stage with
    the stage variables `lambdaFunction=<name of function in step 1>` and
    `tableName=<name of table in step 2>`
-4. Deploy `build-deploy` to `AWS S3` and enable static site serving
+4. Deploy `build-deploy` to `AWS S3` and enable static site serving. NOTE: It is important
+   that e.g. HTTP 403 and 404 is redirected to HTTP 200 /index.html so that it is possible
+   to share links to diagrams with e.g. the following URL: https://sequencediagram.io/yj5nHiXedV
 
 AWS Lambda function role permissions:
 ```
