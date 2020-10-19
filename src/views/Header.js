@@ -1,5 +1,4 @@
 import React from "react";
-import { isChrome } from "./utils";
 
 const gitMasterBuild = document.location.host.indexOf("git-master") !== -1;
 
@@ -33,13 +32,6 @@ export default function Header(props) {
         <Info>
           <b>Touch input is not supported:</b> Touch input is not supported yet,
           please use a mouse or contribute touch input support via GitHub
-        </Info>
-      )}
-
-      {!isChrome() && (
-        <Info>
-          <b>Unsupported browser:</b> Your browser is not supported yet, please
-          use Google Chrome or contribute more browser support via GitHub
         </Info>
       )}
     </div>

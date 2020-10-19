@@ -63,30 +63,6 @@ export function hoverLifelineHelper(dispatch, id) {
   };
 }
 
-// Thanks Jonathan Marzullo and others from https://stackoverflow.com/a/13348618
-export function isChrome() {
-  var isChromium = window["chrome"],
-    winNav = window.navigator,
-    vendorName = winNav.vendor,
-    isOpera = winNav.userAgent.indexOf("OPR") > -1,
-    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-    isIOSChrome = winNav.userAgent.match("CriOS");
-
-  if (isIOSChrome) {
-    return true;
-  } else if (
-    isChromium !== null &&
-    isChromium !== undefined &&
-    vendorName === "Google Inc." &&
-    !isOpera &&
-    !isIEedge
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 export const eatMouseDownCallback = (e) => {
   // We don't want the parent div to receive any mouse down event if
   // this item is clicked
