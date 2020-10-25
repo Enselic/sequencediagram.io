@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/Enselic/sequencediagram.io.svg?branch=master)](https://travis-ci.org/Enselic/sequencediagram.io)
 [![Coverage Status](https://coveralls.io/repos/github/Enselic/sequencediagram.io/badge.svg?branch=master)](https://coveralls.io/github/Enselic/sequencediagram.io?branch=master)
-[![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
 
@@ -43,8 +42,8 @@ Contributions of any kind are very welcomed however!
 
 High prio
 ---------
+- Redo UI; make diagram elements selectable, and show controls upon selection, not hover.
 - Support visualization of so called found/lost messages, i.e. messages originating form/ending in a circle
-- Support more browsers i.e. make the test suite work on more browsers
 
 Low prio
 --------
@@ -95,7 +94,7 @@ Scripts used by CI.
 AWS Deploy info
 ---------------
 
-If you want to deploy to AWS yourself, here are some key steps:
+If you want to deploy to AWS yourself, here are some incoherent and incomplete key steps:
 
 1. aws lambda create-function --function-name SequenceDiagramIo-BackendApiHandler-GitMaster --runtime nodejs12.x --role arn:aws:iam::123456789012:role/SequenceDiagramIo-BackendApiHandlerLambda --handler backend-api-aws-lambda-function.build.handler --description "Handles api.sequencediagram.io/git-master requests" --memory-size 128 --publish --zip-file fileb:///path/to//foo2.zip
 
